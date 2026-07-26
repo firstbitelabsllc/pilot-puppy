@@ -21,6 +21,17 @@ async function openDrawerIfNeeded(page: Page) {
   }
 }
 
+async function closeDrawerIfOpen(page: Page) {
+  const toggle = page.locator('#sidebar-toggle');
+  if (await toggle.isVisible() && await toggle.getAttribute('aria-expanded') === 'true') {
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  }
+}
+
+// On narrow viewports #mode-toggle is hidden and the only mode control lives
+// inside the drawer — which then overlays the tab strip. Close it again, or
+// the very next tab click is intercepted and times out.
 async function clickModeToggle(page: Page) {
   const topbar = page.locator('#mode-toggle');
   if (await topbar.isVisible()) {
@@ -29,6 +40,7 @@ async function clickModeToggle(page: Page) {
   }
   await openDrawerIfNeeded(page);
   await page.locator('#sidebar-mode-toggle').click();
+  await closeDrawerIfOpen(page);
 }
 
 test.describe('Ledger tab is reachable in simple mode', () => {
