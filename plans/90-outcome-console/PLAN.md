@@ -84,8 +84,9 @@ exceptional Ask, one way to Steer, and proof when finished.
 ### What stays underneath
 
 - 90 owns the conversational product experience and semantic policy.
-- The native coding host or Pilot owns execution, provider selection, worker
-  routing, receipt validation, and foldback. The current lead owns acceptance.
+- The native coding host owns ordinary execution and worker management.
+  Delegate owns bounded paid-provider packets and receipt validation. The
+  current lead owns acceptance.
 - Vidux persists plan authority, lifecycle projections, proof references, and
   resume pointers. It does not execute or decide acceptance.
 - Ledger carries bounded append-only receipts; it is evidence, not authority.
@@ -139,18 +140,22 @@ the durable plan and audit receipt remain the authority.
 |---|---|---|
 | 90 | **Keep** | Sole user-facing product and semantic policy |
 | Vidux | **Keep** | Quiet plan, proof, decision, and resume authority |
-| Pilot | **Keep, narrow** | Optional frozen-packet execution and receipt adapter |
-| Pilot-Leo | **Reuse, hide** | Private provider roster, quota health, and machine policy |
+| Native Codex / Cursor / Claude | **Reuse** | Default execution, subagents, tools, worktrees, and lead acceptance |
+| Delegate | **Reuse** | Bounded paid-provider packets, private provider policy, scope, usage, and receipt validation |
+| Agent Orchestrator | **Defer, upstream only** | Optional visual parallel-worktree/session adapter after dogfood |
+| Pilot | **Delete after migration** | Compatibility shim only; no product or roadmap |
 | Standalone Outcome Console | **Delete** | It duplicates the conversational product |
 | Read-only Current Outcome view | **Defer** | Build only after dogfood proves a comprehension gap |
 
-Do not merge 90, Vidux, and Pilot. They need separate failure domains: user
-intent, durable authority, and execution transport. No reviewed competitor
-combines Pilot's exact frozen request/context binding, provider-seat health,
-authority-preserving foldback, and lead-owned acceptance. Agent Orchestrator is
-the strongest optional execution/UI adapter; LangGraph and Microsoft Agent
-Framework are stronger generic durable runtimes but do not replace the three
-product contracts.
+Do not merge 90, Vidux, and an execution tool. They need separate failure
+domains: user intent, durable authority, and execution transport. Pilot's
+frozen request/context binding remains valuable, but Delegate already owns the
+stronger bounded invocation receipt while Vidux and the lead own foldback and
+acceptance. Agent Orchestrator is the strongest optional execution/UI adapter;
+use its upstream release without making its daemon or SQLite database a second
+plan authority. Pi replaces the coding shell rather than this coordination
+boundary, and Gas Town introduces a competing work ledger and orchestration
+operating system.
 
 ## Current Truth Boundary
 
@@ -208,6 +213,10 @@ prompts, routine work produces approval theater, or proof is not trusted.
   evidence, smallest useful surface, and bounded falsification gate.
 - [completed] Reconcile this feature with the proved 90 semantic engine and
   assign execution, persistence, acceptance, and evidence to one layer each.
+- [completed] Correct the portfolio narrative: retire Pilot as a product,
+  preserve only a temporary compatibility shim, reuse Delegate for bounded
+  provider receipts, and defer upstream Agent Orchestrator to a three-scenario
+  dogfood rather than building another operator surface.
 - [in_progress] Correct Answer/Steer completion semantics, add proof/non-delivery
   terminal states, and define a host cancellation acknowledgment before reusing
   the `outcome` / `ask` / `steer` engine in 90's live request loop. This repo
