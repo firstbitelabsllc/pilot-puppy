@@ -50,11 +50,11 @@ it never routes models, schedules work, or transports provider traffic.
 
 - [completed] Cut the CLI to the minimal public surface and align docs.
 - [completed] Wire CI: tests, release verification, secret scan, public-ready gate.
-- [pending] Make the outcome-first operator experience the next Vidux product
-  capability. The user-facing working name is **90**; the durable plan is
-  [`plans/90-outcome-console/PLAN.md`](plans/90-outcome-console/PLAN.md). This
-  is a product hypothesis with a bounded dogfood gate, not a rename or a claim
-  that execution exists.
+- [in_progress] Support the outcome-first **90** product without turning it
+  into a second Vidux interface. The durable product contract is
+  [`plans/90-outcome-console/PLAN.md`](plans/90-outcome-console/PLAN.md), but
+  the next proof belongs in 90's live request loop. A standalone console or
+  project-management GUI has no active implementation leaf.
 - [pending] Triage issues and PRs after the repository is public.
 
 ## Decision Log
@@ -67,6 +67,11 @@ it never routes models, schedules work, or transports provider traffic.
   product layer must make that machinery quiet: one current Outcome, one
   exceptional Ask, a Steer that supersedes stale direction, and proof at the
   end. The coding host still owns provider routing and execution.
+- [2026-07-29] Reuse the Outcome / Ask / Steer contract in 90 rather than
+  building a separately branded Vidux Outcome Console. “Outcome Console” is an
+  internal planning name. A read-only Current Outcome view is allowed later
+  only if live-loop dogfood proves that conversation alone leaves a specific
+  status or proof-comprehension gap.
 
 ## Progress
 
@@ -75,3 +80,6 @@ it never routes models, schedules work, or transports provider traffic.
 - 2026-07-29: Recorded the Outcome Console opportunity, smallest useful GUI,
   competitor evidence, falsification gates, and bounded first dogfood slice.
   No GUI implementation, rename, or release claim is implied.
+- 2026-07-29: Reconciled that hypothesis with the already-proved 90 semantic
+  lifecycle. The active path is now live-loop reuse; recipes, project hygiene,
+  and a standalone GUI are outside the current product slice.

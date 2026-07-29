@@ -1,42 +1,41 @@
-# 90 — Outcome Console Plan
+# 90 — Outcome Contract Plan
 
 **Parent authority:** [`../../PLAN.md`](../../PLAN.md)
-**Status:** discovery active; local semantic proof exists; no GUI implementation
-leaf is active
-**Working name:** “90” is a product shorthand, not a repository, package, or
-public-name change.
+**Status:** contract retained; live-loop reuse is active elsewhere; no
+standalone GUI implementation leaf is active
+**Internal name:** “Outcome Console” names this research and contract. It is not
+a second product, a public feature name, or a Vidux rename.
 
 ## Outcome
 
-Make ordinary software work feel obvious to someone who is not asking for
-implementation details. They state an outcome, receive a concise grounded
-answer, and steer the work without assembling an agent stack, choosing models,
-reading code, or managing a fleet.
+Tell 90 what outcome you want once. It keeps that outcome alive across
+conversations and workers, handles routine choices, asks only when you are
+genuinely needed, and shows proof—or honest non-delivery—at the end.
 
-The product should make the routine ninety percent boring: choose a sensible,
-explainable recipe; keep the work safe; and interrupt only for a real product
-choice, security boundary, money, external communication, or irreversible
-action. A plan remains mandatory underneath, but it is a reliability mechanism,
-not an interface the person must learn.
+That is the user-facing narrative. “Vidux,” “Outcome Console,” “true vibe code,”
+plans, providers, recipes, and workers are architecture or internal vocabulary,
+not concepts the person must learn.
 
-## Opportunity Decision
+## Reuse Decision
 
-Proceed with a narrow Outcome Console, not a general coding-agent GUI.
+Reuse the proved Outcome / Ask / Steer contract inside 90's live request loop.
+Do not start a standalone Vidux console or project-management surface.
 
 The opportunity is not “chat that can write software”; capable products already
-offer that. The wedge is that one durable Outcome survives chats and workers,
-ordinary execution requires no approval ritual, a Steer replaces stale
-direction in place, and an Ask appears only for a genuine fork. The user sees
-proof without having to watch the machinery.
+offer that. The wedge is one durable Outcome that survives chats and workers,
+ordinary execution without approval theater, a Steer that replaces stale
+direction in place, and an Ask only for a genuine fork. The person sees proof
+without managing the machinery.
 
-The internal “90% true vibe code” hypothesis means a non-coder can direct the
-routine build, fix, and release loop from intent and evidence. It does not mean
-the system hides uncertainty, skips engineering proof, or silently crosses a
-hard safety boundary.
+Conversation is the first surface. A visual Current Outcome view becomes
+eligible only after live-loop dogfood identifies a concrete comprehension or
+recovery problem that conversation cannot solve. If built, it is a read-only
+projection of the same authority, not another state store.
 
 Stop this direction if dogfood shows that people primarily want a code editor,
-agent selector, editable prompt queue, or plan-approval screen. Those are
-crowded products and would pull Vidux away from its plan/proof/resume strength.
+agent selector, editable prompt queue, project manager, or plan-approval screen.
+Those are crowded products and would pull Vidux away from its
+plan/proof/resume strength.
 
 ## Market Evidence
 
@@ -61,7 +60,7 @@ This is an initial official-documentation snapshot, not a market-size claim.
 These products validate goals, progress, interruption, and safety controls.
 They do not by themselves validate 90’s proposed differentiation. The testable
 bet is that a non-coder values less operational interface: one Outcome, one
-exceptional Ask, one Steer surface, and proof when finished.
+exceptional Ask, one way to Steer, and proof when finished.
 
 ## Product Contract
 
@@ -83,30 +82,34 @@ exceptional Ask, one Steer surface, and proof when finished.
 
 ### What stays underneath
 
-- Vidux remains the plan, evidence, ownership, checkpoint, and cleanup kernel.
-- The native coding host remains responsible for selecting providers,
-  dispatching workers, editing code, testing, and publishing results.
+- 90 owns the conversational product experience and semantic policy.
+- The native coding host or Pilot owns execution, provider selection, worker
+  routing, foldback, and lead acceptance.
+- Vidux persists plan authority, lifecycle projections, proof references, and
+  resume pointers. It does not execute or decide acceptance.
+- Ledger carries bounded append-only receipts; it is evidence, not authority.
 - A conversation is a reference to an independent context, never a claim that
   every chat shares memory or that raw transcripts are the source of truth.
 - One Outcome may coordinate many project and worker threads, but those threads
   remain independently owned and do not become competing user-visible queues.
 
-## Smallest Useful GUI
+## Smallest Useful Surface
 
-The default home is one calm Outcome card:
+The default response—spoken, typed, or eventually visual—contains one calm
+Current Outcome:
 
 1. **Outcome** — one plain sentence naming the result.
 2. **State** — **working now**, **needs you**, or **finished with proof**.
 3. **Current move** — one sentence describing what is actually happening next.
-4. **Steer** — one composer that updates this same Outcome.
+4. **Steer** — one natural-language way to update this same Outcome.
 5. **Ask** — absent by default; when present, one real fork with concise options
    and consequences.
 6. **Proof** — a compact receipt or link, opened only when wanted.
 
-There is no mode switch between planning and execution on this screen. There is
-no prompt queue, approval button for routine work, model picker, worker list,
-terminal, file tree, or token dashboard. Stop and resume are lifecycle actions,
-not an invitation to manage a fleet.
+There is no default project picker, project list, mode switch, prompt queue,
+routine approval button, model picker, worker list, terminal, file tree, or
+token dashboard. Project identity appears only when ambiguity requires it.
+Stop and resume are lifecycle actions, not an invitation to manage a fleet.
 
 An Ask is a decision interrupt, never a disguised “run” button. A Steer is not
 another queued prompt: once applied, stale direction is visibly superseded and
@@ -129,61 +132,18 @@ Raw transcripts, provider prompts, secrets, and untrusted retrieved text never
 become this state. The coding host may derive a bounded semantic summary, but
 the durable plan and audit receipt remain the authority.
 
-## Default Recipe Boundary
+## Deferred Vidux Kernel Work
 
-Recipes are versioned, tested defaults for common work—not a large prompt that
-reasons from first principles every time, and not a configuration studio.
-
-The initial recipe families are:
-
-1. **Build or change a product feature** — scope, data contract, UI, validation,
-   tests, and rollback.
-2. **Add identity or access** — the project’s established authentication
-   pattern, least-privilege boundaries, and negative-path proof.
-3. **Add data or a service integration** — schema/migration safety, staging
-   environment, secrets boundary, monitoring, and recovery.
-4. **Add payments** — provider-safe integration, test-mode proof, and no live
-   charge or publishing action without explicit authority.
-5. **Fix a bug** — reproduction, system context, smallest reversible change,
-   regression proof, and parent-release linkage.
-6. **Ship a release** — release notes, required checks, staged validation, and
-   a truthful shipped/not-shipped receipt.
-
-Each recipe may select conventional tooling when the current project already
-establishes it. It must state the material tradeoff and escalate when no safe
-default exists. It must not silently create accounts, spend money, publish, or
-widen data access.
-
-## Planning and Garbage Collection Contract
-
-Recursive planning is allowed only when it gives an independent scope, proof,
-or revert boundary. The hierarchy is deliberately bounded:
-
-```
-Root product plan → outcome/release plan → execution leaf
-```
-
-- Every bug gets an execution leaf, linked to the release or product outcome it
-  serves. The leaf records the system context, reproduction, intended change,
-  verification, owner, and close condition.
-- A parent explains **why**; a leaf explains **what changes and how it is
-  proved**. Parent progress derives from child terminal receipts rather than
-  optimistic prose.
-- No fourth planning layer without a demonstrated separate proof and revert
-  boundary. Splitting files or tasks is not enough reason to deepen the tree.
-- One active execution leaf owns one worktree and one claim. A worktree cannot
-  outlive its leaf without an explicit handoff or extension.
-- Every leaf terminates as **merged with proof**, **closed**, **handed off**, or
-  **expired**. Terminal rows keep a short durable receipt; active context,
-  watchers, and clean disposable worktrees are then eligible for cleanup.
-- Cleanup must be visible and reversible. Never auto-delete a dirty worktree or
-  user data. Report orphaned leaves, stale claims, and stale worktrees as
-  attention items until their terminal state is recorded.
+Recipe registries and plan-tree/worktree hygiene remain plausible Vidux kernel
+work, but they are not part of the active 90 product slice and do not gate it.
+Each needs its own parent-plan row and proof boundary before implementation.
+Do not smuggle either into a Current Outcome view.
 
 ## Dogfood Gate
 
-Use three non-coder dogfooders across one build, one bug-fix, and one release
-scenario. A scenario passes only when the person can:
+First dogfood the reused contract in 90's real request loop across one build,
+one bug-fix, and one release scenario. A scenario passes only when the person
+can:
 
 - state the Outcome without naming a repository, provider, or implementation;
 - explain the current state and whether the system needs them;
@@ -193,33 +153,26 @@ scenario. A scenario passes only when the person can:
 - identify the final proof or honest non-delivery state without opening code,
   a terminal, a plan editor, or a worker dashboard.
 
-Record confusion and recovery, not only task completion. The hypothesis is
+Record confusion and recovery, not only task completion. A visual projection is
+triggered only if the lifecycle works but the person still cannot reliably
+understand state, the outstanding Ask, or final proof. The hypothesis is
 falsified if a human translator is repeatedly needed, Steers behave like queued
 prompts, routine work produces approval theater, or proof is not trusted.
 
 ## Ordered Work
 
 - [completed] Record the outcome-first direction, product boundary, market
-  evidence, smallest useful GUI, and bounded planning/cleanup contract.
-- [in_progress] Carry the locally proved `outcome` / `ask` / `steer` contract
-  into a provider-neutral interface. Local deterministic proof is not live
-  voice-loop or GUI proof.
-- [pending] Build a single-screen, local-data prototype of the Outcome card,
-  Steer composer, exceptional Ask, and proof drawer. Do not add agent, model,
-  prompt-queue, file, or terminal controls.
-- [pending] Run the three-person dogfood gate and record the exact places where
-  status, steering, Ask frequency, or proof trust fails.
-- [pending] Implement one end-to-end Steer loop against the existing plan and
-  proof stores: persist acknowledgment, supersede stale direction, surface the
-  lifecycle, and show linked proof or honest non-delivery.
-- [pending] Add a recipe registry for the six initial families. Each recipe
-  exposes its safety boundary, verification gate, and escalation triggers; it
-  does not route models or execute work itself.
-- [pending] Add plan-tree and worktree hygiene reporting: missing parent links,
-  depth violations, stale claims, orphaned worktrees, and leaves without proof.
-  Recommend cleanup before considering automation.
-- [pending] Add voice only after the typed loop passes dogfood with equivalent
-  lifecycle, interruption, privacy, and recovery behavior.
+  evidence, smallest useful surface, and bounded falsification gate.
+- [completed] Reconcile this feature with the proved 90 semantic engine and
+  assign execution, persistence, acceptance, and evidence to one layer each.
+- [in_progress] Reuse the existing `outcome` / `ask` / `steer` engine in 90's
+  live request loop. This repo records the public contract; it does not claim
+  that downstream implementation or its proof.
+- [pending] Dogfood the live loop and record the exact places where status,
+  steering, Ask frequency, recovery, or proof trust fails.
+- [pending] Only if dogfood proves a visual comprehension gap, open one bounded
+  leaf for a read-only Current Outcome projection. Do not add project, agent,
+  model, prompt-queue, file, terminal, or second-state-store controls.
 
 ## Current Proof
 
@@ -230,6 +183,8 @@ prompts, routine work produces approval theater, or proof is not trusted.
 - Publish packet `evt_55d002e0` records this two-file, docs-only product-plan
   handoff. No GUI, live execution loop, microphone path, or product-name change
   is claimed.
+- The downstream typed lifecycle has local deterministic proof, but that does
+  not prove a live request loop or justify a separate GUI.
 
 ## Non-goals
 
@@ -241,8 +196,7 @@ prompts, routine work produces approval theater, or proof is not trusted.
 
 ## Resume Here
 
-Start with the first in-progress row. Bind the already-proved semantic states to
-one local-data Outcome card, then run the dogfood gate before building backend
-surface area. Keep provider routing and execution in the coding host. Do not
-begin microphone capture, rename Vidux, or expand into an IDE until the typed
-Steer loop is demonstrably useful.
+Resume the existing 90 implementation authority at its live request-loop
+boundary. Return here only after dogfood supplies a concrete status, recovery,
+or proof-comprehension failure. Keep routing and execution in the coding host;
+do not rename Vidux, start a standalone console, or expand into an IDE.
