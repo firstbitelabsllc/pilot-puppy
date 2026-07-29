@@ -18,8 +18,9 @@ not concepts the person must learn.
 
 ## Reuse Decision
 
-Reuse the proved Outcome / Ask / Steer contract inside 90's live request loop.
-Do not start a standalone Vidux console or project-management surface.
+Reuse the typed Outcome / Ask / Steer mechanics inside 90's live request loop
+after correcting their false-completion semantics. Do not start a standalone
+Vidux console or project-management surface.
 
 The opportunity is not “chat that can write software”; capable products already
 offer that. The wedge is one durable Outcome that survives chats and workers,
@@ -84,7 +85,7 @@ exceptional Ask, one way to Steer, and proof when finished.
 
 - 90 owns the conversational product experience and semantic policy.
 - The native coding host or Pilot owns execution, provider selection, worker
-  routing, foldback, and lead acceptance.
+  routing, receipt validation, and foldback. The current lead owns acceptance.
 - Vidux persists plan authority, lifecycle projections, proof references, and
   resume pointers. It does not execute or decide acceptance.
 - Ledger carries bounded append-only receipts; it is evidence, not authority.
@@ -132,6 +133,48 @@ Raw transcripts, provider prompts, secrets, and untrusted retrieved text never
 become this state. The coding host may derive a bounded semantic summary, but
 the durable plan and audit receipt remain the authority.
 
+## Portfolio Decision
+
+| Layer | Decision | Distinct role |
+|---|---|---|
+| 90 | **Keep** | Sole user-facing product and semantic policy |
+| Vidux | **Keep** | Quiet plan, proof, decision, and resume authority |
+| Pilot | **Keep, narrow** | Optional frozen-packet execution and receipt adapter |
+| Pilot-Leo | **Reuse, hide** | Private provider roster, quota health, and machine policy |
+| Standalone Outcome Console | **Delete** | It duplicates the conversational product |
+| Read-only Current Outcome view | **Defer** | Build only after dogfood proves a comprehension gap |
+
+Do not merge 90, Vidux, and Pilot. They need separate failure domains: user
+intent, durable authority, and execution transport. No reviewed competitor
+combines Pilot's exact frozen request/context binding, provider-seat health,
+authority-preserving foldback, and lead-owned acceptance. Agent Orchestrator is
+the strongest optional execution/UI adapter; LangGraph and Microsoft Agent
+Framework are stronger generic durable runtimes but do not replace the three
+product contracts.
+
+## Current Truth Boundary
+
+- `answer_ask()` and `steer()` currently mark redirected work complete without
+  accepted proof. The mechanics are reusable, but live integration is blocked
+  until Answer and Steer return work to pending/ready.
+- A Steer changes semantic state but does not yet cancel or fence a running
+  worker. “Stale direction stops” remains a dogfood criterion, not a shipped
+  claim.
+- The lifecycle does not yet represent `delivered_with_proof` or
+  `not_delivered`.
+- Direct-user and lead-verified provenance are asserted by the active agent,
+  not authenticated by a host callback.
+- The rejected PLAN-embedded hot-state writer can overwrite a concurrent editor
+  that does not share its lock. PLAN remains readable authority; scoped
+  interaction transactions belong in a private Vidux-owned journal.
+
+That journal is not a second plan. It may own revision, open Ask,
+Steer received/applied/acknowledged state, a cancellation fence, proof
+references, and the canonical PLAN digest. PLAN continues to own intent,
+priorities, decisions, accepted results, project pointers, and resume state.
+On a digest mismatch, mutation stops: PLAN wins intent while unconsumed
+direct-user events and proof remain evidence for explicit reconciliation.
+
 ## Deferred Vidux Kernel Work
 
 Recipe registries and plan-tree/worktree hygiene remain plausible Vidux kernel
@@ -165,9 +208,12 @@ prompts, routine work produces approval theater, or proof is not trusted.
   evidence, smallest useful surface, and bounded falsification gate.
 - [completed] Reconcile this feature with the proved 90 semantic engine and
   assign execution, persistence, acceptance, and evidence to one layer each.
-- [in_progress] Reuse the existing `outcome` / `ask` / `steer` engine in 90's
-  live request loop. This repo records the public contract; it does not claim
-  that downstream implementation or its proof.
+- [in_progress] Correct Answer/Steer completion semantics, add proof/non-delivery
+  terminal states, and define a host cancellation acknowledgment before reusing
+  the `outcome` / `ask` / `steer` engine in 90's live request loop. This repo
+  records the public contract; it does not claim downstream implementation.
+- [pending] Reuse the minimum proven Vidux safe-file/journal primitives for
+  scoped interaction transactions without creating another task queue.
 - [pending] Dogfood the live loop and record the exact places where status,
   steering, Ask frequency, recovery, or proof trust fails.
 - [pending] Only if dogfood proves a visual comprehension gap, open one bounded
@@ -183,8 +229,9 @@ prompts, routine work produces approval theater, or proof is not trusted.
 - Publish packet `evt_55d002e0` records this two-file, docs-only product-plan
   handoff. No GUI, live execution loop, microphone path, or product-name change
   is claimed.
-- The downstream typed lifecycle has local deterministic proof, but that does
-  not prove a live request loop or justify a separate GUI.
+- The downstream typed lifecycle has local deterministic mechanics proof, but
+  the council found false-completion semantics that those tests encode rather
+  than reject. It does not prove a live request loop or justify a separate GUI.
 
 ## Non-goals
 
@@ -196,7 +243,9 @@ prompts, routine work produces approval theater, or proof is not trusted.
 
 ## Resume Here
 
-Resume the existing 90 implementation authority at its live request-loop
-boundary. Return here only after dogfood supplies a concrete status, recovery,
-or proof-comprehension failure. Keep routing and execution in the coding host;
-do not rename Vidux, start a standalone console, or expand into an IDE.
+Resume the existing 90 implementation authority by fixing semantic completion,
+terminal proof/non-delivery, and cancellation acknowledgment, then add the
+scoped private journal and dogfood the live request loop. Return here for a
+visual leaf only after dogfood supplies a concrete status, recovery, or
+proof-comprehension failure. Keep routing and execution in the coding host; do
+not rename Vidux, start a standalone console, or expand into an IDE.
