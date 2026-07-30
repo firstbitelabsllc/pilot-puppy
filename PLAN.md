@@ -70,6 +70,9 @@ it never routes models, schedules work, or transports provider traffic.
 - [2026-07-29] The first public slice is an interchange schema plus read-only
   validator. It proves bounded state shape and privacy invariants only; GUI,
   persistence, worker control, and a live stop-stale-work loop remain unproved.
+- [2026-07-29] Public source carries product authority, not portfolio
+  operations. Provider receipts, private repository links, personal paths,
+  costs, and session identifiers are rejected from the maintained surface.
 
 ## Progress
 
@@ -80,3 +83,6 @@ it never routes models, schedules work, or transports provider traffic.
   No GUI implementation, rename, or release claim is implied.
 - 2026-07-29: Added the `vidux.outcome.v1` schema, synthetic example,
   reference, and deterministic validator as the provider-neutral boundary.
+- 2026-07-29: Sanitized the maintained plan and shipped docs, strengthened the
+  public-boundary gate, and prepared `1.1.1` as the corrective release without
+  moving or deleting the historical `v1.1.0` tag.

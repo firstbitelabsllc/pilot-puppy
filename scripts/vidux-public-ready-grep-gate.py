@@ -42,6 +42,8 @@ _PRIVATE_FLOW_HYPHEN = "leo" + "-flow"
 _PRIVATE_SLOP_LANE = "/" + "ai-slop"
 _PRIVATE_VIDUX_OVERLAY = "/" + "vidux-leo"
 _PRIVATE_PILOT_OVERLAY = "pilot" + "-leo"
+_PRIVATE_PERSONAL_OVERLAY = "ai" + "-leo"
+_PRIVATE_SKILLS_REPO_PATH = "~/" + "Development/" + "ai"
 
 # Privacy/PII/confidentiality patterns: enforced everywhere scanned,
 # regardless of tense. Category-based and synthetic-safe: no personal names,
@@ -64,6 +66,16 @@ PRIVACY_PATTERNS = (
     (
         "private overlay marker",
         re.compile(re.escape(_PRIVATE_VIDUX_OVERLAY) + r"\b"),
+    ),
+    (
+        "private personal-overlay marker",
+        re.compile(rf"\b{re.escape(_PRIVATE_PERSONAL_OVERLAY)}\b"),
+    ),
+    (
+        "home-relative private skills-repo path",
+        re.compile(
+            re.escape(_PRIVATE_SKILLS_REPO_PATH) + r"(?:-leo)?(?:/|\b)"
+        ),
     ),
     # Absolute POSIX home directories for any username, not one operator.
     (

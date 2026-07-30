@@ -507,6 +507,14 @@ class PublicReadyGrepGateTests(unittest.TestCase):
             (f"Path: {SYN_HOME_LINUX}\n", "absolute home path"),
             ("Notes under ~/" + "Documents/local-tools/README.md\n", "home-relative private path"),
             ("Key material under ~/." + "ssh/id_ed25519\n", "home-relative private path"),
+            (
+                "Skills under ~/" + "Development/" + "ai/skills/\n",
+                "home-relative private skills-repo path",
+            ),
+            (
+                "Personal overlay: " + "ai" + "-leo\n",
+                "private personal-overlay marker",
+            ),
         ]
         for body, expected in fixtures:
             with self.subTest(body=body), tempfile.TemporaryDirectory() as tmp:

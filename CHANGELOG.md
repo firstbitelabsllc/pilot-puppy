@@ -7,6 +7,22 @@ tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
 ## [Unreleased]
 
+## [1.1.1] — 2026-07-29
+
+### Security
+
+- Replaced private operational history in the maintained public plan with a
+  repository-only release plan.
+- Removed private repository names and operator-specific paths from shipped
+  documentation.
+- Extended the public-boundary gate to reject personal overlay names and
+  home-relative private skill-repository paths.
+
+### Changed
+
+- The prior `v1.1.0` release remains intact as historical truth and is
+  superseded by this sanitized source release.
+
 ## [1.1.0] — 2026-07-29
 
 ### Added

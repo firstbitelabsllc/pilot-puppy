@@ -64,7 +64,7 @@ or selects a model. The dashboard is local, not hosted.
 
 ## Outcome / Ask / Steer interchange
 
-Vidux `1.1.0` adds a provider-neutral JSON contract for one Outcome, an
+Vidux `1.1.1` includes a provider-neutral JSON contract for one Outcome, an
 exceptional Ask, Steers, and proof references. It is an interchange boundary,
 not a GUI, worker runtime, shared-memory layer, or live-steering claim.
 
@@ -80,15 +80,15 @@ and [schema](schemas/outcome-ask-steer.v1.json).
 ## Docs
 
 Root is install + agent entry; deeper material stays in docs:
-[Architecture](docs/doctrine/ARCHITECTURE.md) · [Doctrine](docs/doctrine/DOCTRINE.md) · [Loop](docs/doctrine/LOOP.md) · [Enforcement hooks](docs/doctrine/ENFORCEMENT.md) · [Core-cut handoff](docs/CORE-CUT.md) · [Evidence format](guides/evidence-format.md) · [Site / guides](docs/)
+[Architecture](docs/doctrine/ARCHITECTURE.md) · [Doctrine](docs/doctrine/DOCTRINE.md) · [Loop](docs/doctrine/LOOP.md) · [Enforcement hooks](docs/doctrine/ENFORCEMENT.md) · [Core boundary](docs/CORE-CUT.md) · [Evidence format](guides/evidence-format.md) · [Site / guides](docs/)
 Community: [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [SUPPORT](SUPPORT.md) · [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
 Repo `PLAN.md` (if present) is this repo's internal queue, not required to use Vidux in your project.
 
 ## Release truth
 
-Version `1.1.0` is the current source contract (`VERSION` + matching git tag);
+Version `1.1.1` is the current source contract (`VERSION` + matching git tag);
 there is no npm package on the registry. Install from source at the tagged tip
-(`git checkout v1.1.0`) or track `main`. [Release notes](https://github.com/firstbitelabsllc/vidux/releases/tag/v1.1.0).
+(`git checkout v1.1.1`) or track `main`. [Release notes](https://github.com/firstbitelabsllc/vidux/releases/tag/v1.1.1).
 
 ## Contributing
 

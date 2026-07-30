@@ -252,7 +252,7 @@ AUDIT (pick ONE skill per cycle — rotate through the list):
 - Length: is the skill concise or bloated? (vendor guidance: "earn your complexity")
 
 FIX (if issues found):
-1. cd ~/Development/ai && git pull --ff-only
+1. cd <shared-skills-repo> && git pull --ff-only
 2. Identify the owning PLAN.md row before editing. If the skill repo has no
    active row, add one before changing files.
 3. Edit exactly one skill file plus any focused regression test/doc reference.
