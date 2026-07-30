@@ -1276,7 +1276,6 @@ def plan_list_payload(plans: list[dict]) -> list[dict]:
                 "dashboard_verdicts",
                 "dashboard_inbox_entries",
                 "dashboard_ask_owner_entries",
-                "dashboard_ask_leo_entries",  # legacy key, if any residual payloads
             )
         }
         item["child_rels"] = [child["rel"] for child in plan.get("children", [])]
@@ -2340,11 +2339,6 @@ def read_ask_owner_entries(path: Path) -> list[dict]:
         return []
     text, _ = redact_sensitive_text(text)
     return extract_ask_owner_entries(text)
-
-
-# Back-compat aliases for older call sites / tests.
-extract_ask_leo_entries = extract_ask_owner_entries
-read_ask_leo_entries = read_ask_owner_entries
 
 
 def extract_focus_tasks(text: str, limit: int = 3) -> list[dict]:

@@ -7,21 +7,49 @@ tighten doctrine; major bumps change the cycle or `PLAN.md` shape.
 
 ## [Unreleased]
 
+No entries.
+
 ## [1.1.1] — 2026-07-29
 
 ### Security
 
-- Replaced private operational history in the maintained public plan with a
-  repository-only release plan.
-- Removed private repository names and operator-specific paths from shipped
-  documentation.
-- Extended the public-boundary gate to reject personal overlay names and
-  home-relative private skill-repository paths.
+- Replaced private operational material at the maintained tip with a
+  repository-only release plan while preserving existing ancestry.
+- Sanitized operator-specific identities and paths from the source package and
+  maintained documentation.
+- Extended the public-boundary gate to reject private identity markers and
+  concrete home-relative repository paths without enumerating those values in
+  public documentation.
 
 ### Changed
 
-- The prior `v1.1.0` release remains intact as historical truth and is
-  superseded by this sanitized source release.
+- The prior `v1.1.0` tag and release remain intact as historical truth. The
+  `1.1.1` source sanitizes the maintained tip and package. Its published
+  identity is valid only when the matching tag and GitHub Release resolve to
+  the same commit.
+- Reduced the root skill and fleet documentation to the public
+  plan/proof/resume contract. Coding hosts own scheduling, provider selection,
+  worker execution, authentication, and lifecycle.
+- Replaced host-database and nonexistent-helper instructions with supported
+  repository and Git workflows.
+- Renamed the maintained product plan to the provider-neutral Outcome Console
+  path while preserving its Git history.
+
+### Fixed
+
+- Added a repository-wide test that every documented `scripts/` or `tests/`
+  target exists.
+- Removed legacy operator-specific compatibility identifiers from the shipped
+  status/browser surface.
+- Included the dashboard image referenced by the packaged README.
+- Replaced a provider-specific doctor doctrine check with a host-owned
+  execution-boundary check.
+- Made `vidux checkpoint` require explicit proof for completion and leave Git
+  changes uncommitted unless `--commit` is supplied.
+- Made blocked checkpoints require a concrete blocker and kept optional ledger
+  fields distinct from Git commit identity.
+- Removed automatic worktree and orphan-automation deletion from `vidux
+  doctor --fix`; the compatibility flag is now report-only.
 
 ## [1.1.0] — 2026-07-29
 

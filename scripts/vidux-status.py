@@ -281,7 +281,7 @@ def flags_for_plan(
     if any(token in active_text for token in ("auth", "signin", "sign-in", "oauth")):
         flags.append("auth_gap")
     if "ASK-OWNER" in active_text or "ask-owner" in active_text:
-        flags.append("leo_gate")
+        flags.append("owner_gate")
     return flags
 
 

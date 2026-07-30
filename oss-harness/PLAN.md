@@ -1,8 +1,9 @@
 # Open-source release plan
 
-This public plan covers only Vidux itself. It deliberately excludes provider
-accounts, private repositories, worker receipts, personal paths, session
-identifiers, costs, and unpublished portfolio decisions.
+This public plan covers only Vidux itself. It deliberately excludes private
+account configuration, non-public repositories, worker execution logs,
+personal paths, billing data, session data, and unpublished portfolio
+decisions.
 
 ## Outcome
 
@@ -23,8 +24,8 @@ agents instead of competing with their execution engines.
 
 - [completed] Publish the provider-neutral Outcome / Ask / Steer contract.
 - [completed] Require test, package, secret-scan, and public-boundary gates.
-- [completed] Remove private operational history from the maintained public
-  source and package surfaces.
+- [completed] Sanitize the maintained public tip and source package while
+  retaining the repository's existing ancestry under the no-rewrite policy.
 - [pending] Evaluate future changes against stranger usability and the narrow
   plan/proof/resume contract before expanding the product.
 
@@ -35,6 +36,7 @@ agents instead of competing with their execution engines.
 - `npm run test:e2e`
 - hosted CI, CodeQL, secret scanning, and dependency alerts
 
-The repository history is durable evidence, but it is not a license to append
-private campaign logs here. Detailed portfolio operations belong in their
-own non-public authority.
+The maintained tip and source package are the supported public surfaces.
+Existing ancestry remains unchanged, so this plan does not claim historical
+erasure. Detailed portfolio operations belong in their own non-public
+authority and must not be appended here.
