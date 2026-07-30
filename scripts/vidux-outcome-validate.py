@@ -1136,7 +1136,53 @@ def validate_document(document: Any) -> List[Dict[str, str]]:
     return errors
 
 
+def exceeds_max_json_depth(text: str) -> bool:
+    """Report whether structural nesting in the raw text exceeds MAX_JSON_DEPTH.
+
+    Runs before json.loads so the nesting limit is enforced identically on every
+    supported Python version. Without it, deeply nested input raises an
+    interpreter RecursionError inside the decoder on older interpreters and is
+    reported as a parse failure instead of a deterministic depth violation.
+    """
+    depth = 0
+    in_string = False
+    escaped = False
+    for character in text:
+        if in_string:
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                in_string = False
+            continue
+        if character == '"':
+            in_string = True
+        elif character in "[{":
+            depth += 1
+            if depth > MAX_JSON_DEPTH:
+                return True
+        elif character in "]}":
+            if depth > 0:
+                depth -= 1
+    return False
+
+
 def validate_text(text: str) -> Tuple[Dict[str, Any], int]:
+    if exceeds_max_json_depth(text):
+        return (
+            result_payload(
+                False,
+                [
+                    error(
+                        "depth",
+                        "",
+                        f"JSON nesting exceeds maximum depth {MAX_JSON_DEPTH}",
+                    )
+                ],
+            ),
+            1,
+        )
     document, failure = parse_json_document(text)
     if failure is not None:
         return failure, 2
