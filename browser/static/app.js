@@ -592,28 +592,17 @@ function missionEvidenceSummary(scorecard) {
   return { ...counts, status: "unknown", label: "Results not measured" };
 }
 
-function missionHumanState(summary, workflowStatus, taskStats = {}, briefState = "") {
-  if (summary.status === "losing" || workflowStatus === "blocked") {
-    return { label: "Needs attention", detail: "A result or blocker needs a decision.", tone: "needs-you" };
-  }
-  if (summary.status === "winning") {
-    return { label: "Finished with proof", detail: "The declared result has supporting proof.", tone: "finished" };
-  }
+function missionHumanState(summary, workflowStatus, taskStats, briefState, nextMove) {
   const counts = taskStats?.counts || {};
-  const total = Number(taskStats?.total || 0);
-  const open = Number(counts.pending || 0)
-    + Number(counts.in_progress || 0)
-    + Number(counts.in_review || 0)
-    + Number(counts.blocked || 0);
-  const terminalBrief = ["shipped", "completed", "done"].includes(missionStatusClass(briefState));
-  if ((total > 0 && open === 0) || terminalBrief) {
-    return {
-      label: "Needs attention",
-      detail: "The tasks are done, but the outcome still needs proof.",
-      tone: "needs-you",
-      next: "Attach proof for the declared outcome.",
-    };
-  }
+  const blocked = Number(counts.blocked || 0);
+  const open = blocked || ["pending", "in_progress", "in_review"].some(state => Number(counts[state] || 0));
+  const brief = missionStatusClass(briefState);
+  const terminal = (Number(taskStats?.total || 0) > 0 && !open)
+    || ["shipped", "completed", "done"].includes(brief);
+  if (summary.status === "losing" || workflowStatus === "blocked" || brief === "blocked" || blocked) return { label: "Needs attention", detail: "A result or blocker needs a decision.", tone: "needs-you" };
+  if (summary.status === "winning" && terminal) return { label: "Finished with proof", detail: "The result has supporting proof.", tone: "finished" };
+  if (terminal) return { label: "Needs attention", detail: "Tasks are done, but the outcome needs proof.", tone: "needs-you", next: "Attach proof for the declared outcome." };
+  if (!String(nextMove || "").trim()) return { label: "Needs attention", detail: "Choose a next move to continue.", tone: "needs-you", next: "Choose or record the next move." };
   return { label: "Working now", detail: "The next move is clear. No decision is needed from you.", tone: "working" };
 }
 
@@ -668,6 +657,7 @@ function renderMissionControl() {
     workflowStatus,
     selectedPlan?.task_stats,
     selectedPlan?.brief?.state,
+    selected.next,
   );
   const freshness = selected.freshness || { status: "unknown" };
   const freshnessStatus = missionStatusClass(freshness.status);

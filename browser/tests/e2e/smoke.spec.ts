@@ -241,12 +241,83 @@ test.describe('vidux-browse smoke', () => {
     await page.goto('/');
     await expect(page.locator('.outcome-state')).toContainText('Needs attention');
     await expect(page.locator('.outcome-state-copy')).toHaveText(
-      'The tasks are done, but the outcome still needs proof.',
+      'Tasks are done, but the outcome needs proof.',
     );
     await expect(page.locator('.mission-next h3')).toHaveText(
       'Attach proof for the declared outcome.',
     );
     await expect(page.locator('.outcome-state')).not.toContainText('Working now');
+  });
+
+  test('blocked work and missing next moves never get reassuring working copy', async ({ page }) => {
+    let state: 'blocked' | 'missing-next' = 'blocked';
+    await page.route('**/api/plans', async route => {
+      const response = await route.fetch();
+      const body = await response.json();
+      const selected = body.dashboard.mission_control.selected;
+      selected.status = 'shipping';
+      selected.scorecard = [];
+      const plan = body.plans.find(item => item.path === selected.path);
+      if (state === 'blocked') {
+        plan.task_stats = {
+          counts: { pending: 0, in_progress: 0, in_review: 0, completed: 1, blocked: 1 },
+          total: 2,
+        };
+        plan.brief.state = 'blocked';
+      } else {
+        plan.task_stats = {
+          counts: { pending: 1, in_progress: 0, in_review: 0, completed: 0, blocked: 0 },
+          total: 1,
+        };
+        plan.brief.state = 'shipping';
+        selected.next = '';
+      }
+      await route.fulfill({ response, json: body });
+    });
+
+    await page.goto('/');
+    await expect(page.locator('.outcome-state')).toContainText('Needs attention');
+    await expect(page.locator('.outcome-state-copy')).toHaveText(
+      'A result or blocker needs a decision.',
+    );
+    await expect(page.locator('.outcome-state-copy')).not.toContainText('No decision is needed');
+
+    state = 'missing-next';
+    await page.reload();
+    await expect(page.locator('.outcome-state')).toContainText('Needs attention');
+    await expect(page.locator('.outcome-state-copy')).toHaveText(
+      'Choose a next move to continue.',
+    );
+    await expect(page.locator('.mission-next h3')).toHaveText('Choose or record the next move.');
+  });
+
+  test('winning proof does not claim finished while planned work remains open', async ({ page }) => {
+    await page.route('**/api/plans', async route => {
+      const response = await route.fetch();
+      const body = await response.json();
+      const selected = body.dashboard.mission_control.selected;
+      selected.status = 'shipping';
+      selected.scorecard = [{
+        metric: 'Outcome proof',
+        baseline: 'Missing',
+        current: 'Attached',
+        target: 'Attached',
+        status: 'winning',
+        proof_target: { state: 'available', tab: 'EVD:proof', rel: 'evidence/outcome.md' },
+      }];
+      const plan = body.plans.find(item => item.path === selected.path);
+      plan.task_stats = {
+        counts: { pending: 1, in_progress: 1, in_review: 0, completed: 0, blocked: 0 },
+        total: 2,
+      };
+      plan.brief.state = 'shipping';
+      await route.fulfill({ response, json: body });
+    });
+
+    await page.goto('/');
+    await expect(page.locator('.outcome-state')).toContainText('Working now');
+    await expect(page.locator('.outcome-state')).not.toContainText('Finished with proof');
+    await expect(page.locator('.mission-next h3')).not.toBeEmpty();
   });
 
   test('30-issue work queue stays truthful and usable at desktop and 320px', async ({ page }) => {
@@ -463,7 +534,9 @@ test.describe('vidux-browse smoke', () => {
       element.dispatchEvent(new KeyboardEvent('keydown', event));
     });
     await expect(inbox.locator('.steering-item.is-queued')).toContainText('Use the intermediate plan');
-    await expect(inbox.locator('[data-steering-write-status]')).toContainText('Sent. It will be applied at the next safe point');
+    await expect(inbox.locator('[data-steering-write-status]')).toContainText(
+      'Saved locally. It is waiting for your coding tool',
+    );
     expect(enqueuePosts).toBe(1);
 
     items = items.map(item => ({ ...item, status: 'claimed' }));
@@ -553,6 +626,33 @@ test.describe('vidux-browse smoke', () => {
     await page.reload();
     await expect(page.locator('.steering-item')).toHaveCount(0);
     await expect(page.locator('.steering-empty')).toContainText('No change requested');
+  });
+
+  test('local steering access and network failures stay visible', async ({ page }) => {
+    await page.route('**/api/steering**', async route => {
+      await route.fulfill({ status: 403, body: 'local only' });
+    });
+
+    await page.goto('/');
+    const inbox = page.locator('[data-steering-inbox]');
+    await expect(inbox).toHaveAttribute('data-steering-state', 'unavailable');
+    await expect(inbox.locator('.steering-empty')).toBeVisible();
+    await expect(inbox.locator('.steering-empty')).toContainText(
+      'Steering is available only from the local Mac.',
+    );
+    await expect(inbox.locator('[data-steering-form]')).toBeHidden();
+
+    await page.unroute('**/api/steering**');
+    await page.route('**/api/steering**', async route => {
+      await route.abort('failed');
+    });
+    await page.reload();
+    await expect(inbox).toHaveAttribute('data-steering-state', 'error');
+    await expect(inbox.locator('.steering-empty')).toBeVisible();
+    await expect(inbox.locator('.steering-empty')).toContainText(
+      'Could not read local steering state.',
+    );
+    await expect(inbox.locator('[data-steering-form]')).toBeHidden();
   });
 
   test('core app zones remain present without FAB/player chrome', async ({ page }) => {

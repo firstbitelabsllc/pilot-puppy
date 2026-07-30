@@ -65,7 +65,7 @@
           <textarea id="steering-message" name="message" rows="2" maxlength="8192" placeholder="What should change?"></textarea>
           <div class="steering-compose-actions">
             <span>⌘/Ctrl + Enter</span>
-            <button type="submit">Send steer</button>
+            <button type="submit">Save request</button>
           </div>
         </form>
         <p class="steering-write-status" data-steering-write-status role="status" aria-live="polite"></p>
@@ -79,7 +79,7 @@
     if (status === "claimed") return "Applying";
     if (status === "retryable") return "Try again";
     if (status === "failed") return "Not applied";
-    return "Sent";
+    return "Saved";
   }
 
   function renderItems(items) {
@@ -147,6 +147,7 @@
       replaceTextIfChanged(capacity, `${activeItems.length}/${Number(data.capacity || 8)} active`);
     } catch (_error) {
       panel.setAttribute("data-steering-state", "error");
+      panel.querySelector("[data-steering-form]")?.setAttribute("hidden", "");
       replaceHTMLIfChanged(
         items,
         `<div class="steering-empty">Could not read local steering state.</div>`,
@@ -165,7 +166,7 @@
     if (!res.ok) throw new Error((await res.text()) || `request failed (${res.status})`);
     if (statusNode) {
       statusNode.textContent = payload.action === "enqueue"
-        ? "Sent. It will be applied at the next safe point."
+        ? "Saved locally. It is waiting for your coding tool."
         : "Request updated.";
     }
     await refresh(planPath, isCurrent);
@@ -190,7 +191,7 @@
       }
       writing = true;
       if (submit) submit.disabled = true;
-      if (statusNode) statusNode.textContent = "Sending…";
+      if (statusNode) statusNode.textContent = "Saving…";
       try {
         await postAction(planPath, { action: "enqueue", message, source: "vidux-cockpit" }, statusNode, isCurrent);
         textarea.value = "";

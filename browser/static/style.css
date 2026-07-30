@@ -1816,7 +1816,10 @@ code { font-family: var(--mono); background: var(--paper-2); padding: 1px 5px; b
 .outcome-steer .steering-head p:not(.steering-kicker) {
   font-size: 13px;
 }
-.outcome-steer .steering-empty {
+.outcome-steer .steering-inbox[data-steering-state="ready"] .steering-empty {
+  display: none;
+}
+.outcome-steer .steering-composer[hidden] {
   display: none;
 }
 

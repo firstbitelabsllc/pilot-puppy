@@ -63,7 +63,7 @@ plan edit uncommitted unless `--commit` is explicit.
 
 ## Outcome / Ask / Steer interchange
 
-Vidux `1.1.1` defines provider-neutral JSON for one Outcome, an exceptional Ask,
+Vidux `1.2.0` includes provider-neutral JSON for one Outcome, an exceptional Ask,
 Steers, and proof references. That interchange is separate from the local GUI:
 neither is a worker runtime, shared-memory layer, or live model-steering claim.
 
@@ -85,10 +85,11 @@ Repo `PLAN.md` (if present) is this repo's internal queue, not required to use V
 
 ## Release truth
 
-`VERSION` marks `1.1.1`. A release is valid only when its tag and GitHub Release
+`VERSION` marks `1.2.0`. A release is valid only when its tag and GitHub Release
 resolve to the same commit; there is no npm package. The historical
-[`v1.1.0` release](https://github.com/firstbitelabsllc/vidux/releases/tag/v1.1.0)
-remains unchanged; this successor sanitizes the tip/package without rewriting ancestry.
+[`v1.1.1` release](https://github.com/firstbitelabsllc/vidux/releases/tag/v1.1.1)
+remains unchanged. This release adds the Outcome-first local view without
+turning Vidux into a model runner or hosted control plane.
 
 ## Contributing
 
@@ -96,5 +97,4 @@ remains unchanged; this successor sanitizes the tip/package without rewriting an
 npm ci
 npm run verify
 ```
-
 MIT licensed.
