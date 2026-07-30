@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/primary.swiftdeps"
+  },
+  "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/Tests/ABCFireIRTests/GoldenFixtureTests.swift": {
+    "dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/GoldenFixtureTests.d",
+    "object": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/GoldenFixtureTests.swift.o",
+    "swiftmodule": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/GoldenFixtureTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/GoldenFixtureTests.swiftdeps",
+    "diagnostics": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/GoldenFixtureTests.dia"
+  },
+  "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/Tests/ABCFireIRTests/SessionStoreTests.swift": {
+    "dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/SessionStoreTests.d",
+    "object": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/SessionStoreTests.swift.o",
+    "swiftmodule": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/SessionStoreTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/SessionStoreTests.swiftdeps",
+    "diagnostics": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIRTests.build/SessionStoreTests.dia"
+  }
+}

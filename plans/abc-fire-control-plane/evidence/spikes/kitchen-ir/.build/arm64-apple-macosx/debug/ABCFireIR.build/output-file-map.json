@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/primary.swiftdeps"
+  },
+  "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/Sources/ABCFireIR/SessionStore.swift": {
+    "dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/SessionStore.d",
+    "object": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/SessionStore.swift.o",
+    "swiftmodule": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/SessionStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/SessionStore.swiftdeps",
+    "diagnostics": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/SessionStore.dia"
+  },
+  "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/Sources/ABCFireIR/Types.swift": {
+    "dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/Types.d",
+    "object": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/Types.swift.o",
+    "swiftmodule": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/Types~partial.swiftmodule",
+    "swift-dependencies": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/Types.swiftdeps",
+    "diagnostics": "/Users/leokwan/Development/vidux-main-active/plans/abc-fire-control-plane/evidence/spikes/kitchen-ir/.build/arm64-apple-macosx/debug/ABCFireIR.build/Types.dia"
+  }
+}
