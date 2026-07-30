@@ -50,6 +50,12 @@ No entries.
   fields distinct from Git commit identity.
 - Removed automatic worktree and orphan-automation deletion from `vidux
   doctor --fix`; the compatibility flag is now report-only.
+- Kept initialization and checkpoint progress on the same local-day basis,
+  and made status prefer checkpoint cycle order over misleading future dates.
+- Moved browser artifacts out of the installed package to the durable XDG data
+  directory by default, with an explicit `--artifacts-dir` override.
+- Included path-safe comment and artifact store identities in browser reuse
+  checks so a listener cannot be silently reused with the wrong write target.
 
 ## [1.1.0] — 2026-07-29
 

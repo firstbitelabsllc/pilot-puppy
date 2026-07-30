@@ -37,7 +37,10 @@ vidux --version
 The package root is treated as immutable. Live config belongs at
 `$XDG_CONFIG_HOME/vidux/vidux.config.json` (or
 `~/.config/vidux/vidux.config.json`), and project plans belong in their owning
-repositories. Upgrades therefore cannot erase either one.
+repositories. Browser artifacts belong at
+`${VIDUX_BROWSER_ARTIFACTS_DIR:-${XDG_DATA_HOME:-~/.local/share}/vidux/artifacts}`;
+`vidux browse --artifacts-dir <path>` selects another durable directory.
+Upgrades therefore cannot erase config, plans, or browser artifacts.
 
 The release verifier builds the artifact twice and requires byte-identical
 SHA-256 output, exact version agreement, required runtime files, tracked-only
