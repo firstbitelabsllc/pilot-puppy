@@ -24,6 +24,7 @@ SCHEMA = ROOT / "schemas" / "outcome-ask-steer.v1.json"
 DOC = ROOT / "docs" / "reference" / "outcome-ask-steer.md"
 PACKAGE = ROOT / "package.json"
 MAX_INPUT_BYTES = 1 * 1024 * 1024
+MAX_JSON_DEPTH = 64
 
 
 def base_document() -> Dict[str, Any]:
@@ -421,6 +422,39 @@ class OutcomeAskSteerValidatorTests(unittest.TestCase):
         result = self.run_validator(stdin_data=raw, extra_args=[])
         self.assert_invalid(result, code="depth")
         self.assertNotIn("Traceback", result.stderr)
+
+    def test_depth_limit_accepts_64_and_rejects_65_before_decoder(self):
+        at_limit = ("[" * MAX_JSON_DEPTH + "0" + "]" * MAX_JSON_DEPTH).encode(
+            "utf-8"
+        )
+        at_limit_result = self.run_validator(stdin_data=at_limit, extra_args=[])
+        at_limit_payload = self.assert_invalid(at_limit_result, code="type")
+        self.assertNotIn("depth", [item["code"] for item in at_limit_payload["errors"]])
+
+        over_limit = (
+            "[" * (MAX_JSON_DEPTH + 1) + "0" + "]" * (MAX_JSON_DEPTH + 1)
+        ).encode("utf-8")
+        over_limit_result = self.run_validator(stdin_data=over_limit, extra_args=[])
+        self.assert_invalid(over_limit_result, code="depth")
+
+    def test_depth_preflight_ignores_delimiters_and_escapes_inside_strings(self):
+        doc = base_document()
+        doc["outcome"]["summary"] = (
+            "Literal " + ("[{" * 65) + ' plus \\"quoted\\" and \\\\ text.'
+        )
+        result = self.run_json_doc(doc)
+        self.assert_valid(result)
+
+    def test_depth_preflight_does_not_sum_sibling_containers(self):
+        raw = json.dumps([[] for _ in range(MAX_JSON_DEPTH + 50)]).encode("utf-8")
+        result = self.run_validator(stdin_data=raw, extra_args=[])
+        payload = self.assert_invalid(result, code="type")
+        self.assertNotIn("depth", [item["code"] for item in payload["errors"]])
+
+    def test_malformed_over_depth_input_preserves_resource_limit_precedence(self):
+        raw = ("[" * (MAX_JSON_DEPTH + 1)).encode("utf-8")
+        result = self.run_validator(stdin_data=raw, extra_args=[])
+        self.assert_invalid(result, code="depth")
 
     def test_privacy_absolute_home_path_rejected(self):
         doc = base_document()
