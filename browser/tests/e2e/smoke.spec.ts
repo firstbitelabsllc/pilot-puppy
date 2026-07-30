@@ -40,6 +40,10 @@ async function toggleAdvanced(page: Page) {
     await topbar.click();
   } else {
     await openDrawerIfNeeded(page);
+    const technical = page.locator('.sidebar-technical');
+    if (!(await technical.getAttribute('open'))) {
+      await technical.locator('summary').click();
+    }
     await page.locator('#sidebar-mode-toggle').click();
   }
   await expect(page.locator('html')).toHaveClass(/advanced-mode/);
@@ -110,9 +114,9 @@ test.describe('vidux-browse smoke', () => {
     await page.goto('/');
 
     const setup = page.locator('.mission-control.is-empty');
-    await expect(setup.locator('h2')).toHaveText('Connect your first project');
+    await expect(setup.locator('h2')).toHaveText('Add your first project');
     await expect(setup.locator('code')).toHaveText('vidux init --here');
-    await expect(setup).toContainText('Open a terminal in your project');
+    await expect(setup).toContainText('In the project folder, run');
     await expect(page.locator('#sidebar-list')).toContainText('vidux init --here');
     await expect(page.locator('body')).not.toContainText('/private/fixture-root-that-must-not-render');
     await setup.locator('[data-refresh-plans]').click();
@@ -187,17 +191,15 @@ test.describe('vidux-browse smoke', () => {
     const mission = page.locator('.mission-control');
     await expect(mission).toBeVisible();
     await expect(mission.locator('h2')).toHaveText(
-      'Prove the browser leads with one evidence-backed mission.',
+      'Make every project handoff clear at a glance.',
     );
+    await expect(mission.locator('.outcome-state')).toContainText('Needs attention');
+    await expect(mission.locator('.mission-details')).not.toHaveAttribute('open', '');
     await expect(mission.locator('.mission-metric.status-winning')).toHaveCount(1);
     await expect(mission.locator('.mission-metric.status-losing')).toHaveCount(1);
-    await expect(mission.locator('.mission-scorecard-tally')).toHaveAttribute(
-      'aria-label',
-      '1 winning, 1 losing, 0 unproven',
-    );
     await expect(mission.locator('.mission-metric .mission-proof-link')).toHaveCount(2);
-    await expect(mission.locator('.mission-details .mission-proof-link')).toHaveCount(1);
-    await expect(mission.locator('.freshness-fresh')).toContainText('fresh');
+    await expect(mission.locator('.mission-details .mission-proof-link')).toHaveCount(3);
+    await expect(mission.locator('.freshness-fresh')).toContainText('Updated');
     await expect(page.locator('.dashboard-panel')).toHaveCount(0);
 
     const widths = await page.evaluate(() => ({
@@ -206,9 +208,45 @@ test.describe('vidux-browse smoke', () => {
     }));
     expect(widths.content).toBeLessThanOrEqual(widths.viewport);
 
+    await mission.locator('.mission-details summary').click();
+    await expect(mission.locator('.mission-scorecard')).toBeVisible();
     await mission.locator('.mission-open-plan').click();
     await expect(page).toHaveURL(/plan=proj-alpha%2FPLAN\.md/);
     await expect(page.locator('.pane-header h2')).toHaveText('proj-alpha');
+  });
+
+  test('completed tasks without outcome proof never claim work is still running', async ({ page }) => {
+    await page.route('**/api/plans', async route => {
+      const response = await route.fetch();
+      const body = await response.json();
+      const selected = body.dashboard.mission_control.selected;
+      selected.status = 'watching';
+      selected.scorecard = [{
+        metric: 'Outcome proof',
+        baseline: 'Missing',
+        current: 'Missing',
+        target: 'Attached',
+        status: 'unproven',
+        proof_target: { state: 'missing', rel: 'evidence/outcome.md' },
+      }];
+      const plan = body.plans.find(item => item.path === selected.path);
+      plan.task_stats = {
+        counts: { pending: 0, in_progress: 0, in_review: 0, completed: 1, blocked: 0 },
+        total: 1,
+      };
+      plan.brief.state = 'shipped';
+      await route.fulfill({ response, json: body });
+    });
+
+    await page.goto('/');
+    await expect(page.locator('.outcome-state')).toContainText('Needs attention');
+    await expect(page.locator('.outcome-state-copy')).toHaveText(
+      'The tasks are done, but the outcome still needs proof.',
+    );
+    await expect(page.locator('.mission-next h3')).toHaveText(
+      'Attach proof for the declared outcome.',
+    );
+    await expect(page.locator('.outcome-state')).not.toContainText('Working now');
   });
 
   test('30-issue work queue stays truthful and usable at desktop and 320px', async ({ page }) => {
@@ -330,6 +368,7 @@ test.describe('vidux-browse smoke', () => {
 
   test('mission proof opens the validated evidence file', async ({ page }) => {
     await page.goto('/');
+    await page.locator('.mission-details summary').click();
     await page.locator('.mission-proof-link').first().click();
     await expect(page).toHaveURL(/tab=EVD%3A/);
     await expect(page.locator('.pane-header h2')).toHaveText('proj-alpha');
@@ -416,7 +455,7 @@ test.describe('vidux-browse smoke', () => {
     await page.goto('/?plan=proj-alpha%2FPLAN.md');
     const inbox = page.locator('[data-steering-inbox]');
     await expect(inbox).toBeVisible();
-    await expect(inbox).toContainText('This does not send a chat message');
+    await expect(inbox).toContainText('your note stays on this Mac');
     await inbox.locator('textarea').fill('Use the intermediate plan, then re-rank the next safe slice.');
     await inbox.locator('textarea').evaluate(element => {
       const event = { key: 'Enter', code: 'Enter', ctrlKey: true, bubbles: true, cancelable: true };
@@ -424,12 +463,12 @@ test.describe('vidux-browse smoke', () => {
       element.dispatchEvent(new KeyboardEvent('keydown', event));
     });
     await expect(inbox.locator('.steering-item.is-queued')).toContainText('Use the intermediate plan');
-    await expect(inbox.locator('[data-steering-write-status]')).toContainText('Queued for the next safe boundary');
+    await expect(inbox.locator('[data-steering-write-status]')).toContainText('Sent. It will be applied at the next safe point');
     expect(enqueuePosts).toBe(1);
 
     items = items.map(item => ({ ...item, status: 'claimed' }));
     await page.reload();
-    await expect(page.locator('.steering-item.is-claimed')).toContainText('Being handled');
+    await expect(page.locator('.steering-item.is-claimed')).toContainText('Applying');
 
     items = items.map(item => ({ ...item, status: 'retryable', failure_code: 'usage_exhausted' }));
     await page.reload();
@@ -443,7 +482,7 @@ test.describe('vidux-browse smoke', () => {
     items = [];
     await page.reload();
     await expect(page.locator('.steering-item')).toHaveCount(0);
-    await expect(page.locator('.steering-empty')).toContainText('No steer waiting');
+    await expect(page.locator('.steering-empty')).toContainText('No change requested');
 
     await page.setViewportSize({ width: 320, height: 760 });
     const widths = await page.evaluate(() => ({
@@ -513,7 +552,7 @@ test.describe('vidux-browse smoke', () => {
 
     await page.reload();
     await expect(page.locator('.steering-item')).toHaveCount(0);
-    await expect(page.locator('.steering-empty')).toContainText('No steer waiting');
+    await expect(page.locator('.steering-empty')).toContainText('No change requested');
   });
 
   test('core app zones remain present without FAB/player chrome', async ({ page }) => {
@@ -1236,18 +1275,19 @@ test.describe('artifact styling', () => {
     await page.goto('/');
     await expect(page.locator('.mission-control')).toBeVisible();
     await expect(page.locator('.mission-next')).toBeVisible();
-    await expect(page.locator('.mission-scorecard')).toBeVisible();
+    await expect(page.locator('.outcome-steer')).toBeVisible();
     await expect(page.locator('.mission-details')).toBeVisible();
+    await expect(page.locator('.mission-scorecard')).not.toBeVisible();
     const positions = await page.evaluate(() => {
       const top = (selector: string) => document.querySelector(selector)!.getBoundingClientRect().top;
       return {
         next: top('.mission-next'),
-        results: top('.mission-scorecard'),
+        steer: top('.outcome-steer'),
         details: top('.mission-details'),
       };
     });
-    expect(positions.next).toBeLessThan(positions.results);
-    expect(positions.results).toBeLessThan(positions.details);
+    expect(positions.next).toBeLessThan(positions.steer);
+    expect(positions.steer).toBeLessThan(positions.details);
   });
 });
 

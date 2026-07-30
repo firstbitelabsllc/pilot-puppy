@@ -86,7 +86,11 @@ models, schedules work, or transports provider traffic.
   changelog, plan reset to the scaffold shape.
 - 2026-07-29: Recorded the Outcome Console opportunity, smallest useful GUI,
   competitor evidence, falsification gates, and bounded first dogfood slice.
-  No GUI implementation, rename, or release claim is implied.
+  No rename or release claim is implied.
+- 2026-07-29: Implemented the first local Outcome view in the existing browser:
+  one outcome, current move, local Steer, and proof on demand, with projects
+  and technical diagnostics moved out of the default surface. Exceptional Ask
+  dogfood and live Steer application remain.
 - 2026-07-29: Added the `vidux.outcome.v1` schema, synthetic example,
   reference, and deterministic validator as the provider-neutral boundary.
 - 2026-07-29: Sanitized the maintained tip and `1.1.1` source package and
