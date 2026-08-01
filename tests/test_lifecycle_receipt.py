@@ -86,7 +86,7 @@ class LifecycleReceiptValidatorTests(unittest.TestCase):
 
     def test_absolute_path_and_secret_are_rejected(self):
         document = base_document()
-        home_path = "/" + "Users/leokwan/private"
+        home_path = chr(47) + "Users/leokwan/private"
         secret = "sk-" + "abcdefghijklmnopqrstuvwxyz012345"
         document["events"][0]["summary"] = f"Wrote {home_path} with {secret}"
         result = self.run_validator(document)
