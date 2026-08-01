@@ -1,0 +1,31 @@
+{
+  "schema": "vidux-benchmark-fixtures.v1",
+  "cases": [
+    {"id": "durable-state", "path": "durable/PLAN.md"},
+    {"id": "interruption-resume", "path": "interrupted/PLAN.md"},
+    {"id": "proof-present", "path": "proof-present/PLAN.md"},
+    {"id": "proof-missing", "path": "proof-missing/PLAN.md"},
+    {"id": "cross-project-priority-high", "path": "priority-high/PLAN.md"},
+    {"id": "cross-project-priority-low", "path": "priority-low/PLAN.md"}
+  ],
+  "files": [
+    "durable/PLAN.md",
+    "interrupted/PLAN.md",
+    "proof-present/PLAN.md",
+    "proof-present/evidence/2026-08-01-proof.md",
+    "proof-missing/PLAN.md",
+    "priority-high/PLAN.md",
+    "priority-high/evidence/2026-08-01-selected-proof.md",
+    "priority-low/PLAN.md"
+  ],
+  "sha256": {
+    "durable/PLAN.md": "82c006cae930d1f4ae591d8395cdd0a0f831399411ebf8b13e0a3467cb36ceab",
+    "interrupted/PLAN.md": "601e4246be7843705e495fbd3e8970ad66de029fb850852f4a444e8cb7990ed7",
+    "proof-present/PLAN.md": "b8d8906b782b1e7c7ed334ecea221a9138de746f256f07d8e469f026301fe408",
+    "proof-present/evidence/2026-08-01-proof.md": "c6015a3e8da3e92d021ffe3edae3d5e88999711f79407ea6ccf1de5bcd1cf93c",
+    "proof-missing/PLAN.md": "0f7c5592dd109b7c6cdb5932f3b951eb94a9d5bf3bdca4d454f18d3fd4fbfa37",
+    "priority-high/PLAN.md": "089030c0b1e7af985cf605266f89c7a03a8ebae6643bb4d557ce888ff23d316c",
+    "priority-high/evidence/2026-08-01-selected-proof.md": "c04d172db33d10b3d078916a8944d030e35ce0a794d530f6f0f7660b1e2eb5d6",
+    "priority-low/PLAN.md": "dd65ef8f9b92376272f0b8d7a13374a63a852f1b21205c460e061ddc31603554"
+  }
+}

@@ -12,6 +12,9 @@
     "assets/*.png",
     "assets/*.svg",
     "bin/*",
+    "benchmarks/harness/**/*.json",
+    "benchmarks/harness/**/*.md",
+    "benchmarks/harness/run.py",
     "browser/safe_files.py",
     "browser/server.py",
     "browser/coordination_claims.py",
@@ -75,7 +78,8 @@
     "release:verify": "python3 scripts/vidux-release-package.py",
     "release:verify:dev": "python3 scripts/vidux-release-package.py --allow-dirty",
     "playwright:install": "playwright install --with-deps chromium",
-    "test:thin": "bash scripts/vidux-thin-loop-verify.sh"
+    "test:thin": "bash scripts/vidux-thin-loop-verify.sh",
+    "benchmark": "python3 benchmarks/harness/run.py"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.0",
