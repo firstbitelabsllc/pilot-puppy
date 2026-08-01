@@ -254,7 +254,7 @@ redaction regression prove otherwise.
   is `tests/test_drive_mode.py` (5/5), with the existing outcome validator
   still green (56/56). Private `/ninety` now consumes this boundary in Drive
   mode and leaves the generic project loop to each owning plan. Public
-  prepared commit: record after foldback.
+  prepared commit: `65fe5e92` (not merged to `origin/main`).
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
