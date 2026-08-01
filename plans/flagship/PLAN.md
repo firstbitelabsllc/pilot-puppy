@@ -11,9 +11,10 @@ This plan defines the future flagship product. It does not change the current
 
 Keep **Vidux** as the public name and make it the calm local work conductor:
 
-> State the outcome once. Vidux keeps the plan and proof. Pilot Puppy drives the
-> work. Native Codex, Claude, or Cursor executes it. 90 lets you choose the
-> next move from your phone or voice without staring at the machinery.
+> State the outcome once. Vidux keeps the plan and proof. Its little Pilot Puppy
+> driver moves the work. Native Codex, Claude, or Cursor executes it. 90 lets
+> you choose the next move from your phone or voice without staring at the
+> machinery.
 
 Do not create a new repository, rewrite the Vidux history, or replace the name
 before a working successor exists. The name search found Wayline in live
@@ -24,26 +25,32 @@ but it is not the product strategy.
 The shipping shape is **one installable product with strict internal modules**,
 not one fused mega-runtime and not a collection of competing products.
 
-### Friendly product naming and distribution
+### One product, a friendly internal cast
 
-The user-facing driver is now **Pilot Puppy**: a small, approachable right-hand
-helper for people who want decisions and progress without learning agent
-machinery. The public skill/command is `/pilot-puppy`; `/pilot` remains a
-compatibility alias, and the existing `pilot.*` schemas and environment names
-remain stable. This is a brand migration, not a history rewrite or a second
-runtime.
+**Vidux is the only product and the only name a normal user needs.** Pilot Puppy
+is the cute internal name for Vidux's right-hand driver: a small, dependable
+helper that plans, delegates, checks proof, and reports back. It is not a second
+app, install choice, queue, or authority. The maintainer/developer entry point
+is `/pilot-puppy`; `/pilot` remains a compatibility alias, and the existing
+`pilot.*` schemas and environment names remain stable. This is a brand layer,
+not a history rewrite or a second runtime.
 
 The same product may later ship through three thin distribution surfaces:
 
 1. a local skill/CLI for developers who want full custody;
-2. optional ChatGPT, Claude, or Cursor wrappers that call the typed semantic
-   API; and
+2. optional ChatGPT, Claude, or Cursor wrappers that present Vidux's typed
+   semantic API; and
 3. a native iOS/iPad client for the same tailnet-only API.
 
-Those wrappers are interfaces, not cloud executors. They never receive source,
+Those wrappers are Vidux interfaces, not cloud executors. They never receive source,
 credentials, raw transcripts, or a second plan store. A non-technical user can
-discover Pilot Puppy through a hosted or marketplace surface without a GitHub
-or npm workflow, while the Mac remains the execution and credential boundary.
+discover Vidux through a hosted or marketplace surface without a GitHub or npm
+workflow, while the Mac remains the execution and credential boundary.
+
+In the interface, the cast stays plain: Vidux says what is happening, Pilot
+Puppy may be mentioned as the helper handling the current move, and 90 asks
+which useful choice comes next. The system never requires a user to understand
+agents, providers, queues, or the name Pilot Puppy to get work done.
 
 ## Roles (one sentence each)
 
@@ -60,9 +67,34 @@ or npm workflow, while the Mac remains the execution and credential boundary.
 | **Telemetry** | Redacted completion/quality signals | raw prompts, transcripts, secrets, personal paths, or activity theater |
 | **Native iOS/iPad app** | A typed remote client over the local semantic API | an execution host, credential vault, or cloud copy of the codebase |
 
-Pilot Puppy is therefore the main coder/driver. 90 is the steering wheel and
-dashboard. Vidux is the durable road map and evidence. They can ship together,
-but their contracts stay testable independently.
+Vidux is therefore the product. Pilot Puppy is its internal driver, 90 is its
+steering wheel and dashboard, and the native hosts are its execution
+connections. They ship as one umbrella with contracts that remain testable
+independently.
+
+### Relatable language
+
+The brand promise is **one calm place that tells you what is happening and what
+you can do next**. Warmth belongs in the words and the recovery moments, not in
+fake progress, mascot clutter, or gamification. Use the same plain translation
+everywhere:
+
+| Internal contract | Vidux-facing language |
+|---|---|
+| Outcome | What you want |
+| Current move | What's happening now |
+| Ask | Needs your choice |
+| Steer | Change direction |
+| Proof | Why Vidux says it's done |
+| Working | Vidux is on the next move |
+| Blocked | Can't continue yet |
+| Not delivered | Didn't run |
+| Resume | Pick up where you left off |
+
+Pilot Puppy may appear as a small line of personality (for example, “Pilot
+Puppy is checking the proof”), but it never becomes a required concept or a
+second navigation surface. The default screen stays Outcome → Now → Change →
+Proof; technical detail remains available one tap away for people who want it.
 
 ## Why this survives vendor catch-up
 
@@ -96,14 +128,14 @@ all three providers, Vidux should shrink rather than add an agent platform.
                          typed Outcome / Ask / Steer
                                       ^
                                       |
-        iPhone / iPad / Codex Voice  90 (A/B/C + concise status)
+        iPhone / iPad / Codex Voice  90 Drive mode (A/B/C + concise status)
                                       |
                        local semantic API (tailnet only)
                                       |
        PLAN.md + proof + ownership  Vidux core
                                       ^
                                       |
-         Pilot Puppy driver (one lifecycle, one acceptance owner)
+      Pilot Puppy driver (hidden; one lifecycle, one acceptance owner)
                     /             |                \
           Codex adapter     Claude adapter      Cursor adapter
              native host       native host         native host
@@ -171,6 +203,7 @@ redaction regression prove otherwise.
 ## Non-goals (keep the product simple)
 
 - no new universal router or model marketplace;
+- no separate Pilot Puppy app, installer, dashboard, or user-facing queue;
 - no cloud executor, hosted project database, or credential relay;
 - no second plan/queue hidden behind 90, Ledger, MCO, or a mobile app;
 - no support matrix beyond Codex, Claude, and Cursor in the first release;
@@ -250,7 +283,8 @@ receipt and release notes may carry the reviewed links separately.
   validates ordered state transitions and terminal proof references without
   embedding provider, model, prompt, transcript, credential, or machine-path
   data. F1 now owns the first real Pilot Puppy lifecycle.
-- 2026-08-01: Chose **Pilot Puppy** as the approachable user-facing driver
-  name. `/pilot` and `pilot.*` remain compatibility aliases; optional hosted
-  wrappers are interface-only and do not move execution or credentials off the
-  user's Mac.
+- 2026-08-01: Chose **Vidux** as the only user-facing product. **Pilot Puppy**
+  is the approachable internal driver/mascot; `/pilot-puppy` is a maintainer
+  entry point, while `/pilot` and `pilot.*` remain compatibility aliases.
+  Optional hosted wrappers are Vidux interfaces only and do not move execution
+  or credentials off the user's Mac.
