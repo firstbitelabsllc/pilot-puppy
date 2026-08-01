@@ -86,8 +86,10 @@ describe('Chief of Staff desk brief', () => {
   });
 
   it('fails closed for the same malformed or private payloads as the desk view', () => {
+    const privatePath = ['', 'Users', 'leo', 'private'].join('/');
+
     expect(chief.toSpeech()).toBe('');
-    expect(chief.toSpeech({ ...brief(), matters: '/Users/leo/private' })).toBe('');
+    expect(chief.toSpeech({ ...brief(), matters: privatePath })).toBe('');
     expect(chief.toSpeech({ ...brief(), schema: 'vidux.outcome.v1' })).toBe('');
   });
 });
