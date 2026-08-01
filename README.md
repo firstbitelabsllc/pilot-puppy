@@ -67,6 +67,17 @@ Vidux `1.2.0` includes provider-neutral JSON for one Outcome, an exceptional Ask
 Steers, and proof references. That interchange is separate from the local GUI:
 neither is a worker runtime, shared-memory layer, or live model-steering claim.
 
+The companion `vidux.lifecycle.v1` receipt records the bounded transition
+history that a start-to-finish driver can hand back to Vidux. It remains
+provider-neutral and proof-referencing only:
+
+```bash
+python3 scripts/vidux-lifecycle-validate.py \
+  --input examples/lifecycle-receipt/example.json
+```
+
+See the [lifecycle receipt contract](docs/reference/lifecycle-receipt.md).
+
 ```bash
 python3 scripts/vidux-outcome-validate.py \
   --input examples/outcome-ask-steer/example.json

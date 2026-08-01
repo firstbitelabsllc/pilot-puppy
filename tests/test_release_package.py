@@ -59,6 +59,17 @@ class ReleasePackageTests(unittest.TestCase):
             }.issubset(mod.REQUIRED_FILES)
         )
 
+    def test_lifecycle_receipt_contract_is_release_required(self) -> None:
+        self.assertTrue(
+            {
+                "docs/reference/lifecycle-receipt.md",
+                "examples/lifecycle-receipt/example.json",
+                "examples/lifecycle-receipt/invalid-missing-proof.invalid.json",
+                "schemas/lifecycle-receipt.v1.json",
+                "scripts/vidux-lifecycle-validate.py",
+            }.issubset(mod.REQUIRED_FILES)
+        )
+
     def test_steering_and_coordination_runtime_is_release_required(self) -> None:
         self.assertTrue(
             {

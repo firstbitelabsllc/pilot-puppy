@@ -90,15 +90,16 @@ all three providers, Vidux should shrink rather than add an agent platform.
 
 ### Core state
 
-Keep the existing provider-neutral Outcome / Ask / Steer schema and extend it
-only with lifecycle receipts needed to prove:
+Keep the existing provider-neutral Outcome / Ask / Steer schema and pair it
+with the separate lifecycle receipt needed to prove:
 
 `planned → dispatched → working → needs-you → proving → finished-with-proof`
 
-Every state transition carries an outcome id, plan revision, owner, timestamp,
-and proof or honest failure reference. Raw provider messages never become
-durable state. One execution leaf owns one worktree; parent progress derives
-from terminal child receipts.
+Every transition carries an outcome id, plan revision, actor, timestamp, and
+proof or honest failure reference. Raw provider messages never become durable
+state. One execution leaf owns one worktree; parent progress derives from
+terminal child receipts. The public receipt deliberately omits provider/model
+fields; private adapters may retain those details in their own bounded evidence.
 
 ### Pilot lifecycle
 
@@ -160,9 +161,11 @@ redaction regression prove otherwise.
 
 ## Ordered work and gates
 
-- [ ] **F0 — Contract freeze.** Re-read this plan from `origin/main`; pin the
+- [completed] **F0 — Contract freeze.** Re-read this plan from `origin/main`; pin the
   role map, state machine, public/private boundary, and compatibility aliases.
-  Gate: schema fixtures and negative privacy tests describe the new lifecycle.
+  Gate: `vidux.lifecycle.v1` schema, fixtures, deterministic validator, and
+  negative privacy/transition tests describe the new lifecycle. The contract
+  is additive; the existing `vidux.outcome.v1` document remains compatible.
 - [ ] **F1 — Pilot driver.** Implement the truthful start-to-finish lifecycle
   behind `/pilot`, preserving `/leo-flow` compatibility. Gate: the same small
   task produces a provider receipt, proof reference, acceptance, and PLAN
@@ -219,3 +222,10 @@ Keep these primary sources in the research receipt for each implementation row:
 The public plan keeps source names rather than absolute URLs because the
 repository's public-ready gate rejects unapproved external hosts. The research
 receipt and release notes may carry the reviewed links separately.
+
+## Progress
+
+- 2026-08-01: Froze the additive `vidux.lifecycle.v1` receipt contract. It
+  validates ordered state transitions and terminal proof references without
+  embedding provider, model, prompt, transcript, credential, or machine-path
+  data. F1 now owns the first real Pilot lifecycle.

@@ -94,6 +94,10 @@ models, schedules work, or transports provider traffic.
   Wayline is already used by live software products and active marks.
   Rebranding is deferred until the product earns a successor release; the
   existing CLI, package, history, and links remain valid.
+- [2026-08-01] Freeze the additive `vidux.lifecycle.v1` receipt as the
+  provider-neutral transition seam. Pilot owns dispatch and acceptance; the
+  receipt records ordered state and bounded proof references without provider,
+  model, prompt, transcript, credential, or machine-path data.
 
 ## Progress
 
@@ -120,3 +124,5 @@ models, schedules work, or transports provider traffic.
 - 2026-08-01: Opened the flagship convergence plan. It makes Pilot the main
   start-to-finish driver, keeps 90 as the on-the-go A/B/C client, and preserves
   Vidux as the provider-neutral durable authority.
+- 2026-08-01: Added the lifecycle receipt schema, examples, public reference,
+  deterministic validator, focused tests, and release-package requirements.
