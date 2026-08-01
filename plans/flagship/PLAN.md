@@ -220,11 +220,14 @@ redaction regression prove otherwise.
   Gate: `vidux.lifecycle.v1` schema, fixtures, deterministic validator, and
   negative privacy/transition tests describe the new lifecycle. The contract
   is additive; the existing `vidux.outcome.v1` document remains compatible.
-- [ ] **F1 — Pilot Puppy driver.** Implement the truthful start-to-finish lifecycle
-  behind `/pilot-puppy`, preserving `/pilot` and `/leo-flow` compatibility.
-  First gate: one small task in the active native host produces a provider
-  receipt, proof reference, lead acceptance, and PLAN foldback; projection-only
-  runs fail closed. Do not widen the abstraction until this boring loop is real.
+- [completed] **F1 — Pilot Puppy driver (first real-host gate).** The bounded
+  `pilot run` seam preserves `/pilot-puppy`, `/pilot`, and `/leo-flow`
+  compatibility. Codex completed one small task on local branch
+  `codex/vidux-f1-real-20260801` at `73fcb419`: the provider receipt named
+  `f1-real-host`, proof `f1-real-proof` passed, lead acceptance was explicit,
+  and the foldback was appended on that evidence branch. Projection-only runs
+  still fail closed; F2 owns parity through the other two hosts. This prepared
+  branch records the gate only; public `origin/main` has not merged it.
 - [ ] **F2 — Host parity.** Add only the three first-party adapters and capability
   probes, then reproduce the same bounded task through the other two hosts while
   recording honest capability differences. Gate: no adapter writes outside its
