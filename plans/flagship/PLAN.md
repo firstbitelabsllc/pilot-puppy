@@ -244,19 +244,19 @@ redaction regression prove otherwise.
   only `f2-parity.txt` and folding proof `f2-parity-proof` into its isolated
   plan. A model list, login status, or empty provider response is not parity
   evidence. Public `origin/main` still has not merged this prepared gate.
-- [completed] **F3 — 90 semantic client.** The public Drive boundary is now a
-  pure projection of one validated `vidux.outcome.v1` document plus one
-  ephemeral `vidux.drive-steer.v1` choice envelope. The projection presents no
-  more than three open Ask options, keeps every recorded Steer (including
-  `superseded`) visible, and allowlists semantic fields. The choice envelope
-  contains only `revision`, `outcome_id`, `ask_id`, and `option_id`; it cannot
-  execute code, route providers, persist raw screens/chats, or create a queue.
-  Focused proof is `tests/test_drive_mode.py` (6/6), with the existing outcome
-  validator still green (56/56). Private `/ninety` now consumes this boundary
-  in Drive mode and leaves the generic project loop to each owning plan.
-  Public prepared commits: `65fe5e92` + adversarial revision fix `2769c362`
-  (not merged to `origin/main`). F4 owns transport and host acceptance; this
-  row proves the semantic client core, not execution.
+- [in_progress] **F3 — 90 semantic client.** F3a (semantic core) is prepared:
+  a pure projection of one validated `vidux.outcome.v1` document plus one
+  ephemeral `vidux.drive-steer.v1` choice envelope. It presents exactly the
+  first three open Ask options, keeps every recorded Steer (including
+  `superseded`) visible, allowlists semantic fields, and binds the choice to
+  the observed `revision`. Focused proof is `tests/test_drive_mode.py` (6/6),
+  with the existing outcome validator still green (56/56). Prepared commits:
+  `65fe5e92` + revision/privacy corrections `2769c362` (not merged to
+  `origin/main`). F3b remains: one local revision-safe handshake that records
+  `received`/`applied` or `superseded`/non-delivery in the same authority,
+  without executing, routing, or creating a queue. Private `/ninety` now
+  consumes the core in Drive mode; this row stays open until that receipt
+  round-trip is reproduced.
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
