@@ -749,6 +749,39 @@ class BrowserWriteEndpointHTTPTests(unittest.TestCase):
         self.assertEqual(status, 200, text)
         self.assertTrue((self.artifacts_dir / "safe-artifact.html").is_file())
 
+    def test_file_get_artifact_skips_fleet_catalog_scan(self):
+        self.artifacts_dir.mkdir(parents=True)
+        artifact = self.artifacts_dir / "readback.html"
+        artifact.write_text("<h1>Artifact readback</h1>", encoding="utf-8")
+
+        with mock.patch.object(
+            browser_server,
+            "discover_plans_cached",
+            side_effect=AssertionError("artifact read must not scan the fleet catalog"),
+        ):
+            status, text = self.get(
+                f"/api/file?path={quote(str(artifact), safe='')}"
+            )
+
+        self.assertEqual(status, 200, text)
+        self.assertIn("Artifact readback", text)
+
+    def test_missing_artifact_is_fast_404_without_fleet_catalog_scan(self):
+        self.artifacts_dir.mkdir(parents=True)
+        missing = self.artifacts_dir / "missing.html"
+
+        with mock.patch.object(
+            browser_server,
+            "discover_plans_cached",
+            side_effect=AssertionError("missing artifact must not scan the fleet catalog"),
+        ):
+            status, text = self.get(
+                f"/api/file?path={quote(str(missing), safe='')}"
+            )
+
+        self.assertEqual(status, 404, text)
+        self.assertIn("file missing", text)
+
     def test_artifact_post_rejects_symlink_target_without_touching_referent(self):
         self.artifacts_dir.mkdir(parents=True)
         outside = self.dev_root / "outside-artifact.html"

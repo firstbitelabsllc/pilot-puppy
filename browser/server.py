@@ -2756,12 +2756,17 @@ def safe_resolve(raw: str) -> Path | None:
 
 
 def safe_resolve_any(raw: str) -> Path | None:
-    """safe_resolve() OR one exact discovered HTML artifact. Read-only either way."""
-    return _select_catalog_file(
-        raw, _browser_file_catalog(), DEV_ROOT
-    ) or _select_catalog_file(
-        raw, _artifact_file_catalog(), ARTIFACTS_DIR
-    )
+    """Resolve one plan/proof or artifact without scanning unrelated roots.
+
+    Artifact requests are bounded to ``ARTIFACTS_DIR``. Check that namespace
+    first so an artifact read does not pay the cost of rebuilding the full
+    fleet plan catalog on every request. This also makes a missing artifact
+    fail as a fast, honest 404 instead of hanging behind a fleet scan.
+    """
+    requested = _request_path_text(raw)
+    if requested is not None and _relative_request_parts(requested, ARTIFACTS_DIR) is not None:
+        return _select_catalog_file(raw, _artifact_file_catalog(), ARTIFACTS_DIR)
+    return _select_catalog_file(raw, _browser_file_catalog(), DEV_ROOT)
 
 
 def _relative_request_parts(raw: str, root: Path) -> tuple[str, ...] | None:
