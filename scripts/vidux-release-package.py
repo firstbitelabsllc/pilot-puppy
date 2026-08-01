@@ -49,6 +49,7 @@ REQUIRED_FILES = {
     "examples/outcome-ask-steer/privacy-fragmented.invalid.json",
     "package.json",
     "schemas/lifecycle-receipt.v1.json",
+    "schemas/drive-receipt.v1.json",
     "schemas/drive-steer.v1.json",
     "schemas/outcome-ask-steer.v1.json",
     "scripts/vidux-claims.py",

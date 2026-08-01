@@ -41,6 +41,25 @@ may reject the choice as stale or unavailable. The envelope contains no free
 text, provider/model selector, command, queue, credential, or execution
 instruction.
 
+## Local receipt handshake
+
+The owning local host may pass the envelope and the current Outcome document to
+the pure `receive_choice` helper. It performs a compare-and-set on `revision`
+and returns a new document plus one `vidux.drive-receipt.v1` object; it does not
+write storage, invoke a provider, or create a queue.
+
+- A current, visible choice appends one `received` Steer and advances the same
+  document revision.
+- A stale choice appends `superseded`.
+- A hidden option, closed Ask, or identity mismatch appends
+  `not_delivered` with a bounded local proof reference.
+
+The original document is never mutated. Callers run the canonical
+`scripts/vidux-outcome-validate.py` validator on the returned document before
+folding it into the owning authority. The receipt proves the local semantic
+handoff only; it never claims that coding work ran or that a provider was
+selected.
+
 ## Native-client rules
 
 90 may read the projection, present no more than three choices, send one

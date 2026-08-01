@@ -139,6 +139,81 @@ class DriveModeTests(unittest.TestCase):
         invalid["provider"] = "cursor"
         self.assertTrue(validator.validate_document(invalid))
 
+    def test_receive_current_choice_records_same_authority_receipt(self):
+        source = document()
+        choice = drive.build_choice(source, "hold-review")
+        result = drive.receive_choice(
+            source,
+            choice,
+            updated_at="2026-08-01T18:01:00Z",
+        )
+
+        self.assertEqual(result["receipt"]["schema"], "vidux.drive-receipt.v1")
+        self.assertEqual(result["receipt"]["state"], "received")
+        self.assertEqual(result["receipt"]["reason"], "accepted")
+        self.assertEqual(result["receipt"]["observed_revision"], 4)
+        self.assertEqual(result["receipt"]["authority_revision"], 4)
+        self.assertEqual(result["receipt"]["next_revision"], 5)
+        self.assertEqual(result["document"]["revision"], 5)
+        self.assertEqual(result["document"]["steers"][-1]["state"], "received")
+        self.assertEqual(validator.validate_document(result["document"]), [])
+        self.assertEqual(source["revision"], 4)
+        self.assertEqual(len(source["steers"]), 1)
+
+    def test_receive_stale_choice_is_superseded_without_execution(self):
+        source = document()
+        source["revision"] = 5
+        choice = drive.build_choice(document(), "hold-review")
+        result = drive.receive_choice(source, choice)
+
+        self.assertEqual(result["receipt"]["state"], "superseded")
+        self.assertEqual(result["receipt"]["reason"], "stale_revision")
+        self.assertIsNone(result["receipt"]["proof_ref"])
+        self.assertEqual(result["document"]["steers"][-1]["state"], "superseded")
+        self.assertEqual(validator.validate_document(result["document"]), [])
+
+    def test_receive_hidden_choice_is_not_delivered_with_bounded_proof(self):
+        source = document()
+        hidden = {
+            "schema": "vidux.drive-steer.v1",
+            "kind": "answer",
+            "revision": 4,
+            "outcome_id": "publish-notes",
+            "ask_id": "choose-release",
+            "option_id": "write-note",
+        }
+        result = drive.receive_choice(source, hidden)
+
+        self.assertEqual(result["receipt"]["state"], "not_delivered")
+        self.assertEqual(result["receipt"]["reason"], "option_not_visible")
+        proof_ref = result["receipt"]["proof_ref"]
+        self.assertIsInstance(proof_ref, str)
+        self.assertEqual(result["document"]["steers"][-1]["state"], "not_delivered")
+        self.assertEqual(result["document"]["steers"][-1]["proof_ref"], proof_ref)
+        self.assertEqual(validator.validate_document(result["document"]), [])
+
+    def test_receive_current_choice_supersedes_previous_active_steer(self):
+        first = drive.receive_choice(
+            document(),
+            drive.build_choice(document(), "hold-review"),
+        )
+        second_document = first["document"]
+        second = drive.receive_choice(
+            second_document,
+            drive.build_choice(second_document, "ship-now"),
+        )
+
+        self.assertEqual(second["receipt"]["state"], "received")
+        self.assertEqual(second["document"]["steers"][0]["state"], "superseded")
+        self.assertEqual(second["document"]["steers"][-1]["state"], "received")
+        self.assertEqual(validator.validate_document(second["document"]), [])
+
+    def test_receive_rejects_extra_envelope_fields(self):
+        choice = drive.build_choice(document(), "hold-review")
+        choice["provider"] = "cursor"
+        with self.assertRaises(drive.DriveInputError):
+            drive.receive_choice(document(), choice)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -64,6 +64,7 @@ class ReleasePackageTests(unittest.TestCase):
             {
                 "browser/drive_mode.py",
                 "docs/reference/drive-mode.md",
+                "schemas/drive-receipt.v1.json",
                 "schemas/drive-steer.v1.json",
             }.issubset(mod.REQUIRED_FILES)
         )
