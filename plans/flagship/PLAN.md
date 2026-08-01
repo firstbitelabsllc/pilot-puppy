@@ -249,12 +249,14 @@ redaction regression prove otherwise.
   ephemeral `vidux.drive-steer.v1` choice envelope. The projection presents no
   more than three open Ask options, keeps every recorded Steer (including
   `superseded`) visible, and allowlists semantic fields. The choice envelope
-  contains only `outcome_id`, `ask_id`, and `option_id`; it cannot execute code,
-  route providers, persist raw screens/chats, or create a queue. Focused proof
-  is `tests/test_drive_mode.py` (5/5), with the existing outcome validator
-  still green (56/56). Private `/ninety` now consumes this boundary in Drive
-  mode and leaves the generic project loop to each owning plan. Public
-  prepared commit: `65fe5e92` (not merged to `origin/main`).
+  contains only `revision`, `outcome_id`, `ask_id`, and `option_id`; it cannot
+  execute code, route providers, persist raw screens/chats, or create a queue.
+  Focused proof is `tests/test_drive_mode.py` (6/6), with the existing outcome
+  validator still green (56/56). Private `/ninety` now consumes this boundary
+  in Drive mode and leaves the generic project loop to each owning plan.
+  Public prepared commits: `65fe5e92` + adversarial revision fix `2769c362`
+  (not merged to `origin/main`). F4 owns transport and host acceptance; this
+  row proves the semantic client core, not execution.
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
