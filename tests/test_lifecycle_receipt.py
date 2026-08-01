@@ -28,18 +28,22 @@ class LifecycleReceiptValidatorTests(unittest.TestCase):
     def run_validator(self, document: dict[str, Any] | None = None, path: Path | None = None):
         with tempfile.TemporaryDirectory() as dirname:
             input_path = path
+            serialized = None
             if document is not None:
-                input_path = Path(dirname) / "receipt.json"
-                input_path.write_text(json.dumps(document), encoding="utf-8")
-            assert input_path is not None
+                serialized = json.dumps(document)
+                input_args = ["--input", "-"]
+            else:
+                assert input_path is not None
+                input_args = ["--input", str(input_path)]
             env = os.environ.copy()
             env["HOME"] = str(Path(dirname) / "home")
             return subprocess.run(
-                [sys.executable, str(SCRIPT), "--input", str(input_path)],
+                [sys.executable, str(SCRIPT), *input_args],
                 cwd=ROOT,
                 env=env,
                 capture_output=True,
                 text=True,
+                input=serialized,
                 check=False,
             )
 
