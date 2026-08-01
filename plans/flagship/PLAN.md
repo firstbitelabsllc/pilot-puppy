@@ -228,7 +228,7 @@ redaction regression prove otherwise.
   and the foldback was appended on that evidence branch. Projection-only runs
   still fail closed; F2 owns parity through the other two hosts. This prepared
   branch records the gate only; public `origin/main` has not merged it.
-- [ ] **F2 — Host parity.** Add only the three first-party adapters and capability
+- [completed] **F2 — Host parity.** Add only the three first-party adapters and capability
   probes, then reproduce the same bounded task through the other two hosts while
   recording honest capability differences. Gate: no adapter writes outside its
   assigned worktree; missing host, auth, or proof is an explicit
@@ -238,9 +238,12 @@ redaction regression prove otherwise.
   times after the shared adapter command-shape corrections (`ad4cc02c`,
   `941883fd`, `89263542`). Every attempt failed closed with
   `host_receipt_missing` without changing a file or producing an accepted
-  foldback. F2 remains open until Cursor emits the required receipt or its
-  limitation is resolved and reproved. A model list, login status, or empty
-  provider response is not parity evidence.
+  foldback. The final bounded Cursor run used the corrected stdin adapter at
+  shared commit `f4c7ca57`; local branch `codex/vidux-f2-cursor-20260801`
+  recorded the real receipt and explicit lead acceptance at `c0ee4c13`, changing
+  only `f2-parity.txt` and folding proof `f2-parity-proof` into its isolated
+  plan. A model list, login status, or empty provider response is not parity
+  evidence. Public `origin/main` still has not merged this prepared gate.
 - [ ] **F3 — 90 semantic client.** Remove the duplicate driver-loop contract
   from the 90 plan/skill and implement A/B/C status/Steer against the typed
   boundary. Gate: 90 cannot execute code or route providers; stale Steers are
