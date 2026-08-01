@@ -59,6 +59,15 @@ class ReleasePackageTests(unittest.TestCase):
             }.issubset(mod.REQUIRED_FILES)
         )
 
+    def test_drive_mode_contract_is_release_required(self) -> None:
+        self.assertTrue(
+            {
+                "browser/drive_mode.py",
+                "docs/reference/drive-mode.md",
+                "schemas/drive-steer.v1.json",
+            }.issubset(mod.REQUIRED_FILES)
+        )
+
     def test_lifecycle_receipt_contract_is_release_required(self) -> None:
         self.assertTrue(
             {
