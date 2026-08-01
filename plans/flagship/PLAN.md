@@ -233,6 +233,10 @@ redaction regression prove otherwise.
   recording honest capability differences. Gate: no adapter writes outside its
   assigned worktree; missing host, auth, or proof is an explicit
   blocked/non-delivery result; no lossy lowest-common-denominator contract.
+  Current evidence: Claude Code completed the parity marker with proof and
+  foldback at local commit `805050ec`; Cursor was tried twice and failed closed
+  with `host_receipt_missing` without changing a file. F2 remains open until
+  Cursor emits the required receipt or its limitation is resolved and reproved.
 - [ ] **F3 — 90 semantic client.** Remove the duplicate driver-loop contract
   from the 90 plan/skill and implement A/B/C status/Steer against the typed
   boundary. Gate: 90 cannot execute code or route providers; stale Steers are
