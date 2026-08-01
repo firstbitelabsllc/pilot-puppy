@@ -263,6 +263,11 @@ redaction regression prove otherwise.
   Playwright desktop smoke 43/43; public-ready and hosted required checks were
   green. The desk and private 90 consumers still need the same-source
   integration proof before F0.5 can close.
+  **Active claim:** a public reference on-the-go adapter is being added over
+  this exact normalized `vidux.chief-of-staff.v1` payload. It returns concise
+  plain speech and at most three labels, with no speech engine, I/O, routing,
+  queue, or private 90 wiring; it is evidence for the shared projection, not
+  the private 90 consumer or the F0.5 close.
 - [completed] **F1 — Pilot Puppy driver (first real-host gate).** The bounded
   `pilot run` seam preserves `/pilot-puppy`, `/pilot`, and `/leo-flow`
   compatibility. Codex completed one small task on local branch
