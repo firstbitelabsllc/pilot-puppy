@@ -222,11 +222,14 @@ redaction regression prove otherwise.
   is additive; the existing `vidux.outcome.v1` document remains compatible.
 - [ ] **F1 — Pilot Puppy driver.** Implement the truthful start-to-finish lifecycle
   behind `/pilot-puppy`, preserving `/pilot` and `/leo-flow` compatibility.
-  Gate: the same small task produces a provider receipt, proof reference, acceptance, and PLAN
-  foldback in Codex, Claude Code, and Cursor; projection-only runs fail closed.
-- [ ] **F2 — Host adapters.** Add only the three adapters and capability
-  probes. Gate: no adapter writes outside its assigned worktree; missing host,
-  auth, or proof is an explicit blocked/non-delivery result.
+  First gate: one small task in the active native host produces a provider
+  receipt, proof reference, lead acceptance, and PLAN foldback; projection-only
+  runs fail closed. Do not widen the abstraction until this boring loop is real.
+- [ ] **F2 — Host parity.** Add only the three first-party adapters and capability
+  probes, then reproduce the same bounded task through the other two hosts while
+  recording honest capability differences. Gate: no adapter writes outside its
+  assigned worktree; missing host, auth, or proof is an explicit
+  blocked/non-delivery result; no lossy lowest-common-denominator contract.
 - [ ] **F3 — 90 semantic client.** Remove the duplicate driver-loop contract
   from the 90 plan/skill and implement A/B/C status/Steer against the typed
   boundary. Gate: 90 cannot execute code or route providers; stale Steers are
