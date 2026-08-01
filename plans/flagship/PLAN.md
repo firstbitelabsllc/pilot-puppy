@@ -268,7 +268,18 @@ redaction regression prove otherwise.
   `received`/`applied` or `superseded`/non-delivery in the same authority,
   without executing, routing, or creating a queue. Private `/ninety` now
   consumes the core in Drive mode; this row stays open until that receipt
-  round-trip is reproduced.
+  round-trip is reproduced. Public F3b implementation `414096cd` adds the
+  pure local `receive_choice` compare-and-set and the
+  `vidux.drive-receipt.v1` schema: a current visible choice records
+  `received`, a stale choice records `superseded`, and hidden or mismatched
+  choices record `not_delivered` with a bounded proof reference. The original
+  document is not mutated and no host, provider, shell, network, storage, or
+  queue is touched. Focused Drive plus release-contract tests pass 30/30;
+  release packaging passes for 142 files and the public-ready gate passes for
+  201 tracked files. The full Python sweep is 476/478 because the pre-existing
+  README line-budget test remains red; the JS gate is not runnable in this
+  isolated worktree because `vitest` is unavailable. F3 remains open only for
+  reproducing the same receipt round-trip through the private 90 consumer.
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
