@@ -234,9 +234,13 @@ redaction regression prove otherwise.
   assigned worktree; missing host, auth, or proof is an explicit
   blocked/non-delivery result; no lossy lowest-common-denominator contract.
   Current evidence: Claude Code completed the parity marker with proof and
-  foldback at local commit `805050ec`; Cursor was tried twice and failed closed
-  with `host_receipt_missing` without changing a file. F2 remains open until
-  Cursor emits the required receipt or its limitation is resolved and reproved.
+  foldback at local commit `805050ec`; Cursor was tried twice before and three
+  times after the shared adapter command-shape corrections (`ad4cc02c`,
+  `941883fd`, `89263542`). Every attempt failed closed with
+  `host_receipt_missing` without changing a file or producing an accepted
+  foldback. F2 remains open until Cursor emits the required receipt or its
+  limitation is resolved and reproved. A model list, login status, or empty
+  provider response is not parity evidence.
 - [ ] **F3 — 90 semantic client.** Remove the duplicate driver-loop contract
   from the 90 plan/skill and implement A/B/C status/Steer against the typed
   boundary. Gate: 90 cannot execute code or route providers; stale Steers are
