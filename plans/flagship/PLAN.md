@@ -204,12 +204,18 @@ redaction regression prove otherwise.
 
 ## Evidence to keep current
 
-- [Cursor plugins and subagents](https://cursor.com/changelog/2-5)
-- [Cursor background-agent custody](https://docs.cursor.com/background-agent)
-- [Codex app command center](https://openai.com/index/introducing-the-codex-app/)
-- [Codex plugins](https://help.openai.com/en/articles/20001256/)
-- [Claude Code setup and host boundary](https://docs.anthropic.com/en/docs/claude-code/getting-started)
-- [Tailscale Serve](https://tailscale.com/docs/reference/tailscale-cli/serve)
-- [Tailscale iOS/iPad support](https://tailscale.com/docs/install/ios)
-- [OpenTelemetry GenAI attributes](https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/)
-- [Langfuse self-hosted observability](https://langfuse.com/docs/observability/overview)
+Keep these primary sources in the research receipt for each implementation row:
+
+- Cursor changelog: plugins, subagents, hooks, and background-agent custody.
+- OpenAI Codex app announcement and Codex plugin help: native parallel work,
+  worktrees, skills, and packaged workflows.
+- Anthropic Claude Code documentation: local host setup and provider boundary.
+- Tailscale Serve and iOS installation documentation: tailnet-only local
+  access and iPhone/iPad support.
+- OpenTelemetry GenAI semantic conventions: provider/model event attributes.
+- Langfuse observability and self-hosting documentation: optional local sink
+  and masking behavior.
+
+The public plan keeps source names rather than absolute URLs because the
+repository's public-ready gate rejects unapproved external hosts. The research
+receipt and release notes may carry the reviewed links separately.
