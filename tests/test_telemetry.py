@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import os
 from pathlib import Path
 import sys
 from threading import Thread
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -145,6 +147,12 @@ class TelemetryTests(unittest.TestCase):
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()
         endpoint = f"http://127.0.0.1:{server.server_port}/v1/traces"
+        proxy_env = {
+            "HTTP_PROXY": "http://127.0.0.1:9/",
+            "http_proxy": "http://127.0.0.1:9/",
+            "ALL_PROXY": "http://127.0.0.1:9/",
+            "all_proxy": "http://127.0.0.1:9/",
+        }
         try:
             for payload in (
                 BASE,
@@ -156,7 +164,10 @@ class TelemetryTests(unittest.TestCase):
                     "failure_class": "host_receipt_missing",
                 },
             ):
-                result = emit_local(build_event(payload), endpoint=endpoint)
+                with mock.patch.dict(os.environ, proxy_env, clear=False):
+                    os.environ.pop("NO_PROXY", None)
+                    os.environ.pop("no_proxy", None)
+                    result = emit_local(build_event(payload), endpoint=endpoint)
                 self.assertEqual(result["status"], "sent")
         finally:
             server.shutdown()
