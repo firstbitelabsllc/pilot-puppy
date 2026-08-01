@@ -11,7 +11,7 @@ This plan defines the future flagship product. It does not change the current
 
 Keep **Vidux** as the public name and make it the calm local work conductor:
 
-> State the outcome once. Vidux keeps the plan and proof. Pilot drives the
+> State the outcome once. Vidux keeps the plan and proof. Pilot Puppy drives the
 > work. Native Codex, Claude, or Cursor executes it. 90 lets you choose the
 > next move from your phone or voice without staring at the machinery.
 
@@ -24,22 +24,43 @@ but it is not the product strategy.
 The shipping shape is **one installable product with strict internal modules**,
 not one fused mega-runtime and not a collection of competing products.
 
+### Friendly product naming and distribution
+
+The user-facing driver is now **Pilot Puppy**: a small, approachable right-hand
+helper for people who want decisions and progress without learning agent
+machinery. The public skill/command is `/pilot-puppy`; `/pilot` remains a
+compatibility alias, and the existing `pilot.*` schemas and environment names
+remain stable. This is a brand migration, not a history rewrite or a second
+runtime.
+
+The same product may later ship through three thin distribution surfaces:
+
+1. a local skill/CLI for developers who want full custody;
+2. optional ChatGPT, Claude, or Cursor wrappers that call the typed semantic
+   API; and
+3. a native iOS/iPad client for the same tailnet-only API.
+
+Those wrappers are interfaces, not cloud executors. They never receive source,
+credentials, raw transcripts, or a second plan store. A non-technical user can
+discover Pilot Puppy through a hosted or marketplace surface without a GitHub
+or npm workflow, while the Mac remains the execution and credential boundary.
+
 ## Roles (one sentence each)
 
 | Surface | Owns | Must not own |
 |---|---|---|
 | **Vidux core** | `PLAN.md`, Outcome / Ask / Steer, proof references, resume, worktree and ownership contracts | provider choice, worker execution, credentials, cloud orchestration |
-| **Pilot** | Leo's main right-hand driver: plan, split, dispatch, supervise, accept, and fold receipts start-to-finish | a second plan store, raw chat memory, silent provider decisions, user-facing fleet clutter |
+| **Pilot Puppy** | Leo's main right-hand driver: plan, split, dispatch, supervise, accept, and fold receipts start-to-finish | a second plan store, raw chat memory, silent provider decisions, user-facing fleet clutter |
 | **Native host adapters** | The concrete Codex, Claude Code, and Cursor invocation and host-native lifecycle | changing the canonical plan without a receipt, exposing credentials to a remote client |
 | **90** | Car/on-the-go UX: read concise status, speak one next move, present A/B/C, forward the selected Steer, round-robin ready outcomes | coding, provider routing, background observation, transcript storage, a second driver loop |
 | **Ledger** | Append-only bounded activity and handoff evidence | priority, routing, acceptance, or a second authority |
-| **Sidekick patterns** | Checkpoint, watchdog, retry, refutation, cold-review behaviors inside Pilot | a separate runtime or install choice |
-| **Swarm patterns** | Task-shape recipes for solo, batched, or parallel bounded work inside Pilot | a universal cross-provider control plane |
-| **MCO** | Optional transport or experiment behind a Pilot adapter if it proves useful | planner, router, authority, or product identity |
+| **Sidekick patterns** | Checkpoint, watchdog, retry, refutation, cold-review behaviors inside Pilot Puppy | a separate runtime or install choice |
+| **Swarm patterns** | Task-shape recipes for solo, batched, or parallel bounded work inside Pilot Puppy | a universal cross-provider control plane |
+| **MCO** | Optional transport or experiment behind a Pilot Puppy adapter if it proves useful | planner, router, authority, or product identity |
 | **Telemetry** | Redacted completion/quality signals | raw prompts, transcripts, secrets, personal paths, or activity theater |
 | **Native iOS/iPad app** | A typed remote client over the local semantic API | an execution host, credential vault, or cloud copy of the codebase |
 
-Pilot is therefore the main coder/driver. 90 is the steering wheel and
+Pilot Puppy is therefore the main coder/driver. 90 is the steering wheel and
 dashboard. Vidux is the durable road map and evidence. They can ship together,
 but their contracts stay testable independently.
 
@@ -82,7 +103,7 @@ all three providers, Vidux should shrink rather than add an agent platform.
        PLAN.md + proof + ownership  Vidux core
                                       ^
                                       |
-             Pilot driver (one lifecycle, one acceptance owner)
+         Pilot Puppy driver (one lifecycle, one acceptance owner)
                     /             |                \
           Codex adapter     Claude adapter      Cursor adapter
              native host       native host         native host
@@ -101,9 +122,9 @@ state. One execution leaf owns one worktree; parent progress derives from
 terminal child receipts. The public receipt deliberately omits provider/model
 fields; private adapters may retain those details in their own bounded evidence.
 
-### Pilot lifecycle
+### Pilot Puppy lifecycle
 
-Pilot's first flagship gate is one real, boring lifecycle:
+Pilot Puppy's first flagship gate is one real, boring lifecycle:
 
 `start → freeze packet/context → invoke one native host → resume or Steer →
 prove → lead acceptance → fold back to PLAN.md → close or hand off`
@@ -127,7 +148,7 @@ multiple-choice loop is deliberately small:
 
 1. read the current outcomes and readiness;
 2. speak a concise status and offer at most three meaningful choices;
-3. send the chosen Steer to Pilot;
+3. send the chosen Steer to Pilot Puppy;
 4. confirm `received`, then later `applied`, `blocked`, or `finished-with-proof`;
 5. move to the next ready outcome only after the current handoff is durable.
 
@@ -166,9 +187,9 @@ redaction regression prove otherwise.
   Gate: `vidux.lifecycle.v1` schema, fixtures, deterministic validator, and
   negative privacy/transition tests describe the new lifecycle. The contract
   is additive; the existing `vidux.outcome.v1` document remains compatible.
-- [ ] **F1 — Pilot driver.** Implement the truthful start-to-finish lifecycle
-  behind `/pilot`, preserving `/leo-flow` compatibility. Gate: the same small
-  task produces a provider receipt, proof reference, acceptance, and PLAN
+- [ ] **F1 — Pilot Puppy driver.** Implement the truthful start-to-finish lifecycle
+  behind `/pilot-puppy`, preserving `/pilot` and `/leo-flow` compatibility.
+  Gate: the same small task produces a provider receipt, proof reference, acceptance, and PLAN
   foldback in Codex, Claude Code, and Cursor; projection-only runs fail closed.
 - [ ] **F2 — Host adapters.** Add only the three adapters and capability
   probes. Gate: no adapter writes outside its assigned worktree; missing host,
@@ -228,4 +249,8 @@ receipt and release notes may carry the reviewed links separately.
 - 2026-08-01: Froze the additive `vidux.lifecycle.v1` receipt contract. It
   validates ordered state transitions and terminal proof references without
   embedding provider, model, prompt, transcript, credential, or machine-path
-  data. F1 now owns the first real Pilot lifecycle.
+  data. F1 now owns the first real Pilot Puppy lifecycle.
+- 2026-08-01: Chose **Pilot Puppy** as the approachable user-facing driver
+  name. `/pilot` and `pilot.*` remain compatibility aliases; optional hosted
+  wrappers are interface-only and do not move execution or credentials off the
+  user's Mac.
