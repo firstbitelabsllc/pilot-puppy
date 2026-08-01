@@ -243,7 +243,19 @@ redaction regression prove otherwise.
   recorded the real receipt and explicit lead acceptance at `c0ee4c13`, changing
   only `f2-parity.txt` and folding proof `f2-parity-proof` into its isolated
   plan. A model list, login status, or empty provider response is not parity
-  evidence. Public `origin/main` still has not merged this prepared gate.
+  evidence. Public `origin/main` still has not merged this prepared gate. A
+  final follow-up diagnostic against the earlier prepared ref used the
+  corrected stdin adapter at shared commit `f4c7ca57` with one exact allowed
+  marker path. Cursor exited zero but emitted no `pilot.host-receipt.v1`,
+  changed no files, and the host attempt was recorded as `host_receipt_missing`
+  with no acceptance. This is an explicit `not_delivered` result for that
+  packet, not a replacement for the accepted `c0ee4c13` receipt and not
+  evidence that a model list or login probe is execution proof. The three-host
+  decision is therefore conditional and provider-neutral: Codex, Claude Code,
+  and Cursor are supported only when the native host returns the required
+  receipt; a missing receipt stays non-delivery and cannot advance a gate. No
+  further Cursor audit is authorized in F2; the next work follows the next
+  unblocked row after this decision.
 - [in_progress] **F3 — 90 semantic client.** F3a (semantic core) is prepared:
   a pure projection of one validated `vidux.outcome.v1` document plus one
   ephemeral `vidux.drive-steer.v1` choice envelope. It presents exactly the
