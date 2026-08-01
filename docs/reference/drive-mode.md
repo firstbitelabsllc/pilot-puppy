@@ -27,6 +27,7 @@ Selecting an option produces one ephemeral, closed envelope:
 {
   "schema": "vidux.drive-steer.v1",
   "kind": "answer",
+  "revision": 4,
   "outcome_id": "publish-notes",
   "ask_id": "choose-release",
   "option_id": "ship-now"
@@ -34,7 +35,7 @@ Selecting an option produces one ephemeral, closed envelope:
 ```
 
 The envelope is not a durable Steer record. The host that owns the Outcome
-checks the current revision and Ask, applies its normal acceptance and proof
+checks the supplied revision and current Ask, applies its normal acceptance and proof
 rules, then records the resulting `Steer` in the same Outcome authority. It
 may reject the choice as stale or unavailable. The envelope contains no free
 text, provider/model selector, command, queue, credential, or execution

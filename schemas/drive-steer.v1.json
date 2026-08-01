@@ -5,7 +5,7 @@
   "description": "Ephemeral typed answer from a native on-the-go client to the host that owns one vidux.outcome.v1 document. It does not execute work, route providers, or persist mission state.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "kind", "outcome_id", "ask_id", "option_id"],
+  "required": ["schema", "kind", "revision", "outcome_id", "ask_id", "option_id"],
   "properties": {
     "schema": {
       "type": "string",
@@ -14,6 +14,11 @@
     "kind": {
       "type": "string",
       "const": "answer"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
     },
     "outcome_id": {
       "$ref": "outcome-ask-steer.v1.json#/$defs/identifier"

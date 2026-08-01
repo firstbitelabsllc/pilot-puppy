@@ -52,6 +52,13 @@ def _document(document: Any) -> Mapping[str, Any]:
     return document
 
 
+def _revision(document: Mapping[str, Any]) -> int:
+    revision = document.get("revision")
+    if isinstance(revision, bool) or not isinstance(revision, int) or not 0 <= revision <= 2147483647:
+        raise DriveInputError("document.revision must be a public integer")
+    return revision
+
+
 def _outcome(document: Mapping[str, Any]) -> Mapping[str, Any]:
     outcome = _mapping(document.get("outcome"), "outcome")
     return {
@@ -159,6 +166,7 @@ def project_drive(document: Any) -> dict[str, Any]:
     """
 
     source = _document(document)
+    revision = _revision(source)
     outcome = _outcome(source)
     ask = _ask(source, outcome)
     steers = _steers(source, outcome["id"])
@@ -166,7 +174,7 @@ def project_drive(document: Any) -> dict[str, Any]:
     active = next((item for item in steers if item["state"] in NONTERMINAL_STEER_STATES), None)
     return {
         "schema": DRIVE_SCHEMA,
-        "revision": source.get("revision"),
+        "revision": revision,
         "updated_at": source.get("updated_at"),
         "outcome": deepcopy(outcome),
         "ask": ask,
@@ -176,7 +184,7 @@ def project_drive(document: Any) -> dict[str, Any]:
     }
 
 
-def build_choice(document: Any, option_id: Any) -> dict[str, str]:
+def build_choice(document: Any, option_id: Any) -> dict[str, Any]:
     """Build one ephemeral typed answer for the owning host.
 
     This is an intent envelope, not a durable Steer record.  The host that
@@ -186,17 +194,18 @@ def build_choice(document: Any, option_id: Any) -> dict[str, str]:
     """
 
     source = _document(document)
+    revision = _revision(source)
     outcome = _outcome(source)
     ask = _ask(source, outcome)
     if ask is None or ask["state"] != "open":
         raise DriveInputError("a choice requires an open Ask")
     option_id = _identifier(option_id, "option_id")
-    options = source["ask"].get("options", [])
-    if not any(isinstance(option, Mapping) and option.get("id") == option_id for option in options):
+    if not any(option["id"] == option_id for option in ask["options"]):
         raise DriveInputError("option_id is not present in the open Ask")
     return {
         "schema": STEER_SCHEMA,
         "kind": "answer",
+        "revision": revision,
         "outcome_id": outcome["id"],
         "ask_id": ask["id"],
         "option_id": option_id,

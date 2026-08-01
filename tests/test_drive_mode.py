@@ -18,6 +18,15 @@ drive = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = drive
 SPEC.loader.exec_module(drive)
 
+VALIDATOR_SPEC = importlib.util.spec_from_file_location(
+    "vidux_outcome_validator",
+    ROOT / "scripts" / "vidux-outcome-validate.py",
+)
+assert VALIDATOR_SPEC and VALIDATOR_SPEC.loader
+validator = importlib.util.module_from_spec(VALIDATOR_SPEC)
+sys.modules[VALIDATOR_SPEC.name] = validator
+VALIDATOR_SPEC.loader.exec_module(validator)
+
 
 def document() -> dict:
     options = [
@@ -90,6 +99,7 @@ class DriveModeTests(unittest.TestCase):
             {
                 "schema": "vidux.drive-steer.v1",
                 "kind": "answer",
+                "revision": 4,
                 "outcome_id": "publish-notes",
                 "ask_id": "choose-release",
                 "option_id": "hold-review",
@@ -102,6 +112,9 @@ class DriveModeTests(unittest.TestCase):
     def test_unknown_choice_is_rejected(self):
         with self.assertRaises(drive.DriveInputError):
             drive.build_choice(document(), "invented-choice")
+
+        with self.assertRaises(drive.DriveInputError):
+            drive.build_choice(document(), "write-note")
 
     def test_closed_ask_cannot_receive_a_choice(self):
         source = document()
@@ -118,6 +131,13 @@ class DriveModeTests(unittest.TestCase):
         encoded = json.dumps(result, sort_keys=True)
         self.assertNotIn("cursor", encoded)
         self.assertNotIn("do not copy this", encoded)
+
+    def test_projection_is_downstream_of_the_strict_outcome_validator(self):
+        source = document()
+        self.assertEqual(validator.validate_document(source), [])
+        invalid = copy.deepcopy(source)
+        invalid["provider"] = "cursor"
+        self.assertTrue(validator.validate_document(invalid))
 
 
 if __name__ == "__main__":
