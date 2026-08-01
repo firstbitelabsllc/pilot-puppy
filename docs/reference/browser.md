@@ -8,6 +8,7 @@ A local browser surface for inspecting plans across `DEV_ROOT`, scanning the cro
 - `browser/server.py` serves the read-mostly HTTP API and static frontend.
 - `browser/static/` contains the frontend assets.
 - `${VIDUX_BROWSER_ARTIFACTS_DIR:-${XDG_DATA_HOME:-~/.local/share}/vidux/artifacts}` stores ad-hoc HTML artifacts that the UI can list and open, outside the installed package.
+- `VIDUX_BROWSER_ALLOWED_HOSTS` is an optional comma-separated list of exact Host identities for a private authenticated reverse proxy (for example, the current Tailscale Serve MagicDNS name). It never accepts a wildcard or domain suffix; LAN DNS-rebinding protection remains in force.
 - `${VIDUX_BROWSER_COMMENTS_FILE:-~/.vidux-browser/comments.jsonl}` stores named comments and optional anchor metadata as append-only app data.
 - `${VIDUX_BROWSER_STEERING_FILE:-~/.vidux-browser/steering.jsonl}` stores the local, plan-scoped one-shot steering journal.
 - `${VIDUX_CLAIMS_FILE:-~/.agent-ledger/claims.jsonl}` stores provider-neutral live work leases and bounded handoffs.

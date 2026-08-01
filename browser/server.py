@@ -2915,8 +2915,29 @@ def is_private_lan_ip_literal(hostname: str) -> bool:
     return addr in ipaddress.ip_network("fc00::/7")
 
 
-def is_allowed_request_host(host: str, bind_host: str) -> bool:
-    """Reject requests whose Host header isn't a recognized loopback identity.
+def configured_allowed_request_hosts(raw: str | None = None) -> frozenset[str]:
+    """Parse exact host identities for an authenticated private proxy.
+
+    ``VIDUX_BROWSER_ALLOWED_HOSTS`` is intentionally an exact, comma-separated
+    allowlist. It exists for private reverse proxies such as Tailscale Serve,
+    whose backend request keeps the tailnet Host header while the TCP peer is
+    loopback. A suffix or wildcard is never accepted here.
+    """
+    value = os.environ.get("VIDUX_BROWSER_ALLOWED_HOSTS", "") if raw is None else raw
+    hosts = {
+        request_host_hostname(item.strip())
+        for item in value.split(",")
+        if request_host_hostname(item.strip())
+    }
+    return frozenset(hosts)
+
+
+def is_allowed_request_host(
+    host: str,
+    bind_host: str,
+    allowed_hosts: frozenset[str] | set[str] | None = None,
+) -> bool:
+    """Reject requests whose Host header isn't a recognized local identity.
 
     Origin/Referer-must-match-Host (origin_matches_host) does not stop DNS
     rebinding: a rebound page's browser sends a Host header and an Origin
@@ -2928,14 +2949,23 @@ def is_allowed_request_host(host: str, bind_host: str) -> bool:
     Wildcard bind mode is still an allowlist: loopback identities and private
     IP literals are accepted, while domain names remain denied. Otherwise a
     DNS-rebound domain could read every plan/proof API from a LAN-bound server.
-    Writes stay loopback-gated separately via client_address, except for the
-    narrower private-LAN comment route.
+    An explicitly configured exact host is the only domain exception, for a
+    private authenticated proxy such as Tailscale Serve. Writes stay
+    loopback-gated separately via client_address, except for the narrower
+    private-LAN comment route.
     """
     hostname = request_host_hostname(host)
     if not hostname:
         return False
     allowed = {"127.0.0.1", "localhost", "[::1]", "::1"}
     if hostname in allowed:
+        return True
+    explicit_hosts = (
+        configured_allowed_request_hosts()
+        if allowed_hosts is None
+        else frozenset(allowed_hosts)
+    )
+    if hostname in explicit_hosts:
         return True
     if bind_host in ("0.0.0.0", "::"):
         return is_private_lan_ip_literal(hostname)

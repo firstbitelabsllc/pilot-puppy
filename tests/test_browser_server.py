@@ -275,6 +275,34 @@ class BrowserLocalPlanNoteTests(unittest.TestCase):
             "sanity check: Origin==Host agreement alone is not a defense",
         )
 
+    def test_allowed_request_host_permits_exact_private_proxy_host(self):
+        tailnet_host = "leos-mac-studio-10442.tail4cfd4f.ts.net"
+        allowed = browser_server.configured_allowed_request_hosts(tailnet_host)
+
+        self.assertTrue(
+            browser_server.is_allowed_request_host(
+                f"{tailnet_host}:7191", "0.0.0.0", allowed
+            )
+        )
+        self.assertFalse(
+            browser_server.is_allowed_request_host(
+                "other-device.tail4cfd4f.ts.net:7191", "0.0.0.0", allowed
+            )
+        )
+        self.assertFalse(
+            browser_server.is_allowed_request_host(
+                "evil.example:7191", "0.0.0.0", allowed
+            )
+        )
+
+    def test_configured_proxy_hosts_are_exact_not_suffix_matches(self):
+        self.assertEqual(
+            browser_server.configured_allowed_request_hosts(
+                "alpha.example:7191, [fd00::1]:7191, ,alpha.example"
+            ),
+            frozenset({"alpha.example", "[fd00::1]"}),
+        )
+
     def test_allowed_request_host_permits_private_ip_in_lan_bind_mode(self):
         # Wildcard bind exposes the server to a trusted LAN, but it must still
         # admit a concrete private IP identity rather than every Host value.
