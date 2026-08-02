@@ -273,19 +273,13 @@ redaction regression prove otherwise.
   passed, and the development release pack contained 146 files. This is
   evidence for the shared projection, not the private 90 consumer or the F0.5
   close; the desk and private 90 still need one same-source integration receipt.
-  **Claim receipt:** private 90 Drive consumption is now proven by ai-leo PR
-  #206 (source `d46602c078429c9001c7916103e02bbdd1dbda46`, merged to private
-  `main` as `15f663fb254345d6c88cf90175e4485a8d4f8d49`) and its authority-plan
-  follow-up PR #207 (merge `76a40cdf31664252dd04c7a333eeb393ee330880`). The
-  sanitized run used one validated Outcome revision and the public
-  `project_drive`/`receive_choice` boundary: 90 emitted one exact
-  `vidux.drive-steer.v1`, then received `received`, stale `superseded`, and
-  hidden-option `not_delivered` receipts; canonical validation returned 0
-  after both foldbacks. This closes the private-consumer half of the receipt
-  predicate without adding transport or a second source. F0.5 remains open
-  only for one exact `vidux.chief-of-staff.v1` payload to be rendered by both
-  the desk and private 90 report surfaces; the current proof uses the shared
-  Outcome/Drive source and does not claim that final report adapter.
+  **Claim receipt:** F3's private-consumer half is closed by the owner-supplied
+  sanitized receipt
+  [`evidence/2026-08-02-private-90-drive-receipt.md`](evidence/2026-08-02-private-90-drive-receipt.md).
+  It proves the revision-bound Drive handoff only. F0.5 remains open for one
+  exact `vidux.chief-of-staff.v1` payload to be rendered by both the desk and
+  private 90 report surfaces; F4 remains gated on that predicate and a durable
+  Outcome source.
 - [completed] **F1 — Pilot Puppy driver (first real-host gate).** The bounded
   `pilot run` seam preserves `/pilot-puppy`, `/pilot`, and `/leo-flow`
   compatibility. Codex completed one small task on local branch
@@ -462,10 +456,7 @@ receipt and release notes may carry the reviewed links separately.
   and rendered by both the desk HTML view and the on-the-go plain-text adapter;
   the focused suite is now 7/7. This strengthens the public half of F0.5 but
   does not claim the private 90 consumer or close the owner-bound receipt gate.
-- 2026-08-02: Closed F3 after the private 90 Drive client landed in ai-leo PR
-  #206/#207. The cross-repo receipt is semantic only: the private client
-  consumes public `vidux.drive.v1`, emits the closed Drive Steer envelope, and
-  reports the public compare-and-set receipt. Current, stale, and hidden
-  choices all fold into the same validated Outcome shape. F0.5 remains open
-  only for the exact Chief-of-Staff brief to be consumed by private 90; F4 is
-  still correctly deferred because public Vidux has no durable Outcome store.
+- 2026-08-02: Closed F3's private-consumer half with the owner-supplied
+  sanitized Drive receipt. F0.5 remains open for the exact Chief-of-Staff
+  brief consumer; F4 stays gated because public Vidux has no durable Outcome
+  store.
