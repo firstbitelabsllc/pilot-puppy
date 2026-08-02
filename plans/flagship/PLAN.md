@@ -273,6 +273,19 @@ redaction regression prove otherwise.
   passed, and the development release pack contained 146 files. This is
   evidence for the shared projection, not the private 90 consumer or the F0.5
   close; the desk and private 90 still need one same-source integration receipt.
+  **Claim receipt:** private 90 Drive consumption is now proven by ai-leo PR
+  #206 (source `d46602c078429c9001c7916103e02bbdd1dbda46`, merged to private
+  `main` as `15f663fb254345d6c88cf90175e4485a8d4f8d49`) and its authority-plan
+  follow-up PR #207 (merge `76a40cdf31664252dd04c7a333eeb393ee330880`). The
+  sanitized run used one validated Outcome revision and the public
+  `project_drive`/`receive_choice` boundary: 90 emitted one exact
+  `vidux.drive-steer.v1`, then received `received`, stale `superseded`, and
+  hidden-option `not_delivered` receipts; canonical validation returned 0
+  after both foldbacks. This closes the private-consumer half of the receipt
+  predicate without adding transport or a second source. F0.5 remains open
+  only for one exact `vidux.chief-of-staff.v1` payload to be rendered by both
+  the desk and private 90 report surfaces; the current proof uses the shared
+  Outcome/Drive source and does not claim that final report adapter.
 - [completed] **F1 — Pilot Puppy driver (first real-host gate).** The bounded
   `pilot run` seam preserves `/pilot-puppy`, `/pilot`, and `/leo-flow`
   compatibility. Codex completed one small task on local branch
@@ -310,7 +323,7 @@ redaction regression prove otherwise.
   receipt; a missing receipt stays non-delivery and cannot advance a gate. No
   further Cursor audit is authorized in F2; the next work follows the next
   unblocked row after this decision.
-- [in_progress] **F3 — 90 semantic client.** F3a (semantic core) is prepared:
+- [completed] **F3 — 90 semantic client.** F3a (semantic core) is prepared:
   a pure projection of one validated `vidux.outcome.v1` document plus one
   ephemeral `vidux.drive-steer.v1` choice envelope. It presents exactly the
   first three open Ask options, keeps every recorded Steer (including
@@ -318,13 +331,10 @@ redaction regression prove otherwise.
   the observed `revision`. Focused proof is `tests/test_drive_mode.py` (6/6),
   with the existing outcome validator still green (56/56). Prepared commits:
   `65fe5e92` + revision/privacy corrections `2769c362` (now included in the
-  public flagship merge). F3b remains: one local revision-safe handshake that records
-  `received`/`applied` or `superseded`/non-delivery in the same authority,
-  without executing, routing, or creating a queue. An earlier private branch
-  drafted a Drive-mode handoff, but the current private authority has not
-  landed that contract, and no executable consumer or receipt round-trip is
-  claimed. Keep this row open until its owner lands the current contract and
-  supplies that proof. Public F3b implementation `414096cd` adds the
+  public flagship merge). F3b was the remaining private-owner gate: one local
+  revision-safe handshake that records `received`/`applied` or
+  `superseded`/non-delivery in the same authority, without executing, routing,
+  or creating a queue. Public F3b implementation `414096cd` adds the
   pure local `receive_choice` compare-and-set and the
   `vidux.drive-receipt.v1` schema: a current visible choice records
   `received`, a stale choice records `superseded`, and hidden or mismatched
@@ -336,13 +346,14 @@ redaction regression prove otherwise.
   hosted CI, CodeQL, gitleaks, public-ready, and language-analysis checks are
   green. A clean release package is 142 files, 1,297,652 unpacked bytes, and
   SHA-256 `6f703aca6cb71d4dfd6921c9cc7ea454c15426984fabe1773f855e4ae22946fe`.
-  Public PR #27 merged as `c6e96f60`; its source branch remains preserved. F3
-  remains open only for the private 90 consumer. Resume when its owner supplies
-  one sanitized run showing: a validated current `vidux.outcome.v1` revision,
-  one exact `vidux.drive-steer.v1` envelope emitted by 90, the owning host's
-  `receive_choice` result with `received`, `superseded`, or `not_delivered`, the
-  next revision, and canonical-validator exit 0. This public plan does not claim
-  or edit that private consumer.
+  Public PR #27 merged as `c6e96f60`; its source branch remains preserved. The
+  private owner supplied the required sanitized run at public source
+  `6f3d64f84b53a60b2d093ea267e1e89aaba9568e`: one validated current revision,
+  one exact envelope emitted by the private 90 client, public `receive_choice`
+  results `received`, `superseded`, and `not_delivered`, next revisions, and
+  canonical-validator exit 0. No provider, execution, storage, shell, network,
+  or queue was touched. F3 is complete; F0.5 owns the remaining Chief-of-Staff
+  report-surface predicate and F4 stays gated on a durable Outcome source.
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
@@ -442,3 +453,10 @@ receipt and release notes may carry the reviewed links separately.
   and rendered by both the desk HTML view and the on-the-go plain-text adapter;
   the focused suite is now 7/7. This strengthens the public half of F0.5 but
   does not claim the private 90 consumer or close the owner-bound receipt gate.
+- 2026-08-02: Closed F3 after the private 90 Drive client landed in ai-leo PR
+  #206/#207. The cross-repo receipt is semantic only: the private client
+  consumes public `vidux.drive.v1`, emits the closed Drive Steer envelope, and
+  reports the public compare-and-set receipt. Current, stale, and hidden
+  choices all fold into the same validated Outcome shape. F0.5 remains open
+  only for the exact Chief-of-Staff brief to be consumed by private 90; F4 is
+  still correctly deferred because public Vidux has no durable Outcome store.
