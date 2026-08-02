@@ -33,6 +33,7 @@ Source-grounded defaults from the launcher and server:
 - Ledger tab caps: `VIDUX_LEDGER_ITEM_LIMIT` defaults to `20`; `VIDUX_LEDGER_SCAN_LIMIT` defaults to `5000`
 - Steering journal: `VIDUX_BROWSER_STEERING_FILE` defaults to `~/.vidux-browser/steering.jsonl`
 - Work-claims journal: `VIDUX_CLAIMS_FILE` defaults to `~/.agent-ledger/claims.jsonl`
+- `VIDUX_BROWSER_ALLOWED_HOSTS` is an optional comma-separated list of exact Host identities for a private authenticated reverse proxy (for example, the current Tailscale Serve MagicDNS name). It never accepts a wildcard or domain suffix; LAN DNS-rebinding protection remains in force.
 - Artifact shelf: `VIDUX_BROWSER_ARTIFACTS_DIR` defaults to `${XDG_DATA_HOME:-~/.local/share}/vidux/artifacts`
 
 In background mode the launcher writes a PID file and log under
