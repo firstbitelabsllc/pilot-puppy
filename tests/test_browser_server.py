@@ -1502,6 +1502,42 @@ if not ok:
         self.assertIn("style-src 'unsafe-inline'", policy)
         self.assertNotIn("style-src 'self'", policy)
 
+    def test_artifact_file_response_supports_explicit_inline_view(self):
+        self.artifacts_dir.mkdir(parents=True)
+        artifact = self.artifacts_dir / "inline.html"
+        artifact.write_text("<h1>Inline</h1>", encoding="utf-8")
+
+        conn = http.client.HTTPConnection("127.0.0.1", self.port, timeout=5)
+        conn.request(
+            "GET",
+            f"/api/file?path={quote(str(artifact), safe='')}&view=inline",
+        )
+        res = conn.getresponse()
+        body = res.read().decode("utf-8", errors="replace")
+        headers = dict(res.getheaders())
+        conn.close()
+
+        self.assertEqual(res.status, 200, body)
+        self.assertEqual(
+            headers.get("Content-Disposition"),
+            'inline; filename="vidux-artifact.html"',
+        )
+        self.assertEqual(
+            headers.get("Content-Security-Policy"),
+            browser_server.ARTIFACT_CONTENT_SECURITY_POLICY,
+        )
+        self.assertEqual(body, "<h1>Inline</h1>")
+
+        head_status, head_headers, head_body = self.head(
+            f"/api/file?path={quote(str(artifact), safe='')}&view=inline"
+        )
+        self.assertEqual(head_status, 200)
+        self.assertEqual(head_body, b"")
+        self.assertEqual(
+            head_headers.get("Content-Disposition"),
+            'inline; filename="vidux-artifact.html"',
+        )
+
     def test_plain_text_error_backstop_redacts_sensitive_filename(self):
         secret = synthetic_secret()
         missing = self.artifacts_dir / f"{secret}.html"

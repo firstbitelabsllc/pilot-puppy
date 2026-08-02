@@ -287,6 +287,20 @@ ARTIFACT_SECURITY_HEADERS = {
 }
 
 
+def artifact_response_headers(*, inline: bool = False) -> dict[str, str]:
+    """Return the isolated artifact headers without mutating the default policy.
+
+    Artifacts remain download-only unless a same-origin consumer explicitly
+    requests the private inline view. The inline variant is used by a bounded
+    presentation wrapper such as Snowcubes; it keeps the same network-isolated
+    CSP and only applies to an exact discovered artifact path.
+    """
+    headers = dict(ARTIFACT_SECURITY_HEADERS)
+    if inline:
+        headers["Content-Disposition"] = 'inline; filename="vidux-artifact.html"'
+    return headers
+
+
 def _unquoted_secret_value(value: str) -> str:
     text = value.strip()
     if len(text) >= 2 and text[0] == text[-1] and text[0] in "\"'`":
@@ -2764,6 +2778,15 @@ def safe_resolve_any(raw: str) -> Path | None:
     )
 
 
+def is_artifact_file(path: Path) -> bool:
+    """Return True only for a canonical file under the configured artifact root."""
+    try:
+        path.relative_to(ARTIFACTS_DIR.expanduser().resolve(strict=False))
+    except ValueError:
+        return False
+    return True
+
+
 def _relative_request_parts(raw: str, root: Path) -> tuple[str, ...] | None:
     """Lexically split one canonical absolute request without touching the filesystem."""
     root_text = str(root)
@@ -3387,11 +3410,16 @@ class Handler(BaseHTTPRequestHandler):
             if status != 200:
                 self._send(status, body if isinstance(body, str) else "file read failed")
                 return
+            inline_artifact = (
+                (qs.get("view") or [""])[0].strip().lower() == "inline"
+                and p.suffix.lower() == ".html"
+                and is_artifact_file(p)
+            )
             self._send_with_type(
                 body,
                 ctype,
                 extra_headers=(
-                    ARTIFACT_SECURITY_HEADERS
+                    artifact_response_headers(inline=inline_artifact)
                     if p.suffix.lower() == ".html"
                     else None
                 ),
