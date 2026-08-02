@@ -2986,6 +2986,12 @@ def configured_allowed_request_hosts(raw: str | None = None) -> frozenset[str]:
     return frozenset(hosts)
 
 
+def allowed_request_hosts_id() -> str:
+    """Return a path-safe identity for the exact configured Host allowlist."""
+    value = "\n".join(sorted(configured_allowed_request_hosts()))
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()[:16]
+
+
 def is_allowed_request_host(
     host: str,
     bind_host: str,
@@ -3332,6 +3338,7 @@ class Handler(BaseHTTPRequestHandler):
                         "repo_root": str(VIDUX_ROOT),
                         "server_path": str(SERVER_FILE),
                         "server_mtime_ns": SERVER_MTIME_NS,
+                        "allowed_hosts_id": allowed_request_hosts_id(),
                         "steering_store_id": steering_store_id(),
                         "steering_module_mtime_ns": steering_module_mtime_ns(),
                         "coordination_store_id": coordination_store_id(),

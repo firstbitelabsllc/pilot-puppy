@@ -1781,6 +1781,7 @@ class BrowserViduxTruthTests(unittest.TestCase):
         self.assertEqual(payload["dev_root"], str(browser_server.DEV_ROOT))
         self.assertEqual(payload["server_path"], str(browser_server.SERVER_FILE))
         self.assertEqual(payload["server_mtime_ns"], browser_server.SERVER_MTIME_NS)
+        self.assertEqual(payload["allowed_hosts_id"], browser_server.allowed_request_hosts_id())
         self.assertEqual(payload["steering_store_id"], browser_server.steering_store_id())
         self.assertEqual(
             payload["steering_module_mtime_ns"],
