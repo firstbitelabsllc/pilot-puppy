@@ -10,6 +10,14 @@
 
 One calm, local view of AI-assisted project work: the outcome, what is happening now,
 a place to change direction, and proof. One `PLAN.md` keeps it durable.
+
+Vidux is the public repository and durable plan/proof core of **Pilot Puppy**,
+the friendly product umbrella described in the [Pilot Puppy reference](docs/reference/pilot-puppy.md).
+Pilot Puppy reports what changed and drives bounded work; native Codex, Claude
+Code, and Cursor execute on the user's Mac; 90 is the on-the-go briefing and
+choice surface. There is no second queue, provider router, hosted executor, or
+credential relay.
+
 ## Install
 Needs Bash, Git, and Python 3. Node is only for contributor tests and docs.
 ```bash
@@ -53,8 +61,9 @@ plan edit uncommitted unless `--commit` is explicit.
 
 ## Outcome / Ask / Steer interchange
 
-Vidux `1.2.0` includes provider-neutral JSON for one Outcome, an exceptional Ask,
-Steers, and proof references. That interchange is separate from the local GUI: neither
+Vidux `1.2.0` includes provider-neutral JSON for one Outcome, an optional exceptional
+Ask, Steers, and proof references. The current GUI keeps Ask deferred until real
+Outcome-card dogfood reveals a genuine fork. That interchange is separate from the local GUI: neither
 is a worker runtime, shared-memory layer, or live model-steering claim.
 
 The companion `vidux.lifecycle.v1` receipt records the bounded transition history
@@ -82,7 +91,8 @@ invocation/I/O failure. See the [contract](docs/reference/outcome-ask-steer.md) 
 Root is install + agent entry; deeper material stays in docs:
 [Architecture](docs/doctrine/ARCHITECTURE.md) · [Doctrine](docs/doctrine/DOCTRINE.md) · [Loop](docs/doctrine/LOOP.md) · [Enforcement hooks](docs/doctrine/ENFORCEMENT.md) · [Core boundary](docs/CORE-CUT.md) · [Evidence format](guides/evidence-format.md) · [Site / guides](docs/)
 Community: [CONTRIBUTING](CONTRIBUTING.md) · [SECURITY](SECURITY.md) · [SUPPORT](SUPPORT.md) · [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
-Repo `PLAN.md` (if present) is this repo's internal queue, not required to use Vidux in your project.
+Repo `PLAN.md` (if present) is this repository's working authority; it is not
+required to use Vidux in your project.
 
 ## Release truth
 
