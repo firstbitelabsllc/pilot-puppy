@@ -20,6 +20,10 @@ def store_id(path: Path) -> str:
     return hashlib.sha256(str(path.expanduser().resolve()).encode()).hexdigest()[:16]
 
 
+def allowed_hosts_id(*hosts: str) -> str:
+    return hashlib.sha256(",".join(sorted(hosts)).encode()).hexdigest()[:16]
+
+
 class BrowserLauncherStorageTests(unittest.TestCase):
     def test_server_default_artifacts_live_outside_package_root(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -93,6 +97,7 @@ class BrowserLauncherStorageTests(unittest.TestCase):
                 "coordination_store_id": store_id(claims),
                 "comments_store_id": store_id(comments_a),
                 "artifacts_store_id": store_id(artifacts_a),
+                "allowed_hosts_id": allowed_hosts_id(),
             }
             self.assertNotIn(str(home), json.dumps(health))
             self.assertNotIn(str(data), json.dumps(health))
@@ -106,6 +111,7 @@ class BrowserLauncherStorageTests(unittest.TestCase):
                     "VIDUX_TEST_HEALTH": json.dumps(health),
                 }
             )
+            env.pop("VIDUX_BROWSER_ALLOWED_HOSTS", None)
             base_args = [
                 str(LAUNCHER),
                 "--no-open",
@@ -138,6 +144,28 @@ class BrowserLauncherStorageTests(unittest.TestCase):
                 text=True,
                 env=env,
             )
+            # A live process keeps the allowlist it started with, so a caller
+            # that adds a proxy host must not reuse the old Host policy.
+            added_host_env = dict(env)
+            added_host_env["VIDUX_BROWSER_ALLOWED_HOSTS"] = "proxy.example"
+            added_allowed_host = subprocess.run(
+                [*base_args, "--comments-path", str(comments_a)],
+                capture_output=True,
+                text=True,
+                env=added_host_env,
+            )
+            # The mirror case: the running server still authorizes a host the
+            # caller has since removed from its env.
+            removed_host_health = dict(health)
+            removed_host_health["allowed_hosts_id"] = allowed_hosts_id("proxy.example")
+            removed_host_env = dict(env)
+            removed_host_env["VIDUX_TEST_HEALTH"] = json.dumps(removed_host_health)
+            removed_allowed_host = subprocess.run(
+                [*base_args, "--comments-path", str(comments_a)],
+                capture_output=True,
+                text=True,
+                env=removed_host_env,
+            )
 
         self.assertEqual(matched.returncode, 0, matched.stderr)
         self.assertIn("already on", matched.stdout)
@@ -145,6 +173,11 @@ class BrowserLauncherStorageTests(unittest.TestCase):
         self.assertIn("does not match", wrong_comments.stderr)
         self.assertEqual(wrong_artifacts.returncode, 1)
         self.assertIn("does not match", wrong_artifacts.stderr)
+        self.assertEqual(added_allowed_host.returncode, 1, added_allowed_host.stdout)
+        self.assertIn("does not match", added_allowed_host.stderr)
+        self.assertNotIn("proxy.example", added_allowed_host.stderr)
+        self.assertEqual(removed_allowed_host.returncode, 1, removed_allowed_host.stdout)
+        self.assertIn("does not match", removed_allowed_host.stderr)
 
 
 if __name__ == "__main__":

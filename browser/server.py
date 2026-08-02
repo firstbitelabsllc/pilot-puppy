@@ -3209,6 +3209,19 @@ def artifacts_store_id() -> str:
     return hashlib.sha256(resolved.encode("utf-8")).hexdigest()[:16]
 
 
+def allowed_hosts_id() -> str:
+    """Value-safe proxy-allowlist identity used by launcher reuse checks.
+
+    A running server cannot pick up a caller's changed
+    ``VIDUX_BROWSER_ALLOWED_HOSTS``, so reusing an existing listener would
+    silently keep a removed host authorized (or keep a newly added proxy host
+    rejected). Publishing a hash of the normalized allowlist -- never the
+    hosts themselves -- lets the launcher detect the change and refuse reuse.
+    """
+    joined = ",".join(sorted(configured_allowed_request_hosts()))
+    return hashlib.sha256(joined.encode("utf-8")).hexdigest()[:16]
+
+
 def coordination_module_mtime_ns() -> int:
     return COORDINATION_MODULE_MTIME_NS
 
@@ -3301,7 +3314,8 @@ class Handler(BaseHTTPRequestHandler):
                         "coordination_store_id": coordination_store_id(),
                         "coordination_module_mtime_ns": coordination_module_mtime_ns(),
                         "comments_store_id": comments_store_id(),
-                        "artifacts_store_id": artifacts_store_id()})
+                        "artifacts_store_id": artifacts_store_id(),
+                        "allowed_hosts_id": allowed_hosts_id()})
         elif route == "/api/plans":
             plans = discover_plans_cached()
             self._json({
@@ -3839,7 +3853,19 @@ def main(argv=None):
              "-- NOT scoped by --root, so pass this explicitly for hermetic "
              "test/demo runs against a fixture root.",
     )
+    parser.add_argument(
+        "--print-allowed-hosts-id",
+        action="store_true",
+        help="Print the value-safe VIDUX_BROWSER_ALLOWED_HOSTS identity and "
+             "exit. bin/vidux-browse uses this to compare a running "
+             "listener's proxy allowlist against the caller's env without "
+             "duplicating the normalization rules.",
+    )
     args = parser.parse_args(argv)
+
+    if args.print_allowed_hosts_id:
+        print(allowed_hosts_id())
+        return
 
     # CLI overrides module-level globals. Re-resolve so the server uses the
     # passed values rather than the env defaults captured at import time.

@@ -44,7 +44,11 @@ overridable via `VIDUX_BROWSER_PIDFILE` / `VIDUX_BROWSER_LOG`) and waits for
 legacy shared path still exists. If something is already listening on the
 target port, the launcher reuses it only when the health payload matches the
 requested `repo_root`, `dev_root`, path-safe steering and coordination store
-identities, `port`, and current server/mailbox/coordination module mtimes.
+identities, the value-safe `VIDUX_BROWSER_ALLOWED_HOSTS` identity, `port`, and
+current server/mailbox/coordination module mtimes. A running server cannot
+adopt a caller's changed allowlist, so adding or removing a proxy host fails
+the reuse check and the launcher asks you to stop the old process instead of
+silently keeping the old Host policy.
 
 The launcher accepts `--port`, `--host`, `--root`/`--dev-root`, `--open-host`,
 `--comments-path`, `--steering-path`, `--claims-path`, and
@@ -54,7 +58,7 @@ The launcher accepts `--port`, `--host`, `--root`/`--dev-root`, `--open-host`,
 
 The stdlib-only server exposes these routes:
 
-- `GET /api/health` returns `ok`, root/port/server identity, path-safe comment, artifact, steering, and coordination store ids, plus the relevant module mtimes; `bin/vidux-browse` uses these to avoid opening a stale, older-code, foreign, or differently scoped listener on the same port. Store paths are not returned.
+- `GET /api/health` returns `ok`, root/port/server identity, path-safe comment, artifact, steering, and coordination store ids, a value-safe `allowed_hosts_id` hash of the configured proxy Host allowlist, plus the relevant module mtimes; `bin/vidux-browse` uses these to avoid opening a stale, older-code, foreign, differently scoped, or differently host-gated listener on the same port. Store paths and allowlist hosts are not returned.
 - `GET /api/vidux/truth` returns cached read-only config and runtime-doctor status for the browser chrome. Cold calls return a warming payload and refresh the truth bundle in the background, so monitor probes never block on runtime doctor.
 - `GET /api/vidux/truth?refresh=sync` forces the synchronous config/runtime-doctor proof path for manual checks and tests.
 - The truth payload includes `runtime_doctor.system_memory` (a compact copy of `system_memory_pressure`): `memory_pressure_free_pct`/`memory_pct_source` from `memory_pressure -Q`; `vm_free_mb`/`vm_speculative_mb`/`vm_pages_source` from `vm_stat`.
@@ -74,7 +78,8 @@ The stdlib-only server exposes these routes:
 
 The server is narrow:
 
-- **Every request's `Host` header is checked against an allowlist before anything else runs** — independent of, and prior to, the `Origin`/`Referer` matching described below. This closes DNS rebinding: a page served from an attacker-registered domain that resolves to `127.0.0.1` (or the LAN bind address) presents a `Host` header equal to that attacker domain, and its `Origin`/`Referer` headers agree with that same `Host` — so an Origin-must-match-Host check alone can't tell the rebound request apart from a legitimate one. The Host allowlist accepts loopback identities (`127.0.0.1`, `localhost`, `::1`) plus, in `VIDUX_BROWSER_HOST=0.0.0.0` LAN-bind mode, RFC 1918 IPv4 or RFC 4193 IPv6 literals. Open a LAN-bound server by its private IP address; domain Host values remain denied.
+- **Every request's `Host` header is checked against an allowlist before anything else runs** — independent of, and prior to, the `Origin`/`Referer` matching described below. This closes DNS rebinding: a page served from an attacker-registered domain that resolves to `127.0.0.1` (or the LAN bind address) presents a `Host` header equal to that attacker domain, and its `Origin`/`Referer` headers agree with that same `Host` — so an Origin-must-match-Host check alone can't tell the rebound request apart from a legitimate one. The Host allowlist accepts loopback identities (`127.0.0.1`, `localhost`, `::1`) plus, in `VIDUX_BROWSER_HOST=0.0.0.0` LAN-bind mode, RFC 1918 IPv4 or RFC 4193 IPv6 literals. Open a LAN-bound server by its private IP address; a domain Host value is denied unless it is an exact entry in `VIDUX_BROWSER_ALLOWED_HOSTS`.
+- **The configured-domain exception is exact-match only.** Each `VIDUX_BROWSER_ALLOWED_HOSTS` entry is compared as a whole hostname (port stripped, case-folded), with no wildcard, no domain-suffix match, and no implicit subdomains — so it authorizes exactly the private authenticated proxy identity you named (for example, the current Tailscale Serve MagicDNS name) and nothing else. A rebound attacker domain still fails because it is not that literal string. Configure it only for a proxy that authenticates its callers: any name you list is trusted for reads at this boundary, and removing an entry only takes effect after the server restarts (the launcher's `allowed_hosts_id` check forces that restart). Writes stay gated separately by TCP peer, so this exception does not widen the write surface.
 - `POST /api/comments` is the one write route that intentionally accepts real cross-machine LAN peers (see below). When the peer is not loopback, LAN-bind mode requires both the actual TCP peer and the `Host` header to be private-use IP literals (RFC 1918/4193). A public or spoofed TCP peer therefore cannot borrow a private `Host`, and a DNS-rebound domain's `Host` is not a raw private-IP literal.
 - Reads are limited to `DEV_ROOT` and an allowlist of plan-adjacent files: `PLAN.md`, `PROGRESS.md`, `INBOX.md`, `ASK-OWNER.md`, `DOCTRINE.md`, and `README.md`.
 - Markdown under `investigations/` and `evidence/` is also allowed.

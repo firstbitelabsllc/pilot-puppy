@@ -303,6 +303,32 @@ class BrowserLocalPlanNoteTests(unittest.TestCase):
             frozenset({"alpha.example", "[fd00::1]"}),
         )
 
+    def test_allowed_hosts_id_tracks_configured_allowlist_without_leaking_it(self):
+        tailnet_host = "leos-mac-studio-10442.tail4cfd4f.ts.net"
+        with mock.patch.dict(
+            os.environ, {"VIDUX_BROWSER_ALLOWED_HOSTS": ""}, clear=False
+        ):
+            empty_id = browser_server.allowed_hosts_id()
+        with mock.patch.dict(
+            os.environ,
+            {"VIDUX_BROWSER_ALLOWED_HOSTS": f"{tailnet_host}:7191"},
+            clear=False,
+        ):
+            configured_id = browser_server.allowed_hosts_id()
+            # Order and port noise must not look like a policy change.
+            self.assertEqual(configured_id, browser_server.allowed_hosts_id())
+        with mock.patch.dict(
+            os.environ,
+            {"VIDUX_BROWSER_ALLOWED_HOSTS": f"{tailnet_host},other.example"},
+            clear=False,
+        ):
+            widened_id = browser_server.allowed_hosts_id()
+
+        self.assertRegex(empty_id, r"^[0-9a-f]{16}$")
+        self.assertNotEqual(empty_id, configured_id)
+        self.assertNotEqual(configured_id, widened_id)
+        self.assertNotIn(tailnet_host, configured_id)
+
     def test_allowed_request_host_permits_private_ip_in_lan_bind_mode(self):
         # Wildcard bind exposes the server to a trusted LAN, but it must still
         # admit a concrete private IP identity rather than every Host value.
@@ -1793,6 +1819,9 @@ class BrowserViduxTruthTests(unittest.TestCase):
             payload["coordination_module_mtime_ns"],
             browser_server.coordination_module_mtime_ns(),
         )
+        # The launcher cannot push a changed allowlist into a live process, so
+        # the reuse identity has to cover it.
+        self.assertEqual(payload["allowed_hosts_id"], browser_server.allowed_hosts_id())
         self.assertNotIn(str(browser_server.STEERING_FILE), text)
         self.assertNotIn(str(browser_server.CLAIMS_FILE), text)
         self.assertIn("port", payload)
