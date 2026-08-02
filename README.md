@@ -41,7 +41,7 @@ Where is the proof? Open **See proof and plan details** for evidence and the ful
 plan. `PROOF MISSING` remains explicit until evidence exists.
 ## Agent skill
 
-Root [`SKILL.md`](SKILL.md) is the agent entry. The shared Pilot host adapter records bounded Codex, Claude Code, and direct Cursor proof; a login check or model list is not execution proof. Mount with `ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"`.
+Root [`SKILL.md`](SKILL.md) is the agent entry. Claude Code is the tested host for this Vidux skill mount; other hosts are untested by this skill mount. The shared Pilot host adapter separately records bounded Codex, Claude Code, and direct Cursor proof; a login check or model list is not execution proof. Mount with `ln -sfn /path/to/vidux "$HOME/.claude/skills/vidux"`.
 
 ## Where Vidux stops
 
