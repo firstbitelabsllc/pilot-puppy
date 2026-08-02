@@ -347,13 +347,22 @@ redaction regression prove otherwise.
   green. A clean release package is 142 files, 1,297,652 unpacked bytes, and
   SHA-256 `6f703aca6cb71d4dfd6921c9cc7ea454c15426984fabe1773f855e4ae22946fe`.
   Public PR #27 merged as `c6e96f60`; its source branch remains preserved. The
-  private owner supplied the required sanitized run at public source
-  `6f3d64f84b53a60b2d093ea267e1e89aaba9568e`: one validated current revision,
-  one exact envelope emitted by the private 90 client, public `receive_choice`
-  results `received`, `superseded`, and `not_delivered`, next revisions, and
-  canonical-validator exit 0. No provider, execution, storage, shell, network,
-  or queue was touched. F3 is complete; F0.5 owns the remaining Chief-of-Staff
-  report-surface predicate and F4 stays gated on a durable Outcome source.
+  private owner supplied the required sanitized run in the private ai-leo
+  repository: PR #206 (source `d46602c078429c9001c7916103e02bbdd1dbda46`,
+  merged to private `main` as
+  `15f663fb254345d6c88cf90175e4485a8d4f8d49`) carries the run itself, and
+  authority-plan follow-up PR #207 (merge
+  `76a40cdf31664252dd04c7a333eeb393ee330880`) records it. That run shows one
+  validated current revision, one exact envelope emitted by the private 90
+  client, public `receive_choice` results `received`, `superseded`, and
+  `not_delivered`, next revisions, and canonical-validator exit 0. No
+  provider, execution, storage, shell, network, or queue was touched. The
+  receipt artifact is private, so a public-only auditor can verify the public
+  half here (`414096cd` and its tests) and must read the named ai-leo merges
+  for the consumer half; no public Vidux commit contains that run, and the
+  earlier docs commit `6f3d64f8` is not the receipt. F3 is complete; F0.5 owns
+  the remaining Chief-of-Staff report-surface predicate and F4 stays gated on
+  a durable Outcome source.
 - [ ] **F4 — Local transport.** Serve the semantic API on loopback and a
   tailnet-only endpoint. Gate: local integration passes; a non-tailnet request
   is rejected; no Funnel/public listener or credential endpoint exists.
