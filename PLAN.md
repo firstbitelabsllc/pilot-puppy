@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 74
-- Outcome Updated At: 2026-08-03T21:01:39Z
+- Outcome Revision: 75
+- Outcome Updated At: 2026-08-03T21:03:38Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `d392921` for promotion into canonical
@@ -543,6 +543,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   `47dfaf500ae680686599e7a6ff1ee41b30cda7a0f41c7912c6efdce1628652be`.
   This is source, test, and package proof only; no PR, review, merge, release,
   deployment, or runtime claim changed.
+- 2026-08-03: The fresh clone was fast-forwarded to candidate head `5b2c8f7`
+  and reran `npm ci` (186 packages, zero vulnerabilities) plus the complete
+  clean-install proof: version `2.1.0`, 3 JavaScript tests, 164 Python tests
+  (2 skipped), 6 desktop/phone browser tests, docs, Ruff, the 100-file
+  public-ready scan, zero high-severity npm audit findings, and the
+  reproducible 63-file package with SHA-256
+  `47dfaf500ae680686599e7a6ff1ee41b30cda7a0f41c7912c6efdce1628652be`.
+  The clone is clean and matches its remote candidate ref. No PR, review,
+  merge, release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
