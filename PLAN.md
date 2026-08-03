@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 94
-- Outcome Updated At: 2026-08-03T21:59:33Z
+- Outcome Revision: 95
+- Outcome Updated At: 2026-08-03T22:05:31Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `c868976`
@@ -206,6 +206,20 @@ Code, or Cursor without taking custody of credentials or conversations.
   all read back as Pilot Puppy.
 
 ## Progress
+
+- 2026-08-03: Replayed the current candidate at source head `c868976` after
+  refreshing the live PR topology and hosted checks. The owned tree remains
+  clean and matches `origin/codex/seat-hardening-followup-20260803`; open
+  siblings are still #99 (mergeable, separate portfolio PLAN), #105 and #106
+  (conflicting), and #95 (overlapping Python-floor work). The exact local gate
+  passes 3 JavaScript tests, 173 Python tests (2 skipped), 6 desktop/phone
+  browser tests, docs build, the 101-file public-ready scan, and reproducible
+  64-file release verification with SHA-256
+  `fbfc05d062b0239b868321e530a5f7007cf07faefbf125fd56982263372b6c04`.
+  Hosted CI `30856669784` and Secret Scan `30856671187` both remain successful
+  for the exact source head. This audit found no additional release-boundary
+  defect; the remaining pending row is consolidation, not another source fix.
+  Cursor's separate writer lane was not inspected or modified.
 
 - 2026-08-03: R5 is complete. `seat init`, `seat set`, and `seat show` maintain
   a strict owner-local selector overlay for an existing enabled roster slot;
