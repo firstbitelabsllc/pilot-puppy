@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 17
-- Outcome Updated At: 2026-08-03T16:46:55Z
+- Outcome Revision: 18
+- Outcome Updated At: 2026-08-03T16:49:53Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
@@ -90,7 +90,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   history and absent from current tracker outputs. The 5/21 Marathon row is
   FREE/UNKNOWN, with no charge or payment row, and must not be reopened or
   collected. Clean Moussey `origin/main@3c44bbec` removes operator-page
-  clutter and strips credentials from user-facing URLs.
+  clutter and strips credentials from user-facing URLs; its isolated current
+  build renders a private passcode gate and returns a safe unauthenticated 401.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
@@ -248,6 +249,16 @@ Code, or Cursor without taking custody of credentials or conversations.
   marked delivered. The non-developer launch and hierarchy requirement is
   therefore proven; the remaining Star67 predicate is only the owner-admin
   GitHub rename/homepage/topics update.
+- 2026-08-03T16:49:53Z: Reproduced clean Moussey `origin/main@3c44bbec` in an
+  isolated production server. Build passed; `/consignment` rendered the
+  `PRIVATE OPERATOR SURFACE` passcode gate; unauthenticated
+  `/api/consignment` returned HTTP 401 with `operator passcode required`,
+  `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and no URL
+  credential. The owner-owned `:4321` process was not restarted; its visible
+  shell still bypasses the current gate and shows `$0.00/all set` cards beside
+  open activity and old draft records, so it is explicitly stale proof.
+  Resume only with an owner-controlled rebuild/restart and authenticated
+  browser readback against `3c44bbec`.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
@@ -334,12 +345,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   `star67-learn-sql`, sets homepage to `https://learn-sql-peach.vercel.app/`,
   adds the `star67` topic, and reads all three back. No product work waits on
   this.
-- Moussey's clean `origin/main` build and money/UI/security tests are green,
-  but the existing `:4321` process belongs to a dirty primary checkout and was
-  not restarted or overwritten during this pass. Resume with an owner-
-  controlled rebuild/restart, then take authenticated `/consignment` browser
-  readback against the current source; do not treat the stale process as
-  current proof.
+- Moussey's clean `origin/main@3c44bbec` build and money/UI/security tests are
+  green, and an isolated server proves the current private passcode gate plus
+  safe unauthenticated 401. The existing `:4321` process belongs to a dirty
+  primary checkout, visibly bypasses that current gate, and was not restarted
+  or overwritten. Resume with an owner-controlled rebuild/restart and an
+  authenticated `/consignment` browser readback against `3c44bbec`; do not
+  treat either the stale process or the isolated unauthenticated shell as
+  current customer proof.
 - Snowcubes security repair PR #1567 is pushed and mergeable but not merged or
   deployed. Resume by merging it through the repository's normal review path,
   then rerun `npm ci`, high/production audit, and the focused gates. Do not
