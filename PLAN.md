@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 103
-- Outcome Updated At: 2026-08-03T22:16:21Z
+- Outcome Revision: 104
+- Outcome Updated At: 2026-08-03T22:17:13Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `b70a6fe`
@@ -745,6 +745,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   `pilot-puppy doctor --json` returns 11 checks with zero failures and zero
   warnings. This closes the post-fix installed-artifact readback gap; the
   candidate is still not merged or released.
+
+- 2026-08-03: Manual CLI-surface audit found no mismatch between top-level
+  `pilot-puppy help`, README/docs command references, and the public package,
+  plugin, and VERSION metadata. All three identity values remain `2.1.0` and
+  the package exposes only the `pilot-puppy` command. No source or runtime
+  change was needed; the consolidation decision remains the next move.
 
 ## Deferred proof (not a global blocker)
 
