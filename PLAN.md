@@ -77,7 +77,7 @@ Cursor without taking custody of credentials or conversations.
 
 - 2026-08-02: Established one product authority. Outcome, briefing, decision,
   privacy, and native-host behavior stay; unrelated machinery is removed.
-- 2026-08-02: Public core gate passes 76 Python tests, 3 JavaScript tests,
+- 2026-08-02: Public core gate passes 77 Python tests, 3 JavaScript tests,
   4 desktop/phone browser tests, docs build, privacy fixtures, and a reproducible
   51-file stranger install. Real host, restart, cross-repository, and remote
   release proof remain open.

@@ -84,7 +84,7 @@ class ReleasePackageTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, report)
         self.assertTrue(report["stranger_install"])
         self.assertTrue(report["reproducible"])
-        self.assertFalse(report["publishable"])
+        self.assertEqual(report["publishable"], not report["dirty_files"])
 
 
 if __name__ == "__main__":

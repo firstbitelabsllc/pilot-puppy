@@ -189,7 +189,13 @@ def resolve_plan(root: Path, value: Any) -> Path:
     relative = Path(value)
     if relative.is_absolute() or ".." in relative.parts:
         raise BrowserError("plan path must be relative")
-    candidate = (root / relative).resolve()
+    root = root.resolve()
+    candidate = root
+    for part in relative.parts:
+        candidate /= part
+        if candidate.is_symlink():
+            raise BrowserError("plan path must not contain symlinks")
+    candidate = candidate.resolve()
     try:
         candidate.relative_to(root)
     except ValueError as exc:
