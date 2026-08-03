@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 45
-- Outcome Updated At: 2026-08-03T18:55:06Z
+- Outcome Revision: 46
+- Outcome Updated At: 2026-08-03T18:57:33Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -273,6 +273,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T18:57:33Z: Closed the clean-clone Moussey invoice-authority
+  evidence prerequisite. After generating the expected local E2E bundle, the
+  current `origin/main@3c44bbec` helper returned `ok: true`,
+  `allDryRunsOk: true`, `privateFieldsRedacted: true`, and
+  `mutationPerformed: false`. Its ignored generated output lives in the
+  separate Snowcubes clone, whose Git worktree remains clean. The helper's
+  operator-gate state is not a partner-balance claim; Snowcubes
+  `audit-consignment-source-truth.py` remains the money/source authority.
 
 - 2026-08-03T18:55:06Z: The final receipt head is now
   `850068f6f108454098c69a31a6ea9ff18cf3b701`, and its fresh remote run is
