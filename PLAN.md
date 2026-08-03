@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 11
-- Outcome Updated At: 2026-08-03T16:27:00Z
+- Outcome Revision: 12
+- Outcome Updated At: 2026-08-03T16:31:00Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
 - Next: Review and merge the Python-gate fix, then re-run the installed doctor on primary; cross-host Codex proof remains deferred.
@@ -208,7 +208,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   shared Python resolver with a direct `python3` command. The e2e launcher now
   uses the same bounded helper and absolute project paths; 4 desktop/phone
   browser tests, 88 Python tests, 3 JavaScript tests, public-ready, and docs
-  pass on the corrected branch.
+  pass on the corrected branch. Clean release verification emits 53 files
+  with SHA-256 `fcc62b5d46f3193a60eed805758d8c1bda0f8c38848d7e59ba3046e6e7be9354`.
 
 ## Deferred proof (not a global blocker)
 
