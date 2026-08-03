@@ -78,6 +78,20 @@ class CheckpointTests(unittest.TestCase):
             self.assertEqual(plan.count("[receipt:"), 1)
             self.assertEqual(len(list((repo / ".pilot-puppy" / "evidence").glob("*.json"))), 1)
 
+    def test_checkpoint_receipt_stays_inside_progress_section(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = self.make_repo(Path(dirname))
+            plan = repo / "PLAN.md"
+            plan.write_text(
+                plan.read_text(encoding="utf-8")
+                + "\n- 2026-08-03: Existing proof.\n\n## Deferred proof\n\n- Resume later.\n",
+                encoding="utf-8",
+            )
+            result = self.run_checkpoint(repo)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            text = plan.read_text(encoding="utf-8")
+            self.assertLess(text.index("[receipt:"), text.index("## Deferred proof"))
+
     def test_blocked_checkpoint_records_blocker(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo = self.make_repo(Path(dirname))

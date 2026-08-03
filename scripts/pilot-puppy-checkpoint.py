@@ -143,9 +143,17 @@ def update_plan(text: str, task: str, status: str, progress: str, marker: str) -
     progress_index = next((i for i, line in enumerate(lines) if line.strip() == "## Progress"), None)
     if progress_index is None:
         lines.extend(["", "## Progress", ""])
-    elif progress_index == len(lines) - 1:
-        lines.append("")
-    lines.append(progress)
+        lines.append(progress)
+        return "\n".join(lines).rstrip() + "\n"
+
+    progress_end = next(
+        (i for i in range(progress_index + 1, len(lines)) if lines[i].startswith("## ")),
+        len(lines),
+    )
+    insert_at = progress_end
+    while insert_at > progress_index + 1 and not lines[insert_at - 1].strip():
+        insert_at -= 1
+    lines.insert(insert_at, progress)
     return "\n".join(lines).rstrip() + "\n"
 
 

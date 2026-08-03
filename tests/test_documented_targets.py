@@ -14,6 +14,13 @@ DOCUMENTS = (
     *sorted((ROOT / "docs").rglob("*.md")),
     *sorted((ROOT / "guides").rglob("*.md")),
 )
+PUBLIC_TEMPLATES = tuple(sorted((ROOT / ".github" / "ISSUE_TEMPLATE").glob("*.yml")))
+RETIRED_PUBLIC_REFERENCES = (
+    "pilot-puppy-loop.sh",
+    "pilot-puppy-checkpoint.sh",
+    "docs/reference/loop.md",
+    "DOCTRINE.md",
+)
 TARGET = re.compile(
     r"(?<![A-Za-z0-9_./-])"
     r"((?:assets|bin|browser|docs|examples|guides|hooks|references|schemas|scripts|tests)"
@@ -37,6 +44,15 @@ class DocumentedTargetTests(unittest.TestCase):
 
         self.assertTrue(documented, "expected at least one documented target")
         self.assertEqual([], missing, "documented targets must exist in this checkout")
+
+    def test_public_issue_templates_use_current_product_surfaces(self):
+        stale: list[str] = []
+        for document in PUBLIC_TEMPLATES:
+            text = document.read_text(encoding="utf-8")
+            for reference in RETIRED_PUBLIC_REFERENCES:
+                if reference in text:
+                    stale.append(f"{document.relative_to(ROOT)}: {reference}")
+        self.assertEqual([], stale, "public issue templates must not teach retired surfaces")
 
 
 if __name__ == "__main__":

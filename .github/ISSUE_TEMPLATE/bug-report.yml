@@ -17,8 +17,8 @@ body:
       label: Reproduction steps
       description: Include the command, file shape, or loop state that triggered the issue.
       placeholder: |
-        1. Run `/pilot-puppy "..."` in Claude Code
-        2. pilot-puppy-loop.sh outputs ...
+        1. Run `pilot-puppy status` or `pilot-puppy browse` in the repository.
+        2. If relevant, include the exact Pilot Puppy command and PLAN.md state.
         3. Expected X but got Y
     validations:
       required: true
