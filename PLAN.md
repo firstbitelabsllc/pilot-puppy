@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 91
-- Outcome Updated At: 2026-08-03T21:50:29Z
+- Outcome Revision: 92
+- Outcome Updated At: 2026-08-03T21:51:02Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate `4b5a4c3` (source head
-  `4f36a4b`): (A) promote
+- Next: Choose the consolidation path for candidate source head `4f36a4b`
+  (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
   clarified. Read-only audit shows #99 is a separate portfolio-level PLAN,
@@ -655,8 +655,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   superseded deferred R5 row and the duplicate R7 row while retaining the
   completed seat-overlay, calibration, and promotion-pending rows. This is a
   plan-only cleanup; it changes no runtime behavior or proof surface.
-- 2026-08-03: Source head `4f36a4b` passed the full gate; the current plan-only
-  checkpoint is `58dfb15`:
+- 2026-08-03: Source head `4f36a4b` passed the full gate; later plan-only
+  checkpoints preserve that same verified runtime source:
   3 JavaScript tests, 172 Python tests (2 skipped), 6 desktop/phone browser
   tests, docs build, Ruff, zero high-severity npm audit findings, the 101-file
   public-ready scan, and 64-file release verification with SHA-256
