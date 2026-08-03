@@ -12,13 +12,13 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 80
-- Outcome Updated At: 2026-08-03T21:17:18Z
+- Outcome Revision: 81
+- Outcome Updated At: 2026-08-03T21:19:10Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `78e75fd` for promotion into canonical
-  mainline; hosted checks cover source through `78e75fd`, and no merge, release,
-  or deployment claim is made yet.
+- Next: Reconcile candidate source `78e75fd` with open PRs #99, #105, and #106
+  before promotion into canonical mainline; hosted checks cover this source,
+  and no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -574,6 +574,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   that exact source head. These are source, clean-install, and hosted-check
   proofs only; no PR review, merge, release, deployment, or runtime claim
   changed.
+- 2026-08-03: Thermo/Ponytail branch-topology review found no new code defect,
+  but promotion is not mechanically safe yet. Candidate source overlaps open
+  PR #99 on `PLAN.md`, PR #105 on `PLAN.md` and release/Python-gate surfaces,
+  and PR #106 on `PLAN.md` and host-receipt surfaces. A three-way dry run over
+  `origin/main` reports `PLAN.md` conflicts for each open branch. PR #111 is
+  already merged into the candidate base. Keep one canonical plan and do not
+  open a duplicate candidate PR until the owner chooses a consolidation or
+  stack order. All sibling branches remain untouched.
 - 2026-08-03: A fresh clone was fast-forwarded to candidate head `1524797`
   and reran `npm ci` (186 packages, zero vulnerabilities) plus the full
   clean-install proof: 3 JavaScript tests, 167 Python tests (2 skipped), 6
