@@ -12,21 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 117
-- Outcome Updated At: 2026-08-03T23:00:18Z
+- Outcome Revision: 118
+- Outcome Updated At: 2026-08-03T23:01:32Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `a60f996`
-  (plan-only checkpoints follow on the owned branch): (A) promote
-  this candidate through one reviewed PR, (B) update the existing sibling PRs
-  from this candidate, or (C) leave the siblings open while ownership is
-  clarified. The candidate now has local, clean-clone, installed-artifact,
-  hosted CI/Secret Scan, and real Codex sealed-task proof. Read-only audit
-  still shows #99 as a separate portfolio-level PLAN, #105's Python-floor
-  behavior as superseded here by the shared helper plus single-source
-  dispatcher refactor, #106's receipt hardening as present in the stronger
-  candidate host boundary, and #95 overlapping #105. No sibling branch was
-  edited; no merge, release, or deployment claim is made yet.
+- Next: Choose A/B/C consolidation path for candidate `a60f996` before any external PR action.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate
@@ -923,6 +913,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   browser returned `/api/health`, `/api/plans`, and `/` successfully before a
   clean foreground shutdown. This proves the install-to-first-brief path;
   native host execution and consolidation remain separate decisions.
+
+- 2026-08-03: Tightened the authoritative Operator Brief `Next` field to one
+  concise line within the 280-character projection contract. The full A/B/C
+  consolidation context remains in this ledger and the decision boundary is
+  unchanged; this fixes the browser/CLI projection without changing runtime
+  routing or execution behavior.
 
 ## Deferred proof (not a global blocker)
 
