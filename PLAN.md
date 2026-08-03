@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 118
-- Outcome Updated At: 2026-08-03T23:01:32Z
+- Outcome Revision: 119
+- Outcome Updated At: 2026-08-03T23:02:49Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose A/B/C consolidation path for candidate `a60f996` before any external PR action.
@@ -919,6 +919,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   consolidation context remains in this ledger and the decision boundary is
   unchanged; this fixes the browser/CLI projection without changing runtime
   routing or execution behavior.
+
+- 2026-08-03: Refreshed the consolidation topology against `origin/main@601c37c`.
+  Main added only the merged Operator Brief contract correction; no runtime
+  source drift was found. #99 now has a newer dirty PLAN-only head, and #105,
+  #106, and #95 remain dirty drafts. The owned candidate still has no PR; no
+  sibling branch, PR, merge, release, or deployment action was taken.
 
 ## Deferred proof (not a global blocker)
 
