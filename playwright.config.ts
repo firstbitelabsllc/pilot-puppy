@@ -23,7 +23,7 @@ export default defineConfig({
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 900 } } },
-    { name: 'phone', use: { ...devices['iPhone 14'], viewport: { width: 390, height: 844 } } },
+    { name: 'phone', use: { ...devices['Pixel 7'], viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
     command: `python3 browser/server.py --no-open --root ${JSON.stringify(LIVE_ROOT)} --port ${PORT}`,
