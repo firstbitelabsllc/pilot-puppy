@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 9
-- Outcome Updated At: 2026-08-03T16:19:00Z
+- Outcome Revision: 10
+- Outcome Updated At: 2026-08-03T16:21:56Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Review the host-receipt privacy fix, then re-run the installed proof on primary; cross-host Codex proof remains deferred.
+- Next: Review and merge the host-receipt privacy fix, then re-run the installed proof on primary; cross-host Codex proof remains deferred.
 - Decision ID: choose-local-path
 - Decision: What should Pilot Puppy do while the remote computer is unavailable?
 - Option A ID: local-dogfood
@@ -199,6 +199,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   control characters, unknown test fields, and invalid test statuses fail
   closed before `.pilot-puppy/evidence/` is written. Focused host tests pass;
   full local and remote gates remain the resume proof for this row.
+- 2026-08-03: Draft PR #106 carries the receipt privacy fix on current `main`;
+  the remote Python 3.10/3.12/3.14 matrix, browser/docs, public-ready,
+  gitleaks, and CodeQL checks all pass. The branch is mergeable but not merged
+  or released; primary doctor remains the installed-surface proof after review.
 
 ## Deferred proof (not a global blocker)
 
