@@ -172,16 +172,45 @@ def project_proof(document: Mapping[str, Any]) -> list[dict[str, Any]]:
     return projected
 
 
+def _ensure_unique_ids(
+    outcome: Mapping[str, Any],
+    ask: Mapping[str, Any] | None,
+    proof: list[Mapping[str, Any]],
+) -> None:
+    seen: dict[str, str] = {}
+
+    def add(value: str, label: str) -> None:
+        previous = seen.get(value)
+        if previous is not None:
+            raise DecisionInputError(f"{label} duplicates {previous}")
+        seen[value] = label
+
+    add(outcome["id"], "outcome.id")
+    if ask is not None:
+        add(ask["id"], "ask.id")
+        for index, option in enumerate(ask["options"]):
+            add(option["id"], f"ask.options[{index}].id")
+    for index, item in enumerate(proof):
+        add(item["id"], f"proof[{index}].id")
+
+
 def project_decision(value: Any) -> dict[str, Any]:
     document = outcome_document(value)
     outcome = project_outcome(document)
+    ask = project_ask(document, outcome)
+    proof = project_proof(document)
+    if outcome["state"] == "finished_with_proof" and not any(
+        item["delivery"] == "delivered" for item in proof
+    ):
+        raise DecisionInputError("finished_with_proof requires delivered proof")
+    _ensure_unique_ids(outcome, ask, proof)
     return {
         "schema": DECISION_SCHEMA,
         "revision": document["revision"],
         "updated_at": document["updated_at"],
         "outcome": outcome,
-        "ask": project_ask(document, outcome),
-        "proof": project_proof(document),
+        "ask": ask,
+        "proof": proof,
     }
 
 

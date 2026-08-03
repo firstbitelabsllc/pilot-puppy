@@ -65,6 +65,32 @@ class DecisionModeTests(unittest.TestCase):
                 with self.assertRaises(decision.DecisionInputError):
                     decision.project_decision(source)
 
+    def test_state_and_identifier_invariants_match_validator(self) -> None:
+        mutations = (
+            lambda source: (
+                source["outcome"].update({"state": "finished_with_proof"}),
+                source.__setitem__("ask", None),
+                source["proof"][0].update({"delivery": "not_delivered"}),
+            ),
+            lambda source: source["ask"].update({"id": source["outcome"]["id"]}),
+            lambda source: source["ask"]["options"][0].update({"id": source["proof"][0]["id"]}),
+            lambda source: source["proof"].append(copy.deepcopy(source["proof"][0])),
+        )
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                source = document()
+                mutation(source)
+                with self.assertRaises(decision.DecisionInputError):
+                    decision.project_decision(source)
+
+    def test_finished_state_accepts_delivered_proof(self) -> None:
+        source = document()
+        source["outcome"]["state"] = "finished_with_proof"
+        source["ask"] = None
+        result = decision.project_decision(source)
+        self.assertEqual(result["outcome"]["state"], "finished_with_proof")
+        self.assertEqual(result["proof"][0]["delivery"], "delivered")
+
     def test_choice_is_closed_and_typed(self) -> None:
         result = decision.build_choice(document(), "full-review")
         self.assertEqual(
