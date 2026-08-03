@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 10
-- Outcome Updated At: 2026-08-03T16:14:23Z
+- Outcome Revision: 11
+- Outcome Updated At: 2026-08-03T16:27:00Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
 - Next: Review and merge the Python-gate fix, then re-run the installed doctor on primary; cross-host Codex proof remains deferred.
@@ -204,6 +204,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   hermetic low-bare test now proves the versioned interpreter is selected.
   The 88-test Python suite, 3 JavaScript tests, public-ready scan, docs build,
   4 desktop/phone browser tests, and development package verification pass.
+- 2026-08-03: The cold audit found Playwright's web server still bypassed the
+  shared Python resolver with a direct `python3` command. The e2e launcher now
+  uses the same bounded helper and absolute project paths; 4 desktop/phone
+  browser tests, 88 Python tests, 3 JavaScript tests, public-ready, and docs
+  pass on the corrected branch.
 
 ## Deferred proof (not a global blocker)
 
