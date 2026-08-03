@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -54,6 +56,12 @@ class PublicReadyTests(unittest.TestCase):
 
     def test_current_metadata_is_consistent(self) -> None:
         self.assertEqual(mod.metadata_errors(ROOT), [])
+
+    def test_git_paths_reject_invalid_utf8_without_traceback(self) -> None:
+        result = subprocess.CompletedProcess(["git"], 0, stdout=b"?? invalid-\xff\0", stderr=b"")
+        with mock.patch.object(mod.subprocess, "run", return_value=result):
+            with self.assertRaisesRegex(RuntimeError, "unsafe path text"):
+                mod.git_paths(Path("."))
 
 
 if __name__ == "__main__":

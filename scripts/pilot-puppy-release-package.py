@@ -158,7 +158,10 @@ def tracked_files(root: Path) -> set[str]:
     result = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, check=False)
     if result.returncode:
         raise RuntimeError("git ls-files failed")
-    return {item.decode("utf-8") for item in result.stdout.split(b"\0") if item}
+    try:
+        return {item.decode("utf-8") for item in result.stdout.split(b"\0") if item}
+    except UnicodeDecodeError:
+        raise RuntimeError("git ls-files returned unsafe path text") from None
 
 
 def dirty_files(root: Path) -> set[str]:

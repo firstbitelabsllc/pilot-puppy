@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -86,6 +87,12 @@ class ReleasePackageTests(unittest.TestCase):
         self.assertTrue(report["stranger_install"])
         self.assertTrue(report["reproducible"])
         self.assertFalse(report["publishable"])
+
+    def test_tracked_files_reject_invalid_utf8_without_traceback(self) -> None:
+        result = subprocess.CompletedProcess(["git"], 0, stdout=b"invalid-\xff\0", stderr=b"")
+        with mock.patch.object(mod.subprocess, "run", return_value=result):
+            with self.assertRaisesRegex(RuntimeError, "unsafe path text"):
+                mod.tracked_files(ROOT)
 
 
 if __name__ == "__main__":

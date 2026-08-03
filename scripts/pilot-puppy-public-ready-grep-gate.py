@@ -34,7 +34,10 @@ def git_paths(root: Path) -> list[Path]:
     )
     if result.returncode:
         raise RuntimeError(result.stderr.decode(errors="replace").strip() or "git ls-files failed")
-    return [root / item.decode("utf-8") for item in result.stdout.split(b"\0") if item]
+    try:
+        return [root / item.decode("utf-8") for item in result.stdout.split(b"\0") if item]
+    except UnicodeDecodeError:
+        raise RuntimeError("git ls-files returned unsafe path text") from None
 
 
 def working_paths(root: Path) -> list[Path]:
