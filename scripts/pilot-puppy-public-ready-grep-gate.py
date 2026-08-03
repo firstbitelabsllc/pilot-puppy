@@ -27,13 +27,16 @@ SECRET = re.compile(
 
 
 def git_paths(root: Path) -> list[Path]:
-    result = subprocess.run(
-        ["git", "-C", str(root), "ls-files", "-z"],
-        capture_output=True,
-        check=False,
-    )
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "ls-files", "-z"],
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        raise RuntimeError("git ls-files unavailable") from None
     if result.returncode:
-        raise RuntimeError(result.stderr.decode(errors="replace").strip() or "git ls-files failed")
+        raise RuntimeError("git ls-files failed")
     try:
         return [root / item.decode("utf-8") for item in result.stdout.split(b"\0") if item]
     except UnicodeDecodeError:
@@ -74,8 +77,8 @@ def metadata_errors(root: Path) -> list[str]:
         package = json.loads((root / "package.json").read_text(encoding="utf-8"))
         plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
         version = (root / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
-    except (OSError, json.JSONDecodeError, IndexError) as exc:
-        return [f"metadata unreadable: {exc}"]
+    except (OSError, json.JSONDecodeError, IndexError):
+        return ["metadata unreadable"]
     errors = []
     if package.get("name") != "pilot-puppy":
         errors.append("package name must be pilot-puppy")

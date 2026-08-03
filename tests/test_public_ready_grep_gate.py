@@ -85,6 +85,21 @@ class PublicReadyTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "unsafe path text"):
                 mod.git_paths(Path("."))
 
+    def test_failure_details_do_not_echo_private_paths(self) -> None:
+        failed = subprocess.CompletedProcess(
+            ["git"], 1, stdout=b"", stderr=b"/Users/private/secret"
+        )
+        with mock.patch.object(mod.subprocess, "run", return_value=failed):
+            with self.assertRaisesRegex(RuntimeError, "^git ls-files failed$"):
+                mod.git_paths(Path("."))
+
+        with mock.patch.object(mod.subprocess, "run", side_effect=OSError("/Users/private/secret")):
+            with self.assertRaisesRegex(RuntimeError, "^git ls-files unavailable$"):
+                mod.git_paths(Path("."))
+
+        with mock.patch.object(Path, "read_text", side_effect=OSError("/Users/private/secret")):
+            self.assertEqual(mod.metadata_errors(Path("/tmp/repo")), ["metadata unreadable"])
+
 
 if __name__ == "__main__":
     unittest.main()
