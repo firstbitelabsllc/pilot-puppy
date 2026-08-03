@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 71
-- Outcome Updated At: 2026-08-03T20:52:10Z
+- Outcome Revision: 72
+- Outcome Updated At: 2026-08-03T20:54:30Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `212d234` for promotion into canonical
+- Next: Review candidate source at `d392921` for promotion into canonical
   mainline; hosted workflow proof still ends at `ccdcece`, and no merge, release,
   or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
@@ -512,6 +512,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   (160 tests, 2 skipped); Ruff, the 100-file public-ready scan, whitespace
   checks, and release packaging pass. The current 63-file package SHA-256 is
   `a28bf174a5b766b3432185502c0271ac5fb46f2a8acbb85645e95ecddea3f025`.
+  Hosted CI has not run for this source change because no PR was opened.
+- 2026-08-03: Commit `d392921` redacts raw Git stderr and launch exceptions
+  from checkpoint failures, returning stable `Git command failed` or `Git
+  command unavailable` messages. The focused checkpoint tests and full Python
+  suite pass (161 tests, 2 skipped); Ruff, the 100-file public-ready scan,
+  whitespace checks, and release packaging pass. The current 63-file package
+  SHA-256 is
+  `60bd2e339ef8d40e30e0e217d16574767bf55db482284cd0278ceee0f82d5679`.
   Hosted CI has not run for this source change because no PR was opened.
 
 ## Deferred proof (not a global blocker)
