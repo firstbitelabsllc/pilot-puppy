@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 18
-- Outcome Updated At: 2026-08-03T18:31:50Z
+- Outcome Revision: 19
+- Outcome Updated At: 2026-08-03T18:56:58Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Add one route-bound, private local seat overlay for explicit native model selection. It must be absent from the browser, status, plans, route packets, and attempt receipts; it must not create a cloud executor, credential relay, queue, daemon, watcher, or transcript store. Cross-host Codex proof remains deferred and does not block local delegation.
+- Next: Use the generic local roster for the next bounded task. Configure an optional exact native selector with `pilot-puppy seat set` only after choosing that selector locally in the owning native tool; no provider discovery or cost/quality claim is made. Cross-host Codex proof remains deferred and does not block local delegation.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -137,11 +137,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] R4: Keep rerouting and independent criticism at an evidence
   boundary. A `review` route remains a manual critic decision; the lead starts
   any new route explicitly and retains final proof/acceptance.
-- [in_progress] R5: Add a local private seat overlay because a real native-tool
+- [completed] R5: Add a local private seat overlay because a real native-tool
   setup needs more than the generic role/host roster. It may select only a
   validated model flag for a ready, route-bound native host; it must stay
-  owner-local and outside browser/status, plans, route evidence, attempt
-  receipts, packages, and stranger installs. It may never hold credentials,
+  owner-local, with its configuration absent from browser/status, plans, route
+  evidence, attempt receipts, packages, and stranger installs. It may never hold credentials,
   prompts, provider payloads, profile guesses, or arbitrary command arguments.
 - [completed] R6: Prove the default `planner`, `bulk`, `debug`, and `hard-ic`
   route shapes without launch, and publish their honest calibration boundary.
@@ -177,6 +177,16 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03: R5 is complete. `seat init`, `seat set`, and `seat show` maintain
+  a strict owner-local selector overlay for an existing enabled roster slot;
+  `host run --use-seat` requires a sealed route and fails before host launch if
+  the mapping is absent, stale, unsafe, or mismatched. The selected model or
+  Codex profile enters only the native argv and is rejected from receipts.
+  Generic roles, routes, browser/status, plans, package contents, and stranger
+  installs remain selector-free. The full gate passed: 136 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 98-file
+  public-source scan, and a reproducible 63-file package with SHA-256
+  `f372fd76c0d93b9d72baf9cb90d4319121ab1a3a2a0bd90772e55b2257c0153f`.
 - 2026-08-03: The generic roster alone cannot express the requested named local
   seats. Installed Codex, Claude Code, and Cursor-native CLIs each expose a
   model-selection flag, so R5 now implements a local-only, route-bound model
