@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 110
-- Outcome Updated At: 2026-08-03T22:36:00Z
+- Outcome Revision: 111
+- Outcome Updated At: 2026-08-03T22:37:10Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `f01b751`
@@ -843,6 +843,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   doctor path details stay in its explicitly local diagnostic report. No source
   change was needed; the branch remains clean and the consolidation decision
   remains the exact next move.
+
+- 2026-08-03: A native-host boundary audit covered task-file failures, route
+  binding, allowed-path enforcement, receipt extraction, selector redaction,
+  symlink checks, and local roster behavior. The focused host/route/seat/roster
+  suite passes 75 tests; task and route failures remain stable and public-safe,
+  and private selector values stay out of receipt fields. No source change was
+  needed; the candidate is still waiting only on consolidation choice.
 
 ## Deferred proof (not a global blocker)
 
