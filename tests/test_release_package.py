@@ -106,6 +106,11 @@ class ReleasePackageTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "^npm command unavailable$"):
                 mod.command(["npm", "pack"], ROOT)
 
+    def test_malformed_metadata_fails_without_traceback(self) -> None:
+        with mock.patch.object(Path, "read_text", return_value="[]\n"):
+            with self.assertRaisesRegex(RuntimeError, "^metadata unreadable$"):
+                mod.verify(ROOT)
+
 
 if __name__ == "__main__":
     unittest.main()

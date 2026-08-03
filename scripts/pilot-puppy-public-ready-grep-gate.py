@@ -79,6 +79,8 @@ def metadata_errors(root: Path) -> list[str]:
         version = (root / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
     except (OSError, json.JSONDecodeError, IndexError):
         return ["metadata unreadable"]
+    if not isinstance(package, dict) or not isinstance(plugin, dict):
+        return ["metadata unreadable"]
     errors = []
     if package.get("name") != "pilot-puppy":
         errors.append("package name must be pilot-puppy")

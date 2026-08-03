@@ -231,8 +231,17 @@ def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
         payload = run(args)
-    except (CheckpointError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+    except CheckpointError as exc:
         print(f"pilot-puppy checkpoint: {exc}", file=sys.stderr)
+        return 1
+    except OSError:
+        print("pilot-puppy checkpoint: filesystem unavailable", file=sys.stderr)
+        return 1
+    except UnicodeError:
+        print("pilot-puppy checkpoint: input encoding invalid", file=sys.stderr)
+        return 1
+    except json.JSONDecodeError:
+        print("pilot-puppy checkpoint: receipt is invalid", file=sys.stderr)
         return 1
     if args.json:
         print(json.dumps(payload, indent=2, sort_keys=True))

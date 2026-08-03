@@ -78,7 +78,13 @@ def normalize(value: str) -> str:
 
 
 def source_version(root: Path) -> str:
-    return (root / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
+    try:
+        value = (root / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
+    except (OSError, UnicodeError, IndexError):
+        raise RuntimeError("VERSION unreadable") from None
+    if not value:
+        raise RuntimeError("VERSION unreadable")
+    return value
 
 
 def forbidden(path: str) -> bool:
@@ -214,8 +220,13 @@ def stranger_install(tarball: Path, root: Path, expected_version: str) -> None:
 
 
 def verify(root: Path, *, expected_version: str | None = None, allow_dirty: bool = False) -> dict[str, Any]:
-    package = json.loads((root / "package.json").read_text(encoding="utf-8"))
-    plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+    try:
+        package = json.loads((root / "package.json").read_text(encoding="utf-8"))
+        plugin = json.loads((root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        raise RuntimeError("metadata unreadable") from None
+    if not isinstance(package, dict) or not isinstance(plugin, dict):
+        raise RuntimeError("metadata unreadable")
     version = source_version(root)
     with tempfile.TemporaryDirectory(prefix="pilot-puppy-release-") as dirname:
         temp = Path(dirname)

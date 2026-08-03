@@ -79,6 +79,15 @@ class PublicReadyTests(unittest.TestCase):
     def test_current_metadata_is_consistent(self) -> None:
         self.assertEqual(mod.metadata_errors(ROOT), [])
 
+    def test_metadata_with_non_objects_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            (root / "package.json").write_text("[]\n", encoding="utf-8")
+            (root / ".claude-plugin").mkdir()
+            (root / ".claude-plugin" / "plugin.json").write_text("{}\n", encoding="utf-8")
+            (root / "VERSION").write_text("2.1.0\n", encoding="utf-8")
+            self.assertEqual(mod.metadata_errors(root), ["metadata unreadable"])
+
     def test_git_paths_reject_invalid_utf8_without_traceback(self) -> None:
         result = subprocess.CompletedProcess(["git"], 0, stdout=b"?? invalid-\xff\0", stderr=b"")
         with mock.patch.object(mod.subprocess, "run", return_value=result):

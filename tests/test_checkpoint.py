@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from unittest import mock
 
 
@@ -145,6 +147,17 @@ class CheckpointTests(unittest.TestCase):
         with mock.patch.object(checkpoint.subprocess, "run", side_effect=OSError("/Users/private/secret")):
             with self.assertRaisesRegex(checkpoint.CheckpointError, "^Git command unavailable$"):
                 checkpoint.git(Path("/tmp/repo"), "status")
+
+    def test_filesystem_failures_do_not_echo_private_details(self) -> None:
+        output = io.StringIO()
+        with mock.patch.object(checkpoint, "run", side_effect=OSError("/Users/private/secret")):
+            with redirect_stderr(output):
+                result = checkpoint.main(
+                    ["/tmp/private/PLAN.md", "Prove the result", "summary", "--proof", "test"]
+                )
+        self.assertEqual(result, 1)
+        self.assertEqual(output.getvalue().strip(), "pilot-puppy checkpoint: filesystem unavailable")
+        self.assertNotIn("/Users/private/secret", output.getvalue())
 
 
 if __name__ == "__main__":
