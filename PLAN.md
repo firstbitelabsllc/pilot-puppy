@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 112
-- Outcome Updated At: 2026-08-03T22:41:41Z
+- Outcome Revision: 113
+- Outcome Updated At: 2026-08-03T22:48:35Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `6fee9e7`
+- Next: Choose the consolidation path for candidate source head `a60f996`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -30,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate
-  `6fee9e7` has exact local, clean-clone, hosted CI/Secret Scan, isolated
+  `a60f996` has exact local, clean-clone, hosted CI/Secret Scan, isolated
   install/doctor, and real Codex sealed-task proof; Claude/Cursor receipts also
   pass. It is not merged or released.
 - Proof Delivery: delivered
@@ -873,6 +873,24 @@ Code, or Cursor without taking custody of credentials or conversations.
   `__pycache__` in the inspected worktree. The receipt remains local evidence;
   no lead-acceptance, PR, merge, release, deployment, or runtime claim changed.
 
+- 2026-08-03: Release-contract audit found that the new local lint wrapper and
+  its shared Python resolver were not required files in the packed-artifact
+  verifier. Commit `a60f996` adds both paths to `REQUIRED_FILES` and adds a
+  regression. The exact source gate passes 178 Python tests (2 skipped), 3
+  JavaScript tests, 6 desktop/phone browser tests, docs, public-ready,
+  `npm run lint:python`, audit, and release verification for a 65-file package
+  with SHA-256
+  `4164be353c5f06d8a314aa75d6973ed4054d92b3fecc91299b56c159017e6724`.
+
+- 2026-08-03: A fresh clone at exact head `a60f996` passed the full
+  clean-install gate. Hosted CI run `30859851376` and Secret scan run
+  `30859852474` both passed for that exact head. An isolated npm-packed
+  install reported version `2.1.0` and doctor returned 11 checks, zero
+  failures, and zero warnings. The same sealed Codex task returned `status:
+  ok`, changed only `proof/codex-sealed.txt`, passed lead reproduction, and
+  left no `__pycache__` in the inspected worktree. No PR, merge, release,
+  deployment, or runtime claim changed.
+
 ## Deferred proof (not a global blocker)
 
 - The other-computer route is deferred by host availability. Resume only when
@@ -882,7 +900,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
-- Local native-host execution is now proven on candidate head `6fee9e7`: the
+- Local native-host execution is now proven on candidate head `a60f996`: the
   Codex sealed task returned `status: ok`, changed only its allowed path, and
   passed lead reproduction. A binary/version probe is not a substitute for
   that receipt. If the target Mac becomes available, the same task may be
