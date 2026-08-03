@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 9
-- Outcome Updated At: 2026-08-03T16:08:10Z
+- Outcome Revision: 10
+- Outcome Updated At: 2026-08-03T16:14:23Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Use the local CLI, browser, and npm gates now; Python selection no longer depends on a bare 3.9, while cross-host Codex proof remains deferred.
+- Next: Review and merge the Python-gate fix, then re-run the installed doctor on primary; cross-host Codex proof remains deferred.
 - Decision ID: choose-local-path
 - Decision: What should Pilot Puppy do while the remote computer is unavailable?
 - Option A ID: local-dogfood
@@ -194,6 +194,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   `PILOT_PUPPY_BROWSER_HOST`, and `PILOT_PUPPY_BROWSER_PORT`, and explicit flags
   win over environment defaults. Two hermetic tests cover the status path and
   parser precedence; full gates remain the resume proof for this row.
+- 2026-08-03: Draft PR #105 carries the shared Python resolver on top of current
+  `main`; the remote Python 3.10/3.12/3.14 matrix, browser/docs, public-ready,
+  gitleaks, and CodeQL checks all pass. The branch is mergeable but not merged
+  or released; primary doctor remains the installed-surface proof after review.
 - 2026-08-03: The Python floor now has one resolver shared by the CLI, direct
   browser launcher, and npm Python gates. A pinned failing bare `python3` used
   to make `npm run test:py` fail even when Python 3.14 was available; the
