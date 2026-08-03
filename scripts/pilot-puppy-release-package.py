@@ -36,12 +36,14 @@ REQUIRED_FILES = {
     "docs/reference/chief-of-staff.md",
     "docs/reference/native-hosts.md",
     "docs/reference/outcome-choice.md",
+    "docs/reference/roster.md",
     "examples/outcome-choice/example.json",
     "package.json",
     "schemas/chief-of-staff.v1.json",
     "schemas/decision-choice.v1.json",
     "schemas/decision-receipt.v1.json",
     "schemas/outcome-choice.v1.json",
+    "schemas/roster.v1.json",
     "scripts/pilot-puppy-checkpoint.py",
     "scripts/pilot-puppy-doctor.py",
     "scripts/pilot-puppy-host.py",
@@ -49,6 +51,7 @@ REQUIRED_FILES = {
     "scripts/pilot-puppy-outcome-validate.py",
     "scripts/pilot-puppy-public-ready-grep-gate.py",
     "scripts/pilot-puppy-release-package.py",
+    "scripts/pilot-puppy-roster.py",
     "scripts/pilot-puppy-status.py",
 }
 FORBIDDEN_ROOTS = {

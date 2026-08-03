@@ -1,6 +1,9 @@
 # Native hosts
 
 Pilot Puppy supports `codex`, `claude-code`, and `cursor`. You choose the host.
+Any future role selection can choose only one of those declared native-host
+surfaces; it cannot verify or guarantee the provider model or billing tier
+inside that host.
 
 Every run requires one exact clean Git worktree, one frozen task file, one task
 ID, and one or more exact allowed paths. Scope escape, missing receipt,
