@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Keep CLI and npm-gate runs from creating ignored bytecode in the worktree.
+export PYTHONDONTWRITEBYTECODE=1
+
 # Resolve the Python floor once for the direct browser launcher and npm gates.
 # A machine may keep a project-incompatible bare `python3` while a compatible
 # versioned interpreter is available on the same PATH.

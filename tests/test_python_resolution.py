@@ -104,6 +104,27 @@ class PythonResolutionTests(unittest.TestCase):
             self.assertIn(result.returncode, (0, 1))
             self.assertIn('"python"', result.stdout)
 
+    def test_cli_does_not_leave_bytecode_in_its_pilot_root(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname) / "pilot-puppy"
+            shutil.copytree(
+                ROOT,
+                root,
+                ignore=shutil.ignore_patterns(".git", "node_modules", "test-results", "__pycache__", ".ruff_cache"),
+            )
+            result = run_cli(
+                CLI,
+                "status",
+                "--json",
+                "--root",
+                str(root),
+                env={"PILOT_PUPPY_ROOT": str(root)},
+            )
+            bytecode = [path for path in root.rglob("__pycache__") if path.is_dir()]
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('"schema": "pilot-puppy.status.v1"', result.stdout)
+        self.assertEqual(bytecode, [])
+
     def test_versioned_interpreter_wins_over_low_bare_python3(self) -> None:
         candidates = [
             name

@@ -5,6 +5,10 @@
 #
 set -euo pipefail
 
+# The host seal rejects ignored files outside the assigned packet. Pilot Puppy
+# must not dirty the worktree it is inspecting with interpreter bytecode.
+export PYTHONDONTWRITEBYTECODE=1
+
 PILOT_PUPPY_SOURCE="${BASH_SOURCE[0]}"
 while [[ -L "${PILOT_PUPPY_SOURCE}" ]]; do
   PILOT_PUPPY_SOURCE_DIR="$(cd -P "$(dirname "${PILOT_PUPPY_SOURCE}")" && pwd)"
