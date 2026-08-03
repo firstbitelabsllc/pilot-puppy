@@ -150,7 +150,10 @@ def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
             raise HostError("git_status_invalid", "Git returned an invalid status record")
         if chr(entry[0]) in {"R", "C"} or chr(entry[1]) in {"R", "C"}:
             raise HostError("scope_violation", "renames are not accepted by the host packet")
-        path = entry[3:].decode("utf-8", errors="strict")
+        try:
+            path = entry[3:].decode("utf-8", errors="strict")
+        except UnicodeDecodeError:
+            raise HostError("worktree_unsealed", "worktree contains unsafe public path text") from None
         try:
             safe_path = validate_public_text(path, "worktree path", maximum=512)
         except RoutePacketError:

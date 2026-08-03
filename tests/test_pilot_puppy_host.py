@@ -320,6 +320,18 @@ class PilotPuppyHostTests(unittest.TestCase):
                 pilot_puppy_host.status_paths(repo)
             self.assertEqual(status_context.exception.kind, "worktree_unsealed")
 
+    def test_worktree_paths_reject_invalid_utf8_without_traceback(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname).resolve()
+            repo = make_repo(root)
+            result = subprocess.CompletedProcess(
+                ["git"], 0, stdout=b"?? invalid-\xff\0", stderr=b""
+            )
+            with mock.patch.object(pilot_puppy_host.subprocess, "run", return_value=result):
+                with self.assertRaises(pilot_puppy_host.HostError) as context:
+                    pilot_puppy_host.status_paths(repo)
+        self.assertEqual(context.exception.kind, "worktree_unsealed")
+
     def test_host_failure_details_do_not_echo_private_paths(self) -> None:
         private_marker = chr(47) + "Users/private"
         with mock.patch.object(pilot_puppy_host.subprocess, "run", side_effect=OSError(private_marker)):

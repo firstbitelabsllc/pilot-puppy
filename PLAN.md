@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 41
-- Outcome Updated At: 2026-08-03T19:35:20Z
+- Outcome Revision: 42
+- Outcome Updated At: 2026-08-03T19:37:13Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -330,6 +330,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Branch a7e0760 plus main 2f0de9a passed 137 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates in a disposable integration; package SHA-256 `6ed2329b5ee442bdcbc8b8b41b32ef235aed5781c677fc36b8b521469a0793f5`.
 - 2026-08-03: Native-host receipt parsing now bounds nested result envelopes and converts deeply nested JSON into a clean host-receipt failure instead of leaking a recursion traceback; the raw-object scan skips impossible starts so hostile nesting stays bounded. Focused host tests, 132 Python tests, 3 JavaScript tests, 4 browser tests, public-source, docs, and package gates pass on the branch.
 - 2026-08-03: A disposable candidate combining branch `de9283f` with `origin/main` `2f0de9a` passed 138 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates; package SHA-256 `235184b5e32c571121b9d1165a46272c09e4cbc971229bafeaa9f572135104d4`. No canonical main ref changed.
+- 2026-08-03: Git status path decoding now rejects invalid UTF-8 as `worktree_unsealed` instead of leaking a traceback; the current branch passes 133 Python, 3 JavaScript, 4 browser, public-source, and docs gates. Package verification follows the committed receipt.
 
 ## Deferred proof (not a global blocker)
 
