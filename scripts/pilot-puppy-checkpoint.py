@@ -47,14 +47,17 @@ def safe_field(value: str, label: str, *, required: bool = True) -> str:
 
 
 def git(repo: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(
-        ["git", "-C", str(repo), *args],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(repo), *args],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        raise CheckpointError("Git command unavailable") from None
     if check and result.returncode:
-        raise CheckpointError(result.stderr.strip() or "Git command failed")
+        raise CheckpointError("Git command failed")
     return result
 
 

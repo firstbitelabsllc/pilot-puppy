@@ -1,14 +1,23 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parent.parent
 CLI = ROOT / "bin" / "pilot-puppy"
+SCRIPT = ROOT / "scripts" / "pilot-puppy-checkpoint.py"
+SPEC = importlib.util.spec_from_file_location("checkpoint", SCRIPT)
+assert SPEC and SPEC.loader
+checkpoint = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = checkpoint
+SPEC.loader.exec_module(checkpoint)
 
 
 def git(repo: Path, *args: str) -> None:
@@ -124,6 +133,18 @@ class CheckpointTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("must not contain symlinks", result.stderr)
             self.assertEqual(list(outside.iterdir()), [])
+
+    def test_git_failures_do_not_echo_private_details(self) -> None:
+        failed = subprocess.CompletedProcess(
+            ["git"], 1, stdout="", stderr="/Users/private/secret"
+        )
+        with mock.patch.object(checkpoint.subprocess, "run", return_value=failed):
+            with self.assertRaisesRegex(checkpoint.CheckpointError, "^Git command failed$"):
+                checkpoint.git(Path("/tmp/repo"), "status")
+
+        with mock.patch.object(checkpoint.subprocess, "run", side_effect=OSError("/Users/private/secret")):
+            with self.assertRaisesRegex(checkpoint.CheckpointError, "^Git command unavailable$"):
+                checkpoint.git(Path("/tmp/repo"), "status")
 
 
 if __name__ == "__main__":
