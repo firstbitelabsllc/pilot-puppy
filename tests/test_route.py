@@ -383,6 +383,10 @@ class RouteTests(unittest.TestCase):
         for forbidden in ("model", "provider", "account", "quota", "credential", "prompt", "transcript", "path", "command"):
             self.assertNotIn(forbidden, rendered)
         text_pattern = re.compile(schema["$defs"]["route_text"]["pattern"])
+        blank_pattern = re.compile(schema["$defs"]["route_text"]["not"]["pattern"])
+        for value in (" ", "   "):
+            with self.subTest(blank=value):
+                self.assertIsNotNone(blank_pattern.fullmatch(value))
         for value in (
             "path:/Users/person/private",
             "see(/tmp/private)",
@@ -413,6 +417,8 @@ class RouteTests(unittest.TestCase):
             "$HOME/private",
             "line\tbreak",
             "line\nbreak",
+            " ",
+            "   ",
             "gh" + "p_" + "12345678901234567890",
             "Be" + "arer " + "abcdefghijklmnopqrst",
             "-" * 5 + "BEGIN " + "PRIVATE " + "KEY" + "-" * 5,

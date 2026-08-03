@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 17
-- Outcome Updated At: 2026-08-03T17:56:30Z
+- Outcome Revision: 18
+- Outcome Updated At: 2026-08-03T18:38:27Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -142,6 +142,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Keep the packaged route schema's public text bounds aligned with
   runtime route validation, including private paths, control characters, and
   secret-shaped strings.
+- [completed] Reject blank route text in the packaged schema as well as the
+  runtime validator, with regression coverage for both paths.
 - [deferred] R5: Add a local private seat overlay only if a real native-tool
   setup cannot express the generic role/host roster. It must stay owner-local
   and outside source, browser/status, route evidence, packages, and stranger
@@ -301,6 +303,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Route schema and runtime validation share a printable, path-safe text boundary; HTTPS locators remain valid and focused parity tests pass.
 - 2026-08-03: Route schema/runtime parity audit found control-character drift; runtime now rejects tabs/newlines before normalization, with focused tests covering both consumers.
 - 2026-08-03: The public route text rules now match across the checked surfaces, with ordinary HTTPS proof links preserved.
+- 2026-08-03: Blank route text now fails both validation paths; the complete test, browser, docs, public-source, and package gates pass.
 
 ## Deferred proof (not a global blocker)
 
