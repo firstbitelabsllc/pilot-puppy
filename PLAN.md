@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 26
-- Outcome Updated At: 2026-08-03T18:56:51Z
+- Outcome Revision: 27
+- Outcome Updated At: 2026-08-03T18:57:17Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -316,6 +316,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Host adapter failures now return generic details; 124 Python, 3 JavaScript, 4 browser, public-source, and docs gates pass.
 - 2026-08-03: Clean 2.1.0 package verification passes after failure-detail hardening: 61 files, SHA-256 `0e59a00fc7506cdaf83a905bdee2e53f7cad178ca39c59967ce902c70b155d67`.
 - 2026-08-03: Host probe output now applies the same public wording rule; 125 Python, 3 JavaScript, 4 browser, public-source, and docs gates pass.
+- 2026-08-03: Clean 2.1.0 package verification passes after probe-output hardening: 61 files, SHA-256 `22072247f2727caaa970acf79b3f32e0ec8ed385e7a9be561d420f885c8e3a78`.
 
 ## Deferred proof (not a global blocker)
 
