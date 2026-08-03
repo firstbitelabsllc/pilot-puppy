@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 82
-- Outcome Updated At: 2026-08-03T21:25:16Z
+- Outcome Revision: 83
+- Outcome Updated At: 2026-08-03T21:28:33Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Reconcile candidate source `78e75fd` with open PRs #99, #105, and #106
+- Next: Reconcile candidate source `ef330d6` with open PRs #99, #105, and #106
   before promotion into canonical mainline; hosted checks cover this source,
   and no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
@@ -603,6 +603,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   public-source and dirty-package verification also pass. The fix is local
   source/test proof only and still awaits consolidation with open PRs #99,
   #105, and #106.
+- 2026-08-03: Clean clone at exact head `ef330d6` reran `npm ci` (186 packages,
+  zero vulnerabilities), the full 3-JavaScript, 169-Python (3 skipped), and
+  6 desktop/phone browser gate, docs, Ruff, public-source, high-severity npm
+  audit, and reproducible 63-file package verification with SHA-256
+  `e9d8c85af4d24c0ee53b00ecc534b94e3b7cf5d918778279e199f0d3c267d49c`.
+  Hosted CI run `30854702344` and Secret Scan run `30854703926` pass the same
+  exact head. These are source, clean-install, and hosted-check proofs only;
+  no PR, review, merge, release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
