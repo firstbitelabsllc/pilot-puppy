@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 24
-- Outcome Updated At: 2026-08-03T17:21:50Z
+- Outcome Revision: 25
+- Outcome Updated At: 2026-08-03T17:31:40Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, cleaner host-resource, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -30,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@c16d1f93` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, active cleaner resource readback, focused source/test receipts, and live public-surface readbacks.
+- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@c16d1f93` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, active cleaner resource readback, Codex Security CLI dry-run receipts, focused source/test receipts, and live public-surface readbacks.
 - Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; current Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
@@ -119,6 +119,19 @@ Code, or Cursor without taking custody of credentials or conversations.
   two low findings are confined to the Shopify CLI dev chain; forcing the
   breaking CLI upgrade is not justified. PR #1567 is OPEN/CLEAN with
   Graphite mergeability passing; no merge or deployment is claimed.
+- **Codex Security CLI:** the official `@openai/codex-security@0.1.5` command
+  passed input-only dry-runs against clean current revisions of Pilot Puppy,
+  Star67, Snowcubes, and Moussey. One bounded Pilot Puppy standard scan
+  authenticated and started, but was canceled after producing no findings
+  receipt because the host was already resource-constrained. No Codex Security
+  finding or remediation is claimed; existing CodeQL, gitleaks, npm audit, and
+  focused source-security receipts remain the authoritative completed checks.
+- **Host credential privacy:** a names-only local process audit observed
+  credential-bearing arguments in existing MCP launchers. Secret values are
+  intentionally not recorded. No process was restarted or killed; the exact
+  remaining predicate is owner-approved credential rotation followed by safe
+  relaunch through an environment/keyring channel that does not expose values
+  in process arguments.
 - **External gates:** GitHub repository name/homepage/topic settings, other-computer access, and native Codex
   quota remain explicit deferred predicates, not global blockers.
 
@@ -127,6 +140,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Local by default; loopback browser only.
 - Evidence is project-bounded, retention-bounded, and free of credentials,
   prompts, transcripts, provider payloads, and absolute private paths.
+- Credential-bearing process arguments are a host privacy defect, not evidence;
+  never copy them into receipts or plans. Rotation/relaunch remains an
+  owner-controlled security action.
 - Writes are atomic and idempotent. Host work is limited to an exact worktree
   and explicit allowed paths. Scope escape fails closed.
 - Git history is preserved with ordinary forward commits.
@@ -182,6 +198,19 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:31:40Z: Reused the official Codex Security CLI rather than
+  adding a scanner surface. Version `0.1.5` loaded successfully; clean-revision
+  `scan . --dry-run --format json` passed for Pilot Puppy `396ae544`, Star67
+  `1277dd8`, Snowcubes `c16d1f93`, and Moussey `3c44bbec`. A real standard
+  Pilot scan authenticated and entered the scan phase, then was canceled after
+  no findings output because the host resource gate was already red. Partial
+  state was kept outside the repos, no finding was accepted, and the temporary
+  worktrees were removed. The existing CodeQL/gitleaks/npm-audit/source proofs
+  remain current. The same read-only host audit exposed credential-bearing MCP
+  process arguments; values were not recorded and no owner process was touched.
+  Resume security with owner-approved credential rotation/relaunch, then rerun
+  the Codex scan only after the host resource gate is green.
 
 - 2026-08-03T17:21:50Z: Re-read all named portfolio refs, open PRs, live
   surfaces, and canonical plan rows. Pilot Puppy PR #99 is OPEN/CLEAN at
