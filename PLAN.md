@@ -12,13 +12,13 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 79
-- Outcome Updated At: 2026-08-03T21:13:15Z
+- Outcome Revision: 80
+- Outcome Updated At: 2026-08-03T21:17:18Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `72bca68` for promotion into canonical
-  mainline; hosted checks cover source through plan-only head `df116a8`, and no
-  merge, release, or deployment claim is made yet.
+- Next: Review candidate source at `78e75fd` for promotion into canonical
+  mainline; hosted checks cover source through `78e75fd`, and no merge, release,
+  or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -564,6 +564,16 @@ Code, or Cursor without taking custody of credentials or conversations.
   `e045906328c772064c25df22fd064850df2262807e434746c6ff5278a67009ce`.
   This remains source, test, and package proof only; no PR, review, merge,
   release, deployment, or runtime claim changed.
+- 2026-08-03: The final encoding-boundary fix is `78e75fd`. A fresh clone at
+  that exact source head reran `npm ci` (186 packages, zero vulnerabilities),
+  3 JavaScript tests, 168 Python tests (2 skipped), 6 desktop/phone browser
+  tests, docs, Ruff, the 100-file public-ready scan, zero high-severity npm
+  audit findings, and the reproducible 63-file package with SHA-256
+  `fd059d389d5ae35ade7cdfb9ae0f6fbea5fa6da57b49054a8a7bdafa413a5b83`.
+  Hosted CI run `30853921807` and Secret scan run `30853923319` both pass for
+  that exact source head. These are source, clean-install, and hosted-check
+  proofs only; no PR review, merge, release, deployment, or runtime claim
+  changed.
 - 2026-08-03: A fresh clone was fast-forwarded to candidate head `1524797`
   and reran `npm ci` (186 packages, zero vulnerabilities) plus the full
   clean-install proof: 3 JavaScript tests, 167 Python tests (2 skipped), 6
