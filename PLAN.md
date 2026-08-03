@@ -111,7 +111,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Make plan-derived Outcome projection fail closed on the shared canonical decision contract.
 - [completed] Keep Chief-of-Staff plan-brief text public-safe across paths, Unicode, tokens, and fragments.
 - [completed] Keep browser status usable when optional progress text is unsafe.
-- [in_progress] Keep progress prose short and proof separate in browser briefs.
+- [completed] Keep progress prose short and proof separate in browser briefs.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -222,6 +222,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Plan-derived Outcome projection now validates through the shared closed decision contract Proof: 96 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, clean release package SHA-256 `b4eb44de3f40604d17b0fd851a9c8683e7a22f0f02bc81d1c9821d138792f7af`, and doctor pass [receipt:30072918a4e726b6]
 - 2026-08-03: Chief-of-Staff plan-brief overlays now reject paths, Unicode controls, token shapes, and fragmented secrets Proof: 97 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, clean release package SHA-256 `2bb0e9a85c54bc5033775eef635aad3e29f7753fba996547fb9a1276974935c3`, and doctor pass [receipt:81ed46d6da69254a]
 - 2026-08-03: Browser status now falls back to the canonical Outcome when advisory progress is unsafe Proof: 98 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, clean release package SHA-256 `5e807605e194407aaa981f8e81eca49c72ac94eab9307d18e97bada4b06591da`, and doctor pass [receipt:7bff8f022f13ab5f]
+- 2026-08-03: Browser briefs now keep changed prose concise and leave proof details on the proof surface Proof: 99 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, clean release package SHA-256 `28d5dfd673a18a6a50a05a84f0532c50b5265d7dfe93a667256434a5d2900c6d`, and doctor pass [receipt:89b2aad99f47e93b]
 
 ## Deferred proof (not a global blocker)
 
