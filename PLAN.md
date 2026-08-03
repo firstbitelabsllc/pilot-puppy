@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 44
-- Outcome Updated At: 2026-08-03T18:53:27Z
+- Outcome Revision: 45
+- Outcome Updated At: 2026-08-03T18:55:06Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -273,6 +273,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T18:55:06Z: The final receipt head is now
+  `850068f6f108454098c69a31a6ea9ff18cf3b701`, and its fresh remote run is
+  OPEN/CLEAN/MERGEABLE with CI 3.10/3.12/3.14, browser/docs, CodeQL,
+  gitleaks, public-ready, and Graphite passing; `[code]smith` is skipped for
+  the docs-only plan change. No merge or public-main readback is claimed.
 
 - 2026-08-03T18:53:27Z: Portfolio PR #99 reached its final post-push proof at
   `164644b37246df1cd7edf53162e27024fc3d12b2`: OPEN/CLEAN/MERGEABLE, with CI
@@ -793,7 +799,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   not force the breaking Shopify CLI upgrade just to claim zero total
   findings.
 - Pilot Puppy portfolio PR #99 is at
-  `164644b37246df1cd7edf53162e27024fc3d12b2`, OPEN/CLEAN/MERGEABLE. At the
+  `850068f6f108454098c69a31a6ea9ff18cf3b701`, OPEN/CLEAN/MERGEABLE. At the
   latest readback, Graphite, all required CI, CodeQL, gitleaks, browser/docs,
   and public-ready checks pass; `[code]smith` is skipped for this docs-only
   receipt. Resume with the repository's external merge action, then read back
