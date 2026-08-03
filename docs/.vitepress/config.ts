@@ -15,6 +15,7 @@ const sidebar = [
       { text: 'Briefing', link: '/reference/chief-of-staff' },
       { text: 'A/B/C decisions', link: '/reference/decision-mode' },
       { text: 'Outcome contract', link: '/reference/outcome-choice' },
+      { text: 'Local roster', link: '/reference/roster' },
       { text: 'Native hosts', link: '/reference/native-hosts' },
       { text: 'Browser', link: '/reference/browser' },
       { text: 'Configuration', link: '/reference/config' },

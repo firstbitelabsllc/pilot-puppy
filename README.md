@@ -4,10 +4,10 @@
 
 Your chief of staff for AI coding work.
 
-Pilot Puppy tells you what matters, what is happening, what proof exists, and
-which A/B/C choice needs you. When work is ready, it can hand one sealed task
-to native Codex, Claude Code, or Cursor and validate the result without taking
-custody of your login or conversation.
+Pilot Puppy tells you what work is trying to achieve, what is happening, what
+proof exists, and which A/B/C choice needs you. It helps you name the right
+local role for a task, drives an existing native coding tool only when you ask,
+and reports the proof without taking custody of your login or conversation.
 
 It supports a project's own work lane; it is not a gate that pauses unrelated
 projects. One sealed task makes a handoff reviewable, while each project keeps
@@ -38,12 +38,20 @@ Start in the repository whose work you want to understand:
 
 ```bash
 pilot-puppy init --here
+pilot-puppy roster init
+pilot-puppy roster show
 pilot-puppy status
 pilot-puppy browse
 ```
 
 `PLAN.md` is durable authority. The loopback browser renders its current
 Outcome, one plain-language briefing, proof status, and up to three choices.
+
+`roster init` creates a generic local list of six work roles: `lead`,
+`planner`, `bulk`, `debug`, `critic`, and `hard-ic`. It is not a model picker
+or dispatch system. Associate those generic names with your own native-tool
+setup privately; the browser, project status, and receipts never contain that
+mapping. There is no `route` command yet.
 
 To run a bounded task, write the complete task to a file, choose one native
 host, and list the only paths it may change:
@@ -70,12 +78,18 @@ reproduces the proof.
 - Evidence is bounded to `.pilot-puppy/evidence/` inside the project.
 - Prompts, raw transcripts, credentials, provider payloads, and absolute
   private paths are not stored in receipts.
-- Pilot Puppy does not choose models, relay credentials, run a cloud worker,
-  watch in the background, or maintain a second queue.
+- The local roster is not project evidence and never feeds browser, status, or
+  receipts. Pilot Puppy does not collect provider, model, account, or quota
+  details for it.
+- Pilot Puppy does not relay credentials, run a cloud worker, watch in the
+  background, or maintain a second queue.
 
 ## Honest limitations
 
-- You choose the native host; Pilot Puppy does not optimize model routing.
+- You choose the native host. The shipped roster is setup/display only; an
+  explainable route command is not shipped yet.
+- A future role selector can choose only a declared role and native-host
+  surface; it cannot guarantee a host's proprietary model or billing tier.
 - Host availability and authentication remain owned by Codex, Claude Code, or
   Cursor.
 - A receipt is evidence to review, not automatic acceptance.
