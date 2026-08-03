@@ -101,7 +101,11 @@ def scan(root: Path, paths: list[Path], *, metadata: bool) -> dict:
             relative = path.relative_to(root).as_posix()
         except ValueError:
             continue
-        if not path.exists() or path.is_symlink():
+        if path.is_symlink():
+            findings.append({"file": relative, "line": 0, "reason": "symlinked release path"})
+            continue
+        if not path.exists():
+            findings.append({"file": relative, "line": 0, "reason": "missing release path"})
             continue
         if path.name in FORBIDDEN_NAMES or path.suffix.lower() in FORBIDDEN_SUFFIXES:
             findings.append({"file": relative, "line": 0, "reason": "forbidden release file"})

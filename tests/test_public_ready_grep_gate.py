@@ -54,6 +54,18 @@ class PublicReadyTests(unittest.TestCase):
         self.assertFalse(report["ok"])
         self.assertEqual(report["findings"][0]["reason"], "forbidden release file")
 
+    def test_symlinked_release_path_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname) / "repo"
+            root.mkdir()
+            outside = Path(dirname) / "outside.txt"
+            outside.write_text("safe public text\n", encoding="utf-8")
+            path = root / "README.md"
+            path.symlink_to(outside)
+            report = mod.scan(root, [path], metadata=False)
+        self.assertFalse(report["ok"])
+        self.assertEqual(report["findings"][0]["reason"], "symlinked release path")
+
     def test_current_metadata_is_consistent(self) -> None:
         self.assertEqual(mod.metadata_errors(ROOT), [])
 
