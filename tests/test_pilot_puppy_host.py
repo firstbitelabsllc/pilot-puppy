@@ -46,6 +46,13 @@ elif mode == "scope":
 elif mode == "ignored":
     pathlib.Path.cwd().joinpath(".env").write_text("ignored escape\n", encoding="utf-8")
     changed = []
+elif mode == "symlink":
+    target = pathlib.Path.cwd().parent.joinpath("outside-target.txt")
+    target.write_text("escape\n", encoding="utf-8")
+    link = pathlib.Path.cwd().joinpath("src", "link.txt")
+    link.parent.mkdir(exist_ok=True)
+    link.symlink_to(target)
+    changed = ["src/link.txt"]
 else:
     changed = []
 
@@ -135,6 +142,7 @@ def run_host(
     output: Path,
     *,
     host: str = "cursor",
+    allowed_path: str = "result.txt",
     route_file: str | None = None,
     roster_file: Path | None = None,
     force: bool = False,
@@ -154,7 +162,7 @@ def run_host(
         "--task-id",
         "add-proof",
         "--allowed-path",
-        "result.txt",
+        allowed_path,
         "--out",
         str(output),
         "--json",
@@ -608,6 +616,50 @@ class PilotPuppyHostTests(unittest.TestCase):
             payload = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual(payload["status"], "blocked")
             self.assertEqual(payload["blocked"]["kind"], "scope_violation")
+
+    def test_preexisting_symlink_is_rejected_before_host_launch(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            outside = root / "outside-target.txt"
+            outside.write_text("base\n", encoding="utf-8")
+            link = repo / "linked.txt"
+            link.symlink_to(outside)
+            git(repo, "add", "linked.txt")
+            git(repo, "commit", "-qm", "add tracked link")
+            binary = make_host(root)
+            task = root / "task.txt"
+            task.write_text("Do the bounded task.\n", encoding="utf-8")
+            output = repo / ".pilot-puppy" / "evidence" / "attempt.json"
+            result = run_host(repo, binary, task, output)
+            payload = json.loads(result.stdout)
+            output_written = output.exists()
+            result_contents = (repo / "result.txt").read_text(encoding="utf-8")
+
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(payload["blocked"]["kind"], "worktree_unsealed")
+        self.assertFalse(output_written)
+        self.assertEqual(result_contents, "base\n")
+
+    def test_symlink_created_under_allowed_path_is_rejected_after_run(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            (repo / "src").mkdir()
+            (repo / "src" / "keep.txt").write_text("base\n", encoding="utf-8")
+            git(repo, "add", "src/keep.txt")
+            git(repo, "commit", "-qm", "add source directory")
+            binary = make_host(root, mode="symlink")
+            task = root / "task.txt"
+            task.write_text("Do the bounded task.\n", encoding="utf-8")
+            output = repo / ".pilot-puppy" / "evidence" / "attempt.json"
+            result = run_host(repo, binary, task, output, allowed_path="src")
+            payload = json.loads(result.stdout)
+            link_exists = (repo / "src" / "link.txt").is_symlink()
+
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(payload["blocked"]["kind"], "worktree_unsealed")
+        self.assertTrue(link_exists)
 
     def test_output_must_stay_in_project_evidence(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:

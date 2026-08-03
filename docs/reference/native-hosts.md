@@ -14,5 +14,9 @@ the frozen task's SHA-256, not its prompt or provider output. If a route packet
 is provided, its task hash, roster revision/hash, and host must match before
 launch.
 
+Worktrees containing symlinked paths are rejected before launch and after the
+host returns. Keep bounded host tasks on regular files and directories so the
+Git path audit cannot be bypassed through a link to another location.
+
 Pre-existing ignored files must be inside an allowed path or the bounded local
 evidence directory. This keeps ignored files inside the same scope audit.

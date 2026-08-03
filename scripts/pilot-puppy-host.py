@@ -159,6 +159,19 @@ def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
     return paths
 
 
+def reject_worktree_symlinks(repo: Path) -> None:
+    """Reject link paths that could bypass the Git path-scope audit."""
+
+    for current, directories, files in os.walk(repo, followlinks=False):
+        current_path = Path(current)
+        for name in [*directories, *files]:
+            if name == ".git":
+                continue
+            if (current_path / name).is_symlink():
+                raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
+        directories[:] = [name for name in directories if name != ".git"]
+
+
 def local_state_snapshot(repo: Path) -> dict[str, str]:
     state = repo / ".pilot-puppy"
     evidence = state / "evidence"
@@ -633,6 +646,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     exact_git_root(repo)
     allowed = normalize_allowed(repo, args.allowed_path)
     destination = validate_output_path(repo, args.out)
+    reject_worktree_symlinks(repo)
     try:
         task, task_sha256 = frozen_task_sha256(Path(args.task_file).expanduser())
     except TaskError as exc:
@@ -678,6 +692,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         blocked_reason: dict[str, str] | None = None
         host_receipt: dict[str, Any] | None = None
         try:
+            reject_worktree_symlinks(repo)
             if result.get("timed_out"):
                 raise HostError("host_timeout", "host exceeded the bounded execution timeout")
             if result.get("launch_error"):
