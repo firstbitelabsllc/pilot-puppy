@@ -11,29 +11,32 @@ Cursor without taking custody of credentials or conversations.
 
 ## Operator Brief
 
-- Outcome ID: nicole-public-apps-finish-20260803
-- Outcome Revision: 7
-- Outcome Updated At: 2026-08-03T15:52:00Z
+- Outcome ID: cross-computer-resplit-cycle-20260803
+- Outcome Revision: 8
+- Outcome Updated At: 2026-08-03T15:53:44Z
 - Outcome State: working
-- Outcome: Make Nicole's two public apps ready to share and hand off: an
-  any-job, local-first Job Hunt Board and the browser-local Star67/Pivot SQL
-  learning desk. Keep the experience simple, truthful, useful to a non-coder,
-  and easy to install. Pilot Puppy is only the durable brief and execution
-  aid; it is not the product under test.
-- Next: Fresh-read the two public `main` refs, reproduce one highest-impact
-  user-facing defect or false claim, and make the smallest coherent repair.
-  If neither surface has a reproduced defect, stop without inventing work and
-  leave the next observation as the resume point.
-- Proof ID: nicole-public-apps-finish-20260803
-- Proof: `finance-job-board@d993537d` and `pivot-sql@0721078`, their focused
-  test/browser receipts, and current local/public UI readbacks.
-- Proof Summary: the Board is category-neutral and its refresh copy is
-  truthful; Pivot's local-only SQL boundary, authored coaching, progress, and
-  public launch path are proven. Remaining work must be a reproduced UX,
-  accessibility, performance, setup, or trust issue—not a feature wish list.
+- Outcome: Make Pilot Puppy the verified cross-computer execution surface for
+  the next Resplit/native development cycle. Keep it as the existing brief,
+  proof, and native-host handoff tool; do not add a second execution layer or
+  turn it into the product under development.
+- Next: Obtain a real second-computer handoff receipt. Clone the public
+  repository, install it, mount the canonical skill, run `pilot-puppy doctor`,
+  read the target project's `PLAN.md`, and record host, revision, mount source,
+  doctor result, and next move here. Then rerun the identical sealed native
+  Codex task after the named quota reset and reproduce its exact proof locally.
+- Proof ID: cross-computer-resplit-cycle-20260803
+- Proof: a fresh target-host identity/revision/doctor/mount/target-plan
+  receipt; one sealed native-host receipt with `status: ok`, exact allowed-path
+  change, passing proof command, and lead reproduction; and the named Codex
+  reset predicate if that gate is still waiting.
+- Proof Summary: local doctor and green PR checks are readiness evidence only.
+  Completion requires host-verified handoff and separately execution-proven
+  sealed work; merged, released, host-verified, and lead-reproduced remain
+  distinct claims.
 - Proof Delivery: product code and source receipts remain separate from merged,
-  deployed, live, and proven state. Repository ownership transfer is not part
-  of this goal.
+  deployed, live, host-verified, and lead-reproduced state. The next Resplit
+  task remains owned by its canonical project plan; this plan records only the
+  handoff and execution evidence.
 
 ## Tool boundary
 
@@ -78,8 +81,10 @@ Cursor without taking custody of credentials or conversations.
   local configuration boundaries, and current launch links are the source of
   truth. No Nicole-specific PII, LinkedIn session, or paid model belongs in
   either public repo.
-- **Pilot Puppy portability: PARKED.** The release is proven; other-computer
-  testing is optional tooling work and must not displace the two products.
+- **Pilot Puppy portability: ACTIVE / WAITING ON TARGET ACCESS.** The release
+  and local doctor are proven, but the cross-computer handoff is not. This
+  objective is about making the existing surface usable for the next Resplit
+  cycle, not adding a new Pilot Puppy feature.
 
 ## Privacy and safety
 
@@ -109,12 +114,12 @@ Cursor without taking custody of credentials or conversations.
 - [completed] Review the Pivot public release for one reproduced high-impact
   user harm; the local-only SQL guard and the full 183/183 browser proof are
   green, so no patch was warranted and the product slice is closed.
-- [in progress] Review and finish the two public Nicole apps from their exact
-  current refs. Repair one reproduced high-impact issue at a time, then run
-  the smallest real UI and repository proof before deciding whether another
-  slice exists.
-- [parked] Pilot Puppy cross-host portability remains available as tooling work
-  only when a real product task needs it; do not spend the goal on a host test.
+- [completed] Review the two public Nicole apps from their exact current refs;
+  leave their existing product proofs intact and do not invent another slice
+  while the platform handoff is unresolved.
+- [in progress] Verify the fresh second-computer Pilot Puppy handoff for the
+  next Resplit/native cycle, then rerun the identical sealed Codex task after
+  its named quota reset and reproduce the proof from the lead checkout.
 
 ## Mechanical proof required for this outcome
 
@@ -133,19 +138,33 @@ Cursor without taking custody of credentials or conversations.
   mechanics, not a reason to polish a broken flow.
 - Public history contains no personal data, credentials, raw transcripts, paid
   runtime dependency, or private absolute path.
-- Pilot Puppy receipts are optional execution evidence only; they never replace
-  lead reproduction in the product repository.
+- A fresh target-host receipt must include host identity, exact revision,
+  install, canonical skill mount source, doctor result, target `PLAN.md`
+  readback, and the next move. A host receipt is not acceptance by itself.
+- The sealed native Codex gate must be the same task after the named reset,
+  return `status: ok`, change only its allowed path, pass its proof command,
+  and be reproduced from the lead checkout. A version probe or quota
+  projection is not execution proof.
 
 ## Progress
 
-- 2026-08-03T15:52:00Z: Replaced the broad portfolio outcome with the actual
-  Nicole handoff goal: finish the public any-job Job Hunt Board and the public
-  Star67/Pivot SQL desk. Current authorities are
+- 2026-08-03T15:53:44Z: Revalidated the active cross-computer gate. The saved
+  target `Leos-Macbook-M4-Pro` resolves on the local network and answers one
+  ICMP ping, but a read-only SSH probe in `BatchMode` timed out on port 22.
+  A fresh Jump Desktop attempt stayed at `Connecting...`; the viewer log
+  records `No route to host` on TURN/STUN and then a closed RTC session. The
+  target is therefore reachable enough to identify but not reachable enough
+  to produce a shell or native-host receipt. No clone, install, doctor, mount,
+  target-plan readback, or sealed-task execution is claimed. Resume predicate:
+  obtain a working target shell or remote UI, then run the documented
+  clone/install/mount/doctor bootstrap and record the exact host receipt.
+- Historical 2026-08-03T15:52:00Z: A product-focused Nicole handoff outcome
+  was briefly recorded and is superseded by the active cross-computer cycle
+  above. Its existing product proofs remain evidence, not current scope.
+  The recorded authorities were
   `finance-job-board@d993537d` and `pivot-sql@0721078`. Pilot Puppy
   portability, Snowcubes, Moussey, LinkedIn automation, paid runtime models,
-  and speculative bug-count work are outside this goal. Resume by reproducing
-  one high-impact UX, setup, accessibility, performance, or trust problem in
-  one of the two apps; if none reproduces, keep the green release unchanged.
+  and speculative bug-count work are outside that superseded outcome.
 - 2026-08-03T15:49:34Z: Fresh second-computer reachability attempt used the
   saved Jump Desktop profile for `Leos-Macbook-M4-Pro`. The viewer stayed on
   `Connecting...`; the local Jump log records `No route to host` for the
@@ -270,12 +289,14 @@ Cursor without taking custody of credentials or conversations.
   passing proof command. Do not run a host against the dirty Android lane or
   turn its source/JVM receipt into runtime proof.
 - **Other-computer access: WAITING IN THIS SESSION.** The saved target profile
-  is `Leos-Macbook-M4-Pro`, but a fresh Jump attempt remains at
-  `Connecting...`; the viewer log reports `No route to host` and a closed RTC
-  session. No second-computer shell or native-host session is reachable here.
-  Resume with the exact bootstrap in `docs/guide/other-computer-handoff.md`
-  after the target accepts a connection, then record host identity, revision,
-  mount source, doctor result, target `PLAN.md` readback, and the next move.
+  is `Leos-Macbook-M4-Pro`; its local-network name answers ICMP, but a read-only
+  `ssh -o BatchMode` probe times out on port 22. A fresh Jump attempt remains
+  at `Connecting...`; the viewer log reports `No route to host` on TURN/STUN
+  and a closed RTC session. No second-computer shell or native-host session is
+  reachable here. Resume with the exact bootstrap in
+  `docs/guide/other-computer-handoff.md` after a target shell or remote UI
+  accepts a connection, then record host identity, revision, mount source,
+  doctor result, target `PLAN.md` readback, and the next move.
 - The source and bootstrap are not code-blocked. The current gap is the
   target-specific frozen task packet and clean target revision. **Need:** a
   task ID/hash plus a second-computer receipt with `status: ok`, exact
