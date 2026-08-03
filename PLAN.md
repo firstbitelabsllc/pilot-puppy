@@ -12,12 +12,13 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 65
-- Outcome Updated At: 2026-08-03T20:37:20Z
+- Outcome Revision: 66
+- Outcome Updated At: 2026-08-03T20:42:39Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review the workflow-tested candidate source at `ccdcece` for promotion
-  into canonical mainline; no merge, release, or deployment claim is made yet.
+- Next: Review candidate source at `9949ce6` for promotion into canonical
+  mainline; hosted workflow proof still ends at `ccdcece`, and no merge, release,
+  or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -474,6 +475,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   (2 skipped), Ruff, the 100-file public-ready scan, release packaging, and
   whitespace checks; all passed. Hosted source proof remains tied to `ccdcece`
   because this head is plan-only.
+- 2026-08-03: Commit `9949ce6` makes the public-ready scan fail closed on
+  tracked symlink paths instead of silently following an external file. The
+  focused regression passes; the exact candidate content passes 157 Python
+  tests (2 skipped), 3 JavaScript tests, 6 browser checks, docs, Ruff, the
+  100-file public-ready scan, whitespace checks, and a 63-file package with
+  SHA-256 `7727d68d5377252bbbc124fc16088d5ddd0ed2489f619866bc7d5639ad59717a`.
+  Hosted CI has not run for this source change because no PR was opened.
 
 ## Deferred proof (not a global blocker)
 
