@@ -201,6 +201,10 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Public templates now match shipped commands Proof: 87 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, release package, and doctor all pass [receipt:c7b9f8e360ec14e7]
 - 2026-08-03: Checkpoint receipts remain in the Progress section Proof: 18 focused checkpoint/browser tests plus full verify, docs, E2E, release, and doctor gates pass [receipt:3c66fb780fc7353d]
 - 2026-08-03: Contributor guidance now points only to shipped files Proof: 88 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, dev release package, and doctor all pass [receipt:6b093d1938201fd9]
+- 2026-08-03: Exact pushed head `2a78ede` passes the clean release package
+  check with SHA-256 `ee668e04175217079f0d2eb30c9cba67d2f8e198ae8de08a341fc15066db342e`,
+  the full local gates, status projection, and 11/11 doctor; no merge or
+  release was performed.
 
 ## Deferred proof (not a global blocker)
 
