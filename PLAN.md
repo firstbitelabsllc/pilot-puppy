@@ -12,11 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 87
-- Outcome Updated At: 2026-08-03T21:44:06Z
+- Outcome Revision: 88
+- Outcome Updated At: 2026-08-03T21:46:08Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate `f6a8362`: (A) promote
+- Next: Choose the consolidation path for candidate `77c62a0` (source head
+  `4f36a4b`): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
   clarified. Read-only audit shows #99 is a separate portfolio-level PLAN,
@@ -156,10 +157,6 @@ Code, or Cursor without taking custody of credentials or conversations.
   entries bounded and public-safe before they enter attempt evidence.
 - [completed] Keep the read-only host probe's version and executable-name
   projection bounded before it enters public output.
-- [deferred] R5: Add a local private seat overlay only if a real native-tool
-  setup cannot express the generic role/host roster. It must stay owner-local
-  and outside source, browser/status, route evidence, packages, and stranger
-  installs; it may never hold credentials, prompts, or provider payloads.
 - [completed] R6: Measure the four role shapes with sealed same-task proof;
   this release records an honest null result because the required comparable
   surfaces and evidence are not available. No performance claim is published.
@@ -178,9 +175,6 @@ Code, or Cursor without taking custody of credentials or conversations.
   separate clean worktrees. Report route, scope, proof, lead reproduction, and
   elapsed time or an honest null; never claim model quality, provider usage,
   tokens, cost, quota, or performance by assertion.
-- [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
-  fresh install, docs, loopback UI readback, package, privacy, and security
-  gates.
 - [completed] R8: Make local role routing usable without source spelunking:
   render the four work shapes in the loopback briefing and add one atomic local
   `roster prefer` command that reprioritizes only declared, enabled generic
@@ -657,6 +651,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   net Python-floor and public-safe receipt behavior, so blindly merging any
   sibling would risk regressing the current role/seat surface. Keep this as a
   disposition decision, not a branch rewrite or external PR action.
+- 2026-08-03: Normalized the current Work list after the audit: removed the
+  superseded deferred R5 row and the duplicate R7 row while retaining the
+  completed seat-overlay, calibration, and promotion-pending rows. This is a
+  plan-only cleanup; it changes no runtime behavior or proof surface.
 
 ## Deferred proof (not a global blocker)
 
