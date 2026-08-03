@@ -21,15 +21,18 @@ resolve_python() {
   fi
 
   local candidate
+  local resolved
   for candidate in $(compgen -c python3. | grep -E '^python3\.[0-9]+$' | sort -t. -k2,2nr -u) python3; do
-    if command -v "${candidate}" >/dev/null 2>&1 && python3_satisfies_floor "${candidate}"; then
-      command -v "${candidate}"
+    resolved="$(type -P "${candidate}" 2>/dev/null || true)"
+    if [[ -n "${resolved}" ]] && python3_satisfies_floor "${resolved}"; then
+      printf '%s\n' "${resolved}"
       return 0
     fi
   done
 
-  if command -v python3 >/dev/null 2>&1; then
-    echo "pilot-puppy ${command_name}: python3 on PATH is $(python3 -c 'import sys; print("%d.%d.%d" % sys.version_info[:3])' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
+  resolved="$(type -P python3 2>/dev/null || true)"
+  if [[ -n "${resolved}" ]]; then
+    echo "pilot-puppy ${command_name}: python3 on PATH is $(${resolved} -c 'import sys; print("%d.%d.%d" % sys.version_info[:3])' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
     echo "  Install a newer interpreter (kept alongside the existing one is fine) and re-run." >&2
   else
     echo "pilot-puppy ${command_name}: python3 not found on PATH." >&2

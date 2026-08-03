@@ -140,6 +140,32 @@ class PythonResolutionTests(unittest.TestCase):
         self.assertIn('"schema": "pilot-puppy.status.v1"', result.stdout)
         self.assertTrue(used)
 
+    def test_ignores_shell_function_named_like_versioned_interpreter(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            low = bin_dir / "python3"
+            low.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+            low.chmod(0o755)
+            bash_env = root / "bash-env"
+            bash_env.write_text("function python3.99() { return 0; }\n", encoding="utf-8")
+            result = subprocess.run(
+                [str(PYTHON), "--print"],
+                cwd=ROOT,
+                env={
+                    **os.environ,
+                    "PATH": f"{bin_dir}{os.pathsep}/usr/bin{os.pathsep}/bin",
+                    "BASH_ENV": str(bash_env),
+                    "PILOT_PUPPY_PYTHON": "",
+                },
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(result.returncode, 127)
+        self.assertIn("requires Python 3.10+", result.stderr)
+
     def test_direct_browse_launcher_uses_versioned_interpreter_when_bare_python3_is_low(self) -> None:
         candidates = [
             name
