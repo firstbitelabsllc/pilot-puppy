@@ -12,22 +12,25 @@ the product under test and it does not own either app's acceptance evidence.
 ## Operator Brief
 
 - Outcome ID: nicole-public-apps-finish-20260803
-- Outcome Revision: 9
-- Outcome Updated At: 2026-08-03T16:08:01Z
-- Outcome State: working
+- Outcome Revision: 11
+- Outcome Updated At: 2026-08-03T16:44:51Z
+- Outcome State: complete
 - Outcome: Finish only the highest-impact reproduced UX, setup, accessibility,
   performance, or trust problem in the two public apps. Keep the Board useful
   for any job, keep Pivot simple for non-coders, and preserve local-first,
   deterministic, privacy-safe boundaries.
-- Next: Read Pivot PR #1 checks and public source status. If the scoped hierarchy
-  repair is green, merge or leave the exact PR receipt; then re-read public main
-  and record the next one-line resume decision. If a check is red, repair only
-  the reproduced failure. Do not churn the already-green Board.
+- Next: Resume only for a newly reproduced high-impact defect. The current
+  product pass is closed; do not churn the already-green Board or add another
+  platform layer.
 - Proof ID: nicole-public-apps-finish-20260803
 - Proof: Board `finance-job-board@d993537d` has 228 Python tests and Chromium
-  E2E green. Pivot branch `fc2059c` has Node 22 contracts/build, current-source
-  183/183 browser smoke, crew visual proof, and diff proof green; its public
-  main remains `0721078` until PR #1 is accepted.
+  E2E green. Pivot PR #1 merged to public `main` as `1277dd8` after the
+  complete Chromium/Firefox/WebKit rerun passed; branch `fc2059c` also has
+  Node 22 contracts/build, current-source 183/183 browser smoke, crew visual
+  proof, and diff proof green. Correct-project Vercel deployment
+  `learn-pvr8tmzsh-leojkwans-projects.vercel.app` is READY and aliased to
+  `learn-sql-peach.vercel.app`; the production URL returned HTTP 200 with the
+  repaired hierarchy markers and security headers.
 - Proof Summary: source, merged, deployed, live, and proven states remain
   distinct. A Pilot Puppy doctor/host receipt is not product proof.
 - Proof Delivery: product code and source receipts remain separate from merged,
@@ -70,10 +73,17 @@ the product under test and it does not own either app's acceptance evidence.
   unsupported “this week” claim to “since last refresh” and merged to public
   `main` as `d993537d`. The 228 Python tests, Chromium smoke, all public CI
   lanes, and `git diff --check` pass.
-- **Star67/Pivot SQL: PUBLIC FRONT DOOR UPDATED.** README commit `0721078` is
-  pushed to `main` and puts `https://learn-sql-peach.vercel.app/` before local
-  setup. The live Vercel app is HTTP 200 with Star67 content and security
-  headers.
+- **Star67/Pivot SQL: PUBLIC FRONT DOOR, SOURCE HIERARCHY, AND HOSTED UI
+  UPDATED.** README
+  commit `0721078` put `https://learn-sql-peach.vercel.app/` before local
+  setup; PR #1 now makes Riff's task primary and Frosty visibly optional in
+  public `main` `1277dd8`. The prior hosted URL was HTTP 200 with Star67
+  content and security headers; the correct-project production deployment
+  `learn-pvr8tmzsh-leojkwans-projects.vercel.app` is READY and aliased to the
+  public launch URL. A live Chromium smoke readback confirmed
+  `Start here · Riff’s task` and the outlined `btn-ghost` Frosty action. The
+  one live smoke assertion that requires a localhost base is not applicable
+  to the hosted URL; the local production smoke remains 183/183 green.
 - **Nicole handoff: READY WITH A BOUNDED FINISH PASS.** Public setup paths,
   local configuration boundaries, and current launch links are the source of
   truth. No Nicole-specific PII, LinkedIn session, or paid model belongs in
@@ -114,8 +124,8 @@ the product under test and it does not own either app's acceptance evidence.
 - [completed] Review the two public Nicole apps from their exact current refs;
   leave their existing product proofs intact and do not invent another slice
   while the platform handoff is unresolved.
-- [in progress] Finish the current bounded Pivot hierarchy repair through its
-  PR/public-main readback, then close this product pass with the exact next
+- [completed] Finish the bounded Pivot hierarchy repair through its hosted
+  production readback, then close this product pass with the exact next
   decision recorded here. Keep the already-green Board unchanged.
 
 ## Mechanical proof required for this outcome
@@ -152,6 +162,27 @@ the product under test and it does not own either app's acceptance evidence.
   crew visual proof, and `git diff --check` pass. Resume by reading PR #1's
   checks, then re-read public main; do not add another queue, platform layer,
   Board patch, LinkedIn automation, paid runtime, or speculative bug list.
+- 2026-08-03T16:30:57Z: Pivot PR #1 passed the complete rerun (Chromium,
+  Firefox, and WebKit) and merged to public `main` as `1277dd8`. The bounded
+  fix makes `Start here · Riff's task` the clear primary directive and labels
+  Frosty `Optional coaching` with an outlined action. Local Node 22 contracts,
+  build, 183/183 smoke in Chromium and Firefox, crew visual proof, and diff
+  proof remain green. A production deployment was started against the
+  existing `learn-sql` Vercel project; its deployment URL is
+  `learn-pvr8tmzsh-leojkwans-projects.vercel.app` and is still building, so
+  no live UI claim is made yet. Resume by reading the production URL and then
+  `learn-sql-peach.vercel.app/`; close if the markers and headers match, or
+  record the exact deployment failure without changing product code.
+- 2026-08-03T16:44:51Z: The correct `learn-sql` Vercel deployment
+  `learn-pvr8tmzsh-leojkwans-projects.vercel.app` reached READY after its
+  normal deterministic build and was aliased to `learn-sql-peach.vercel.app`.
+  Fresh HTTP readback returned 200, HSTS, nosniff, and the repaired bundle;
+  live Chromium smoke confirmed `Start here · Riff’s task` and the outlined
+  Frosty action. The hosted smoke's one
+  localhost-only advisory assertion is not an app failure; local production
+  smoke remains 183/183 green. Both app sources, public main, hosted UI, and
+  plan receipt are now complete. Resume only for a newly reproduced
+  high-impact defect; do not add a platform layer or speculative bug queue.
 - 2026-08-03T15:53:44Z: Revalidated the active cross-computer gate. The saved
   target `Leos-Macbook-M4-Pro` resolves on the local network and answers one
   ICMP ping, but a read-only SSH probe in `BatchMode` timed out on port 22.
