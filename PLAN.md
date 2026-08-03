@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 70
-- Outcome Updated At: 2026-08-03T20:49:39Z
+- Outcome Revision: 71
+- Outcome Updated At: 2026-08-03T20:52:10Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `57f913f` for promotion into canonical
+- Next: Review candidate source at `212d234` for promotion into canonical
   mainline; hosted workflow proof still ends at `ccdcece`, and no merge, release,
   or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
@@ -504,6 +504,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   whitespace checks, and release packaging pass. The current 63-file package
   SHA-256 is
   `d27f580ae81811c952d1c563c2a8b9b8c87dae2bf157590bcaf42a0b701050ad`.
+  Hosted CI has not run for this source change because no PR was opened.
+- 2026-08-03: Commit `212d234` applies the same public-safe error boundary to
+  release packaging and Outcome validation. Release subprocess failures no
+  longer echo stderr or launch paths, and Outcome I/O errors return a stable
+  `input is unreadable` message. Focused tests and the full Python suite pass
+  (160 tests, 2 skipped); Ruff, the 100-file public-ready scan, whitespace
+  checks, and release packaging pass. The current 63-file package SHA-256 is
+  `a28bf174a5b766b3432185502c0271ac5fb46f2a8acbb85645e95ecddea3f025`.
   Hosted CI has not run for this source change because no PR was opened.
 
 ## Deferred proof (not a global blocker)
