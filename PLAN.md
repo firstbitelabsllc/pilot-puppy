@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 89
-- Outcome Updated At: 2026-08-03T21:49:09Z
+- Outcome Revision: 90
+- Outcome Updated At: 2026-08-03T21:49:43Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate `2be2290` (source head
+- Next: Choose the consolidation path for candidate `4b5a4c3` (source head
   `4f36a4b`): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
