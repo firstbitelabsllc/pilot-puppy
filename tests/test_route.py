@@ -7,6 +7,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -381,6 +382,11 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(schema["properties"]["schema"]["const"], route.ROUTE_SCHEMA)
         for forbidden in ("model", "provider", "account", "quota", "credential", "prompt", "transcript", "path", "command"):
             self.assertNotIn(forbidden, rendered)
+        text_pattern = re.compile(schema["$defs"]["route_text"]["pattern"])
+        for value in ("path:/Users/person/private", "see(/tmp/private)", "path:$HOME/private"):
+            with self.subTest(value=value):
+                self.assertIsNone(text_pattern.fullmatch(value))
+        self.assertIsNotNone(text_pattern.fullmatch("https://example.com/proof"))
 
     def test_route_text_rejects_punctuation_adjacent_private_paths_but_keeps_https(self) -> None:
         document = route.route_document(

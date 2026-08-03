@@ -41,7 +41,7 @@ ID_RE: Final = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 SHA256_RE: Final = re.compile(r"^[0-9a-f]{64}$")
 CONTROL_RE: Final = re.compile(r"[\x00-\x1f\x7f]")
 PRIVATE_PATH_RE: Final = re.compile(
-    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|"
+    r"(?:^|[^A-Za-z0-9])(?:~/|/Users/|/home/|/private/var/|file:///|"
     r"\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
     re.IGNORECASE,
 )

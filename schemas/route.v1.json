@@ -71,7 +71,7 @@
       "required": ["role", "when"],
       "properties": {
         "role": {"enum": ["lead", "planner", "bulk", "debug", "critic", "hard-ic"]},
-        "when": {"type": "string", "minLength": 1, "maxLength": 280}
+        "when": {"$ref": "#/$defs/route_text"}
       }
     },
     "execution": {
@@ -93,7 +93,7 @@
           "required": ["kind", "summary"],
           "properties": {
             "kind": {"enum": ["no_declared_slot", "no_available_slot"]},
-            "summary": {"type": "string", "minLength": 1, "maxLength": 280}
+            "summary": {"$ref": "#/$defs/route_text"}
           }
         }
       ]
@@ -212,6 +212,12 @@
     }
   ],
   "$defs": {
+    "route_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 280,
+      "pattern": "^(?!.*(?:^|[^A-Za-z0-9])(?:~/|/Users/|/home/|/private/var/|file:///|\\$HOME(?:[/\\\\]|$)|[A-Za-z]:[\\\\/]|\\\\\\\\))(?!.*(?:^|[^A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\\s\"']*)?)[\\u0020-\\u007E]+$"
+    },
     "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,63}$"},
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "requested_lead": {
