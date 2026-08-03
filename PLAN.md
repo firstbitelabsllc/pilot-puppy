@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 64
-- Outcome Updated At: 2026-08-03T20:35:42Z
+- Outcome Revision: 65
+- Outcome Updated At: 2026-08-03T20:37:20Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review the workflow-tested candidate source at `ccdcece` for promotion
@@ -470,6 +470,10 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: A fresh public-ready recheck found the disposable-candidate doctor
   receipt had copied a private absolute path into `PLAN.md`. The receipt now
   uses a checkout-neutral description; the source head remains unchanged.
+- 2026-08-03: On `d2ac235`, supported Python 3.14.6 reran 156 Python tests
+  (2 skipped), Ruff, the 100-file public-ready scan, release packaging, and
+  whitespace checks; all passed. Hosted source proof remains tied to `ccdcece`
+  because this head is plan-only.
 
 ## Deferred proof (not a global blocker)
 
