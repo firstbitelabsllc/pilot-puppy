@@ -59,6 +59,10 @@ class ReleasePackageTests(unittest.TestCase):
         pack["files"] = [item for item in pack["files"] if item["path"] != "bin/pilot-puppy"]
         self.assertTrue(any("missing" in error for error in self.errors(package, plugin, pack, tracked)))
 
+    def test_local_python_commands_are_required_in_the_packed_artifact(self) -> None:
+        self.assertIn("scripts/pilot-puppy-lint.sh", mod.REQUIRED_FILES)
+        self.assertIn("scripts/pilot-puppy-python.sh", mod.REQUIRED_FILES)
+
     def test_second_skill_or_private_stream_fails(self) -> None:
         package, plugin, pack, tracked = baseline()
         extras = ["nested/SKILL.md", "activity.jsonl"]
