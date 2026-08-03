@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 16
-- Outcome Updated At: 2026-08-03T17:53:51Z
+- Outcome Revision: 17
+- Outcome Updated At: 2026-08-03T17:56:30Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: R6 has an honest null result; no role-quality or usage claim is published without a controlled four-surface sealed run. Cross-host Codex proof remains deferred and does not block local delegation.
+- Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -149,6 +149,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
   fresh install, docs, loopback UI readback, package, privacy, and security
   gates.
+- [pending] Promote the route-packet public-text privacy hardening into
+  canonical mainline after review; branch proof is not release proof.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -292,6 +294,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   binary availability; and Codex execution is quota-blocked. A claim would be
   assertion, so measurement resumes only with a controlled four-surface sealed
   run.
+- 2026-08-03: Mainline release proof omitted route-packet path privacy hardening; branch `77972f4` restores it, but canonical promotion awaits review.
 
 ## Deferred proof (not a global blocker)
 
