@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 28
-- Outcome Updated At: 2026-08-03T17:49:09Z
+- Outcome Revision: 29
+- Outcome Updated At: 2026-08-03T17:53:23Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -31,7 +31,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
 - Proof: Star67 `main@1277dd8` with README `0721078`, current-main accessibility/plain-language proof, Snowcubes `origin/main@ecaa2b20` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec` with current consignment/security proof, active cleaner resource readback, Codex Security CLI dry-run receipts, Pilot Puppy `v2.1.0` public role-routing release readback, focused source/test receipts, and live public-surface readbacks.
-- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@ecaa2b20`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. Current Moussey `origin/main@3c44bbec` passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), 4 URL-boundary tests, 7 recorder tests, the consignment-surface check, production build, `npm audit --omit=dev` with 0 vulnerabilities, and clean diff proof. The Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain. On the Pilot Puppy lane itself, `v2.1.0` is public at `c7d63619` with a verified 61-file release asset and a fresh tag-clone/install/readback; real Claude Code and Cursor tasks pass and Codex execution stays quota-blocked.
+- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@ecaa2b20`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. Current Moussey `origin/main@3c44bbec` passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), 4 URL-boundary tests, 7 recorder tests, the consignment-surface check, production build, `npm audit --omit=dev` with 0 vulnerabilities, and clean diff proof. The Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain. On the Pilot Puppy lane itself, `v2.1.0` is public at `c7d63619` with a verified 61-file release asset and a fresh tag-clone/install/readback; real Claude Code and Cursor tasks pass and Codex execution stays quota-blocked. At the `17:53:23Z` readback, portfolio PR #99 is `defa64d8`; CI, CodeQL, gitleaks, public-ready, and `[code]smith` jobs are still running or queued, so it remains open and unmerged.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Platform boundary
@@ -141,8 +141,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - **Moussey cleaner:** the canonical photo-cleaner plan still has active
   MPCLEAN-254 host-survival work and MPCLEAN-253 real-media inspection work,
   under an existing Claude Code single-writer lease. The fresh read-only host
-  sample at `2026-08-03T17:21:04Z` reported 62% memory free but about 54.6 of
-  56.3 GiB swap used and only about 12 GiB root free. The approved disk-clean
+  sample at `2026-08-03T17:50:42Z` reports 63% memory free but about 51,017 of
+  52,224 MiB swap used, only about 23 GiB root free, and load averages of
+  11.67/10.97/12.28. The approved disk-clean
   dry run found only 51 MiB of DerivedData and no meaningful safe reclaim. The
   cleaner build/browser/media ladder is therefore paused; no process, cache,
   source, or personal-media mutation was attempted.
@@ -264,6 +265,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:53:23Z: Reconciled the portfolio ledger after Pilot Puppy
+  `v2.1.0` role-routing changes landed on the PR branch. The whole Outcome is
+  still active: Star67's admin metadata, Moussey authenticated runtime,
+  Snowcubes merge/deploy, cleaner host safety, credential rotation, and
+  cross-host portability remain separate predicates. PR #99 is at `defa64d8`
+  and its fresh CI/CodeQL/gitleaks/public-ready/[code]smith jobs are running or
+  queued; no merge or public-main claim is made. The latest host sample remains
+  unsafe for cleaner work (`63%` free memory, `51,017/52,224 MiB` swap used,
+  `23 GiB` root free, load `11.67/10.97/12.28`). No owner checkout, process,
+  merge, deployment, credential, or personal-media mutation was performed.
 
 - 2026-08-03T17:47:50Z: Reproduced current Moussey `origin/main@3c44bbec`
   consignment proof in a clean disposable worktree. `npm ci --include=dev
@@ -604,10 +616,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   deployed. Resume by merging it through the repository's normal review path,
   then rerun `npm ci`, high/production audit, and the focused gates. Do not
   force the breaking Shopify CLI upgrade just to claim zero total findings.
-- Pilot Puppy portfolio PR #99 is pushed and all required remote checks pass,
-  but it is still open. Resume with the repository's external merge action,
-  then read back `origin/main` and the public plan before treating the full
-  portfolio outcome as the public-main authority.
+- Pilot Puppy portfolio PR #99 is pushed at `defa64d8` and remains open. At the
+  latest readback, CI, CodeQL, gitleaks, public-ready, and `[code]smith` jobs
+  are still running or queued. Resume with the repository's external merge
+  action only after the required checks settle, then read back `origin/main`
+  and the public plan before treating the full portfolio outcome as the
+  public-main authority.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
