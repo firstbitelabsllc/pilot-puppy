@@ -11,29 +11,29 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Operator Brief
 
-- Outcome ID: ship-pilot-puppy
-- Outcome Revision: 8
-- Outcome Updated At: 2026-08-03T15:57:00Z
-- Outcome State: needs_input
-- Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Use the local CLI and browser now; Python selection no longer depends on a bare 3.9, while cross-host Codex proof remains deferred.
-- Decision ID: choose-local-path
-- Decision: What should Pilot Puppy do while the remote computer is unavailable?
-- Option A ID: local-dogfood
-- Option A: Run local dogfood
-- Option A Consequence: Use the browser and native local hosts to validate the current brief now.
-- Option B ID: local-product-row
-- Option B: Take the next local row
-- Option B Consequence: Ship the highest reachable product improvement without waiting on remote proof.
-- Option C ID: defer-cross-host
-- Option C: Defer cross-host proof
-- Option C Consequence: Resume when Jump Connect accepts the target or quota resets; no remote work is attempted now.
-- Proof ID: pilot-puppy-v2-public-readback
-- Proof: tests/
-- Proof Summary: v2.0.0 is public and fresh-clone/install/readback passes; real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
-- Proof Delivery: delivered
+- Outcome ID: portfolio-product-closeout-20260803
+- Outcome Revision: 9
+- Outcome Updated At: 2026-08-03T16:20:00Z
+- Outcome State: working
+- Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
+- Next: Resume each lane from its canonical plan and current ref. Continue reachable work without waiting on the other computer or native-Codex quota. The immediate open item is the owner-admin GitHub repository update: rename `nlau1193/pivot-sql` to `star67-learn-sql` and set its public homepage/topics; product verification continues independently.
+- Decision ID: choose-reachable-portfolio-work
+- Decision: What deserves action next across the portfolio?
+- Option A ID: continue-reachable-lanes
+- Option A: Continue reachable lanes
+- Option A Consequence: Advance Star67, Moussey, Snowcubes, security, and handoff work from their own plans while preserving owner boundaries.
+- Option B ID: close-source-truth-receipts
+- Option B: Close source-truth receipts
+- Option B Consequence: Reconcile current refs, tests, deployed surfaces, and proof ledgers before any new feature work.
+- Option C ID: defer-external-gates
+- Option C: Defer external gates
+- Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
+- Proof ID: portfolio-product-closeout-20260803
+- Proof: Star67 `0721078`, Snowcubes `origin/main@1a2b5c6f`, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
+- Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures.
+- Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
-## Product boundary
+## Platform boundary
 
 - One product, repository, package, command, skill, configuration boundary,
   local evidence path, and user-facing name: **Pilot Puppy**.
@@ -45,6 +45,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   A/B/C choice. It does not run a cloud executor or store chat transcripts.
 - No aliases, hidden products, daemon, scheduler,
   watcher, credential relay, remote database, or background dispatch loop.
+- Pilot Puppy coordinates other repositories but does not absorb their plans,
+  private data, source files, or proof ledgers into its own runtime.
 
 ## Platform alignment
 
@@ -69,6 +71,28 @@ Code, or Cursor without taking custody of credentials or conversations.
   Otherwise work directly in the product lane and prove the real user-visible
   outcome there. Amp only sharpens that lane's brief; it does not dispatch,
   validate, or become its authority.
+- The current portfolio lanes are Star67/Pivot SQL, Moussey consignment,
+  Snowcubes consignment/storefront, and security/privacy plus release handoff.
+  Each lane keeps its own canonical plan and owner/worktree boundary.
+
+## Portfolio map
+
+- **Star67/Pivot SQL:** README commit `0721078` is pushed to `main` and puts
+  `https://learn-sql-peach.vercel.app/` before local setup. The live Vercel app
+  is HTTP 200 with Star67 content and security headers. Repository rename is
+  waiting on owner-admin access.
+- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@1a2b5c6f`
+  audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
+  `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
+  history and absent from current tracker outputs. The 5/21 Marathon row is
+  FREE/UNKNOWN, with no charge or payment row, and must not be reopened or
+  collected. Clean Moussey `origin/main@3c44bbec` removes operator-page
+  clutter and strips credentials from user-facing URLs.
+- **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
+  public page did not expose the retired receivable figures or consignment-only
+  billing/source language.
+- **External gates:** GitHub repository name/homepage/topic settings, other-computer access, and native Codex
+  quota remain explicit deferred predicates, not global blockers.
 
 ## Privacy and safety
 
@@ -102,6 +126,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3`.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
+- [in_progress] Coordinate the full product portfolio from this plan: resume
+  each lane from its own authority, keep source/merged/deployed/live/proven
+  states distinct, and close reachable Star67, Moussey, Snowcubes, security,
+  and handoff work without creating a second operating layer.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -119,9 +147,32 @@ Code, or Cursor without taking custody of credentials or conversations.
   paths.
 - The renamed public remote, release artifact, installed skill, command, and UI
   all read back as Pilot Puppy.
+- Star67 proof includes the public launch URL, source branding, focused
+  contracts, typecheck, dependency audit, and secret-scan disposition.
+- Moussey/Snowcubes proof includes source-authority audit, focused money/UI
+  tests, production build, credential-URL checks, and real public readback;
+  primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
 
+- 2026-08-03T16:20:00Z: Reframed the active outcome from a narrow platform
+  proof slice to the full reachable product portfolio, rebased on the merged
+  Python-floor and configuration-default receipts at revision 8. Star67 README
+  commit
+  `0721078` is pushed and the Vercel surface is live/healthy; clean Snowcubes
+  `origin/main@1a2b5c6f` passes the source-truth audit and focused FPA,
+  consignment, cafe-doctor, and recorder suites; clean Moussey
+  `origin/main@3c44bbec` passes the 65-test consignment/invoice suite, the
+  credential-free URL suite, the consignment-surface check, and production
+  build; `trysnowcubes.com` returns HTTP 200. The requested GitHub rename is
+  the only current external blocker: the authenticated account has WRITE but
+  not ADMIN permission, so the old repository name remains factual.
+- 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
+  description is branded, but homepage is unset and `star67` is absent from
+  topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
+  topics replacement with the current account; `gh api` reports `WRITE` and
+  `admin: false`. No metadata mutation is claimed. Resume with owner/admin
+  access, then set the repository name, homepage, and topics and read them back.
 - 2026-08-03: Made the local-first boundary operational. The unavailable Jump
   route is deferred, while the Outcome now offers three honest local choices:
   dogfood here, take the next reachable product row, or defer cross-host proof.
@@ -207,6 +258,19 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Deferred proof (not a global blocker)
 
+- The Star67 repository settings are owner-admin bound. GitHub reports
+  `nlau1193/pivot-sql` with the current account at `WRITE` and returned HTTP
+  404 for the rename/settings PATCH and topics replacement because the account
+  is not repository admin. Resume when an owner/admin renames it to
+  `star67-learn-sql`, sets homepage to `https://learn-sql-peach.vercel.app/`,
+  adds the `star67` topic, and reads all three back. No product work waits on
+  this.
+- Moussey's clean `origin/main` build and money/UI/security tests are green,
+  but the existing `:4321` process belongs to a dirty primary checkout and was
+  not restarted or overwritten during this pass. Resume with an owner-
+  controlled rebuild/restart, then take authenticated `/consignment` browser
+  readback against the current source; do not treat the stale process as
+  current proof.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
