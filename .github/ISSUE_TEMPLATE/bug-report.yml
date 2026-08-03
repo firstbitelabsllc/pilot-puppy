@@ -17,9 +17,9 @@ body:
       label: Reproduction steps
       description: Include the command, file shape, or loop state that triggered the issue.
       placeholder: |
-        1. Run `/pilot-puppy "..."` in Claude Code
-        2. pilot-puppy-loop.sh outputs ...
-        3. Expected X but got Y
+        1. Run the relevant `pilot-puppy` command (e.g. `pilot-puppy status`).
+        2. For host issues, include `pilot-puppy host probe --host <host>`.
+        3. Capture the command output or browser brief.
     validations:
       required: true
   - type: textarea

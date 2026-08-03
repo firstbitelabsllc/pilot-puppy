@@ -10,10 +10,10 @@ body:
       label: Area
       description: Which part of Pilot Puppy does this affect?
       options:
-        - Core loop (SKILL.md / docs/reference/loop.md / DOCTRINE.md)
-        - Scripts (pilot-puppy-loop.sh, pilot-puppy-checkpoint.sh, etc.)
-        - Commands (slash commands)
-        - Fleet intelligence (observer, witness, doctor)
+        - Core plan and brief (PLAN.md / SKILL.md / docs/reference/plan-fields.md)
+        - CLI commands (init, status, browse, checkpoint, roster, route, host, doctor)
+        - Native-host handoff (route / host)
+        - Local roster and routing
         - Documentation (guides, README, examples)
         - CI / testing
         - Other
