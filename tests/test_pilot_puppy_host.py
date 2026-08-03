@@ -19,7 +19,7 @@ SCRIPT = SKILL_DIR / "scripts" / "pilot-puppy-host.py"
 ROUTE_SCRIPT = SKILL_DIR / "scripts" / "pilot-puppy-route.py"
 if str(SCRIPT.parent) not in sys.path:
     sys.path.insert(0, str(SCRIPT.parent))
-from pilot_puppy_roster_lib import initialize_roster
+from pilot_puppy_roster_lib import initialize_roster  # noqa: E402
 
 SPEC = importlib.util.spec_from_file_location("pilot_puppy_host", SCRIPT)
 assert SPEC and SPEC.loader
@@ -463,7 +463,7 @@ class PilotPuppyHostTests(unittest.TestCase):
             task = root / "task.txt"
             task.write_text("Add the proof marker and run the bounded test.\n", encoding="utf-8")
             roster_file = make_roster(root)
-            route_file = make_route(repo, task, roster_file)
+            make_route(repo, task, roster_file)
             output = repo / ".pilot-puppy" / "evidence" / "attempt.json"
             result = run_host(
                 repo,
@@ -554,7 +554,7 @@ class PilotPuppyHostTests(unittest.TestCase):
                 task = root / "task.txt"
                 task.write_text("Do the bounded task.\n", encoding="utf-8")
                 roster_file = make_roster(root)
-                route_file = make_route(repo, task, roster_file, task_kind="plan" if case == "manual" else "dev")
+                make_route(repo, task, roster_file, task_kind="plan" if case == "manual" else "dev")
                 if case == "task":
                     task.write_text("A different frozen task.\n", encoding="utf-8")
                 elif case == "roster":

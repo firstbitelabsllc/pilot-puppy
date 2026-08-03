@@ -15,7 +15,6 @@ import sys
 from typing import Any
 
 from pilot_puppy_roster_lib import (
-    RosterError,
     RosterExistsError,
     initialize_roster,
     load_roster,
