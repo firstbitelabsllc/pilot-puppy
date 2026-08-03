@@ -45,6 +45,17 @@ credential relay, transcript store, or parallel status database. Keep evidence
 inside the project-local `.pilot-puppy/evidence/` path and never put credentials,
 prompts, raw transcripts, provider payloads, or absolute private paths in it.
 
+## Portable execution proof
+
+The bootstrap commands prove installation, not a real host run. Before running
+the proof on the second computer, carry the owning target project's frozen task
+file, task ID/hash, clean target revision, exact allowed paths, and proof
+command. Keep target-specific prompts, credentials, transcripts, provider
+payloads, and private absolute paths out of this public repository and its
+evidence. Run the task through one native host, then reproduce the result from
+the lead checkout. Accept only `status: ok`, the exact allowed-path change, and
+the passing proof command; `doctor` or a version probe alone is insufficient.
+
 ## Main skill map
 
 | Skill | Use it for |
@@ -66,16 +77,19 @@ helpers are adapters; none becomes the plan authority or stores credentials.
 
 - Repository: `firstbitelabsllc/pilot-puppy`
 - Release: `v2.0.0`
-- Current `main`: `acc80dc6` (documentation closeout is ahead of the shipped tag)
+- Current `main`: `0c6d8ce19dc5efdf944196c5db7600d1d1a030a4` (includes the merged other-computer handoff)
 - Shipped release commit: `6375c84a`
 - Release package SHA-256: `9827381f6570dac1bf5e66611fae4056e18f3a14c6a914d85a099e5d5643b8cb`
 - Local gate: `pilot-puppy doctor` is 11/11 green; the public, package, docs,
   browser, privacy, and hosted checks are green.
 
-The remaining resume item is the same sealed native Codex task after the
-account quota reset. Re-run that exact task, require `status: ok`, require only
-its allowed-path change, and reproduce the proof from the lead checkout. Do
-not weaken the gate or substitute a version probe for execution proof.
+The remaining resume item is the portable execution proof, not another
+platform feature. The public repository intentionally does not include a
+target-specific task packet or private target revision, so those bounded
+inputs must be supplied with the handoff before a second-computer receipt can
+be trusted. The local Codex account quota resets after
+`2026-08-07 23:52 America/New_York`; that is a fallback for rerunning the same
+task, not a reason to weaken the gate or add a new platform layer.
 
 ## Fast local readback
 
@@ -87,5 +101,6 @@ pilot-puppy doctor
 ```
 
 When handing work to the next computer, pass the repository, exact revision,
-owning `PLAN.md` row, allowed paths, proof command, and one resume predicate.
-That is enough context; do not paste a transcript.
+frozen task file/hash, task ID, owning `PLAN.md` row, allowed paths, proof
+command, and one resume predicate. That is enough context; do not paste a
+prompt or transcript.
