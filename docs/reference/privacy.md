@@ -16,6 +16,9 @@ Native-host attempt receipts keep test results equally closed: each entry is
 only a bounded public `name` plus `pass`/`fail` status. Arbitrary host metadata
 is rejected before it reaches project evidence.
 
+Checkpoint task, summary, proof, and blocker fields use the same public-text
+boundary, including fragmented-secret detection across fields.
+
 The browser is loopback-only. Evidence stays inside the Git project under
 `.pilot-puppy/evidence/`. There is no remote database, cloud executor,
 credential relay, watcher, daemon, or background dispatch process.

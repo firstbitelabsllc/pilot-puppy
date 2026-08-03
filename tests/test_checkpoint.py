@@ -103,7 +103,18 @@ class CheckpointTests(unittest.TestCase):
     def test_rejects_private_paths_and_credentials(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo = self.make_repo(Path(dirname))
-            for proof in ("/Users/person/proof.txt", "token=super-secret-value"):
+            file_url = "file://" + "/private/proof.txt"
+            for proof in (
+                "/Users/person/proof.txt",
+                "/tmp/proof.txt",
+                "~/proof.txt",
+                "$HOME/proof.txt",
+                file_url,
+                "token=super-secret-value",
+                "xoxb-1234567890",
+                "safe\u200btext",
+                "cafe\u0301",
+            ):
                 result = subprocess.run(
                     [str(CLI), "checkpoint", str(repo / "PLAN.md"), "Prove the result", "summary", "--proof", proof],
                     cwd=repo,
@@ -112,6 +123,28 @@ class CheckpointTests(unittest.TestCase):
                     check=False,
                 )
                 self.assertEqual(result.returncode, 1)
+            self.assertFalse((repo / ".pilot-puppy").exists())
+
+    def test_rejects_secret_fragments_across_receipt_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = self.make_repo(Path(dirname))
+            result = subprocess.run(
+                [
+                    str(CLI),
+                    "checkpoint",
+                    str(repo / "PLAN.md"),
+                    "Prove the result",
+                    "xoxb-123",
+                    "--proof",
+                    "4567890",
+                ],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("fragmented secret", result.stderr)
             self.assertFalse((repo / ".pilot-puppy").exists())
 
     def test_requires_one_exact_plan_row(self) -> None:

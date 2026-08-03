@@ -15,15 +15,23 @@ import subprocess
 import sys
 import tempfile
 from typing import Any
+import unicodedata
 
 
 MAX_PLAN_BYTES = 1_000_000
 MAX_FIELD_CHARS = 1_000
 TASK_RE = re.compile(r"^(?P<prefix>\s*-\s*\[)(?P<state>[^]]+)(?P<suffix>\]\s*)(?P<body>.+?)\s*$")
-PRIVATE_PATH_RE = re.compile(r"(?:/Users/|/home/|[A-Za-z]:\\\\Users\\\\)")
+CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+PRIVATE_PATH_RE = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
 SECRET_RE = re.compile(
-    r"(?:\b(?:sk|ghp|github_pat|xox[baprs])-[-A-Za-z0-9_]{8,}|"
-    r"\bAKIA[0-9A-Z]{12,}|\bBearer\s+[A-Za-z0-9._~+/-]{8,}|"
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----|"
     r"(?:token|password|secret)\s*[:=]\s*\S+)",
     re.IGNORECASE,
 )
@@ -39,11 +47,26 @@ def safe_field(value: str, label: str, *, required: bool = True) -> str:
         raise CheckpointError(f"{label} is required")
     if len(clean) > MAX_FIELD_CHARS:
         raise CheckpointError(f"{label} exceeds {MAX_FIELD_CHARS} characters")
-    if PRIVATE_PATH_RE.search(clean):
-        raise CheckpointError(f"{label} contains an absolute private path")
-    if SECRET_RE.search(clean):
-        raise CheckpointError(f"{label} appears to contain a credential")
+    if (
+        CONTROL_RE.search(clean)
+        or any(unicodedata.category(character) in {"Cc", "Cf"} for character in clean)
+        or unicodedata.normalize("NFC", clean) != clean
+        or PRIVATE_PATH_RE.search(clean)
+        or ABSOLUTE_PATH_RE.search(clean)
+        or SECRET_RE.search(clean)
+    ):
+        raise CheckpointError(f"{label} contains private or unsafe text")
     return clean
+
+
+def ensure_no_fragmented_secrets(values: list[str | None]) -> None:
+    strings = [value for value in values if value]
+    for start in range(len(strings)):
+        combined = ""
+        for value in strings[start : start + 4]:
+            combined += value
+            if SECRET_RE.search(combined):
+                raise CheckpointError("checkpoint fields contain a fragmented secret-shaped value")
 
 
 def git(repo: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -106,7 +129,7 @@ def slug(value: str) -> str:
 
 
 def receipt_core(args: argparse.Namespace, plan_relative: str) -> dict[str, Any]:
-    return {
+    core = {
         "schema": "pilot-puppy.checkpoint.v1",
         "plan": plan_relative,
         "task": safe_field(args.task, "task"),
@@ -116,6 +139,8 @@ def receipt_core(args: argparse.Namespace, plan_relative: str) -> dict[str, Any]
         "outcome": args.outcome,
         "blocker": safe_field(args.blocker or "", "blocker", required=False) or None,
     }
+    ensure_no_fragmented_secrets([core["task"], core["summary"], core["proof"], core["blocker"]])
+    return core
 
 
 def receipt_id(core: dict[str, Any]) -> str:

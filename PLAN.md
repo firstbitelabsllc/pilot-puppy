@@ -116,6 +116,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   port environment defaults while preserving command-line precedence.
 - [completed] Close native-host receipt test metadata to a bounded public
   shape before it reaches project evidence.
+- [completed] Align checkpoint receipt fields with the public-text and
+  fragmented-secret boundary.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -228,6 +230,10 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Native-host receipts now project closed public test metadata.
   Proof: 100 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
   public-ready scan, dev release package, and doctor pass [receipt:43997320a0145985]
+- 2026-08-03: Checkpoint receipts now reject unsafe and fragmented public text.
+  Proof: 101 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
+  public-ready scan, dev release package, and doctor pass [receipt:a4955d7784066e1b]
+- 2026-08-03: Checkpoint receipts now reject unsafe and fragmented public text. Proof: tests/test_checkpoint.py [receipt:a4955d7784066e1b]
 
 ## Deferred proof (not a global blocker)
 
