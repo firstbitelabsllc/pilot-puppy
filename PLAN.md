@@ -345,6 +345,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   about 15 seconds; the attempt was closed without reaching the remote UI.
   No clone, install, doctor, mount, or native-host receipt was produced. The
   target-host availability predicate is still unmet; do not retry in a loop.
+- 2026-08-03T23:03Z: Made one bounded follow-up attempt after a fresh Jump
+  state check. `Leos-Macbook-M4-Pro` remained at `Connecting...` for another
+  15 seconds and was closed without reaching the remote UI. No clone,
+  install, doctor, mount, Outcome/A/B/C, or native-host receipt was produced.
+  The target-host availability predicate remains unmet; do not retry again in
+  this run.
 
 ## Deferred proof (not a global blocker)
 
