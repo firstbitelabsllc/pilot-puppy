@@ -206,7 +206,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   check with SHA-256 `ee668e04175217079f0d2eb30c9cba67d2f8e198ae8de08a341fc15066db342e`,
   the full local gates, status projection, and 11/11 doctor; the later plan
   proof commit records this result, and no merge or release was performed.
-- 2026-08-03: Proof projections now use a closed public-safe shape Proof: 89 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, dev release package, and doctor all pass [receipt:92631a7308c9edf8]
+- 2026-08-03: Proof projections now use a closed public-safe shape Proof: 89 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, clean release package SHA-256 `cfaf7a6f115fdb12c8351203eeac7cdf6e7fc6f81e0f48b5c321819573b10514`, and doctor all pass [receipt:92631a7308c9edf8]
 
 ## Deferred proof (not a global blocker)
 
