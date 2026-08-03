@@ -216,7 +216,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 280,
-      "pattern": "^(?!.*(?:^|[^A-Za-z0-9])(?:~/|/Users/|/home/|/private/var/|file:///|\\$HOME(?:[/\\\\]|$)|[A-Za-z]:[\\\\/]|\\\\\\\\))(?!.*(?:^|[^A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\\s\"']*)?)[\\u0020-\\u007E]+$"
+      "pattern": "^(?!.*(?:^|[^A-Za-z0-9])(?:~/|/Users/|/home/|/private/var/|file:///|\\$HOME(?:[/\\\\]|$)|[A-Za-z]:[\\\\/]|\\\\\\\\))(?!.*(?:^|[^A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\\s\"']*)?)(?!.*(?:[sS][kK]-(?:[aA][nN][tT]-)?[A-Za-z0-9_-]{8,}|[gG][hH][pPoOuUsSrR]_[A-Za-z0-9]{20,}|[gG][iI][tT][hH][uU][bB]_[pP][aA][tT]_[A-Za-z0-9_]{20,}|[xX][oO][xX][bBaApPrRsS]-[A-Za-z0-9-]{10,}|[aA][kK][iI][aA][A-Za-z0-9]{16}|[aA][sS][iI][aA][A-Za-z0-9]{16}|[bB][eE][aA][rR][eE][rR][ ]+[A-Za-z0-9._\\-/+=]{20,}|-----[bB][eE][gG][iI][nN][ A-Za-z]*[pP][rR][iI][vV][aA][tT][eE][ ]+[kK][eE][yY]-----))[\\u0020-\\u007E]+$"
     },
     "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,63}$"},
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},

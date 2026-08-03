@@ -389,6 +389,9 @@ class RouteTests(unittest.TestCase):
             "path:$HOME/private",
             "line\tbreak",
             "line\nbreak",
+            "gh" + "p_" + "12345678901234567890",
+            "Be" + "arer " + "abcdefghijklmnopqrst",
+            "-" * 5 + "BEGIN " + "PRIVATE " + "KEY" + "-" * 5,
         ):
             with self.subTest(value=value):
                 self.assertIsNone(text_pattern.fullmatch(value))
@@ -410,6 +413,9 @@ class RouteTests(unittest.TestCase):
             "$HOME/private",
             "line\tbreak",
             "line\nbreak",
+            "gh" + "p_" + "12345678901234567890",
+            "Be" + "arer " + "abcdefghijklmnopqrst",
+            "-" * 5 + "BEGIN " + "PRIVATE " + "KEY" + "-" * 5,
         ):
             with self.subTest(value=value):
                 forged = copy.deepcopy(document)
