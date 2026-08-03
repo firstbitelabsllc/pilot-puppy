@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 92
-- Outcome Updated At: 2026-08-03T21:51:02Z
+- Outcome Revision: 93
+- Outcome Updated At: 2026-08-03T21:58:16Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `4f36a4b`
+- Next: Choose the consolidation path for candidate source head `c868976`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -666,6 +666,20 @@ Code, or Cursor without taking custody of credentials or conversations.
   `pilot-puppy doctor --json` with 11 checks, zero failures, and zero warnings.
   This refreshes source, package, and installed-artifact proof only; hosted
   CI remains tied to source head `4f36a4b`, and no PR, merge, release,
+  deployment, or runtime claim changed.
+- 2026-08-03: Build audit found that Bash functions named like `python3.14`
+  could enter `compgen` and be mistaken for external interpreters. Source
+  `c868976` now resolves candidates with Bash `type -P`, so only external
+  executable paths can satisfy the Python floor; the bare-Python diagnostic
+  uses the same external-path rule. The hermetic regression passes with a
+  shell function plus a failing bare `python3`. Exact-head local and clean
+  clone proof passes 3 JavaScript tests, 173 Python tests (2 skipped), 6
+  browser tests, docs, Ruff, npm audit, the 101-file public-ready scan, and
+  64-file release verification with SHA-256
+  `fbfc05d062b0239b868321e530a5f7007cf07faefbf125fd56982263372b6c04`.
+  Hosted CI run `30856669784` and Secret Scan run `30856671187` both pass
+  `headSha=c8689760c8fb56301a867b29356628ba531b8b29`. This is source,
+  clean-clone, and hosted-check proof only; no PR, review, merge, release,
   deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
