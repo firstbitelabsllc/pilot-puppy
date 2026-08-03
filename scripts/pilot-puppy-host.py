@@ -36,6 +36,20 @@ MAX_TASK_BYTES = 120_000
 MAX_CAPTURE_BYTES = 64 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
 MAX_SUMMARY_CHARS = 280
+MAX_TEST_NAME_CHARS = 120
+CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+PRIVATE_PATH_RE = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+SECRET_SHAPE_RE = re.compile(
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
+    re.IGNORECASE,
+)
 
 
 class HostError(ValueError):
@@ -51,6 +65,19 @@ def identifier(value: Any, label: str) -> str:
     if not isinstance(value, str) or not ID_RE.fullmatch(value):
         raise HostError("identifier_invalid", f"{label} must match the public identifier pattern")
     return value
+
+
+def receipt_text(value: Any, label: str, maximum: int) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise HostError("host_receipt_invalid", f"{label} must be a nonblank string")
+    text = value.strip()
+    if len(text) > maximum:
+        raise HostError("host_receipt_invalid", f"{label} exceeds {maximum} characters")
+    if CONTROL_RE.search(text) or PRIVATE_PATH_RE.search(text) or ABSOLUTE_PATH_RE.search(text):
+        raise HostError("host_receipt_invalid", f"{label} contains a private path or control character")
+    if SECRET_SHAPE_RE.search(text):
+        raise HostError("host_receipt_invalid", f"{label} contains a secret-shaped value")
+    return text
 
 
 def resolve_binary(host: str, explicit: str | None) -> str:
@@ -424,32 +451,50 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
     status = raw.get("status")
     if status not in {"ok", "blocked", "failed"}:
         raise HostError("host_receipt_invalid", "host receipt status is invalid")
-    summary = raw.get("summary")
-    if not isinstance(summary, str) or not summary.strip() or len(summary) > MAX_SUMMARY_CHARS:
-        raise HostError("host_receipt_invalid", "host receipt summary is invalid")
+    summary = receipt_text(raw.get("summary"), "host receipt summary", MAX_SUMMARY_CHARS)
     reported_paths = raw.get("changed_paths")
     if not isinstance(reported_paths, list) or any(not isinstance(item, str) for item in reported_paths):
         raise HostError("host_receipt_invalid", "host receipt changed_paths must be a string list")
     for path in reported_paths:
         candidate = Path(path)
-        if candidate.is_absolute() or ".." in candidate.parts or not path_allowed(path, allowed):
+        if (
+            not path
+            or CONTROL_RE.search(path)
+            or re.match(r"^(?:[A-Za-z]:[\\/]|\\\\)", path)
+            or candidate.is_absolute()
+            or ".." in candidate.parts
+            or not path_allowed(path, allowed)
+        ):
             raise HostError("scope_violation", "host receipt reports a path outside the packet")
     tests = raw.get("tests")
     if not isinstance(tests, list) or any(not isinstance(item, dict) for item in tests):
         raise HostError("host_receipt_invalid", "host receipt tests must be an object list")
+    normalized_tests = []
+    for index, item in enumerate(tests):
+        if set(item) != {"name", "status"}:
+            raise HostError("host_receipt_invalid", f"host receipt test {index} contains unknown fields")
+        test_status = item.get("status")
+        if test_status not in {"pass", "fail"}:
+            raise HostError("host_receipt_invalid", f"host receipt test {index} status is invalid")
+        normalized_tests.append(
+            {
+                "name": receipt_text(item.get("name"), f"host receipt test {index} name", MAX_TEST_NAME_CHARS),
+                "status": test_status,
+            }
+        )
     proof_ref = raw.get("proof_ref")
     if status == "ok":
         identifier(proof_ref, "host proof_ref")
-        if not tests or any(item.get("status") != "pass" for item in tests):
+        if not normalized_tests or any(item["status"] != "pass" for item in normalized_tests):
             raise HostError("proof_missing", "successful host receipt requires passing tests")
     elif proof_ref is not None:
         identifier(proof_ref, "host proof_ref")
     return {
         "status": status,
-        "summary": summary.strip(),
+        "summary": summary,
         "proof_ref": proof_ref,
         "changed_paths": sorted(set(reported_paths)),
-        "tests": tests,
+        "tests": normalized_tests,
     }
 
 

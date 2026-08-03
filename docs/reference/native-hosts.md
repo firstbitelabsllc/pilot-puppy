@@ -9,5 +9,9 @@ claim stays `accepted_by_lead: false` until a person or lead agent reproduces
 the proof. Pilot Puppy supplies the receipt contract to the host and records
 the frozen task's SHA-256, not its prompt or provider output.
 
+Receipt summaries and test names are bounded public text. Unknown test fields,
+secret-shaped values, control characters, and absolute paths are rejected
+before the attempt is written.
+
 Pre-existing ignored files must be inside an allowed path or the bounded local
 evidence directory. This keeps ignored files inside the same scope audit.

@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 8
-- Outcome Updated At: 2026-08-03T15:57:00Z
+- Outcome Revision: 9
+- Outcome Updated At: 2026-08-03T16:19:00Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Use the local CLI and browser now; Python selection no longer depends on a bare 3.9, while cross-host Codex proof remains deferred.
+- Next: Review the host-receipt privacy fix, then re-run the installed proof on primary; cross-host Codex proof remains deferred.
 - Decision ID: choose-local-path
 - Decision: What should Pilot Puppy do while the remote computer is unavailable?
 - Option A ID: local-dogfood
@@ -102,6 +102,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3`.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
+- [completed] Reject private, secret-shaped, and out-of-contract native-host
+  receipt text before writing project-local evidence.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -192,6 +194,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   `PILOT_PUPPY_BROWSER_HOST`, and `PILOT_PUPPY_BROWSER_PORT`, and explicit flags
   win over environment defaults. Two hermetic tests cover the status path and
   parser precedence; full gates remain the resume proof for this row.
+- 2026-08-03: Native-host receipt validation now keeps persisted summaries and
+  test entries closed and public-safe. Private paths, secret-shaped text,
+  control characters, unknown test fields, and invalid test statuses fail
+  closed before `.pilot-puppy/evidence/` is written. Focused host tests pass;
+  full local and remote gates remain the resume proof for this row.
 
 ## Deferred proof (not a global blocker)
 
