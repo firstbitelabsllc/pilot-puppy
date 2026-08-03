@@ -59,6 +59,7 @@
     "test:js": "vitest run",
     "test:js:watch": "vitest",
     "test:py": "scripts/pilot-puppy-python.sh -m unittest discover -s tests -p 'test_*.py'",
+    "lint:python": "scripts/pilot-puppy-lint.sh",
     "public-ready:grep": "scripts/pilot-puppy-python.sh scripts/pilot-puppy-public-ready-grep-gate.py --tracked-only --metadata",
     "verify": "npm test && npm run public-ready:grep",
     "prepublishOnly": "npm run verify && npm run release:verify",

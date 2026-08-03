@@ -32,13 +32,15 @@ aren't merged right now:
 ```bash
 npm install
 npm run verify        # npm test (JS + Python units) + the public-ready grep gate
+npm run lint:python   # pinned Ruff surface used by hosted CI
 npm run test:e2e       # Playwright, needs `npm run playwright:install` once
 npm run release:verify # reproducible, tracked-only installable package boundary
 ```
 
 ## Code style
 
-There's no linter/formatter config in this repo (no ESLint/Ruff/Prettier) —
+Ruff `0.15.20` is the pinned Python lint surface used by hosted CI and the
+`npm run lint:python` command. There is no ESLint or Prettier configuration —
 match the surrounding file's formatting. `docs/doctrine/WRITING-STYLE.md` is a different
 thing: it's prose-writing guidance for the agent-facing doctrine docs
 (SKILL.md, docs/doctrine essays, etc.), not a code style guide.

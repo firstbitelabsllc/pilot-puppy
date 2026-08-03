@@ -1,10 +1,12 @@
-"""Regression contract for the hosted Python quality gate."""
+"""Regression contract for the hosted and local Python quality gates."""
 
+import json
 from pathlib import Path
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PACKAGE = ROOT / "package.json"
 WORKFLOW = ROOT / ".github" / "workflows" / "ci.yml"
 SECRET_WORKFLOW = ROOT / ".github" / "workflows" / "secret-scan.yml"
 
@@ -12,6 +14,7 @@ SECRET_WORKFLOW = ROOT / ".github" / "workflows" / "secret-scan.yml"
 class CiWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        cls.package = json.loads(PACKAGE.read_text(encoding="utf-8"))
         cls.workflow = WORKFLOW.read_text(encoding="utf-8")
         cls.secret_workflow = SECRET_WORKFLOW.read_text(encoding="utf-8")
 
@@ -23,6 +26,16 @@ class CiWorkflowTests(unittest.TestCase):
             self.workflow,
         )
         self.assertIn("python -m ruff check scripts tests browser", self.workflow)
+
+    def test_local_python_lint_uses_the_same_resolver_and_surface(self) -> None:
+        self.assertEqual(
+            self.package["scripts"]["lint:python"],
+            "scripts/pilot-puppy-lint.sh",
+        )
+        lint = (ROOT / "scripts" / "pilot-puppy-lint.sh").read_text(encoding="utf-8")
+        self.assertIn("ruff check scripts tests browser", lint)
+        self.assertIn("pilot-puppy-python.sh", lint)
+        self.assertIn("-m ruff check scripts tests browser", lint)
 
     def test_workflows_use_current_node24_action_pins(self) -> None:
         expected_ci = {
