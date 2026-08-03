@@ -198,6 +198,23 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertEqual(len(receipts), 1)
         self.assertEqual(receipts[0]["task_id"], "cursor-native-probe")
 
+    def test_cursor_json_envelope_accepts_receipt_fields_before_schema(self) -> None:
+        receipt = json.dumps(
+            {
+                "task_id": "cursor-native-probe",
+                "status": "ok",
+                "summary": "marker created",
+                "changed_paths": ["cursor-native-marker.txt"],
+                "tests": [{"name": "marker", "status": "pass"}],
+                "proof_ref": "cursor-native-probe",
+                "schema": "pilot-puppy.host-receipt.v1",
+            }
+        )
+        envelope = json.dumps({"type": "result", "result": "Prose before receipt. " + receipt})
+        receipts = pilot_puppy_host.json_objects(envelope)
+        self.assertEqual(len(receipts), 1)
+        self.assertEqual(receipts[0]["task_id"], "cursor-native-probe")
+
     def test_deep_host_json_fails_closed_without_recursion_traceback(self) -> None:
         hostile = "{" + '"result":{' * 1200 + '"ignored"' + "}" * 1200
         with self.assertRaises(pilot_puppy_host.HostError) as context:

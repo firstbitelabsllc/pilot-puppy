@@ -42,11 +42,15 @@ HOST_RECEIPT_SCHEMA = "pilot-puppy.host-receipt.v1"
 HOSTS = {"codex", "claude-code", "cursor"}
 ID_RE = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 JSON_FENCE_RE = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL)
-RECEIPT_OBJECT_START_RE = re.compile(r'\{\s*"schema"\s*:')
+RECEIPT_SCHEMA_MARKER_RE = re.compile(
+    r'"schema"\s*:\s*"' + re.escape(HOST_RECEIPT_SCHEMA) + r'"'
+)
 MAX_CAPTURE_BYTES = 64 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
 MAX_SUMMARY_CHARS = 280
 MAX_NESTED_RESULT_DEPTH = 16
+MAX_SCHEMA_MARKERS = 16
+MAX_SCHEMA_BACKTRACK_ATTEMPTS = 64
 
 
 class HostError(ValueError):
@@ -434,21 +438,22 @@ def json_objects(text: str, *, _depth: int = 0) -> list[dict[str, Any]]:
     # syntactically valid JSON objects and keep the schema filter below as the
     # trust boundary. This does not accept arbitrary text as a receipt.
     decoder = json.JSONDecoder()
-    offset = 0
-    while True:
-        start = text.find("{", offset)
-        if start < 0:
-            break
-        if RECEIPT_OBJECT_START_RE.match(text, start) is None:
-            offset = start + 1
-            continue
-        try:
-            value, end = decoder.raw_decode(text[start:])
-        except (json.JSONDecodeError, RecursionError):
-            offset = start + 1
-            continue
-        add(value)
-        offset = start + max(end, 1)
+    attempts = 0
+    for marker in list(RECEIPT_SCHEMA_MARKER_RE.finditer(text))[:MAX_SCHEMA_MARKERS]:
+        lower_bound = max(0, marker.start() - MAX_RECEIPT_BYTES)
+        cursor = marker.start()
+        while cursor > lower_bound and attempts < MAX_SCHEMA_BACKTRACK_ATTEMPTS:
+            start = text.rfind("{", lower_bound, cursor)
+            if start < 0:
+                break
+            attempts += 1
+            try:
+                value, _ = decoder.raw_decode(text[start:])
+            except (json.JSONDecodeError, RecursionError):
+                cursor = start
+                continue
+            add(value)
+            cursor = start
 
     unique: dict[str, dict[str, Any]] = {}
     for item in candidates:

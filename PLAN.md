@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 48
-- Outcome Updated At: 2026-08-03T19:48:16Z
+- Outcome Revision: 49
+- Outcome Updated At: 2026-08-03T19:51:54Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -337,6 +337,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: The cold Ruff pass is clean across `scripts`, `tests`, and `browser`; unused imports, formatting, and test-assignment noise are removed. The 134-test, browser, public-source, and docs gates remain green.
 - 2026-08-03: The exact-head disposable merge exposed a roster CLI import conflict with main's newer `roster prefer` surface (`ROLES` was undefined in the merged candidate). The base import surface is preserved and `RosterError` handling is explicit; branch gates are green, and the next mainline candidate must re-run the roster suite before review.
 - 2026-08-03: The corrected disposable candidate at branch `66b82d9` plus `origin/main` `2f0de9a` includes main's roster-preference tests and passes 140 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates; package SHA-256 `e4ad56945187fbc17a1accb6d25e48e476d9cd9529ad4021c5bfed4d941a547d`. Only the shared PLAN conflict was resolved in the disposable candidate; no canonical main ref changed.
+- 2026-08-03: Receipt extraction now accepts Cursor envelopes whose `schema` field is not first while retaining bounded marker backtracking; the deep hostile-JSON regression stays fast. The branch passes 135 Python, 3 JavaScript, 4 browser, Ruff, public-source, and docs gates.
 
 ## Deferred proof (not a global blocker)
 
