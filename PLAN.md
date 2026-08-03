@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 63
-- Outcome Updated At: 2026-08-03T20:31:32Z
+- Outcome Revision: 64
+- Outcome Updated At: 2026-08-03T20:35:42Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review the workflow-tested candidate source at `ccdcece` for promotion
@@ -459,14 +459,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   recur. No PR, merge, release, deployment, or runtime proof exists.
 - 2026-08-03: Candidate-local `pilot-puppy doctor --json` reports 4/11 fails
   only because PATH and the three native skill mounts still resolve the primary
-  `/Users/lkwan/Snapchat/Dev/pilot-puppy` checkout instead of this disposable
-  candidate. Python, Git, product identity, all three native hosts, and the host
+  installed primary checkout instead of this disposable candidate. Python, Git,
+  product identity, all three native hosts, and the host
   floor pass. This is an environment-boundary receipt; do not remount shared
   roots from the candidate or count it as a source defect.
 - 2026-08-03: The installed primary checkout independently passes `pilot-puppy
   doctor --json` 11/11 at version 2.1.0. That proves the current installed
   surface, not the disposable candidate; candidate release verification remains
   the source/install proof for this branch.
+- 2026-08-03: A fresh public-ready recheck found the disposable-candidate doctor
+  receipt had copied a private absolute path into `PLAN.md`. The receipt now
+  uses a checkout-neutral description; the source head remains unchanged.
 
 ## Deferred proof (not a global blocker)
 
