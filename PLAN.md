@@ -130,6 +130,20 @@ Code, or Cursor without taking custody of credentials or conversations.
   second-computer route the first unblock attempt for the remaining Codex
   execution proof. No new runtime, queue, router, credential relay, or second
   plan authority is needed.
+- 2026-08-03: The other computer came online natively. Fresh pull of
+  `origin/main@5d987b5`, global install, and skill mounts pass; `doctor`
+  initially failed its python check (bare python3 pinned at 3.9.10 with
+  3.13/3.14 unused on PATH) — fixed by interpreter resolution in PR #95, after
+  which doctor reports 11/11 and the 83-test suite is green. Native Codex on
+  this machine is auth-blocked (401 Unauthorized, no login), not quota-blocked;
+  `codex login` is the operator unblock. A sealed claude-code harness exercise
+  in a clean scratch repo sealed scope correctly (only the allowed file
+  changed; lead-reproduced tests pass) and surfaced two harness findings:
+  `--out` collision is detected after host execution instead of preflight (the
+  completed work's receipt is refused and the worktree is left dirty), and the
+  quickstart's in-project `--out` path makes every second run `worktree_dirty`
+  unless `.pilot-puppy/` is ignored. Nested claude-code-inside-claude-code runs
+  are not a fair host bench; the Codex rerun stays the gate.
 - 2026-08-03: The read-only Jump Desktop attempt to the other-computer route
   returned `Computer is offline`; no remote UI, install, doctor, skill mount,
   or native-host receipt was produced. This is host availability, not a Pilot
@@ -140,8 +154,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - The other-computer route is blocked by host availability. **Need:** the
   target Mac online and running Jump Connect; then run the documented clone,
   install, doctor, skill-mount, and Outcome/A/B/C readback path.
-- Native Codex execution is also time-bound. If the other computer has a usable
-  account, run the same sealed task there; otherwise resume after 2026-08-07
-  23:52 America/New_York. In either route, it must return `status: ok`, change
+- Native Codex execution is auth-blocked on the second computer (401
+  Unauthorized — needs `codex login`) and quota-blocked on the first until
+  2026-08-07 23:52 America/New_York; whichever unblocks first runs the sealed
+  task. In either route, it must return `status: ok`, change
   only its allowed path, and pass the lead-reproduced check. A binary/version
   probe does not satisfy this gate.
