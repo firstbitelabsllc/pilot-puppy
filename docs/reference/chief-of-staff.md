@@ -10,3 +10,5 @@ The briefing is a pure projection of one validated Outcome. It answers:
 
 It includes at most three choices and one proof reference. It contains no
 implementation transcript, provider identity, model choice, or machine path.
+Plan-brief overlays use the same public-safe text boundary: absolute paths,
+Unicode controls, token-shaped values, and fragmented secrets are rejected.

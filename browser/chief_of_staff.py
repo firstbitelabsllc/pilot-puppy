@@ -14,6 +14,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 import re
 from typing import Any
+import unicodedata
 
 try:  # The browser server runs with its sibling directory on sys.path.
     from decision_mode import DecisionInputError, project_decision
@@ -26,6 +27,14 @@ MAX_TEXT = 280
 PRIVATE_TEXT_RE = re.compile(
     r"(?:/Users/|/home/|/private/var/|[A-Za-z]:[\\/]|\\\\|~/|\$HOME|file://|"
     r"\b(?:provider|model|prompt|transcript|credential|secret|password|token)\b)",
+    re.IGNORECASE,
+)
+ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+SECRET_SHAPE_RE = re.compile(
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
     re.IGNORECASE,
 )
 
@@ -46,7 +55,13 @@ def _public_text(value: Any, label: str) -> str:
         raise DecisionInputError(f"{label} must be nonblank")
     if len(text) > MAX_TEXT:
         raise DecisionInputError(f"{label} exceeds {MAX_TEXT} characters")
-    if PRIVATE_TEXT_RE.search(text):
+    if (
+        PRIVATE_TEXT_RE.search(text)
+        or ABSOLUTE_PATH_RE.search(text)
+        or SECRET_SHAPE_RE.search(text)
+        or any(unicodedata.category(character) in {"Cc", "Cf"} for character in text)
+        or unicodedata.normalize("NFC", text) != text
+    ):
         raise DecisionInputError(f"{label} contains private or implementation detail")
     return text
 
@@ -59,11 +74,23 @@ def _plan_brief(value: Any) -> dict[str, str]:
     allowed = {"summary", "latest_change", "latest_decision", "recommendation"}
     if set(value) - allowed:
         raise DecisionInputError("plan_brief contains an unknown field")
-    return {
+    plan = {
         key: _public_text(raw, f"plan_brief.{key}")
         for key, raw in value.items()
         if raw is not None
     }
+    _ensure_no_fragmented_secrets(plan)
+    return plan
+
+
+def _ensure_no_fragmented_secrets(value: Mapping[str, str]) -> None:
+    strings = list(value.values())
+    for start in range(len(strings)):
+        combined = ""
+        for item in strings[start : start + 4]:
+            combined += item
+            if SECRET_SHAPE_RE.search(combined):
+                raise DecisionInputError("plan_brief contains a fragmented secret-shaped value")
 
 
 def _state(outcome_state: str) -> str:

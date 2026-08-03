@@ -122,6 +122,18 @@ class ChiefOfStaffTests(unittest.TestCase):
         with self.assertRaises(chief.DecisionInputError):
             chief.project_chief_of_staff(document(), plan_brief={"raw": "not allowed"})
 
+    def test_rejects_public_brief_privacy_fragments(self):
+        for plan_brief in (
+            {"summary": "/tmp/private"},
+            {"summary": "safe\u200btext"},
+            {"summary": "cafe\u0301"},
+            {"summary": "xoxb-1234567890"},
+            {"summary": "sk-", "latest_change": "abcdefghijklmnopqrstuvwxyz012345"},
+        ):
+            with self.subTest(plan_brief=plan_brief):
+                with self.assertRaises(chief.DecisionInputError):
+                    chief.project_chief_of_staff(document(), plan_brief=plan_brief)
+
     def test_projection_does_not_mutate_shared_outcome(self):
         source = document()
         original = copy.deepcopy(source)
