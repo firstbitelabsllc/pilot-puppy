@@ -108,6 +108,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Keep decision projection state and cross-object identifier invariants aligned with the canonical validator.
 - [completed] Close decision projection scalar, Unicode, timestamp, and locator bounds against the canonical validator.
 - [completed] Close decision projection fragmented-secret, path, token, and JSON-array bounds against the canonical validator.
+- [in_progress] Make plan-derived Outcome projection fail closed on the shared canonical decision contract.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 import subprocess
@@ -81,6 +82,43 @@ class OutcomeSourceTests(unittest.TestCase):
         del brief["option_c"]
         with self.assertRaisesRegex(OutcomeSourceError, "option_c"):
             project_plan_outcome(brief)
+
+    def test_generated_document_uses_shared_decision_contract(self) -> None:
+        needs_input = canonical_brief() | {
+            "outcome_state": "needs_input",
+            "decision_id": "choose-review",
+            "decision": "How should we review?",
+            "option_a_id": "focused-check",
+            "option_a": "Focused check",
+            "option_a_consequence": "Run the direct regression.",
+            "option_b_id": "full-check",
+            "option_b": "Full check",
+            "option_b_consequence": "Run every local test.",
+            "option_c_id": "stop-now",
+            "option_c": "Stop now",
+            "option_c_consequence": "Leave the result open.",
+        }
+        with_proof = canonical_brief() | {
+            "proof_id": "notes-proof",
+            "proof": "docs/reference/outcome-choice.md",
+            "proof_summary": "The outline is bounded.",
+            "proof_delivery": "delivered",
+        }
+        mutations = (
+            (needs_input, lambda brief: brief.update(option_a="x" * 81)),
+            (with_proof, lambda brief: brief.update(proof_delivery="unknown")),
+            (with_proof, lambda brief: brief.update(proof="ftp://example.com/proof")),
+            (canonical_brief(), lambda brief: brief.update(next="xoxb-1234567890")),
+            (canonical_brief(), lambda brief: brief.update(outcome_state="finished_with_proof")),
+            (with_proof, lambda brief: (brief.update(proof="sk-"), brief.update(proof_summary="abcdefghijklmnopqrstuvwxyz012345"))),
+            (needs_input, lambda brief: brief.update(option_b_id=brief["option_a_id"])),
+        )
+        for brief, mutation in mutations:
+            with self.subTest(mutation=mutation):
+                source = copy.deepcopy(brief)
+                mutation(source)
+                with self.assertRaises(OutcomeSourceError):
+                    project_plan_outcome(source)
 
     def test_server_attaches_one_source_to_both_views(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:

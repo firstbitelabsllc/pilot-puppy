@@ -15,6 +15,11 @@ import re
 from typing import Any
 import unicodedata
 
+try:  # The browser server runs with its sibling directory on sys.path.
+    from decision_mode import DecisionInputError, project_decision
+except ModuleNotFoundError:  # Also support ``import browser.outcome_source``.
+    from browser.decision_mode import DecisionInputError, project_decision
+
 
 OUTCOME_SCHEMA = "pilot-puppy.outcome.v1"
 MAX_REVISION = 2_147_483_647
@@ -162,7 +167,7 @@ def project_plan_outcome(brief: Mapping[str, Any]) -> dict[str, Any]:
             }
         )
 
-    return {
+    document = {
         "schema": OUTCOME_SCHEMA,
         "revision": revision,
         "updated_at": updated_at,
@@ -175,6 +180,11 @@ def project_plan_outcome(brief: Mapping[str, Any]) -> dict[str, Any]:
         "ask": ask,
         "proof": proof,
     }
+    try:
+        project_decision(document)
+    except DecisionInputError as exc:
+        raise OutcomeSourceError(str(exc)) from exc
+    return document
 
 
 __all__ = ["OUTCOME_SCHEMA", "OutcomeSourceError", "project_plan_outcome"]
