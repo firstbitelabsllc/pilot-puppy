@@ -16,7 +16,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Outcome Updated At: 2026-08-03T19:58:38Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
+- Next: Validate the seat overlay and host privacy hardening together in the current-main candidate; no canonical promotion or release claim is made until that candidate passes review.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -158,8 +158,28 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
   fresh install, docs, loopback UI readback, package, privacy, and security
   gates.
-- [pending] Promote the route-packet public-text privacy hardening into
-  canonical mainline after review; branch proof is not release proof.
+- [completed] R5: Add a local private seat overlay because a real native-tool
+  setup needs more than the generic role/host roster. It may select only a
+  validated model flag for a ready, route-bound native host; it must stay
+  owner-local, with its configuration absent from browser/status, plans, route
+  evidence, attempt receipts, packages, and stranger installs. It may never hold credentials,
+  prompts, provider payloads, profile guesses, or arbitrary command arguments.
+- [completed] R6: Prove the default `planner`, `bulk`, `debug`, and `hard-ic`
+  route shapes without launch, and publish their honest calibration boundary.
+  A native-host calibration is valid only for the same role and frozen task in
+  separate clean worktrees. Report route, scope, proof, lead reproduction, and
+  elapsed time or an honest null; never claim model quality, provider usage,
+  tokens, cost, quota, or performance by assertion.
+- [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
+  fresh install, docs, loopback UI readback, package, privacy, and security
+  gates.
+- [completed] R8: Make local role routing usable without source spelunking:
+  render the four work shapes in the loopback briefing and add one atomic local
+  `roster prefer` command that reprioritizes only declared, enabled generic
+  role/host slots. It must not read providers/models/quotas, launch work, or
+  create project evidence.
+- [pending] Promote the route, host-receipt, and worktree-seal privacy hardening
+  into canonical mainline after review; candidate proof is not release proof.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -180,6 +200,41 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03: R5 is complete. `seat init`, `seat set`, and `seat show` maintain
+  a strict owner-local selector overlay for an existing enabled roster slot;
+  `host run --use-seat` requires a sealed route and fails before host launch if
+  the mapping is absent, stale, unsafe, or mismatched. The selected model or
+  Codex profile enters only the native argv and is rejected from receipts.
+  Generic roles, routes, browser/status, plans, package contents, and stranger
+  installs remain selector-free. The full gate passed: 136 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 98-file
+  public-source scan, and a reproducible 63-file package with SHA-256
+  `f372fd76c0d93b9d72baf9cb90d4319121ab1a3a2a0bd90772e55b2257c0153f`.
+- 2026-08-03: The generic roster alone cannot express the requested named local
+  seats. Installed Codex, Claude Code, and Cursor-native CLIs each expose a
+  model-selection flag, so R5 now implements a local-only, route-bound model
+  overlay rather than a cloud router or cost dashboard. It will accept no
+  arbitrary native arguments, credentials, profiles, account discovery, quota
+  checks, or provider calls; a bad or unsupported local choice must fail before
+  a host starts. The exact private selector must not appear in a browser,
+  `status`, plan, route packet, or host attempt receipt.
+- 2026-08-03: R8 passed the integrated public gate: 126 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 95-file
+  public-source scan, package verification, and a zero-vulnerability
+  dependency audit. It adds no host launch, provider/model/usage selection,
+  cloud execution, credential relay, queue, daemon, watcher, or transcript
+  store. This is source proof only; it does not claim a new public release or
+  a native-host execution.
+- 2026-08-03: Restored the live local delegation surface to public main
+  `bc2e06c0` without copying or adding a runtime. Skillbox read back one
+  current Pilot Puppy source in Codex, Claude Code, and Cursor; `pilot-puppy`
+  reported 2.1.0 and its doctor passed 11/11. A fresh private generic roster
+  exposes routine development as bulk/Cursor with bulk/Codex fallback,
+  debug/Codex, and hard implementation/Claude Code. A no-launch `dev` route
+  read back that exact Cursor-first selection. R8 adds a visible four-shape
+  guide and an atomic `roster prefer` command. Specific native model/profile
+  selection remains deferred until a
+  real same-host need and safe invocation contract exist.
 - 2026-08-03: User made local role-based smart routing and a usable roster P0.
   Pilot Puppy will not add cloud execution, voice/on-the-go controls, a
   credential relay, a transcript store, or autonomous dispatch. The direct
@@ -340,6 +395,17 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Receipt extraction now accepts Cursor envelopes whose `schema` field is not first while retaining bounded marker backtracking; the deep hostile-JSON regression stays fast. The branch passes 135 Python, 3 JavaScript, 4 browser, Ruff, public-source, and docs gates.
 - 2026-08-03: The refreshed disposable candidate at branch `d6dc925` plus `origin/main` `2f0de9a` passes 141 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates, including main's roster-preference tests and the flexible receipt-order regression; package SHA-256 `5bb86fb45211c4d68e1bb403e07b337c453c049be223b945a5f378a27afb84a0`. No canonical main ref changed.
 - 2026-08-03: Final host-boundary review at branch head `544b68f` now rejects nested `.git` directories before or after a native run while preserving normal submodule `.git` files. The exact branch passes 136 Python tests (3 skipped), 3 JavaScript tests, 4 browser checks, Ruff, docs, and the 96-file public-ready scan. The clean 61-file package hash is `b9fa8acba8695df861b1c5cdfd846f93421feeb96d6d59186de3a70dd4e9bed7`; promotion into canonical mainline remains pending review.
+- 2026-08-03: R6 delivered. A focused no-launch regression now proves the
+  default planner/manual, bulk/Cursor, debug/Codex, and hard-IC/Claude Code
+  decisions. One fresh real bulk/Cursor dogfood followed its sealed route,
+  changed only its allowed file, returned `status: ok`, passed its verifier,
+  and passed lead reproduction in 29.5 seconds. The host receipt explicitly
+  records `projection_is_usage: false`; no token, cost, quota, model, or
+  provider-performance claim is made. A literal valid receipt example fixed
+  the one malformed-proof-label block found in the first fresh attempt. The
+  raw route and attempt receipt stay local because they are task- and
+  worktree-specific; this public record preserves only the safe mechanical
+  facts above.
 
 ## Deferred proof (not a global blocker)
 

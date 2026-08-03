@@ -16,13 +16,21 @@ Create or inspect the local roster:
 ```bash
 pilot-puppy roster init
 pilot-puppy roster show
+pilot-puppy roster prefer --role bulk --host codex
 ```
+
+`prefer` moves one already-declared role/host slot to priority 1 within that
+role. It preserves every other role and the relative order of the remaining
+slots; it rejects a missing or disabled slot rather than creating or enabling
+one, and it never launches work. Repeating an already-first preference is a
+local no-op.
 
 Choose another local file only when you mean to:
 
 ```bash
 pilot-puppy roster init --file /safe/local/path/roster.json
 pilot-puppy roster show --file /safe/local/path/roster.json --json
+pilot-puppy roster prefer --role bulk --host codex --file /safe/local/path/roster.json
 ```
 
 `init` never overwrites an existing roster. The default file stays outside the
@@ -46,6 +54,15 @@ It has no cloud executor, voice mode, credential relay, transcript store,
 background queue, daemon, or watcher. The roster itself never becomes another
 authority alongside `PLAN.md`.
 
-Keep any named-seat mapping in your own private setup. The browser, `status`,
-and project receipts never read or publish the roster. Do not put credentials,
-prompts, transcripts, provider payloads, or private paths in it.
+For an optional named native selector, use the separate local `seat` overlay:
+
+```bash
+pilot-puppy seat init
+pilot-puppy seat set --slot bulk-cursor --model MODEL
+```
+
+It can bind only a slot already declared and enabled in this roster. It cannot
+change the generic role, host, priority, or enabled state. The browser, `status`,
+route, and project receipts never read or publish the overlay. Do not put
+credentials, prompts, transcripts, provider payloads, private paths, accounts,
+or quota data in either local configuration.

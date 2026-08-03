@@ -49,9 +49,12 @@ Outcome, one plain-language briefing, proof status, and up to three choices.
 
 `roster init` creates a generic local list of six work roles: `lead`,
 `planner`, `bulk`, `debug`, `critic`, and `hard-ic`. It is not a model picker
-or dispatch system. Associate those generic names with your own native-tool
-setup privately; the browser, project status, and receipts never contain that
-mapping.
+or dispatch system. To change a role's local first choice, explicitly prefer one
+already-declared host:
+
+```bash
+pilot-puppy roster prefer --role bulk --host codex
+```
 
 For a bounded handoff, first ask Pilot Puppy to make one transparent local
 selection. It chooses only among declared slots for the requested task kind,
@@ -70,6 +73,28 @@ The result might say `bulk via cursor`, `bulk via codex`, or that no declared
 slot is available. That choice is a local hint based only on the roster and a
 bounded version probe—never an account, quota, model, or billing claim.
 
+This is where the practical efficiency comes from: routine, well-scoped work
+uses the local `bulk` policy first; difficult implementation uses `hard-ic`;
+debugging, planning, review, and acceptance stay separate. You set the local
+priority once, then each route makes that choice visible before any native host
+uses time or tokens. Pilot Puppy does not pretend to know provider prices,
+models, or account usage.
+
+If your own native tools need an explicit local model/profile selector, add it
+to a separate owner-only overlay. This is optional: the route still selects the
+generic role and host first, and this overlay never changes that decision.
+
+```bash
+pilot-puppy seat init
+pilot-puppy seat set --slot bulk-cursor --model MODEL
+pilot-puppy seat show
+```
+
+`seat` only binds a selector to a slot already declared in the local roster.
+It cannot add a seat, change a role/host/priority, query a provider, or hold a
+credential. Use the exact selector your native tool documents; Pilot Puppy does
+not look up models, accounts, quota, pricing, or availability.
+
 Then explicitly run the selected native host and list the only paths it may
 change. Passing the route packet makes the host fail closed if the frozen task,
 roster revision, or selected host changed in between:
@@ -83,6 +108,7 @@ pilot-puppy host run \
   --allowed-path src/login.tsx \
   --allowed-path src/login.test.tsx \
   --route-file .pilot-puppy/evidence/fix-login-copy.route.json \
+  --use-seat \
   --out .pilot-puppy/evidence/fix-login-copy.json
 ```
 
@@ -100,6 +126,9 @@ reproduces the proof.
 - The local roster is not project evidence and never feeds browser, status, or
   receipts. Pilot Puppy does not collect provider, model, account, or quota
   details for it.
+- The optional private seat overlay is read only after a sealed route has
+  selected its exact native slot. Its selector value and path never appear in
+  browser or status output, plans, route packets, host attempts, or packages.
 - Pilot Puppy does not relay credentials, run a cloud worker, watch in the
   background, or maintain a second queue.
 
@@ -107,6 +136,9 @@ reproduces the proof.
 
 - Route selects only a declared role and native-host surface; it cannot
   guarantee a host's proprietary model, account state, quota, or billing tier.
+- `--use-seat` is an explicit local CLI flag, not provider discovery or smart
+  pricing. It fails before launch if the sealed route has no matching private
+  selector.
 - Route never launches work, silently swaps a host, retries, or owns a queue.
   The lead still chooses whether to run the selected host and accepts proof.
 - Host availability and authentication remain owned by Codex, Claude Code, or
