@@ -995,8 +995,12 @@ def main(argv: list[str] | None = None) -> int:
             "execution": {"performed": False, "projection_only": True},
         }
         code = 1
+    # ``run_attempt`` already writes the artifact when ``--out -`` is used.
+    # Do not append a second copy when the caller requested machine-readable
+    # output on that same stream.
     if getattr(args, "json", False):
-        print(json.dumps(payload, indent=2, sort_keys=True))
+        if not (args.command == "run" and getattr(args, "out", None) == "-"):
+            print(json.dumps(payload, indent=2, sort_keys=True))
     elif code:
         print(f"pilot-puppy host: {payload.get('blocked') or payload.get('status')}", file=sys.stderr)
     else:

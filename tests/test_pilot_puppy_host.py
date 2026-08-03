@@ -500,6 +500,44 @@ class PilotPuppyHostTests(unittest.TestCase):
                 self.assertFalse(payload["accepted_by_lead"])
                 self.assertTrue(payload["unreviewed_claim"])
 
+    def test_json_stdout_is_one_document_when_output_is_stdout(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            binary = make_host(root)
+            task = root / "task.txt"
+            task.write_text("Add the proof marker and run the bounded test.\n", encoding="utf-8")
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(SCRIPT),
+                    "run",
+                    "--host",
+                    "cursor",
+                    "--binary",
+                    str(binary),
+                    "--repo",
+                    str(repo),
+                    "--task-file",
+                    str(task),
+                    "--task-id",
+                    "add-proof",
+                    "--allowed-path",
+                    "result.txt",
+                    "--out",
+                    "-",
+                    "--json",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["schema"], "pilot-puppy.host-attempt.v1")
+        self.assertEqual(result.stdout.count('"schema": "pilot-puppy.host-attempt.v1"'), 1)
+
     def test_ready_route_binds_one_host_run_without_leaking_private_roster_text(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname).resolve()

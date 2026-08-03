@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 81
-- Outcome Updated At: 2026-08-03T21:19:10Z
+- Outcome Revision: 82
+- Outcome Updated At: 2026-08-03T21:25:16Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Reconcile candidate source `78e75fd` with open PRs #99, #105, and #106
@@ -597,6 +597,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   scan run `30853587658` passed gitleaks and the public-ready gate. These are
   exact-head hosted checks, not PR review, merge, release, deployment, or
   runtime proof.
+- 2026-08-03: `host run --out - --json` now emits one machine-readable attempt
+  document instead of duplicating it on stdout. The regression passes the full
+  3-JavaScript, 169-Python (3 skipped), and 6 desktop/phone browser gate;
+  public-source and dirty-package verification also pass. The fix is local
+  source/test proof only and still awaits consolidation with open PRs #99,
+  #105, and #106.
 
 ## Deferred proof (not a global blocker)
 
