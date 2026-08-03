@@ -37,6 +37,9 @@ if mode == "ok":
 elif mode == "scope":
     pathlib.Path.cwd().joinpath("outside.txt").write_text("escape\n", encoding="utf-8")
     changed = ["outside.txt"]
+elif mode == "ignored":
+    pathlib.Path.cwd().joinpath(".env").write_text("ignored escape\n", encoding="utf-8")
+    changed = []
 else:
     changed = []
 
@@ -68,7 +71,8 @@ def make_repo(root: Path) -> Path:
     git(repo, "config", "user.email", "pilot-puppy-test@example.invalid")
     git(repo, "config", "user.name", "Pilot Puppy Test")
     (repo / "result.txt").write_text("base\n", encoding="utf-8")
-    git(repo, "add", "result.txt")
+    (repo / ".gitignore").write_text(".env\n.pilot-puppy/\n", encoding="utf-8")
+    git(repo, "add", "result.txt", ".gitignore")
     git(repo, "commit", "-qm", "base")
     return repo
 
@@ -300,6 +304,43 @@ class PilotPuppyHostTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertFalse(output.exists())
             self.assertEqual(json.loads(result.stdout)["blocked"]["kind"], "output_unsafe")
+
+    def test_ignored_scope_escape_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            binary = make_host(root, mode="ignored")
+            task = root / "task.txt"
+            task.write_text("Do the bounded task.\n", encoding="utf-8")
+            output = repo / ".pilot-puppy" / "evidence" / "attempt.json"
+            result = subprocess.run(
+                [
+                    "python3",
+                    str(SCRIPT),
+                    "run",
+                    "--host",
+                    "codex",
+                    "--binary",
+                    str(binary),
+                    "--repo",
+                    str(repo),
+                    "--task-file",
+                    str(task),
+                    "--task-id",
+                    "add-proof",
+                    "--allowed-path",
+                    "result.txt",
+                    "--out",
+                    str(output),
+                    "--json",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 1)
+            payload = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(payload["blocked"]["kind"], "scope_violation")
 
 
 if __name__ == "__main__":

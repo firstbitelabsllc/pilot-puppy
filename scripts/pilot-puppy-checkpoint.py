@@ -177,8 +177,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     marker = f"[receipt:{identifier}]"
     evidence_relative = Path(".pilot-puppy") / "evidence" / f"{slug(core['task'])}-{identifier}.json"
     evidence = repo / evidence_relative
-    if evidence.is_symlink():
-        raise CheckpointError("receipt destination must not be a symlink")
+    state = repo / ".pilot-puppy"
+    evidence_dir = state / "evidence"
+    if state.is_symlink() or evidence_dir.is_symlink() or evidence.is_symlink():
+        raise CheckpointError("receipt path must not contain symlinks")
 
     existing = evidence.read_text(encoding="utf-8") if evidence.is_file() else None
     if existing is not None:

@@ -112,10 +112,13 @@ def exact_git_root(repo: Path) -> Path:
     return root
 
 
-def status_paths(repo: Path) -> list[str]:
+def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
+    command = ["git", "-C", str(repo), "status", "--porcelain=v1", "-z", "--untracked-files=all"]
+    if include_ignored:
+        command.append("--ignored")
     try:
         result = subprocess.run(
-            ["git", "-C", str(repo), "status", "--porcelain=v1", "-z", "--untracked-files=all"],
+            command,
             capture_output=True,
             timeout=5,
             check=False,
@@ -135,6 +138,31 @@ def status_paths(repo: Path) -> list[str]:
         path = entry[3:].decode("utf-8", errors="strict")
         paths.append(path)
     return paths
+
+
+def local_state_snapshot(repo: Path) -> dict[str, str]:
+    state = repo / ".pilot-puppy"
+    evidence = state / "evidence"
+    if state.is_symlink() or evidence.is_symlink():
+        raise HostError("worktree_unsealed", "project evidence path must not be a symlink")
+    if not state.exists():
+        return {}
+    if not state.is_dir():
+        raise HostError("worktree_unsealed", "project evidence state must be a directory")
+    unexpected = [path for path in state.iterdir() if path.name != "evidence"]
+    if unexpected:
+        raise HostError("worktree_unsealed", "project state contains material outside evidence")
+    if not evidence.exists():
+        return {}
+    if not evidence.is_dir():
+        raise HostError("worktree_unsealed", "project evidence must be a directory")
+    snapshot: dict[str, str] = {}
+    for path in sorted(evidence.rglob("*")):
+        relative = path.relative_to(repo).as_posix()
+        if path.is_symlink() or not path.is_file():
+            raise HostError("worktree_unsealed", "project evidence must contain regular files only")
+        snapshot[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return snapshot
 
 
 def normalize_allowed(repo: Path, values: list[str]) -> list[str]:
@@ -507,6 +535,18 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     before = status_paths(repo)
     if before:
         raise HostError("worktree_dirty", "host packet requires a clean assigned worktree")
+    before_all = status_paths(repo, include_ignored=True)
+    before_ignored = set(before_all) - set(before)
+    unsafe_ignored = [
+        path
+        for path in before_ignored
+        if not path_allowed(path, allowed)
+        and path.rstrip("/") != ".pilot-puppy"
+        and not path.startswith(".pilot-puppy/evidence/")
+    ]
+    if unsafe_ignored:
+        raise HostError("worktree_unsealed", "ignored files outside the packet are not allowed")
+    state_before = local_state_snapshot(repo)
     binary = resolve_binary(args.host, args.binary)
     with tempfile.TemporaryDirectory(prefix="pilot-puppy-host-") as temp_dir:
         final_message = Path(temp_dir) / "final-message.txt"
@@ -516,8 +556,12 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         output_texts.append(result.get("stderr", b"").decode("utf-8", errors="replace"))
         if final_message.is_file() and not final_message.is_symlink() and final_message.stat().st_size <= MAX_RECEIPT_BYTES:
             output_texts.append(final_message.read_text(encoding="utf-8", errors="replace"))
-        after = status_paths(repo)
-        changed = sorted(set(after) - set(before))
+        after_all = status_paths(repo, include_ignored=True)
+        state_after = local_state_snapshot(repo)
+        changed = sorted(
+            set(before_all).symmetric_difference(after_all)
+            | {path for path in set(state_before) | set(state_after) if state_before.get(path) != state_after.get(path)}
+        )
         status = "failed"
         blocked_reason: dict[str, str] | None = None
         host_receipt: dict[str, Any] | None = None
@@ -532,10 +576,15 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             outside = [path for path in changed if not path_allowed(path, allowed)]
             if outside:
                 raise HostError("scope_violation", "host changed a path outside the packet")
-            reported_missing = [path for path in host_receipt["changed_paths"] if path not in changed]
+            reported_missing = [
+                path
+                for path in host_receipt["changed_paths"]
+                if path not in changed and path not in before_ignored
+            ]
             if reported_missing:
                 raise HostError("host_receipt_invalid", "host receipt reports a path Git did not change")
             status = host_receipt["status"]
+            changed = sorted(set(changed) | set(host_receipt["changed_paths"]))
             if status == "ok" and not host_receipt["proof_ref"]:
                 raise HostError("proof_missing", "host returned success without proof")
         except HostError as exc:

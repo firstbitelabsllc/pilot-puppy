@@ -230,7 +230,7 @@ def verify(root: Path, *, expected_version: str | None = None, allow_dirty: bool
     return {
         "schema": "pilot-puppy.release.v1",
         "ok": not errors,
-        "publishable": not errors and not dirty,
+        "publishable": not errors and not dirty and not allow_dirty,
         "version": version,
         "file_count": len(manifest.get("files", [])),
         "unpacked_bytes": int(manifest.get("unpackedSize", 0) or 0),

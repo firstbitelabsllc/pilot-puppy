@@ -113,6 +113,18 @@ class CheckpointTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("exactly one", result.stderr)
 
+    def test_rejects_symlinked_evidence_parent(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = self.make_repo(root)
+            outside = root / "outside"
+            outside.mkdir()
+            (repo / ".pilot-puppy").symlink_to(outside, target_is_directory=True)
+            result = self.run_checkpoint(repo)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("must not contain symlinks", result.stderr)
+            self.assertEqual(list(outside.iterdir()), [])
+
 
 if __name__ == "__main__":
     unittest.main()

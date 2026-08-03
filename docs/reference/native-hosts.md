@@ -8,3 +8,6 @@ non-zero exit, timeout, or missing passing tests fails closed. The returned
 claim stays `accepted_by_lead: false` until a person or lead agent reproduces
 the proof. Pilot Puppy supplies the receipt contract to the host and records
 the frozen task's SHA-256, not its prompt or provider output.
+
+Pre-existing ignored files must be inside an allowed path or the bounded local
+evidence directory. This keeps ignored files inside the same scope audit.
