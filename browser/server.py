@@ -116,7 +116,7 @@ def title(text: str, fallback: str) -> str:
 
 
 def latest_progress(text: str) -> str | None:
-    rows = [line.strip()[2:] for line in section(text, "Progress") if line.strip().startswith("- ")]
+    rows = [line[2:].strip() for line in section(text, "Progress") if line.startswith("- ")]
     if not rows:
         return None
     return RECEIPT_MARKER_RE.sub(" ", rows[-1]).strip()[:280]

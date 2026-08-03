@@ -46,6 +46,7 @@ PLAN = """# Release notes
 
 - 2026-08-02: The bounded implementation is still under review.
 - 2026-08-03: The bounded implementation is ready for a decision.
+  - Nested evidence must not become the latest top-level change.
 """
 
 
