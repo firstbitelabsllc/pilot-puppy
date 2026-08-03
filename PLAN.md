@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 116
-- Outcome Updated At: 2026-08-03T22:57:43Z
+- Outcome Revision: 117
+- Outcome Updated At: 2026-08-03T23:00:18Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `a60f996`
@@ -915,6 +915,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   the same check because they point at a different checkout; that is expected
   custody protection, not a product defect. Release verification still passes
   with the 65-file SHA-256 `1910ae707bc31fd47fae19a76adf7441c571b912dfe7647c13bbd0c1ddd0ee7a`.
+
+- 2026-08-03: Ran a fresh-consumer smoke path from the packed artifact. A new
+  Git project initialized its repository-owned `PLAN.md`, created and read
+  the local roster, rendered status JSON, produced manual and ready route
+  packets, and recorded a bounded checkpoint receipt. The installed loopback
+  browser returned `/api/health`, `/api/plans`, and `/` successfully before a
+  clean foreground shutdown. This proves the install-to-first-brief path;
+  native host execution and consolidation remain separate decisions.
 
 ## Deferred proof (not a global blocker)
 
