@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 16
-- Outcome Updated At: 2026-08-03T16:41:44Z
+- Outcome Revision: 17
+- Outcome Updated At: 2026-08-03T16:46:55Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
@@ -79,8 +79,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 - **Star67/Pivot SQL:** README commit `0721078` is pushed to `main` and puts
   `https://learn-sql-peach.vercel.app/` before local setup. The live Vercel app
-  is HTTP 200 with Star67 content and security headers. Repository rename is
-  waiting on owner-admin access.
+  is HTTP 200 with Star67 content and security headers. A production browser
+  readback reaches the local practice workspace, shows 2,930,845 warehouse
+  rows, makes Riff's task primary and Frosty's coaching visibly optional, and
+  runs the guided query to a `✓ delivered` result of 2,736,642 GL lines.
+  Repository rename is waiting on owner-admin access.
 - **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@b8b18e1f`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
@@ -236,6 +239,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   public-ready, and Graphite checks all pass. Neither PR is merged or deployed;
   the next action remains the external merge/readback predicate plus the
   owner-controlled Star67 metadata and Moussey authenticated-runtime gates.
+- 2026-08-03T16:46:55Z: Completed the real production Star67 browser readback.
+  `https://learn-sql-peach.vercel.app/` opens the branded landing page and
+  enters the practice workspace without an account. The local warehouse
+  reports 2,930,845 available rows; Riff is the primary guided task, Frosty is
+  labeled optional and built-in/private, and running the prefilled query
+  returns one read-only row with `transaction_lines = 2,736,642` and the task
+  marked delivered. The non-developer launch and hierarchy requirement is
+  therefore proven; the remaining Star67 predicate is only the owner-admin
+  GitHub rename/homepage/topics update.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
