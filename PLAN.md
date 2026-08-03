@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 36
-- Outcome Updated At: 2026-08-03T19:17:58Z
+- Outcome Revision: 37
+- Outcome Updated At: 2026-08-03T19:19:51Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -325,6 +325,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Symlinked worktree paths now fail closed before and after native-host runs; 129 tests and 4 browser checks pass.
 - 2026-08-03: Codex, Claude Code, and Cursor command shapes now have explicit regression coverage; the full 130-test and 4-browser gate passes.
 - 2026-08-03: Local probes report all three native hosts available; this audit worktree's doctor remains environment-bound because installed CLI and skill mounts resolve to the primary checkout.
+- 2026-08-03: Git metadata links are now rejected alongside worktree links; the complete 131-test and 4-browser gate passes.
 
 ## Deferred proof (not a global blocker)
 

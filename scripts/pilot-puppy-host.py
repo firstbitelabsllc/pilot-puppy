@@ -166,6 +166,8 @@ def reject_worktree_symlinks(repo: Path) -> None:
         current_path = Path(current)
         for name in [*directories, *files]:
             if name == ".git":
+                if (current_path / name).is_symlink():
+                    raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
                 continue
             if (current_path / name).is_symlink():
                 raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")

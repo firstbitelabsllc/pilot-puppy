@@ -674,6 +674,18 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertFalse(output_written)
         self.assertEqual(result_contents, "base\n")
 
+    def test_symlinked_git_metadata_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            real_git = root / "git-store"
+            (repo / ".git").rename(real_git)
+            (repo / ".git").symlink_to(real_git, target_is_directory=True)
+            with self.assertRaises(pilot_puppy_host.HostError) as context:
+                pilot_puppy_host.reject_worktree_symlinks(repo)
+
+        self.assertEqual(context.exception.kind, "worktree_unsealed")
+
     def test_symlink_created_under_allowed_path_is_rejected_after_run(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
