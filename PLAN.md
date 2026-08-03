@@ -75,13 +75,9 @@ Cursor without taking custody of credentials or conversations.
 - **Snowcubes storefront: LIVE.** `https://trysnowcubes.com/` returned HTTP
   200; the public page did not expose the retired receivable figures or
   consignment-only billing/source language.
-- **Pilot Puppy portability: PACKET READY / TARGET OFFLINE.** Public `main`
-  readback is `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`. The private-safe
-  packet is `host-prompt-heading-guard` with SHA-256
-  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`, exact
-  allowed path `tests/test_pilot_puppy_host.py`, and proof command
-  `python3 -m unittest tests.test_pilot_puppy_host -v`. The target Mac is not
-  reachable in this session, so no remote receipt is claimed.
+- **Pilot Puppy portability: PARKED.** Other-computer access and the native
+  Codex quota gate remain tooling proof gaps, not reasons to stop reachable
+  product work.
 
 ## Privacy and safety
 
@@ -115,10 +111,8 @@ Cursor without taking custody of credentials or conversations.
   each lane from its own authority, keep source/merged/deployed/live/proven
   states distinct, and close reachable Star67, Moussey, Snowcubes, security,
   and handoff work without creating a second operating layer.
-- [in progress] Close the portable other-computer proof with the prepared
-  packet when the target Mac is reachable; accept only a sealed `status: ok`,
-  the exact allowed-path change, and lead-reproduced proof. Do not add platform
-  machinery or substitute a local version probe.
+- [parked] Pilot Puppy cross-host portability remains available as tooling work
+  only when a real product task needs it; do not spend the goal on a host test.
 
 ## Mechanical proof required for this outcome
 
@@ -232,18 +226,6 @@ Cursor without taking custody of credentials or conversations.
   claimed. Resume only when the target session opens, then run the bootstrap
   against the merged public `main` and record host, revision, mounts, doctor,
   target-plan readback, and sealed-task proof.
-- 2026-08-03T15:47:13Z: Fresh public-main readback is
-  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`. Prepared one private-safe frozen
-  packet, `host-prompt-heading-guard`, SHA-256
-  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`, for
-  `tests/test_pilot_puppy_host.py` with proof command
-  `python3 -m unittest tests.test_pilot_puppy_host -v`. A read-only Jump
-  Desktop connection attempt to `Leos-Macbook-M4-Pro` remained on
-  `Connecting...` and returned to the computer list; no target UI, clone,
-  install, doctor, mount, or sealed-host receipt exists. Resume predicate:
-  when that target accepts a connection, clone this exact public revision,
-  install, mount, read back `PLAN.md`, run the packet through one native host,
-  then reproduce the exact test from the lead checkout.
 
 ## Blocked proof
 
@@ -269,17 +251,11 @@ Cursor without taking custody of credentials or conversations.
   or native-host session is reachable here. Resume with the exact bootstrap in
   `docs/guide/other-computer-handoff.md`, then record host identity, revision,
   mount source, doctor result, target `PLAN.md` readback, and the next move.
-- **Frozen packet: READY.** The packet metadata is public-safe and recorded
-  above: task ID `host-prompt-heading-guard`, target revision
-  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, SHA-256
-  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`, exact
-  allowed path `tests/test_pilot_puppy_host.py`, and proof command
-  `python3 -m unittest tests.test_pilot_puppy_host -v`. The packet file stays
-  outside the public repository; it contains no credentials, prompts from a
-  private project, transcripts, or provider payloads.
-- The remaining gap is target reachability and the second-computer receipt:
-  `status: ok`, exactly the allowed-path change, passing proof, and lead
-  reproduction. A doctor or version probe alone is insufficient.
+- The source and bootstrap are not code-blocked. The current gap is the
+  target-specific frozen task packet and clean target revision. **Need:** a
+  task ID/hash plus a second-computer receipt with `status: ok`, exact
+  allowed-path change, proof command result, and lead reproduction. The public
+  repo intentionally does not carry private target prompts or credentials.
 - Native Codex execution is blocked until **2026-08-07 23:52
   America/New_York**. At or after that time, rerun the same sealed task; it
   must return `status: ok`, change only its allowed path, and pass the
