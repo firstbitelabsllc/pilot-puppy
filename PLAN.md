@@ -12,13 +12,13 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 78
-- Outcome Updated At: 2026-08-03T21:12:50Z
+- Outcome Revision: 79
+- Outcome Updated At: 2026-08-03T21:13:15Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `d392921` for promotion into canonical
-  mainline; hosted workflow proof still ends at `ccdcece`, and no merge, release,
-  or deployment claim is made yet.
+- Next: Review candidate source at `72bca68` for promotion into canonical
+  mainline; hosted checks cover source through plan-only head `df116a8`, and no
+  merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
