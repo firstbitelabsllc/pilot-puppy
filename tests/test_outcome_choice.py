@@ -70,13 +70,29 @@ class OutcomeValidatorTests(unittest.TestCase):
     def test_cli_rejects_duplicate_json_keys(self) -> None:
         result = subprocess.run(
             [sys.executable, str(SCRIPT)],
-            input='{"schema":"pilot-puppy.outcome.v1","schema":"duplicate"}',
+            input='{"schema":"pilot-puppy.outcome.v1","/Users/private/secret":"first","/Users/private/secret":"second"}',
             capture_output=True,
             text=True,
             check=False,
         )
         self.assertEqual(result.returncode, 1)
-        self.assertEqual(json.loads(result.stdout)["errors"][0]["code"], "json")
+        report = json.loads(result.stdout)
+        self.assertEqual(report["errors"][0]["code"], "json")
+        self.assertEqual(report["errors"][0]["message"], "duplicate object key")
+        self.assertNotIn("/Users/private/secret", result.stdout)
+
+    def test_cli_reports_stable_malformed_json_without_input_details(self) -> None:
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT)],
+            input='{"schema":"pilot-puppy.outcome.v1","current":"/Users/private/secret",',
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 1)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["errors"][0]["message"], "JSON is malformed")
+        self.assertNotIn("/Users/private/secret", result.stdout)
 
     def test_cli_reports_io_as_invocation_failure(self) -> None:
         result = subprocess.run(

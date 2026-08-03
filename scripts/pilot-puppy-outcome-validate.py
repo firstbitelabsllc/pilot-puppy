@@ -251,12 +251,18 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     try:
         document = json.loads(raw.decode("utf-8"), object_pairs_hook=object_pairs)
-    except (UnicodeDecodeError, json.JSONDecodeError, DuplicateKey) as exc:
-        print(json.dumps(result(False, [issue("json", "", str(exc))]), separators=(",", ":"), sort_keys=True))
-        return 1
-    errors = validate_document(document)
-    print(json.dumps(result(not errors, errors), separators=(",", ":"), sort_keys=True))
-    return 1 if errors else 0
+    except DuplicateKey:
+        message = "duplicate object key"
+    except UnicodeDecodeError:
+        message = "input encoding is invalid"
+    except json.JSONDecodeError:
+        message = "JSON is malformed"
+    else:
+        errors = validate_document(document)
+        print(json.dumps(result(not errors, errors), separators=(",", ":"), sort_keys=True))
+        return 1 if errors else 0
+    print(json.dumps(result(False, [issue("json", "", message)]), separators=(",", ":"), sort_keys=True))
+    return 1
 
 
 if __name__ == "__main__":
