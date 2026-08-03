@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 73
-- Outcome Updated At: 2026-08-03T20:57:35Z
+- Outcome Revision: 74
+- Outcome Updated At: 2026-08-03T21:01:39Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `d392921` for promotion into canonical
@@ -532,6 +532,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   The clean tree and candidate remote ref match; this is source and clean
   install proof only. No PR, review, merge, release, deployment, or runtime
   claim changed.
+- 2026-08-03: Adversarial error-boundary review found malformed metadata and
+  filesystem failures that could escape as raw exceptions. Commit `db97849`
+  now fails closed with stable public-safe messages in the public-ready scan,
+  release verifier, and checkpoint CLI; regression coverage passes. The
+  candidate gates pass at 164 Python tests (2 skipped), 3 JavaScript tests, 6
+  desktop/phone browser tests, docs, Ruff, the 100-file public-ready scan,
+  zero high-severity npm audit findings, and a reproducible 63-file package
+  with SHA-256
+  `47dfaf500ae680686599e7a6ff1ee41b30cda7a0f41c7912c6efdce1628652be`.
+  This is source, test, and package proof only; no PR, review, merge, release,
+  deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
