@@ -12,14 +12,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 64
-- Outcome Updated At: 2026-08-03T23:35:37Z
+- Outcome Revision: 65
+- Outcome Updated At: 2026-08-03T23:48:05Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring every active product lane to a clean, user-ready state: Star67, Moussey consignment and cleaner, Snowcubes, security cleanup, and release handoff. It coordinates the portfolio; it is not the product under test.
 - Outcome Detail: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref, without waiting on the other computer or native-Codex quota. Keep the Snowcubes C14 count, Moussey C11 runtime, owner-admin, cleaner host-resource, and merge/deploy predicates open until each is proven.
-- Next Detail: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is now reconciled into its consignment-hardening plan on isolated branch `codex/consignment-plan-free-decision-20260803` at `c05efdde`; keep that branch reviewable but do not merge it without the external merge boundary. Keep Snowcubes C14 open until a source-cited attachment/count receipt exists. Current public Pilot Puppy main is `601c37c`, which retains the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Snowcubes current public main is `c48ace456`; security PR #1567 has been refreshed onto that base at `8d6ae00c` and remains unmerged. Current Moussey main `3c44bbec` has a fresh production dependency audit finding 3 transitive vulnerabilities; the isolated lockfile-only repair branch `codex/moussey-dependency-audit-20260804` at `63293fb` reports 0 vulnerabilities and passes focused tests, surface proof, and build, but remains unmerged. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
+- Next: Resume every lane from its canonical plan and current ref, without waiting on the other computer or native-Codex quota. Keep the Moussey C11 runtime, owner-admin, cleaner host-resource, and merge/deploy predicates open until each is proven.
+- Next Detail: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is now reconciled into its consignment-hardening plan on isolated branch `codex/consignment-plan-free-decision-20260803` at `61709a22`; keep that branch reviewable but do not merge it without the external merge boundary. Snowcubes C14 now has a source-cited 2026-07-25 10-pack count receipt from read-only Messages metadata; no ledger or Shopify write was made and the unavailable JPEG was not interpreted. Current public Pilot Puppy main is `601c37c`, which retains the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Snowcubes current public main is `c48ace456`; security PR #1567 has been refreshed onto that base at `8d6ae00c` and remains unmerged. Current Moussey main `3c44bbec` has a fresh production dependency audit finding 3 transitive vulnerabilities; the isolated lockfile-only repair branch `codex/moussey-dependency-audit-20260804` at `63293fb` reports 0 vulnerabilities and passes focused tests, surface proof, and build, but remains unmerged. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -144,8 +144,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   a dirty primary checkout. The reachable Tailscale target serves `/consignment`
   but its summary API reports that consignment data is not configured, so the
   protected-401 then authenticated-summary-200 predicate (C11) remains open;
-  no restart or credential retrieval was attempted. Snowcubes C14 remains open
-  for a source-cited attachment/count receipt.
+  no restart or credential retrieval was attempted. Snowcubes C14 is now
+  satisfied by a read-only Messages receipt tying a 2026-07-25 drop to 10 packs
+  and a registered JPEG; the unavailable JPEG was not interpreted and no ledger
+  or Shopify write was made.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
@@ -287,6 +289,19 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T23:48:05Z: Closed the Snowcubes C14 evidence predicate without
+  changing money state. The local read-only iMessage fallback found the Zack
+  thread's 2026-07-25 drop record: 10 packs were reported and one JPEG was
+  registered on the same Messages row (`chat.db` row `429590`, 4.3 MB). The
+  JPEG payload is not downloaded on this Mac, so no image interpretation is
+  claimed. Snowcubes source audit remained `ok: true` with 7 Bagels `$0.00`,
+  Everyman `$22.00`, and Marathon `$0.00`; `cafe:doctor -- --fast` passed all
+  9 blocking checks. The source-plan receipt is committed at `61709a22` on
+  `codex/consignment-plan-free-decision-20260803`; no ledger, tracker,
+  Shopify, payment, merge, deployment, or partner-facing state changed. C11,
+  owner-admin, cleaner host-resource, security scan, credential rotation,
+  merge/deploy, and portability predicates remain open.
 
 - 2026-08-03T23:35:37Z: Continued the whole-portfolio Outcome with a bounded
   Moussey security slice; this advances one lane and does not close the
