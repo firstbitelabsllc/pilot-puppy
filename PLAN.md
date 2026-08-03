@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 66
-- Outcome Updated At: 2026-08-03T20:42:39Z
+- Outcome Revision: 67
+- Outcome Updated At: 2026-08-03T20:45:10Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `9949ce6` for promotion into canonical
@@ -482,6 +482,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   100-file public-ready scan, whitespace checks, and a 63-file package with
   SHA-256 `7727d68d5377252bbbc124fc16088d5ddd0ed2489f619866bc7d5639ad59717a`.
   Hosted CI has not run for this source change because no PR was opened.
+- 2026-08-03: The installed primary checkout is clean at local `2f0de9a`, one
+  commit behind live `origin/main` `2029756`. Its `pilot-puppy doctor --json`
+  still passes 11/11, but that is installed-surface proof only; it is not proof
+  of the current candidate or its new public-ready hardening.
 
 ## Deferred proof (not a global blocker)
 
