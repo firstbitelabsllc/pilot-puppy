@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 34
-- Outcome Updated At: 2026-08-03T18:04:59Z
+- Outcome Revision: 35
+- Outcome Updated At: 2026-08-03T18:07:42Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. On the Pilot Puppy lane, `v2.1.0` shipped the local role route, so the next optional row is the R6 sealed same-task role measurement or an honest null result. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. On the Pilot Puppy lane, `v2.1.0` shipped the local role route and R6 is delivered, so use the four-shape routing policy for the next real bounded product task and revisit a local private seat overlay only if the generic role/host roster cannot express a needed setup. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -234,9 +234,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   setup cannot express the generic role/host roster. It must stay owner-local
   and outside source, browser/status, route evidence, packages, and stranger
   installs; it may never hold credentials, prompts, or provider payloads.
-- [pending] R6: Measure the four role shapes with sealed same-task proof;
-  publish measured quality/scope/proof/usage results or an honest null result,
-  never a performance claim by assertion.
+- [completed] R6: Prove the default `planner`, `bulk`, `debug`, and `hard-ic`
+  route shapes without launch, and publish their honest calibration boundary.
+  A native-host calibration is valid only for the same role and frozen task in
+  separate clean worktrees. Report route, scope, proof, lead reproduction, and
+  elapsed time or an honest null; never claim model quality, provider usage,
+  tokens, cost, quota, or performance by assertion.
 - [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
   fresh install, docs, loopback UI readback, package, privacy, and security
   gates.
@@ -636,6 +639,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   CodeQL, and mergeability checks passed. A fresh v2.1.0 tag clone installed
   with zero vulnerabilities, read back version 2.1.0, passed 3 JavaScript and
   120 Python tests, and passed the 95-file public-source scan.
+- 2026-08-03: R6 delivered. A focused no-launch regression now proves the
+  default planner/manual, bulk/Cursor, debug/Codex, and hard-IC/Claude Code
+  decisions. One fresh real bulk/Cursor dogfood followed its sealed route,
+  changed only its allowed file, returned `status: ok`, passed its verifier,
+  and passed lead reproduction in 29.5 seconds. The host receipt explicitly
+  records `projection_is_usage: false`; no token, cost, quota, model, or
+  provider-performance claim is made. A literal valid receipt example fixed
+  the one malformed-proof-label block found in the first fresh attempt. The
+  raw route and attempt receipt stay local because they are task- and
+  worktree-specific; this public record preserves only the safe mechanical
+  facts above.
 
 ## Deferred proof (not a global blocker)
 
