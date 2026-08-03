@@ -229,7 +229,7 @@ print_version() {
 # subcommand gets the same clear message for the same root cause.
 require_pilot_puppy_checkout() {
   if [[ ! -f "${PILOT_PUPPY_ROOT}/VERSION" || ! -d "${PILOT_PUPPY_ROOT}/scripts" ]]; then
-    echo "pilot-puppy: PILOT_PUPPY_ROOT does not look like a pilot-puppy checkout: ${PILOT_PUPPY_ROOT}" >&2
+    echo "pilot-puppy: PILOT_PUPPY_ROOT does not look like a pilot-puppy checkout" >&2
     echo "  Expected a VERSION file and a scripts/ directory under it." >&2
     echo "  If PILOT_PUPPY_ROOT is set in your environment, unset it or point it at a real pilot-puppy checkout." >&2
     exit 127

@@ -54,6 +54,21 @@ class DoctorTests(unittest.TestCase):
         self.assertFalse(report["ok"])
         self.assertNotIn("Traceback", result.stderr)
 
+    def test_bad_cli_root_does_not_echo_private_path(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            result = subprocess.run(
+                [str(CLI), "status", "--json"],
+                cwd=ROOT,
+                env={**os.environ, "PILOT_PUPPY_ROOT": dirname},
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(result.returncode, 127)
+        self.assertIn("PILOT_PUPPY_ROOT does not look like a pilot-puppy checkout", result.stderr)
+        self.assertNotIn(dirname, result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+
     def test_malformed_metadata_fails_without_private_details(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
