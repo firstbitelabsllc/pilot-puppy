@@ -118,6 +118,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   shape before it reaches project evidence.
 - [completed] Align checkpoint receipt fields with the public-text and
   fragmented-secret boundary.
+- [completed] Let checkpoint address wrapped task rows by full text and keep
+  progress receipts singular.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -233,7 +235,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Checkpoint receipts now reject unsafe and fragmented public text.
   Proof: 101 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
   public-ready scan, dev release package, and doctor pass [receipt:a4955d7784066e1b]
-- 2026-08-03: Checkpoint receipts now reject unsafe and fragmented public text. Proof: tests/test_checkpoint.py [receipt:a4955d7784066e1b]
+- 2026-08-03: Checkpoint now matches wrapped plan rows and keeps one progress receipt.
+  Proof: 102 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
+  public-ready scan, dev release package, and doctor pass [receipt:9fcdbe7d02894b03]
 
 ## Deferred proof (not a global blocker)
 

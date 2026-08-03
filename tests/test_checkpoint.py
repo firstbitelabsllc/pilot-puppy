@@ -66,6 +66,36 @@ class CheckpointTests(unittest.TestCase):
             self.assertNotIn(dirname, encoded)
             self.assertEqual(payload["plan"], "PLAN.md")
 
+    def test_matches_a_wrapped_task_row_by_its_full_text(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = self.make_repo(Path(dirname))
+            plan = repo / "PLAN.md"
+            plan.write_text(
+                plan.read_text(encoding="utf-8").replace(
+                    "- [in_progress] Prove the result",
+                    "- [in_progress] Prove the\n  bounded result",
+                ),
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [
+                    str(CLI),
+                    "checkpoint",
+                    str(plan),
+                    "Prove the bounded result",
+                    "The focused check passed",
+                    "--proof",
+                    "tests/test_checkpoint.py",
+                ],
+                cwd=repo,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            updated = plan.read_text(encoding="utf-8")
+            self.assertIn("- [completed] Prove the\n  bounded result", updated)
+
     def test_same_checkpoint_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo = self.make_repo(Path(dirname))

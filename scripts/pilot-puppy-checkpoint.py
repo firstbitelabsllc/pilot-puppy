@@ -128,6 +128,24 @@ def slug(value: str) -> str:
     return (result or "checkpoint")[:64]
 
 
+def task_rows(lines: list[str]) -> list[tuple[int, re.Match[str], str]]:
+    rows: list[tuple[int, re.Match[str], str]] = []
+    for index, line in enumerate(lines):
+        match = TASK_RE.match(line)
+        if not match:
+            continue
+        parts = [match.group("body")]
+        continuation = index + 1
+        while continuation < len(lines):
+            candidate = lines[continuation]
+            if not candidate.strip() or TASK_RE.match(candidate) or not candidate[0].isspace():
+                break
+            parts.append(candidate.strip())
+            continuation += 1
+        rows.append((index, match, " ".join(parts)))
+    return rows
+
+
 def receipt_core(args: argparse.Namespace, plan_relative: str) -> dict[str, Any]:
     core = {
         "schema": "pilot-puppy.checkpoint.v1",
@@ -153,11 +171,7 @@ def update_plan(text: str, task: str, status: str, progress: str, marker: str) -
         return text
     lines = text.splitlines()
     target = " ".join(task.split())
-    matches: list[int] = []
-    for index, line in enumerate(lines):
-        match = TASK_RE.match(line)
-        if match and " ".join(match.group("body").split()) == target:
-            matches.append(index)
+    matches = [index for index, _match, body in task_rows(lines) if " ".join(body.split()) == target]
     if len(matches) != 1:
         raise CheckpointError("task must match exactly one PLAN.md checkbox row")
     index = matches[0]
