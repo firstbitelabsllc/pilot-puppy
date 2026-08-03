@@ -10,3 +10,7 @@ options. Each option has an ID, label, and consequence. The browser sends only:
 The server compares that revision with current authority. A current choice is
 `received`; a stale choice is `superseded`; a mismatched choice is
 `not_delivered`. Receipt does not mean the coding host applied the choice.
+
+The projected Outcome, ask, options, and proof entries are closed contracts;
+unknown fields, unsupported states, and unsafe or oversized public text fail
+before the decision payload is rendered.

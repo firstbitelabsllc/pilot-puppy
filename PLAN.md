@@ -104,6 +104,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Keep checkpoint receipts inside `## Progress` so browser status can surface them.
 - [completed] Remove deleted doctrine paths from contributor guidance and make the public target regression cover that file.
 - [completed] Close and privacy-check proof dictionaries before decision and Chief-of-Staff projection.
+- [completed] Close nested Outcome and A/B/C projection fields against the canonical validator.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -207,6 +208,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   the full local gates, status projection, and 11/11 doctor; the later plan
   proof commit records this result, and no merge or release was performed.
 - 2026-08-03: Proof projections now use a closed public-safe shape Proof: 89 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, clean release package SHA-256 `cfaf7a6f115fdb12c8351203eeac7cdf6e7fc6f81e0f48b5c321819573b10514`, and doctor all pass [receipt:92631a7308c9edf8]
+- 2026-08-03: Nested decision projections now enforce the canonical closed shape Proof: 90 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, release verify, and doctor pass [receipt:9f115ffd993271c0]
 
 ## Deferred proof (not a global blocker)
 

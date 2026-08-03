@@ -27,6 +27,8 @@ SECRET_SHAPE_RE = re.compile(
 )
 PROOF_TYPES = frozenset({"test", "runtime", "ui", "release", "document", "other"})
 PROOF_DELIVERY = frozenset({"delivered", "not_delivered"})
+OUTCOME_STATES = frozenset({"working", "needs_input", "blocked", "finished_with_proof", "not_delivered"})
+CATEGORIES = frozenset({"product_choice", "security", "money", "external_communication", "irreversible_action"})
 
 
 class DecisionInputError(ValueError):
@@ -77,10 +79,16 @@ def outcome_document(value: Any) -> Mapping[str, Any]:
 
 def project_outcome(document: Mapping[str, Any]) -> dict[str, Any]:
     source = mapping(document.get("outcome"), "outcome")
+    expected = {"id", "summary", "state", "current_move"}
+    if set(source) != expected:
+        raise DecisionInputError("outcome contains fields outside the Outcome contract")
+    state = text(source.get("state"), "outcome.state", maximum=32)
+    if state not in OUTCOME_STATES:
+        raise DecisionInputError("outcome.state is not supported")
     return {
         "id": identifier(source.get("id"), "outcome.id"),
         "summary": text(source.get("summary"), "outcome.summary"),
-        "state": text(source.get("state"), "outcome.state"),
+        "state": state,
         "current_move": text(source.get("current_move"), "outcome.current_move"),
     }
 
@@ -92,8 +100,16 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
             raise DecisionInputError("a needs_input Outcome requires an open A/B/C choice")
         return None
     source = mapping(raw, "ask")
+    expected = {"id", "category", "question", "options", "state", "answer_option_id"}
+    if set(source) != expected:
+        raise DecisionInputError("ask contains fields outside the choice contract")
     if source.get("state") != "open" or outcome["state"] != "needs_input":
         raise DecisionInputError("only a needs_input Outcome may expose an open A/B/C choice")
+    if source.get("answer_option_id") is not None:
+        raise DecisionInputError("an open choice must not carry an answer")
+    category = text(source.get("category"), "ask.category", maximum=32)
+    if category not in CATEGORIES:
+        raise DecisionInputError("ask.category is not supported")
     options = source.get("options")
     if not isinstance(options, Sequence) or isinstance(options, (str, bytes)) or len(options) != 3:
         raise DecisionInputError("an open choice must contain exactly A/B/C")
@@ -101,6 +117,8 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
     seen = set()
     for index, raw_option in enumerate(options):
         option = mapping(raw_option, f"ask.options[{index}]")
+        if set(option) != {"id", "label", "consequence"}:
+            raise DecisionInputError(f"ask.options[{index}] contains fields outside the option contract")
         option_id = identifier(option.get("id"), f"ask.options[{index}].id")
         if option_id in seen:
             raise DecisionInputError("choice option IDs must be unique")
@@ -114,7 +132,7 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
         )
     return {
         "id": identifier(source.get("id"), "ask.id"),
-        "category": text(source.get("category"), "ask.category"),
+        "category": category,
         "question": text(source.get("question"), "ask.question"),
         "state": "open",
         "answer_option_id": None,

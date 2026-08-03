@@ -49,6 +49,22 @@ class DecisionModeTests(unittest.TestCase):
                 with self.assertRaises(decision.DecisionInputError):
                     decision.project_decision(source)
 
+    def test_nested_outcome_and_choice_contracts_are_closed(self) -> None:
+        mutations = (
+            lambda source: source["outcome"].update({"implementation": "hidden"}),
+            lambda source: source["outcome"].update({"state": "unknown"}),
+            lambda source: source["ask"].update({"answer_option_id": "full-review"}),
+            lambda source: source["ask"].update({"extra": "field"}),
+            lambda source: source["ask"]["options"][0].update({"extra": "field"}),
+            lambda source: source["ask"].update({"category": "provider"}),
+        )
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                source = document()
+                mutation(source)
+                with self.assertRaises(decision.DecisionInputError):
+                    decision.project_decision(source)
+
     def test_choice_is_closed_and_typed(self) -> None:
         result = decision.build_choice(document(), "full-review")
         self.assertEqual(
