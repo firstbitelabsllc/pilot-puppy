@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 53
-- Outcome Updated At: 2026-08-03T22:58:20Z
+- Outcome Revision: 54
+- Outcome Updated At: 2026-08-03T23:04:00Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is now reconciled into its consignment-hardening plan on isolated branch `codex/consignment-plan-free-decision-20260803` at `c05efdde`; keep that branch reviewable but do not merge it without the external merge boundary. On the Pilot Puppy lane, current public main `2029756` includes the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is now reconciled into its consignment-hardening plan on isolated branch `codex/consignment-plan-free-decision-20260803` at `c05efdde`; keep that branch reviewable but do not merge it without the external merge boundary. Keep Snowcubes C14 open until a source-cited attachment/count receipt exists. On the Pilot Puppy lane, current public main `2029756` includes the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -31,7 +31,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
 - Proof: Star67 `main@1277dd8` with README `0721078`, current-main accessibility/plain-language proof, Snowcubes `origin/main@f3f877ee` plus security branch `48121626` / PR #1567 and consignment-plan reconciliation `c05efdde`, Moussey `origin/main@3c44bbec` with current consignment/security proof, active cleaner resource readback, Codex Security CLI dry-run receipts plus the current official-scan setup, Pilot Puppy `main@2029756` R5/R8 public role-routing readback plus the `v2.1.0` release proof, focused source/test receipts, and live public-surface readbacks.
-- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@f3f877ee`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. The live storefront returned HTTP 200 with none of the retired figures or consignment-only billing/source labels. Public main still reports 11 development-chain vulnerabilities (7 high, 4 low); Snowcubes PR #1567 at `48121626` is based on that latest public main, remains the lockfile-only repair, passes `git diff --check`, reports 0 production/high vulnerabilities, and reduces the full audit to two low `esbuild` findings in the Shopify CLI dev chain. The breaking CLI upgrade is not justified. Clean Moussey `origin/main@3c44bbec` current-main proof passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), the consignment-surface check, production build, and `npm audit --omit=dev` with 0 vulnerabilities; the dirty owner runtime remains separate. On the Pilot Puppy lane itself, public `main@2029756` contains the R5 owner-local route-bound seat overlay and R8 generic role-routing surface; the `v2.1.0` release remains public at `c7d63619` with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass and Codex execution stays quota-blocked. Portfolio PR #99 is OPEN/CLEAN/MERGEABLE against `main@2029756`, with all required checks passing and CodeSmith skipped by policy; it remains unmerged.
+- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@f3f877ee`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. The live storefront returned HTTP 200 with none of the retired figures or consignment-only billing/source labels. Public main still reports 11 development-chain vulnerabilities (7 high, 4 low); Snowcubes PR #1567 at `48121626` is based on that latest public main, remains the lockfile-only repair, passes `git diff --check`, reports 0 production/high vulnerabilities, and reduces the full audit to two low `esbuild` findings in the Shopify CLI dev chain. The breaking CLI upgrade is not justified. Clean Moussey `origin/main@3c44bbec` current-main proof passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), the consignment-surface check, production build, and `npm audit --omit=dev` with 0 vulnerabilities; the dirty owner runtime remains separate. On the Pilot Puppy lane itself, public `main@2029756` contains the R5 owner-local route-bound seat overlay and R8 generic role-routing surface; the `v2.1.0` release remains public at `c7d63619` with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass and Codex execution stays quota-blocked. Portfolio PR #99 is OPEN at head `e5b7bd2`, with CI, browser/docs, CodeQL, gitleaks, public-ready, and Graphite passing; `[code]smith` is still in progress, so the PR is not yet recorded as clean/mergeable and remains unmerged.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Platform boundary
@@ -139,7 +139,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   a dirty primary checkout. The reachable Tailscale target serves `/consignment`
   but its summary API reports that consignment data is not configured, so the
   protected-401 then authenticated-summary-200 predicate (C11) remains open;
-  no restart or credential retrieval was attempted.
+  no restart or credential retrieval was attempted. Snowcubes C14 remains open
+  for a source-cited attachment/count receipt.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
@@ -291,6 +292,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   explicit runtime predicate and no owner process was restarted. The official
   Codex Security plugin workspace is open on clean Moussey main and has not yet
   delivered findings; the full portfolio Outcome remains active.
+
+- 2026-08-03T23:04:00Z: Pushed the refreshed full-portfolio receipt as Pilot
+  Puppy PR #99 head `e5b7bd2`. Its CI, browser/docs, CodeQL, gitleaks,
+  public-ready, and Graphite checks passed; `[code]smith` was still in progress
+  at readback, so no clean/mergeable or merged state is claimed. The plan keeps
+  the Snowcubes C14 source-cited count gate, Moussey C11 authenticated-runtime
+  gate, Star67 owner-admin metadata gate, cleaner host/resource gate, security
+  report gate, credential rotation, deployment, and portability as separate
+  predicates within the same active portfolio Outcome.
 
 - 2026-08-03T19:12:15Z: Confirmed the full-portfolio receipt is durable and
   current: PR #99 remains OPEN/CLEAN/MERGEABLE against `main@2029756`, all
