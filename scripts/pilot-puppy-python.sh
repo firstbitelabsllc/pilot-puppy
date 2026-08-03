@@ -29,7 +29,7 @@ resolve_python() {
   done
 
   if command -v python3 >/dev/null 2>&1; then
-    echo "pilot-puppy ${command_name}: python3 on PATH is $(python3 -c 'import sys; print(\"%d.%d.%d\" % sys.version_info[:3])' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
+    echo "pilot-puppy ${command_name}: python3 on PATH is $(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:3])))' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
     echo "  Install a newer interpreter (kept alongside the existing one is fine) and re-run." >&2
   else
     echo "pilot-puppy ${command_name}: python3 not found on PATH." >&2

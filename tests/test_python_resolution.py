@@ -42,7 +42,7 @@ class PythonResolutionTests(unittest.TestCase):
     def test_shared_helper_honors_valid_override(self) -> None:
         candidates = [
             name
-            for name in ("python3.10", "python3.11", "python3.12", "python3.13", "python3.14")
+            for name in tuple(f"python3.{minor}" for minor in range(10, 30))
             if shutil.which(name)
         ]
         if sys.version_info < (3, 10) and not candidates:
@@ -107,7 +107,7 @@ class PythonResolutionTests(unittest.TestCase):
     def test_versioned_interpreter_wins_over_low_bare_python3(self) -> None:
         candidates = [
             name
-            for name in ("python3.10", "python3.11", "python3.12", "python3.13", "python3.14")
+            for name in tuple(f"python3.{minor}" for minor in range(10, 30))
             if shutil.which(name)
         ]
         if not candidates:
@@ -143,7 +143,7 @@ class PythonResolutionTests(unittest.TestCase):
     def test_npm_gate_uses_versioned_interpreter_when_bare_python3_is_low(self) -> None:
         candidates = [
             name
-            for name in ("python3.10", "python3.11", "python3.12", "python3.13", "python3.14")
+            for name in tuple(f"python3.{minor}" for minor in range(10, 30))
             if shutil.which(name)
         ]
         if not candidates:

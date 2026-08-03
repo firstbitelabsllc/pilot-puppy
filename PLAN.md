@@ -12,25 +12,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 12
-- Outcome Updated At: 2026-08-03T16:31:00Z
-- Outcome State: needs_input
-- Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Review and merge the Python-gate fix, then re-run the installed doctor on primary; cross-host Codex proof remains deferred.
-- Decision ID: choose-local-path
-- Decision: What should Pilot Puppy do while the remote computer is unavailable?
-- Option A ID: local-dogfood
-- Option A: Run local dogfood
-- Option A Consequence: Use the browser and native local hosts to validate the current brief now.
-- Option B ID: local-product-row
-- Option B: Take the next local row
-- Option B Consequence: Ship the highest reachable product improvement without waiting on remote proof.
-- Option C ID: defer-cross-host
-- Option C: Defer cross-host proof
-- Option C Consequence: Resume when Jump Connect accepts the target or quota resets; no remote work is attempted now.
+- Outcome Revision: 20
+- Outcome Updated At: 2026-08-03T22:58:50Z
+- Outcome State: working
+- Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
+- Next: Use the local roster for the next bounded task. Configure an exact native selector with `pilot-puppy seat set` only after choosing it locally; make no provider, cost, or quality claim. Cross-host Codex proof remains deferred.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
-- Proof Summary: v2.0.0 is public and fresh-clone/install/readback passes; real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
+- Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
 - Proof Delivery: delivered
 
 ## Product boundary
@@ -46,16 +35,52 @@ Code, or Cursor without taking custody of credentials or conversations.
 - No aliases, hidden products, daemon, scheduler,
   watcher, credential relay, remote database, or background dispatch loop.
 
+## Delegation architecture
+
+- Pilot Puppy is one foreground umbrella: Outcome, durable plan/proof/resume,
+  explicit delegation roles, one bounded native-host packet, and lead
+  acceptance. It is not a second product per capability.
+- The public roster names only provider-neutral roles and native host surfaces:
+  `lead`, `planner`, `bulk`, `debug`, `critic`, and `hard-ic`. Concrete model,
+  account, quota, command, and machine bindings stay in a local private
+  overlay; prompts, transcripts, credentials, and provider payloads never
+  enter the plan, browser, or evidence.
+- A foreground smart router may deterministically choose one role and native
+  host surface from an explicit task class and local roster. It must print the
+  choice, reason, alternative, and escalation; it never launches work,
+  silently substitutes a provider, owns a queue, or persists a second mission
+  state. Native host authentication remains native.
+- The lead alone owns plan claims, task split, review, proof, merge, publish,
+  and acceptance. Workers return drafts plus bounded receipts. Fan-out stays
+  depth one and at most three path-disjoint slices only when the lead can fold
+  them in the same cycle; one batched bulk worker is the default.
+- Re-evaluate a role only at an evidence boundary: scout result, failed proof,
+  semantic uncertainty, compaction, or explicit escalation. No timer, retry,
+  watcher, or autonomous reroute exists.
+- Thermo and Ponytail remain separate review disciplines, not runtime roles or
+  a second agent system. Pilot Puppy records only their bounded decisions or
+  receipts when a task needs them.
+
 ## Platform alignment
 
 - The current platform effort is local-first product proof. Cross-host
   portability is a deferred receipt, not a gate on reachable work.
 - Existing plan, host, and project-local evidence boundaries are sufficient;
-  do not add a router, queue, watcher, relay, or compatibility product to work
-  around one unavailable Codex account.
+  do not add a background or autonomous router, queue, watcher, relay, or
+  compatibility product to work around one unavailable Codex account. A local
+  foreground role router is allowed only when it is explicit, explainable, and
+  cannot dispatch work by itself.
 - When the target is available, a usable Codex account there can complete the
   deferred receipt. The local quota reset is the alternate resume predicate,
   not a reason to expand the product.
+- The deferred Codex receipt uses one frozen, public-safe packet: task ID
+  `host-prompt-heading-guard`, target revision
+  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, SHA-256
+  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`, exact
+  allowed path `tests/test_pilot_puppy_host.py`, and proof command
+  `python3 -m unittest tests.test_pilot_puppy_host -v`. The packet file stays
+  outside this public repository and contains no private prompts, credentials,
+  transcripts, or provider payloads.
 
 ## Worklane boundary
 
@@ -102,6 +127,44 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3`.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
+- [completed] R1: Add a provider-neutral, local roster contract and safe
+  foreground display for explicit `lead`, `planner`, `bulk`, `debug`, `critic`,
+  and `hard-ic` roles. It must be local configuration only, no-overwrite,
+  bounded, and private-text safe. Local roster output may show safe role labels
+  and availability; concrete model, account, quota, command, and machine data
+  must stay out of browser/status/evidence output.
+- [completed] R2: Add a foreground smart role router that deterministically
+  selects a role and native-host surface from an explicit task class, prints
+  its reason, alternative, and escalation, and never launches work. Preserve
+  existing `host run --host` compatibility and bind a later packet to the
+  route-safe roster revision/hash.
+- [completed] R3: Bind a ready explicit route to the existing one-task native
+  host handoff. Reject unsafe, stale, forged, task-mismatched, host-mismatched,
+  or self-overwriting route packets before a host starts. Keep one explicit
+  packet at a time; do not add a fan-out manager, queue, daemon, or retries.
+- [completed] R4: Keep rerouting and independent criticism at an evidence
+  boundary. A `review` route remains a manual critic decision; the lead starts
+  any new route explicitly and retains final proof/acceptance.
+- [completed] R5: Add a local private seat overlay because a real native-tool
+  setup needs more than the generic role/host roster. It may select only a
+  validated model flag for a ready, route-bound native host; it must stay
+  owner-local, with its configuration absent from browser/status, plans, route
+  evidence, attempt receipts, packages, and stranger installs. It may never hold credentials,
+  prompts, provider payloads, profile guesses, or arbitrary command arguments.
+- [completed] R6: Prove the default `planner`, `bulk`, `debug`, and `hard-ic`
+  route shapes without launch, and publish their honest calibration boundary.
+  A native-host calibration is valid only for the same role and frozen task in
+  separate clean worktrees. Report route, scope, proof, lead reproduction, and
+  elapsed time or an honest null; never claim model quality, provider usage,
+  tokens, cost, quota, or performance by assertion.
+- [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
+  fresh install, docs, loopback UI readback, package, privacy, and security
+  gates.
+- [completed] R8: Make local role routing usable without source spelunking:
+  render the four work shapes in the loopback briefing and add one atomic local
+  `roster prefer` command that reprioritizes only declared, enabled generic
+  role/host slots. It must not read providers/models/quotas, launch work, or
+  create project evidence.
 - [completed] Share Python 3.10+ resolution across the CLI, direct browser
   launcher, and npm Python gates.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -124,6 +187,64 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03: Tightened the Operator Brief's `Next` field to the 280-character
+  contract so `pilot-puppy status` and the loopback browser render the current
+  Outcome again. No routing or execution behavior changed.
+- 2026-08-03: R5 is complete. `seat init`, `seat set`, and `seat show` maintain
+  a strict owner-local selector overlay for an existing enabled roster slot;
+  `host run --use-seat` requires a sealed route and fails before host launch if
+  the mapping is absent, stale, unsafe, or mismatched. The selected model or
+  Codex profile enters only the native argv and is rejected from receipts.
+  Generic roles, routes, browser/status, plans, package contents, and stranger
+  installs remain selector-free. The full gate passed: 136 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 98-file
+  public-source scan, and a reproducible 63-file package with SHA-256
+  `f372fd76c0d93b9d72baf9cb90d4319121ab1a3a2a0bd90772e55b2257c0153f`.
+- 2026-08-03: The generic roster alone cannot express the requested named local
+  seats. Installed Codex, Claude Code, and Cursor-native CLIs each expose a
+  model-selection flag, so R5 now implements a local-only, route-bound model
+  overlay rather than a cloud router or cost dashboard. It will accept no
+  arbitrary native arguments, credentials, profiles, account discovery, quota
+  checks, or provider calls; a bad or unsupported local choice must fail before
+  a host starts. The exact private selector must not appear in a browser,
+  `status`, plan, route packet, or host attempt receipt.
+- 2026-08-03: R8 passed the integrated public gate: 126 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 95-file
+  public-source scan, package verification, and a zero-vulnerability
+  dependency audit. It adds no host launch, provider/model/usage selection,
+  cloud execution, credential relay, queue, daemon, watcher, or transcript
+  store. This is source proof only; it does not claim a new public release or
+  a native-host execution.
+- 2026-08-03: Restored the live local delegation surface to public main
+  `bc2e06c0` without copying or adding a runtime. Skillbox read back one
+  current Pilot Puppy source in Codex, Claude Code, and Cursor; `pilot-puppy`
+  reported 2.1.0 and its doctor passed 11/11. A fresh private generic roster
+  exposes routine development as bulk/Cursor with bulk/Codex fallback,
+  debug/Codex, and hard implementation/Claude Code. A no-launch `dev` route
+  read back that exact Cursor-first selection. R8 adds a visible four-shape
+  guide and an atomic `roster prefer` command. Specific native model/profile
+  selection remains deferred until a
+  real same-host need and safe invocation contract exist.
+- 2026-08-03: User made local role-based smart routing and a usable roster P0.
+  Pilot Puppy will not add cloud execution, voice/on-the-go controls, a
+  credential relay, a transcript store, or autonomous dispatch. The direct
+  work starts with a secure generic roster, followed immediately by a
+  transparent role route that saves stronger native seats for work that needs
+  them.
+- 2026-08-03: R1–R4 are implemented in the local delegation slice. `roster`
+  stores only generic local roles/hosts; `route` selects one role/host from an
+  explicit task kind, prints alternatives and escalation, and does not launch.
+  `host run --route-file` validates the frozen task, route-safe roster hash,
+  declared enabled slot, and selected host before launch. This works in an
+  ordinary clean Git repository without adding an ignore rule, while preserving
+  the bounded evidence directory. No cloud executor, credential relay,
+  transcript store, queue, daemon, watcher, voice client, or provider-model
+  router was added.
+- 2026-08-03: Independent hostile-input coverage now rejects named pipes,
+  group/world-readable local rosters, private slot-ID hash leakage, malformed
+  or stale packets, undeclared selections, route/output collisions, and cross-
+  host substitution. Full Python, JS, docs, package, public-source, and
+  desktop/phone loopback gates are the remaining R7 proof fold.
 - 2026-08-03: Made the local-first boundary operational. The unavailable Jump
   route is deferred, while the Outcome now offers three honest local choices:
   dogfood here, take the next reachable product row, or defer cross-host proof.
@@ -165,8 +286,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   package install, version readback, and a real new-repository A/B/C brief.
 - 2026-08-03: PR #90 merged as `0c6d8ce1`. Its docs-only handoff makes the
   second-computer route the first unblock attempt for the remaining Codex
-  execution proof. No new runtime, queue, router, credential relay, or second
-  plan authority is needed.
+  execution proof. No new runtime, queue, autonomous router, credential relay,
+  or second plan authority is needed.
 - 2026-08-03: The read-only Jump Desktop attempt to the other-computer route
   returned `Computer is offline`; no remote UI, install, doctor, skill mount,
   or native-host receipt was produced. This is host availability, not a Pilot
@@ -194,22 +315,70 @@ Code, or Cursor without taking custody of credentials or conversations.
   `PILOT_PUPPY_BROWSER_HOST`, and `PILOT_PUPPY_BROWSER_PORT`, and explicit flags
   win over environment defaults. Two hermetic tests cover the status path and
   parser precedence; full gates remain the resume proof for this row.
-- 2026-08-03: Draft PR #105 carries the shared Python resolver on top of current
-  `main`; the remote Python 3.10/3.12/3.14 matrix, browser/docs, public-ready,
-  gitleaks, and CodeQL checks all pass. The branch is mergeable but not merged
-  or released; primary doctor remains the installed-surface proof after review.
-- 2026-08-03: The Python floor now has one resolver shared by the CLI, direct
-  browser launcher, and npm Python gates. A pinned failing bare `python3` used
-  to make `npm run test:py` fail even when Python 3.14 was available; the
-  hermetic low-bare test now proves the versioned interpreter is selected.
-  The 88-test Python suite, 3 JavaScript tests, public-ready scan, docs build,
-  4 desktop/phone browser tests, and development package verification pass.
-- 2026-08-03: The cold audit found Playwright's web server still bypassed the
-  shared Python resolver with a direct `python3` command. The e2e launcher now
-  uses the same bounded helper and absolute project paths; 4 desktop/phone
-  browser tests, 88 Python tests, 3 JavaScript tests, public-ready, and docs
-  pass on the corrected branch. Clean release verification emits 53 files
-  with SHA-256 `fcc62b5d46f3193a60eed805758d8c1bda0f8c38848d7e59ba3046e6e7be9354`.
+- 2026-08-03: The Python floor has one resolver (`scripts/pilot-puppy-python.sh`)
+  shared by the CLI, direct browser launcher, npm Python gates, and the
+  Playwright web server; a hermetic low-bare test proves a pinned failing
+  `python3` no longer masks a newer versioned interpreter, and the below-floor
+  diagnostic prints the real version instead of `unreadable`. Rebased onto the
+  v2.1.x main; 138 Python tests, 3 JavaScript tests, the
+  101-file public-ready scan, and docs gates pass on the merged tree.
+- 2026-08-03: Architecture review restored the useful delegation policy that
+  earlier consolidation removed: a provider-neutral role roster, foreground
+  selection, bounded packets, lead-owned acceptance, and evidence-boundary
+  escalation. The public product will not restore a hidden queue, autonomous
+  router, daemon, credential relay, transcript store, or private provider
+  roster.
+- 2026-08-03: The completed R1–R4 implementation passes 120 Python tests, 3
+  JS tests, 4 desktop/phone Chromium tests, docs build, public-source scan,
+  and a 61-file clean development package with zero dependency vulnerabilities.
+  The only active row is R7: commit/push/remote review and release-readback;
+  no provider host or cloud executor ran for this local routing work.
+- 2026-08-03: A final independent hostile-input review found no release blocker.
+  It re-ran 44 focused routing/host tests and the 120-test Python suite. The
+  release candidate rejects FIFO inputs, stale or forged packets, undeclared
+  slots, route/output collisions, private roster permissions, and host
+  substitution before launch. Remote merge, tag, and release readback remain
+  the only R7 actions.
+- 2026-08-03: R7 delivered. PR #107 merged as c7d63619; public release v2.1.0
+  targets that exact commit with a 61-file asset whose SHA-256 is
+  ecdc1509261b2eefc1d92074783cbc28f7be4ef1ac3bf0766326c9e22dd98634.
+  Hosted Python 3.10/3.12/3.14, browser/docs, gitleaks, public-readiness,
+  CodeQL, and mergeability checks passed. A fresh v2.1.0 tag clone installed
+  with zero vulnerabilities, read back version 2.1.0, passed 3 JavaScript and
+  120 Python tests, and passed the 95-file public-source scan.
+- 2026-08-03: R6 delivered. A focused no-launch regression now proves the
+  default planner/manual, bulk/Cursor, debug/Codex, and hard-IC/Claude Code
+  decisions. One fresh real bulk/Cursor dogfood followed its sealed route,
+  changed only its allowed file, returned `status: ok`, passed its verifier,
+  and passed lead reproduction in 29.5 seconds. The host receipt explicitly
+  records `projection_is_usage: false`; no token, cost, quota, model, or
+  provider-performance claim is made. A literal valid receipt example fixed
+  the one malformed-proof-label block found in the first fresh attempt. The
+  raw route and attempt receipt stay local because they are task- and
+  worktree-specific; this public record preserves only the safe mechanical
+  facts above.
+- 2026-08-03T22:57Z: Rechecked the documented other-computer route. Jump
+  Desktop opened `Leos-Macbook-M4-Pro` but remained on `Connecting...` for
+  about 15 seconds; the attempt was closed without reaching the remote UI.
+  No clone, install, doctor, mount, or native-host receipt was produced. The
+  target-host availability predicate is still unmet; do not retry in a loop.
+- 2026-08-03T23:03Z: Made one bounded follow-up attempt after a fresh Jump
+  state check. `Leos-Macbook-M4-Pro` remained at `Connecting...` for another
+  15 seconds and was closed without reaching the remote UI. No clone,
+  install, doctor, mount, Outcome/A/B/C, or native-host receipt was produced.
+  The target-host availability predicate remains unmet; do not retry again in
+  this run.
+- 2026-08-03T23:33:34Z: Made one fresh low-cost reachability check after the
+  pause. `Leos-Macbook-M4-Pro.local` resolved to `192.168.4.29`, but the
+  bounded ICMP probe received no replies and read-only SSH timed out after
+  five seconds. No clone, install, doctor, mount, Outcome/A/B/C, or
+  native-host receipt was produced. The target-host availability predicate
+  remains unmet; do not open another Jump or retry in a loop.
+- 2026-08-03T23:38:52Z: Restored the public-safe frozen packet metadata from
+  the repository's prior packet receipt after auditing the current plan. This
+  preserves the exact task ID, target revision, hash, allowed path, and proof
+  command without copying the packet file or any private task content. It is
+  packet readiness only; no target-host or native-host receipt is claimed.
 
 ## Deferred proof (not a global blocker)
 
@@ -220,6 +389,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
+- The frozen packet is ready and must not be replaced: use task ID
+  `host-prompt-heading-guard` at target revision
+  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, exact allowed path
+  `tests/test_pilot_puppy_host.py`, and proof command
+  `python3 -m unittest tests.test_pilot_puppy_host -v`; verify its SHA-256
+  as `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`.
 - Native Codex execution is also time-bound. If the target has a usable
   account, run the same sealed task there; otherwise resume after 2026-08-07
   23:52 America/New_York. In either route, it must return `status: ok`, change
