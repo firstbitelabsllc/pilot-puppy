@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 59
-- Outcome Updated At: 2026-08-03T23:14:15Z
+- Outcome Revision: 60
+- Outcome Updated At: 2026-08-03T23:16:05Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring every active product lane to a clean, user-ready state: Star67, Moussey consignment and cleaner, Snowcubes, security cleanup, and release handoff. It coordinates the portfolio; it is not the product under test.
 - Outcome Detail: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
@@ -166,8 +166,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   current public main still reports 7 high and 4 low development-chain
   findings, so the repair remains materially useful. Fresh post-push CI and
   post-merge reruns are still required. Forcing the breaking Shopify CLI
-  upgrade is not justified. PR #1567 is OPEN after the refresh; its current
-  merge/check readback is still pending, and no merge or deployment is claimed.
+  upgrade is not justified. PR #1567 is now OPEN/CLEAN/mergeable after the
+  refresh; no merge or deployment is claimed.
 - **Codex Security:** the official plugin now has a standard workspace open on
   clean Moussey `origin/main@3c44bbec`, with setup valid and the bounded scan
   start surface awaiting its handshake. No plugin findings or remediation are
@@ -286,6 +286,19 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T23:16:05Z: Completed the current-ref reconciliation readback.
+  Pilot Puppy PR #99 at head `e2b5a5e` against public `main@601c37c` is
+  OPEN/CLEAN with CI 3.10/3.12/3.14, browser/docs, CodeQL, gitleaks,
+  public-ready, Graphite, and `[code]smith` skipped by policy. Snowcubes PR
+  #1567 at `8d6ae00c` against `main@c48ace456` is OPEN/CLEAN/mergeable with
+  Graphite passing and review checks skipped by policy. A fresh C11 readback
+  found Nicole's MacBook Air online and Tailscale-pingable; `/api/health` and
+  `/consignment` return `200`, but `/api/consignment?view=summary` returns
+  `data_unavailable` because consignment data is not configured on that machine.
+  The four expected C14 source CSVs were not found in the current repo/history
+  or local attachment search, so none was fabricated. No owner process,
+  credential, Shopify, payment, merge, deploy, or cleaner mutation occurred.
 
 - 2026-08-03T23:13:14Z: Re-read direct GitHub refs and reconciled the current
   portfolio boundary. Pilot Puppy public `main@601c37c` is the current base;
