@@ -95,6 +95,10 @@ def run_probe(binary: str) -> tuple[int | None, str, bool]:
     # Versions are diagnostic only. Keep them short and strip control bytes;
     # never include command paths, prompts, or provider output in the receipt.
     clean = " ".join(output.split())[:120]
+    try:
+        clean = validate_public_text(clean, "host version", maximum=120)
+    except RoutePacketError:
+        clean = ""
     return result.returncode, clean, result.returncode == 0
 
 
@@ -598,11 +602,15 @@ def probe(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     try:
         binary = resolve_binary(args.host, args.binary)
         returncode, version, available = run_probe(binary)
+        try:
+            binary_name = validate_public_text(Path(binary).name, "host binary name", maximum=120)
+        except RoutePacketError:
+            binary_name = "native-host"
         payload = {
             "schema": PROBE_SCHEMA,
             "host": args.host,
             "available": available,
-            "binary_name": Path(binary).name,
+            "binary_name": binary_name,
             "version": version or None,
             "probe_exit_code": returncode,
             "execution": {"performed": False, "projection_only": True},

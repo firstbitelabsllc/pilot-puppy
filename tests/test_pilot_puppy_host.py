@@ -300,6 +300,26 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertEqual(payload["schema"], "pilot-puppy.host-probe.v1")
         self.assertEqual(payload["execution"], {"performed": False, "projection_only": True})
 
+    def test_probe_does_not_publish_unsafe_version_or_binary_text(self) -> None:
+        unsafe_version = "path:" + chr(47) + "Users/private"
+        result = subprocess.CompletedProcess(["fake"], 0, stdout=unsafe_version, stderr="")
+        with mock.patch.object(pilot_puppy_host.subprocess, "run", return_value=result):
+            returncode, version, available = pilot_puppy_host.run_probe("fake")
+        self.assertEqual(returncode, 0)
+        self.assertEqual(version, "")
+        self.assertTrue(available)
+
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname).resolve()
+            binary = root / ("native" + "\n" + "private")
+            binary.write_text(FAKE_HOST, encoding="utf-8")
+            binary.chmod(0o755)
+            args = type("Args", (), {"host": "codex", "binary": str(binary)})()
+            with mock.patch.object(pilot_puppy_host, "run_probe", return_value=(0, "safe", True)):
+                payload, code = pilot_puppy_host.probe(args)
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["binary_name"], "native-host")
+
     def test_cursor_without_explicit_binary_resolves_cursor_agent(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
