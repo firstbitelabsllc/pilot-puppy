@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 111
-- Outcome Updated At: 2026-08-03T22:37:10Z
+- Outcome Revision: 112
+- Outcome Updated At: 2026-08-03T22:41:41Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `f01b751`
+- Next: Choose the consolidation path for candidate source head `6fee9e7`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -30,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate
-  `f01b751` has exact local, clean-clone, hosted CI/Secret Scan, isolated
+  `6fee9e7` has exact local, clean-clone, hosted CI/Secret Scan, isolated
   install/doctor, and real Codex sealed-task proof; Claude/Cursor receipts also
   pass. It is not merged or released.
 - Proof Delivery: delivered
@@ -851,6 +851,28 @@ Code, or Cursor without taking custody of credentials or conversations.
   and private selector values stay out of receipt fields. No source change was
   needed; the candidate is still waiting only on consolidation choice.
 
+- 2026-08-03: Build-surface audit found a real drift: hosted CI ran pinned Ruff
+  while `CONTRIBUTING.md` claimed no Ruff surface and `package.json` exposed no
+  local lint command. Commit `6fee9e7` adds `npm run lint:python` through a
+  small wrapper that prefers a PATH Ruff executable and falls back to the
+  shared Python resolver, updates the contributor guide, and adds a workflow
+  regression. The local lint command, shell syntax, and full gate pass.
+
+- 2026-08-03: A fresh clone at exact head `6fee9e7` passed `npm ci` (186
+  packages, zero vulnerabilities), 3 JavaScript tests, 177 Python tests (2
+  skipped), 6 desktop/phone browser tests, docs, public-ready, `npm run
+  lint:python`, audit, and release verification. Hosted CI run `30859535218`
+  and Secret scan run `30859536415` both passed for that exact head. The
+  isolated npm-packed install reported version `2.1.0` and doctor returned 11
+  checks, zero failures, and zero warnings. The package is 65 files with
+  SHA-256 `3eea6e1e9c08e42633c6ad42df8e217b7adb47e8aad2120ff60ed57547a031e9`.
+
+- 2026-08-03: The same sealed Codex task was replayed against exact source head
+  `6fee9e7`. It returned `status: ok`, changed only `proof/codex-sealed.txt`,
+  reported a passing `relevant-test`, passed lead reproduction, and left no
+  `__pycache__` in the inspected worktree. The receipt remains local evidence;
+  no lead-acceptance, PR, merge, release, deployment, or runtime claim changed.
+
 ## Deferred proof (not a global blocker)
 
 - The other-computer route is deferred by host availability. Resume only when
@@ -860,7 +882,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
-- Local native-host execution is now proven on candidate head `f01b751`: the
+- Local native-host execution is now proven on candidate head `6fee9e7`: the
   Codex sealed task returned `status: ok`, changed only its allowed path, and
   passed lead reproduction. A binary/version probe is not a substitute for
   that receipt. If the target Mac becomes available, the same task may be
