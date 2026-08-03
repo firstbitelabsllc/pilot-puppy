@@ -351,6 +351,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   install, doctor, mount, Outcome/A/B/C, or native-host receipt was produced.
   The target-host availability predicate remains unmet; do not retry again in
   this run.
+- 2026-08-03T23:33:34Z: Made one fresh low-cost reachability check after the
+  pause. `Leos-Macbook-M4-Pro.local` resolved to `192.168.4.29`, but the
+  bounded ICMP probe received no replies and read-only SSH timed out after
+  five seconds. No clone, install, doctor, mount, Outcome/A/B/C, or
+  native-host receipt was produced. The target-host availability predicate
+  remains unmet; do not open another Jump or retry in a loop.
 
 ## Deferred proof (not a global blocker)
 
