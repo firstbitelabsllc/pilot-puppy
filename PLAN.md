@@ -12,17 +12,19 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 86
-- Outcome Updated At: 2026-08-03T21:41:13Z
+- Outcome Revision: 87
+- Outcome Updated At: 2026-08-03T21:44:06Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Reconcile candidate source `4f36a4b` with open PRs #99, #105, #106,
-  and draft #95 before promotion into canonical mainline. The candidate now
-  keeps the Python-floor helper as the single resolver authority across the
-  dispatcher, direct browser, npm gates, and Playwright; sibling branches were
-  not edited. #95 is an older Python-floor draft that overlaps #105. Hosted
-  checks cover this source, and no merge, release, or deployment claim is made
-  yet.
+- Next: Choose the consolidation path for candidate `f6a8362`: (A) promote
+  this candidate through one reviewed PR, (B) update the existing sibling PRs
+  from this candidate, or (C) leave the siblings open while ownership is
+  clarified. Read-only audit shows #99 is a separate portfolio-level PLAN,
+  #105's Python-floor behavior is already superseded here by the shared
+  helper plus single-source dispatcher refactor, #106's receipt hardening is
+  already present in the stronger candidate host boundary, and #95 overlaps
+  #105. No sibling branch was edited; no merge, release, or deployment claim is
+  made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -646,6 +648,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   `headSha=4f36a4b2142f03f8216caf9a757bf4de20a5b60d`. This is source,
   clean-clone, and hosted-check proof only; no PR, review, merge, release,
   deployment, or runtime claim changed.
+- 2026-08-03: Read-only consolidation audit refreshed `origin/main@2029756d`,
+  candidate `f6a8362`, #99 at `268340e`, #105 at `580a99d`, #106 at `1e1a113`,
+  and #95 at `a03f39e`. `git merge-tree --write-tree` reports only a PLAN
+  conflict with #99 because it carries a different portfolio Outcome; #105
+  conflicts in its older PLAN/config/helper/test surfaces, and #106 conflicts
+  in its older PLAN and host validator. The candidate already contains the
+  net Python-floor and public-safe receipt behavior, so blindly merging any
+  sibling would risk regressing the current role/seat surface. Keep this as a
+  disposition decision, not a branch rewrite or external PR action.
 
 ## Deferred proof (not a global blocker)
 
