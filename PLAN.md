@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 21
-- Outcome Updated At: 2026-08-03T17:06:10Z
+- Outcome Revision: 22
+- Outcome Updated At: 2026-08-03T17:13:44Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
@@ -29,7 +29,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `0721078`, Snowcubes `origin/main@27665b6e` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
+- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@0109759c` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
 - Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; current Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
@@ -77,14 +77,15 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Portfolio map
 
-- **Star67/Pivot SQL:** README commit `0721078` is pushed to `main` and puts
+- **Star67/Pivot SQL:** current `main@1277dd8` includes README commit `0721078`,
+  which puts
   `https://learn-sql-peach.vercel.app/` before local setup. The live Vercel app
   is HTTP 200 with Star67 content and security headers. A production browser
   readback reaches the local practice workspace, shows 2,930,845 warehouse
   rows, makes Riff's task primary and Frosty's coaching visibly optional, and
   runs the guided query to a `✓ delivered` result of 2,736,642 GL lines.
   Repository rename is waiting on owner-admin access.
-- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@27665b6e`
+- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@0109759c`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
   history and absent from current tracker outputs. The 5/21 Marathon row is
@@ -166,6 +167,20 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:13:44Z: Audited the complete current Moussey runtime source for
+  the password-URL requirement, not just consignment. `lib/moussey-url.ts`
+  removes URL userinfo and all credential query keys; WebSocket URLs clear
+  query and hash before connection; the only preserved token is the documented
+  short-lived cleaner-media capability. No runtime source path emits a
+  password/passcode/token URL; remaining token strings are test fixtures or
+  the intentional media exception. Clean `origin/main@3c44bbec` proof passes
+  with dev dependencies installed: 39/39 URL, phone-origin, consignment, and
+  route tests (one pre-existing visit-delegation test skipped), the
+  consignment-surface check, a production webpack build, and `npm ci` with
+  zero reported vulnerabilities. No source change was needed; the invariant
+  is already centralized and covered. The remaining Moussey predicate is only
+  owner-controlled runtime restart plus authenticated browser readback.
 
 - 2026-08-03T17:06:10Z: Rebased Snowcubes security PR #1567 onto the current
   public main `27665b6e` and pushed `77e2bb5e`. The diff remains exactly one
