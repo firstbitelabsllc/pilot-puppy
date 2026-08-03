@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 23
-- Outcome Updated At: 2026-08-03T17:17:49Z
+- Outcome Revision: 24
+- Outcome Updated At: 2026-08-03T17:21:50Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, cleaner host-resource, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -30,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@c16d1f93` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
+- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@c16d1f93` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, active cleaner resource readback, focused source/test receipts, and live public-surface readbacks.
 - Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; current Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
@@ -76,8 +76,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   outcome there. Amp only sharpens that lane's brief; it does not dispatch,
   validate, or become its authority.
 - The current portfolio lanes are Star67/Pivot SQL, Moussey consignment,
-  Snowcubes consignment/storefront, and security/privacy plus release handoff.
-  Each lane keeps its own canonical plan and owner/worktree boundary.
+  Moussey cleaner/host safety, Snowcubes consignment/storefront, and
+  security/privacy plus release handoff. Each lane keeps its own canonical plan
+  and owner/worktree boundary.
 
 ## Portfolio map
 
@@ -100,6 +101,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
+- **Moussey cleaner:** the canonical photo-cleaner plan still has active
+  MPCLEAN-254 host-survival work and MPCLEAN-253 real-media inspection work,
+  under an existing Claude Code single-writer lease. The fresh read-only host
+  sample at `2026-08-03T17:21:04Z` reported 62% memory free but about 54.6 of
+  56.3 GiB swap used and only about 12 GiB root free. The approved disk-clean
+  dry run found only 51 MiB of DerivedData and no meaningful safe reclaim. The
+  cleaner build/browser/media ladder is therefore paused; no process, cache,
+  source, or personal-media mutation was attempted.
 - **Security:** Snowcubes PR #1567 (`77e2bb5e`) was verified as a lockfile-only
   repair against public main `27665b6e`; Snowcubes main has since advanced to
   `c16d1f93` with unrelated product/docs changes. The recorded security proof
@@ -173,6 +182,21 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:21:50Z: Re-read all named portfolio refs, open PRs, live
+  surfaces, and canonical plan rows. Pilot Puppy PR #99 is OPEN/CLEAN at
+  `f1694484` with all required CI, CodeQL, gitleaks, browser/docs,
+  public-ready, and mergeability checks passing; it is not merged. Star67
+  remains public `nlau1193/pivot-sql` with homepage unset and admin permission
+  absent. Snowcubes remains `origin/main@c16d1f93`, live HTTP 200, with PR #1567
+  OPEN/CLEAN; F9, F10, and F12 remain Found-export, visit-cycle, and product
+  fact gates owned by Leo/Nicole rather than missing code. Moussey consignment
+  remains clean source at `3c44bbec`, but its owner process is still the stale
+  `:4321` runtime. The active cleaner plan is now included in the portfolio
+  map: its first resource sample is red on swap/disk pressure, the dry-run
+  cleanup has no meaningful safe reclaim, and the existing single-writer lease
+  forbids overlapping edits. Continue reachable non-heavy lanes; resume cleaner
+  only after two quiet green host samples plus lease/readiness confirmation.
 
 - 2026-08-03T17:17:49Z: Amp review corrected the operating brief: the active
   goal is the full Star67, Moussey, Snowcubes, security, deployment, and
