@@ -13,7 +13,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 - Outcome ID: portfolio-product-closeout-20260803
 - Outcome Revision: 35
-- Outcome Updated At: 2026-08-03T18:13:42Z
+- Outcome Updated At: 2026-08-03T18:16:44Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -268,6 +268,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T18:16:44Z: Re-read the parked host/runtime predicates. The Mac
+  reports 60% system-wide memory free, about 50,849 MiB of 52,224 MiB swap in
+  use, and 16 GiB root free; this does not clear MPCLEAN-254, so no Cleaner
+  build, browser/media ladder, process restart, or source/personal-media
+  mutation ran. Moussey `:4321` is still PID 73384 from the dirty owner
+  checkout. Star67 still reports `admin=false` with no homepage, and the two
+  open PRs remain unmerged. This is a current safety boundary, not a claim of
+  portfolio completion.
 
 - 2026-08-03T18:13:42Z: Portfolio PR #99 at `c0840e01` completed its fresh
   post-plan-update proof cycle. CI 3.10/3.12/3.14, browser/docs, CodeQL,
