@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 115
-- Outcome Updated At: 2026-08-03T22:54:07Z
+- Outcome Revision: 116
+- Outcome Updated At: 2026-08-03T22:57:43Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `a60f996`
@@ -906,6 +906,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   separate, while #105, #106, and #95 remain open dirty drafts. No new source
   defect was found; no sibling branch, PR, merge, release, or deployment action
   was taken. The A/B/C consolidation choice remains the exact next decision.
+
+- 2026-08-03: Packed the clean candidate artifact and installed it into an
+  isolated consumer with isolated PATH and skill mounts. `pilot-puppy doctor
+  --json` returned 11 checks, zero failures, and zero warnings; all three
+  native-host probes and all three package skill mounts resolved to the
+  installed artifact. The shared machine's existing mounts correctly failed
+  the same check because they point at a different checkout; that is expected
+  custody protection, not a product defect. Release verification still passes
+  with the 65-file SHA-256 `1910ae707bc31fd47fae19a76adf7441c571b912dfe7647c13bbd0c1ddd0ee7a`.
 
 ## Deferred proof (not a global blocker)
 
