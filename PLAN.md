@@ -12,13 +12,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 83
-- Outcome Updated At: 2026-08-03T21:28:33Z
+- Outcome Revision: 84
+- Outcome Updated At: 2026-08-03T21:29:40Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Reconcile candidate source `ef330d6` with open PRs #99, #105, and #106
-  before promotion into canonical mainline; hosted checks cover this source,
-  and no merge, release, or deployment claim is made yet.
+- Next: Reconcile candidate source `ef330d6` with open PRs #99, #105, #106,
+  and draft #95 before promotion into canonical mainline; #95 is an older
+  Python-floor draft that overlaps the later #105 gate series. Hosted checks
+  cover this source, and no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -611,6 +612,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   Hosted CI run `30854702344` and Secret Scan run `30854703926` pass the same
   exact head. These are source, clean-install, and hosted-check proofs only;
   no PR, review, merge, release, deployment, or runtime claim changed.
+- 2026-08-03: Live PR refresh also shows draft #95 (`claude/python-floor-
+  resolution-20260803`) still open. A read-only range comparison shows its
+  Python-floor work overlaps the later #105 (`codex/python-gate-floor-20260803`)
+  gate series; no branch was edited. Keep #95 as an explicit duplicate/stale
+  disposition item rather than silently treating #105 as the only open overlap.
 
 ## Deferred proof (not a global blocker)
 
