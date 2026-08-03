@@ -124,6 +124,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   titles public-safe in status and browser output.
 - [completed] Reprove the pushed branch from a fresh clone with lockfile
   install and public gates.
+- [completed] Count only `## Work` checkboxes in status task summaries.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -251,6 +252,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Bounded native Codex attempt timed out after 60 seconds with no host receipt.
   It reported `status: failed`, `kind: host_timeout`, `proof_ref: null`, and only the allowed
   `native-probe.txt` path in a disposable checkout; cross-host proof remains deferred.
+- 2026-08-03: Status task counts now reflect only the Work section.
+  Proof: 106 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
+  public-ready scan, dev release package, and doctor pass [receipt:18d79afcdab177be]
 
 ## Deferred proof (not a global blocker)
 

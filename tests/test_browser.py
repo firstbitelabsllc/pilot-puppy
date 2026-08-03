@@ -110,6 +110,16 @@ class BrowserTests(unittest.TestCase):
             record = server.plan_record(plan, repo)
         self.assertEqual(record["title"], "Project")
 
+    def test_task_counts_ignore_checklists_outside_work_section(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(
+                plan.read_text(encoding="utf-8") + "\n## Notes\n\n- [completed] This is not work.\n",
+                encoding="utf-8",
+            )
+            record = server.plan_record(plan, repo)
+        self.assertEqual(record["tasks"], {"pending": 0, "in_progress": 1, "blocked": 0, "completed": 0})
+
     def test_unsafe_latest_progress_falls_back_to_outcome_move(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_repo(Path(dirname))

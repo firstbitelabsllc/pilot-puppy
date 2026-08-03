@@ -8,6 +8,7 @@ fields:
 - Option A/B/C ID, label, and consequence
 - Proof ID, relative Proof locator, Proof Summary, and Proof Delivery
 
-Tasks use `pending`, `in_progress`, `blocked`, or `completed`. A blocked row
-names a concrete resume condition. Large proof belongs in repository files;
-the plan links to it.
+Tasks in the `## Work` section use `pending`, `in_progress`, `blocked`, or
+`completed`; checklists in other sections are not counted as work. A blocked
+row names a concrete resume condition. Large proof belongs in repository
+files; the plan links to it.

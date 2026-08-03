@@ -108,7 +108,8 @@ def operator_brief(text: str) -> dict[str, str]:
 def task_counts(text: str) -> dict[str, int]:
     counts = {"pending": 0, "in_progress": 0, "blocked": 0, "completed": 0}
     aliases = {"x": "completed", "done": "completed", "working": "in_progress"}
-    for line in text.splitlines():
+    work = section(text, "Work")
+    for line in work if work else text.splitlines():
         match = TASK_RE.match(line)
         if not match:
             continue
