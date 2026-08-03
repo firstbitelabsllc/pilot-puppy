@@ -208,7 +208,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   the full local gates, status projection, and 11/11 doctor; the later plan
   proof commit records this result, and no merge or release was performed.
 - 2026-08-03: Proof projections now use a closed public-safe shape Proof: 89 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, clean release package SHA-256 `cfaf7a6f115fdb12c8351203eeac7cdf6e7fc6f81e0f48b5c321819573b10514`, and doctor all pass [receipt:92631a7308c9edf8]
-- 2026-08-03: Nested decision projections now enforce the canonical closed shape Proof: 90 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, release verify, and doctor pass [receipt:9f115ffd993271c0]
+- 2026-08-03: Nested decision projections now enforce the canonical closed shape Proof: 90 Python tests, 3 JavaScript tests, 4 browser tests, docs build, public-ready scan, clean release package SHA-256 `908e94e8a15fb0be31d5da81846cde2799d5d2c22c61ecf7daa0704dd79885b5`, and doctor pass [receipt:9f115ffd993271c0]
 
 ## Deferred proof (not a global blocker)
 
