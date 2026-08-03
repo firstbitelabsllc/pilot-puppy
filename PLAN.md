@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 93
-- Outcome Updated At: 2026-08-03T21:58:16Z
+- Outcome Revision: 94
+- Outcome Updated At: 2026-08-03T21:59:33Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `c868976`
@@ -681,6 +681,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   `headSha=c8689760c8fb56301a867b29356628ba531b8b29`. This is source,
   clean-clone, and hosted-check proof only; no PR, review, merge, release,
   deployment, or runtime claim changed.
+- 2026-08-03: The latest clean-clone source at `c868976` was packed and
+  installed under an isolated npm prefix. With isolated `.claude`, `.agents`,
+  and `.cursor` mounts pointing at the installed package and all three native
+  host binaries available, the installed `pilot-puppy doctor --json` returned
+  11 checks, zero failures, and zero warnings. The installed artifact reports
+  version 2.1.0. This closes the post-hardening package/install readback gap;
+  no PR, merge, release publication, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
