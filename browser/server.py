@@ -142,7 +142,14 @@ def plan_record(path: Path, root: Path) -> dict[str, Any]:
         outcome = project_plan_outcome(brief)
         decision = project_decision(outcome)
         plan_summary = {"latest_change": latest_progress(text)} if latest_progress(text) else None
-        chief = project_chief_of_staff(outcome, plan_brief=plan_summary)
+        try:
+            chief = project_chief_of_staff(outcome, plan_brief=plan_summary)
+        except DecisionInputError:
+            if plan_summary is None:
+                raise
+            # Progress is advisory; an unsafe or implementation-heavy line
+            # must not hide an otherwise valid Outcome from the status view.
+            chief = project_chief_of_staff(outcome)
     except (OutcomeSourceError, DecisionInputError) as exc:
         error = str(exc)
     return {

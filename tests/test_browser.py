@@ -80,6 +80,20 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(record["briefing"]["proof"]["locator"], "tests/test_browser.py")
         self.assertNotIn(dirname, json.dumps(record))
 
+    def test_unsafe_latest_progress_falls_back_to_outcome_move(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(
+                PLAN.replace(
+                    "The bounded implementation is ready for a decision.",
+                    "Token shapes and private paths were rejected by the implementation.",
+                ),
+                encoding="utf-8",
+            )
+            record = server.plan_record(plan, repo)
+        self.assertIsNone(record["contract_error"])
+        self.assertEqual(record["briefing"]["changed"], "Choose the final review depth.")
+
     def test_decision_receipt_is_project_local_bounded_and_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_repo(Path(dirname))

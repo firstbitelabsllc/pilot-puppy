@@ -110,6 +110,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Close decision projection fragmented-secret, path, token, and JSON-array bounds against the canonical validator.
 - [completed] Make plan-derived Outcome projection fail closed on the shared canonical decision contract.
 - [completed] Keep Chief-of-Staff plan-brief text public-safe across paths, Unicode, tokens, and fragments.
+- [in_progress] Keep browser status usable when optional progress text is unsafe.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer
