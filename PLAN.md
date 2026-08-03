@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 114
-- Outcome Updated At: 2026-08-03T22:50:31Z
+- Outcome Revision: 115
+- Outcome Updated At: 2026-08-03T22:54:07Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `a60f996`
@@ -897,6 +897,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   version locally gives exact parity. This is a docs-only correction; runtime
   source remains `a60f996` and no proof surface or consolidation decision
   changed.
+
+- 2026-08-03: Re-audited the pushed candidate `a6a2228` against refreshed
+  `origin/main@2029756d`. The tree is clean, the candidate diff has no whitespace
+  errors, all tracked Bash entrypoints pass `bash -n`, `npm audit --audit-level=high`
+  reports zero vulnerabilities, and the full local test/docs/public-ready/lint/
+  release gate remains green. The read-only PR refresh shows #99 clean and
+  separate, while #105, #106, and #95 remain open dirty drafts. No new source
+  defect was found; no sibling branch, PR, merge, release, or deployment action
+  was taken. The A/B/C consolidation choice remains the exact next decision.
 
 ## Deferred proof (not a global blocker)
 
