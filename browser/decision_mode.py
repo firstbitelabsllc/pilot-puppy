@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
 from datetime import datetime, timezone
 import re
 from typing import Any
@@ -22,12 +22,14 @@ RELATIVE_LOCATOR_RE = re.compile(
 )
 CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
 PRIVATE_PATH_RE = re.compile(
-    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
     re.IGNORECASE,
 )
+ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
 SECRET_SHAPE_RE = re.compile(
     r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
-    r"github_pat_[A-Za-z0-9_]{20,}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
     r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
     re.IGNORECASE,
 )
@@ -58,6 +60,7 @@ def text(value: Any, label: str, *, maximum: int = 280) -> str:
         or any(unicodedata.category(character) in {"Cc", "Cf"} for character in value)
         or unicodedata.normalize("NFC", value) != value
         or PRIVATE_PATH_RE.search(value)
+        or ABSOLUTE_PATH_RE.search(value)
         or SECRET_SHAPE_RE.search(value)
     ):
         raise DecisionInputError(f"{label} contains private or unsafe text")
@@ -145,7 +148,7 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
     if category not in CATEGORIES:
         raise DecisionInputError("ask.category is not supported")
     options = source.get("options")
-    if not isinstance(options, Sequence) or isinstance(options, (str, bytes)) or len(options) != 3:
+    if not isinstance(options, list) or len(options) != 3:
         raise DecisionInputError("an open choice must contain exactly A/B/C")
     projected = []
     seen = set()
@@ -228,6 +231,28 @@ def _ensure_unique_ids(
         add(item["id"], f"proof[{index}].id")
 
 
+def _ensure_no_fragmented_secrets(value: Any) -> None:
+    strings: list[str] = []
+
+    def collect(item: Any) -> None:
+        if isinstance(item, str):
+            strings.append(item)
+        elif isinstance(item, Mapping):
+            for child in item.values():
+                collect(child)
+        elif isinstance(item, list):
+            for child in item:
+                collect(child)
+
+    collect(value)
+    for start in range(len(strings)):
+        combined = ""
+        for item in strings[start : start + 4]:
+            combined += item
+            if SECRET_SHAPE_RE.search(combined):
+                raise DecisionInputError("public projection contains a fragmented secret-shaped value")
+
+
 def project_decision(value: Any) -> dict[str, Any]:
     document = outcome_document(value)
     outcome = project_outcome(document)
@@ -238,7 +263,7 @@ def project_decision(value: Any) -> dict[str, Any]:
     ):
         raise DecisionInputError("finished_with_proof requires delivered proof")
     _ensure_unique_ids(outcome, ask, proof)
-    return {
+    projected = {
         "schema": DECISION_SCHEMA,
         "revision": document["revision"],
         "updated_at": document["updated_at"],
@@ -246,6 +271,8 @@ def project_decision(value: Any) -> dict[str, Any]:
         "ask": ask,
         "proof": proof,
     }
+    _ensure_no_fragmented_secrets(projected)
+    return projected
 
 
 def build_choice(value: Any, option_id: Any) -> dict[str, Any]:

@@ -113,6 +113,23 @@ class DecisionModeTests(unittest.TestCase):
         result = decision.project_decision(source)
         self.assertEqual(result["proof"][0]["locator"], "https://example.com/proof")
 
+    def test_privacy_and_json_array_bounds_match_canonical_validator(self) -> None:
+        fragmented = json.loads(
+            (ROOT / "examples" / "outcome-choice" / "privacy-fragmented.invalid.json").read_text(encoding="utf-8")
+        )
+        with self.assertRaises(decision.DecisionInputError):
+            decision.project_decision(fragmented)
+        for value in ("/tmp/private/file", "$HOME/private", "xoxb-1234567890", "AKIA1234567890123456"):
+            with self.subTest(value=value):
+                source = document()
+                source["outcome"]["current_move"] = value
+                with self.assertRaises(decision.DecisionInputError):
+                    decision.project_decision(source)
+        source = document()
+        source["ask"]["options"] = tuple(source["ask"]["options"])
+        with self.assertRaises(decision.DecisionInputError):
+            decision.project_decision(source)
+
     def test_choice_is_closed_and_typed(self) -> None:
         result = decision.build_choice(document(), "full-review")
         self.assertEqual(

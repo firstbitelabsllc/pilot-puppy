@@ -107,6 +107,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Close nested Outcome and A/B/C projection fields against the canonical validator.
 - [completed] Keep decision projection state and cross-object identifier invariants aligned with the canonical validator.
 - [completed] Close decision projection scalar, Unicode, timestamp, and locator bounds against the canonical validator.
+- [in_progress] Close decision projection fragmented-secret, path, token, and JSON-array bounds against the canonical validator.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer
