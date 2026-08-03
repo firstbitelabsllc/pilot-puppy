@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 88
-- Outcome Updated At: 2026-08-03T21:46:08Z
+- Outcome Revision: 89
+- Outcome Updated At: 2026-08-03T21:49:09Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate `77c62a0` (source head
+- Next: Choose the consolidation path for candidate `2be2290` (source head
   `4f36a4b`): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -655,6 +655,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   superseded deferred R5 row and the duplicate R7 row while retaining the
   completed seat-overlay, calibration, and promotion-pending rows. This is a
   plan-only cleanup; it changes no runtime behavior or proof surface.
+- 2026-08-03: Exact current candidate head `2be2290` passed the full gate:
+  3 JavaScript tests, 172 Python tests (2 skipped), 6 desktop/phone browser
+  tests, docs build, Ruff, zero high-severity npm audit findings, the 101-file
+  public-ready scan, and 64-file release verification with SHA-256
+  `ed5b760157f1a45bd3ab153de2221ada673abaaee0aa4906b70de3f551552d44`.
+  A fresh npm-packed artifact installed under an isolated prefix and, with
+  isolated mounts plus the three native host binaries on PATH, returned
+  `pilot-puppy doctor --json` with 11 checks, zero failures, and zero warnings.
+  This refreshes source, package, and installed-artifact proof only; hosted
+  CI remains tied to source head `4f36a4b`, and no PR, merge, release,
+  deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
