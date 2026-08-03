@@ -39,6 +39,5 @@ npm run release:verify # reproducible, tracked-only installable package boundary
 ## Code style
 
 There's no linter/formatter config in this repo (no ESLint/Ruff/Prettier) —
-match the surrounding file's formatting. `docs/doctrine/WRITING-STYLE.md` is a different
-thing: it's prose-writing guidance for the agent-facing doctrine docs
-(SKILL.md, docs/doctrine essays, etc.), not a code style guide.
+match the surrounding file's formatting. Keep changes narrow, and update the
+focused tests and public documentation when behavior changes.

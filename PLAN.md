@@ -102,6 +102,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3`.
 - [completed] Audit public issue templates against shipped CLI; remove retired examples.
 - [completed] Keep checkpoint receipts inside `## Progress` so browser status can surface them.
+- [completed] Remove deleted doctrine paths from contributor guidance and make the public target regression cover that file.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -199,6 +200,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   rejects the retired loop/checkpoint names and old internal docs.
 - 2026-08-03: Public templates now match shipped commands Proof: 87 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, release package, and doctor all pass [receipt:c7b9f8e360ec14e7]
 - 2026-08-03: Checkpoint receipts remain in the Progress section Proof: 18 focused checkpoint/browser tests plus full verify, docs, E2E, release, and doctor gates pass [receipt:3c66fb780fc7353d]
+- 2026-08-03: Contributor guidance now points only to shipped files Proof: 88 Python tests, 3 JavaScript tests, public-ready scan, docs build, 4 browser E2E tests, dev release package, and doctor all pass [receipt:6b093d1938201fd9]
 
 ## Deferred proof (not a global blocker)
 
