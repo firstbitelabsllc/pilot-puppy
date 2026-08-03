@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 51
-- Outcome Updated At: 2026-08-03T19:57:56Z
+- Outcome Revision: 52
+- Outcome Updated At: 2026-08-03T19:58:38Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -339,7 +339,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: The corrected disposable candidate at branch `66b82d9` plus `origin/main` `2f0de9a` includes main's roster-preference tests and passes 140 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates; package SHA-256 `e4ad56945187fbc17a1accb6d25e48e476d9cd9529ad4021c5bfed4d941a547d`. Only the shared PLAN conflict was resolved in the disposable candidate; no canonical main ref changed.
 - 2026-08-03: Receipt extraction now accepts Cursor envelopes whose `schema` field is not first while retaining bounded marker backtracking; the deep hostile-JSON regression stays fast. The branch passes 135 Python, 3 JavaScript, 4 browser, Ruff, public-source, and docs gates.
 - 2026-08-03: The refreshed disposable candidate at branch `d6dc925` plus `origin/main` `2f0de9a` passes 141 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates, including main's roster-preference tests and the flexible receipt-order regression; package SHA-256 `5bb86fb45211c4d68e1bb403e07b337c453c049be223b945a5f378a27afb84a0`. No canonical main ref changed.
-- 2026-08-03: Final host-boundary review now rejects nested `.git` directories before or after a native run while preserving normal submodule `.git` files. The exact branch passes 136 Python tests (3 skipped), 3 JavaScript tests, 4 browser checks, Ruff, docs, and the 96-file public-ready scan. The clean 61-file package hash is `b9fa8acba8695df861b1c5cdfd846f93421feeb96d6d59186de3a70dd4e9bed7`; promotion into canonical mainline remains pending review.
+- 2026-08-03: Final host-boundary review at branch head `544b68f` now rejects nested `.git` directories before or after a native run while preserving normal submodule `.git` files. The exact branch passes 136 Python tests (3 skipped), 3 JavaScript tests, 4 browser checks, Ruff, docs, and the 96-file public-ready scan. The clean 61-file package hash is `b9fa8acba8695df861b1c5cdfd846f93421feeb96d6d59186de3a70dd4e9bed7`; promotion into canonical mainline remains pending review.
 
 ## Deferred proof (not a global blocker)
 
