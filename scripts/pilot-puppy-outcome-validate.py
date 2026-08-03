@@ -243,8 +243,8 @@ def main(argv: list[str] | None = None) -> int:
         else:
             with open(args.input, "rb") as stream:
                 raw = stream.read(MAX_INPUT_BYTES + 1)
-    except OSError as exc:
-        print(json.dumps(result(False, [issue("io", "", str(exc))]), separators=(",", ":"), sort_keys=True))
+    except OSError:
+        print(json.dumps(result(False, [issue("io", "", "input is unreadable")]), separators=(",", ":"), sort_keys=True))
         return 2
     if len(raw) > MAX_INPUT_BYTES:
         print(json.dumps(result(False, [issue("bounds", "", "input exceeds size limit")]), separators=(",", ":"), sort_keys=True))

@@ -80,13 +80,16 @@ class OutcomeValidatorTests(unittest.TestCase):
 
     def test_cli_reports_io_as_invocation_failure(self) -> None:
         result = subprocess.run(
-            [sys.executable, str(SCRIPT), "--input", "/definitely/missing/outcome.json"],
+            [sys.executable, str(SCRIPT), "--input", "/Users/private/outcome.json"],
             capture_output=True,
             text=True,
             check=False,
         )
         self.assertEqual(result.returncode, 2)
-        self.assertEqual(json.loads(result.stdout)["errors"][0]["code"], "io")
+        report = json.loads(result.stdout)
+        self.assertEqual(report["errors"][0]["code"], "io")
+        self.assertEqual(report["errors"][0]["message"], "input is unreadable")
+        self.assertNotIn("/Users/private", result.stdout)
 
     def test_docs_name_only_the_single_contract(self) -> None:
         text = (ROOT / "docs" / "reference" / "outcome-choice.md").read_text(encoding="utf-8")

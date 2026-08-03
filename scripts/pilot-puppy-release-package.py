@@ -147,10 +147,12 @@ def validate_release_candidate(
 
 
 def command(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=False)
+    try:
+        result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=False)
+    except OSError:
+        raise RuntimeError(f"{command[0]} command unavailable") from None
     if result.returncode:
-        detail = result.stderr.strip() or result.stdout.strip() or f"exit {result.returncode}"
-        raise RuntimeError(f"{' '.join(command)} failed: {detail}")
+        raise RuntimeError(f"{command[0]} command failed")
     return result
 
 

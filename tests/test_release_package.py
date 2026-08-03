@@ -94,6 +94,18 @@ class ReleasePackageTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "unsafe path text"):
                 mod.tracked_files(ROOT)
 
+    def test_command_failures_do_not_echo_private_details(self) -> None:
+        failed = subprocess.CompletedProcess(
+            ["npm"], 1, stdout="", stderr="/Users/private/secret"
+        )
+        with mock.patch.object(mod.subprocess, "run", return_value=failed):
+            with self.assertRaisesRegex(RuntimeError, "^npm command failed$"):
+                mod.command(["npm", "pack"], ROOT)
+
+        with mock.patch.object(mod.subprocess, "run", side_effect=OSError("/Users/private/secret")):
+            with self.assertRaisesRegex(RuntimeError, "^npm command unavailable$"):
+                mod.command(["npm", "pack"], ROOT)
+
 
 if __name__ == "__main__":
     unittest.main()
