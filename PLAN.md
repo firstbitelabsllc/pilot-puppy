@@ -11,21 +11,22 @@ Cursor without taking custody of credentials or conversations.
 
 ## Operator Brief
 
-- Outcome ID: prove-pilot-puppy-portability
-- Outcome Revision: 4
-- Outcome Updated At: 2026-08-03T15:02:37Z
+- Outcome ID: nicole-public-products-bounded-improvement
+- Outcome Revision: 5
+- Outcome Updated At: 2026-08-03T15:21:28Z
 - Outcome State: working
-- Outcome: Prove one simple Pilot Puppy product can be cold-started on another computer and safely drive a native coding host without adding a second platform.
-- Next: Freeze the target task packet (file/ID, clean revision, allowed paths, proof command), then run public-main clone/install/mount/doctor and one native task. Accept only `status: ok`, exact paths, and lead reproduction. Quota reset is fallback; do not add a platform.
-- Proof ID: pilot-puppy-other-computer-unblock
-- Proof: .pilot-puppy/evidence/other-computer-unblock.json
-- Proof Summary: v2.0.0 is public, the local doctor is 11/11, PR #90 merged after all checks passed, and Claude Code/Cursor sealed tasks pass; the portable task inputs and second-computer receipt are not yet present, while native Codex execution is quota-blocked.
-- Proof Delivery: pending
+- Outcome: Deliver the next highest-impact, reproducible improvement in Nicole's two public applications—the all-role local Job Hunt Board and the Star67 Pivot SQL desk—without paid runtime services or private-data leakage. Pilot Puppy is an optional execution front door, not the product under test.
+- Next: Finish the small public-board truth fix now in review, then inspect Pivot only for a reproduced high-impact regression. Keep green releases stable; do not manufacture work, add a platform, or reopen the retired LinkedIn arm.
+- Proof ID: nicole-public-products-bounded-improvement-20260803
+- Proof: public finance-job-board PR #1 plus this plan's bounded product receipt
+- Proof Summary: the clean public board changed `+N this week` to `+N since last refresh` (the actual stored baseline), with 228 Python tests and the Chromium smoke green. Pivot remains on its proven release floor until a real user harm is reproduced.
+- Proof Delivery: finance board branch pushed; PR review pending; Pivot decision pending evidence.
 
-## Product boundary
+## Tool boundary
 
-- One product, repository, package, command, skill, configuration boundary,
-  local evidence path, and user-facing name: **Pilot Puppy**.
+- Pilot Puppy remains one tool, repository, package, command, skill, and
+  configuration boundary. It is not the user-facing product being improved in
+  this outcome.
 - `PLAN.md` is durable authority. Receipts are bounded evidence, never a second
   queue or source of truth.
 - Native coding hosts execute. Pilot Puppy seals scope, invokes one selected
@@ -35,43 +36,36 @@ Cursor without taking custody of credentials or conversations.
 - No aliases, hidden products, daemon, scheduler,
   watcher, credential relay, remote database, or background dispatch loop.
 
-## Platform-unblock boundary
+## Product-work boundary
 
-- The new platform effort is portability to a second computer, not a new
-  executor, router, queue, daemon, or control plane.
-- The handoff source is PR #90 at `06a84b2d798096bcae79a3585d34908a7609ebb3`.
-  Its checks were green and it merged to `main` as
-  `0c6d8ce19dc5efdf944196c5db7600d1d1a030a4` at
-  `2026-08-03T14:56:42Z`. This proves the source is public; it does not prove
-  a second computer has installed or read it back.
-- The second computer owns its native host authentication. The only required
-  local proof is clone/install, `pilot-puppy doctor`, the three skill mounts,
-  and one bounded native-host receipt with lead reproduction. `doctor` proves
-  host availability only; it is not execution proof.
-- The public handoff has bootstrap instructions, not a target-specific task
-  packet. The second computer must receive the frozen task file, task ID, clean
-  target revision, exact allowed paths, and proof command. Keep private target
-  paths, prompts, credentials, and transcripts out of this public repository.
+- Nicole's public repositories are the mutable product surfaces: the clean
+  `finance-job-board` clone and the clean `pivot-sql` clone under the public
+  release worktrees. The private monorepo is context only and is never merged
+  into either public history.
+- Pilot Puppy may run a bounded task through a native host when that removes
+  friction, but a doctor result, host receipt, or platform install is not
+  product proof. Lead review and product tests remain the acceptance gate.
+- The job board is category-neutral, local-first, and refreshes official ATS
+  feeds only. Pivot is local-only with deterministic authored coaching and
+  grading. Neither public runtime may require an account, key, paid model, or
+  private session.
+- Keep one obvious user action, truthful copy, and the existing privacy/art
+  boundaries. Do not reintroduce LinkedIn login/scraping or a second executor.
 
-## Unblock map
+## Product unblock map
 
-- **Source and CI: WORKS.** PR #90 at `06a84b2d798096bcae79a3585d34908a7609ebb3`
-  passed every required check and merged to `main` as
-  `0c6d8ce19dc5efdf944196c5db7600d1d1a030a4`. There is no code or CI failure
-  to fix in this handoff.
-- **Public landing: DONE.** The handoff is now in the protected public
-  `main`; this is a source/release receipt, not proof of another computer.
-- **Portable task inputs: OPEN GAP.** The public handoff does not contain a
-  target-specific frozen task packet or target revision. Need: those exact
-  inputs, carried without private prompts or credentials, before a host receipt
-  can be trusted as a cross-computer proof.
-- **Second-computer bootstrap: READY.** Once those inputs exist, use the public
-  clone for clone/install/mount/doctor and one clean brief readback. If doctor
-  fails, fix only the named bootstrap prerequisite.
-- **Native Codex proof: BLOCKED UNTIL RESET.** The account quota resets after
-  `2026-08-07 23:52 America/New_York`; only then can the same sealed task be
-  rerun. A version probe, another provider, or a new platform layer is not a
-  substitute.
+- **Job Board: IN REVIEW.** PR #1 (`codex/truthful-refresh-momentum`) changes
+  the unsupported “this week” claim to “since last refresh”; 228 Python tests,
+  Chromium smoke, and `git diff --check` pass. Merge only after the normal CI
+  result is green.
+- **Pivot SQL: PROVEN / NO OPEN REGRESSION.** Keep its production floor and
+  inspect only a reproduced user-facing failure or a clearly stale claim.
+- **Nicole handoff: READY.** The public README setup paths and local-only
+  boundaries are the source of truth. A new computer can use them, but that is
+  not the current deliverable.
+- **Pilot Puppy portability: PARKED.** The release is proven; the previous
+  cross-host receipt remains historical context and is not allowed to displace
+  product work.
 
 ## Privacy and safety
 
@@ -96,38 +90,41 @@ Cursor without taking custody of credentials or conversations.
   fresh-install, and read back the remote, mounts, command, and real UI.
 - [completed] Run the final cold review and zero-surface audit; close only when
   all changed repositories are clean, pushed, and remotely verified.
-- [in_progress] Close the portable proof gap: freeze the exact task packet and
-  target clean revision, run the other-computer clone/install/mount/doctor path,
-  execute one bounded native-host task, and reproduce its proof from the lead
-  checkout.
-- [blocked] Rerun the same sealed native Codex task after its account quota
-  resets; require `status: ok`, the exact allowed-path change, and a
-  lead-reproduced check. Do not substitute a version probe.
+- [completed] Land the first bounded public-board trust fix: describe the
+  refresh baseline instead of claiming a seven-day window, with browser proof.
+- [in_progress] Review the Pivot public release for one reproduced high-impact
+  user harm; if none is found, leave it unchanged and close this product slice.
+- [parked] Pilot Puppy cross-host portability remains available as tooling work
+  only when a real product task needs it; do not spend the goal on a host test.
 
-## Mechanical proof required
+## Mechanical proof required for this outcome
 
-- Full tests, docs, package, privacy, security, fresh clone, and install pass.
-- `pilot-puppy doctor` passes; removed commands fail lookup.
-- Codex, Claude Code, and Cursor each complete one sealed task with
-  lead-reproduced proof.
-- One real Outcome survives restart and renders an accurate brief and A/B/C
-  choice.
-- Active repositories and installed roots contain no predecessor product
-  names, duplicate state, credentials, raw transcripts, or absolute private
-  paths.
-- The renamed public remote, release artifact, installed skill, command, and UI
-  all read back as Pilot Puppy.
-- The portable task packet has a stable task ID/hash, target clean revision,
-  exact allowed paths, and proof command; it contains no private prompt,
-  credential, transcript, provider payload, or absolute private path.
-- A fresh second computer can install the exact handoff revision, pass
-  `pilot-puppy doctor`, mount the same skill in Claude Code, Codex, and Cursor,
-  and render the same Outcome and A/B/C brief.
-- The same sealed native Codex task returns `status: ok`, changes only its
-  allowed path, and passes lead reproduction after the quota reset.
+- Every product change is tied to a reproduced user harm or a plainly false
+  claim; green surfaces are not churned.
+- Job Board changes pass its scoped Python suite, browser smoke, and
+  `git diff --check`; live refresh proof remains separate from fixture proof.
+- Pivot changes preserve its existing local and production smoke/ladders,
+  deterministic build, no-paid/local-only boundary, and artifact identity.
+- Public history contains no personal data, credentials, raw transcripts, paid
+  runtime dependency, or private absolute path.
+- Pilot Puppy receipts are optional execution evidence only; they never replace
+  lead reproduction in the product repository.
 
 ## Progress
 
+- 2026-08-03: Product-focused takeover replaced the parked portability target.
+  The clean public Job Hunt Board branch `codex/truthful-refresh-momentum`
+  pushed commit `f46bc76` and PR #1: its refresh delta now says `since last
+  refresh` rather than claiming a seven-day window. Scoped proof is 228 Python
+  tests, Chromium smoke, and `git diff --check`.
+- 2026-08-03: The clean public Pivot SQL release was re-read and reproduced
+  with the Node 22 toolchain: `npm test` passed the deterministic 14/14 data
+  contract, all source contracts, and the coaching contract; production smoke
+  against the existing local preview passed `183/183`, including the
+  local-only remote-SQL guard (`attemptedRequests=0`), no third-party boot
+  requests, responsive workbench, progress, keyboard, recovery, and no page
+  errors. No Pivot patch was warranted. A concurrent README edit is left
+  untouched and is not treated as this outcome's change.
 - 2026-08-02: Established one product authority. Outcome, briefing, decision,
   privacy, and native-host behavior stay; unrelated machinery is removed.
 - 2026-08-02: Public core gate passes 79 Python tests, 3 JavaScript tests,
@@ -190,6 +187,13 @@ Cursor without taking custody of credentials or conversations.
   resume: bring the target Mac online with Jump Connect, then run the
   documented clone/install/mount/doctor bootstrap and record the target
   `PLAN.md` readback and sealed-task receipt.
+- 2026-08-03T15:09:34Z: Fresh fetch confirms public `origin/main@83a95d3b`,
+  whose only change is the dynamic public-main readback in the plan and
+  handoff. A follow-up Jump Desktop retry still opened no remote UI; the
+  terminal launch landed on this computer. No cross-computer receipt is
+  claimed. Resume only when the target session opens, then run the bootstrap
+  against the merged public `main` and record host, revision, mounts, doctor,
+  target-plan readback, and sealed-task proof.
 
 ## Blocked proof
 
