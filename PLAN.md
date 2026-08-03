@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 54
-- Outcome Updated At: 2026-08-03T20:13:05Z
+- Outcome Revision: 55
+- Outcome Updated At: 2026-08-03T20:17:55Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate `694d815` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
+- Next: Review candidate `9bab0aa` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -419,6 +419,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   Ruff, and a 63-file package with SHA-256
   `acc4404425e5185d60865c698c281ff26ac73e0fd561ae045c0d88c0567ce935`.
   No canonical main, PR, merge, release, deployment, or runtime claim changed.
+- 2026-08-03: A fresh review of candidate `9bab0aa` against current `origin/main`
+  `2029756` found no additional source or privacy defect. PR #111 is merged
+  with its hosted checks green; Ruff remains a local supplemental gate because
+  CI does not run it. The candidate is pushed and clean, but still has no PR,
+  merge, release, deployment, or runtime proof.
 
 ## Deferred proof (not a global blocker)
 
