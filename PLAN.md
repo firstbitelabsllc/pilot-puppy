@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 59
-- Outcome Updated At: 2026-08-03T20:23:38Z
+- Outcome Revision: 60
+- Outcome Updated At: 2026-08-03T20:29:11Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review the workflow-tested candidate source at `a3c2542` for promotion
@@ -181,6 +181,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   create project evidence.
 - [completed] R9: Make the already-proven Python quality surface reproducible
   in hosted CI with one pinned Ruff job over `scripts`, `tests`, and `browser`.
+- [completed] R10: Refresh every first-party checkout, setup-node,
+  setup-python, and cache workflow pin to the current Node 24-compatible
+  action release, with a regression contract for the exact SHAs.
 - [pending] Promote the route, host-receipt, and worktree-seal privacy hardening
   into canonical mainline after review; candidate proof is not release proof.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -448,6 +451,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   Node 20 and are being forced onto Node 24. No job failed; action-refresh
   compatibility is the next separate build-maintenance audit, not part of this
   candidate’s Ruff change.
+- 2026-08-03: Commits `7c6b991` and `ccdcece` refresh the first-party workflow
+  pins to checkout `v7.0.1`, setup-node `v7.0.0`, setup-python `v7.0.0`, and
+  cache `v6.1.0`, all Node 24-compatible. Hosted CI run `30850318298` passed
+  all five jobs, and secret-scan run `30850320418` passed both gitleaks and
+  public-ready jobs on head `ccdcece`; the prior Node 20 annotations did not
+  recur. No PR, merge, release, deployment, or runtime proof exists.
 
 ## Deferred proof (not a global blocker)
 
