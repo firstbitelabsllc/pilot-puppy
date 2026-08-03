@@ -39,8 +39,10 @@ npm run release:verify # reproducible, tracked-only installable package boundary
 
 ## Code style
 
-Ruff `0.15.20` is the pinned Python lint surface used by hosted CI and the
-`npm run lint:python` command. There is no ESLint or Prettier configuration —
+Hosted CI pins Ruff `0.15.20`. `npm run lint:python` uses a PATH Ruff
+executable when available and falls back to the shared Python resolver; install
+`ruff==0.15.20` locally when you need exact CI parity. There is no ESLint or
+Prettier configuration —
 match the surrounding file's formatting. `docs/doctrine/WRITING-STYLE.md` is a different
 thing: it's prose-writing guidance for the agent-facing doctrine docs
 (SKILL.md, docs/doctrine essays, etc.), not a code style guide.

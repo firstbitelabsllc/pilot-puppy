@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 113
-- Outcome Updated At: 2026-08-03T22:48:35Z
+- Outcome Revision: 114
+- Outcome Updated At: 2026-08-03T22:50:31Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `a60f996`
@@ -890,6 +890,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   ok`, changed only `proof/codex-sealed.txt`, passed lead reproduction, and
   left no `__pycache__` in the inspected worktree. No PR, merge, release,
   deployment, or runtime claim changed.
+
+- 2026-08-03: Clarified the contributor guide's local/hosted lint parity. It
+  now says hosted CI pins Ruff `0.15.20`, the local wrapper prefers a PATH Ruff
+  executable and falls back to the shared resolver, and installing the pinned
+  version locally gives exact parity. This is a docs-only correction; runtime
+  source remains `a60f996` and no proof surface or consolidation decision
+  changed.
 
 ## Deferred proof (not a global blocker)
 
