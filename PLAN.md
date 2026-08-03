@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 72
-- Outcome Updated At: 2026-08-03T20:54:30Z
+- Outcome Revision: 73
+- Outcome Updated At: 2026-08-03T20:57:35Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `d392921` for promotion into canonical
@@ -521,6 +521,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   SHA-256 is
   `60bd2e339ef8d40e30e0e217d16574767bf55db482284cd0278ceee0f82d5679`.
   Hosted CI has not run for this source change because no PR was opened.
+- 2026-08-03: A fresh clone of candidate branch
+  `codex/seat-hardening-followup-20260803` at `72c652f` completed `npm ci`
+  (186 packages, zero audit findings) and the clean-install gates: Pilot Puppy
+  version `2.1.0`, 3 JavaScript tests, 161 Python tests (2 skipped), 6
+  desktop/phone browser tests, docs build, Ruff, the 100-file public-ready
+  scan, zero high-severity npm audit findings, and the reproducible 63-file
+  release package with SHA-256
+  `60bd2e339ef8d40e30e0e217d16574767bf55db482284cd0278ceee0f82d5679`.
+  The clean tree and candidate remote ref match; this is source and clean
+  install proof only. No PR, review, merge, release, deployment, or runtime
+  claim changed.
 
 ## Deferred proof (not a global blocker)
 
