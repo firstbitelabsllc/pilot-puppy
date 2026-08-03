@@ -205,6 +205,39 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertEqual(command[-1], "agent")
         self.assertNotIn("frozen task", command)
 
+    def test_codex_and_claude_command_shapes_are_explicit(self) -> None:
+        repo = Path("/workspace/repo")
+        final_message = Path("/tmp/final-message.txt")
+        self.assertEqual(
+            pilot_puppy_host.command_shape("codex", "codex", repo, final_message),
+            [
+                "codex",
+                "exec",
+                "--json",
+                "--ephemeral",
+                "--sandbox",
+                "workspace-write",
+                "-C",
+                "/workspace/repo",
+                "--output-last-message",
+                "/tmp/final-message.txt",
+            ],
+        )
+        self.assertEqual(
+            pilot_puppy_host.command_shape("claude-code", "claude", repo, final_message),
+            [
+                "claude",
+                "--print",
+                "--output-format",
+                "json",
+                "--no-session-persistence",
+                "--permission-mode",
+                "acceptEdits",
+                "--add-dir",
+                "/workspace/repo",
+            ],
+        )
+
     def test_host_prompt_supplies_the_receipt_contract(self) -> None:
         task = "Change the bounded file."
         digest = hashlib.sha256(task.encode("utf-8")).hexdigest()
