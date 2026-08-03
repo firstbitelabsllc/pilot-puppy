@@ -12,12 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 38
-- Outcome Updated At: 2026-08-03T18:25:49Z
+- Outcome Revision: 39
+- Outcome Updated At: 2026-08-03T18:27:26Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
-- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. On the Pilot Puppy lane, `v2.1.0` shipped the local role route and R6 is delivered, so use the four-shape routing policy for the next real bounded product task and revisit a local private seat overlay only if the generic role/host roster cannot express a needed setup. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. On the Pilot Puppy lane, `v2.1.0` shipped the local role route and R8 is delivered on public main (visible four-shape guide plus the atomic `roster prefer` command), so use the four-shape routing policy for the next real bounded product task and revisit a local private seat overlay only if the generic role/host roster cannot express a needed setup. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, and portability predicates explicit while reachable product proof continues independently; do not create a redundant Star67 PR when the same behavior is already on current main.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -243,6 +243,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] R7: Complete OSS hardening: threat boundary, license/provenance,
   fresh install, docs, loopback UI readback, package, privacy, and security
   gates.
+- [completed] R8: Make local role routing usable without source spelunking:
+  render the four work shapes in the loopback briefing and add one atomic local
+  `roster prefer` command that reprioritizes only declared, enabled generic
+  role/host slots. It must not read providers/models/quotas, launch work, or
+  create project evidence.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -572,6 +577,23 @@ Code, or Cursor without taking custody of credentials or conversations.
   topics replacement with the current account; `gh api` reports `WRITE` and
   `admin: false`. No metadata mutation is claimed. Resume with owner/admin
   access, then set the repository name, homepage, and topics and read them back.
+- 2026-08-03: R8 passed the integrated public gate: 126 Python tests, 3
+  JavaScript tests, 6 desktop/phone browser tests, docs build, the 95-file
+  public-source scan, package verification, and a zero-vulnerability
+  dependency audit. It adds no host launch, provider/model/usage selection,
+  cloud execution, credential relay, queue, daemon, watcher, or transcript
+  store. This is source proof only; it does not claim a new public release or
+  a native-host execution.
+- 2026-08-03: Restored the live local delegation surface to public main
+  `bc2e06c0` without copying or adding a runtime. Skillbox read back one
+  current Pilot Puppy source in Codex, Claude Code, and Cursor; `pilot-puppy`
+  reported 2.1.0 and its doctor passed 11/11. A fresh private generic roster
+  exposes routine development as bulk/Cursor with bulk/Codex fallback,
+  debug/Codex, and hard implementation/Claude Code. A no-launch `dev` route
+  read back that exact Cursor-first selection. R8 adds a visible four-shape
+  guide and an atomic `roster prefer` command. Specific native model/profile
+  selection remains deferred until a
+  real same-host need and safe invocation contract exist.
 - 2026-08-03: User made local role-based smart routing and a usable roster P0.
   Pilot Puppy will not add cloud execution, voice/on-the-go controls, a
   credential relay, a transcript store, or autonomous dispatch. The direct
