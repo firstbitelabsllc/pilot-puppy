@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from copy import deepcopy
 import re
 from typing import Any
 
@@ -15,6 +14,19 @@ RECEIPT_SCHEMA = "pilot-puppy.decision-receipt.v1"
 MAX_REVISION = 2_147_483_647
 IDENTIFIER_RE = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 UTC_RE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z$")
+CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+PRIVATE_PATH_RE = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+SECRET_SHAPE_RE = re.compile(
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
+    re.IGNORECASE,
+)
+PROOF_TYPES = frozenset({"test", "runtime", "ui", "release", "document", "other"})
+PROOF_DELIVERY = frozenset({"delivered", "not_delivered"})
 
 
 class DecisionInputError(ValueError):
@@ -27,9 +39,14 @@ def mapping(value: Any, label: str) -> Mapping[str, Any]:
     return value
 
 
-def text(value: Any, label: str) -> str:
+def text(value: Any, label: str, *, maximum: int = 280) -> str:
     if not isinstance(value, str) or not value.strip():
         raise DecisionInputError(f"{label} must be a nonblank string")
+    value = " ".join(value.split())
+    if len(value) > maximum:
+        raise DecisionInputError(f"{label} exceeds {maximum} characters")
+    if CONTROL_RE.search(value) or PRIVATE_PATH_RE.search(value) or SECRET_SHAPE_RE.search(value):
+        raise DecisionInputError(f"{label} contains private or unsafe text")
     return value
 
 
@@ -107,9 +124,34 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
 
 def project_proof(document: Mapping[str, Any]) -> list[dict[str, Any]]:
     raw = document.get("proof")
-    if not isinstance(raw, list):
+    if not isinstance(raw, list) or len(raw) > 64:
         raise DecisionInputError("proof must be an array")
-    return [deepcopy(dict(mapping(item, f"proof[{index}]"))) for index, item in enumerate(raw)]
+    projected = []
+    for index, item in enumerate(raw):
+        source = mapping(item, f"proof[{index}]")
+        expected = {"id", "type", "locator", "verification_summary", "delivery"}
+        if set(source) != expected:
+            raise DecisionInputError(f"proof[{index}] contains fields outside the proof contract")
+        proof_type = text(source.get("type"), f"proof[{index}].type", maximum=32)
+        delivery = text(source.get("delivery"), f"proof[{index}].delivery", maximum=32)
+        if proof_type not in PROOF_TYPES:
+            raise DecisionInputError(f"proof[{index}].type is not supported")
+        if delivery not in PROOF_DELIVERY:
+            raise DecisionInputError(f"proof[{index}].delivery is not supported")
+        projected.append(
+            {
+                "id": identifier(source.get("id"), f"proof[{index}].id"),
+                "type": proof_type,
+                "locator": text(source.get("locator"), f"proof[{index}].locator", maximum=512),
+                "verification_summary": text(
+                    source.get("verification_summary"),
+                    f"proof[{index}].verification_summary",
+                    maximum=500,
+                ),
+                "delivery": delivery,
+            }
+        )
+    return projected
 
 
 def project_decision(value: Any) -> dict[str, Any]:

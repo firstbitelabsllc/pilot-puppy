@@ -36,6 +36,19 @@ class DecisionModeTests(unittest.TestCase):
         with self.assertRaises(decision.DecisionInputError):
             decision.project_decision(source)
 
+    def test_proof_projection_is_closed_bounded_and_public_safe(self) -> None:
+        for mutation in (
+            lambda source: source["proof"][0].update({"extra": "field"}),
+            lambda source: source["proof"][0].update({"delivery": "unknown"}),
+            lambda source: source["proof"][0].update({"locator": "/Users/person/private"}),
+            lambda source: source["proof"][0].update({"verification_summary": "x" * 501}),
+        ):
+            with self.subTest(mutation=mutation):
+                source = document()
+                mutation(source)
+                with self.assertRaises(decision.DecisionInputError):
+                    decision.project_decision(source)
+
     def test_choice_is_closed_and_typed(self) -> None:
         result = decision.build_choice(document(), "full-review")
         self.assertEqual(
