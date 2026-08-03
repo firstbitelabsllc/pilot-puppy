@@ -119,7 +119,10 @@ def latest_progress(text: str) -> str | None:
     rows = [line.strip()[2:] for line in section(text, "Progress") if line.strip().startswith("- ")]
     if not rows:
         return None
-    return RECEIPT_MARKER_RE.sub(" ", rows[-1]).strip()[:280]
+    latest = RECEIPT_MARKER_RE.sub(" ", rows[-1]).strip()
+    latest = latest.split(" Proof:", 1)[0].strip()
+    latest = re.sub(r"^\d{4}-\d{2}-\d{2}:\s*", "", latest)
+    return latest[:280] or None
 
 
 def read_plan(path: Path) -> str:

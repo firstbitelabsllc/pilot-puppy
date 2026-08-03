@@ -111,6 +111,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Make plan-derived Outcome projection fail closed on the shared canonical decision contract.
 - [completed] Keep Chief-of-Staff plan-brief text public-safe across paths, Unicode, tokens, and fragments.
 - [completed] Keep browser status usable when optional progress text is unsafe.
+- [in_progress] Keep progress prose short and proof separate in browser briefs.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
 - [deferred] Close cross-host portability proof through the other-computer

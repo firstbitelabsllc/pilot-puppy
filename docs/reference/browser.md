@@ -10,4 +10,6 @@ Choice receipts are atomic and idempotent under the selected Git project's
 `.pilot-puppy/evidence/` directory. The browser never receives a credential,
 prompt, transcript, provider payload, or absolute private path.
 An unsafe optional progress line is dropped from the brief rather than hiding
-the valid Outcome; the Outcome's current move remains the fallback.
+the valid Outcome; the Outcome's current move remains the fallback. Date,
+proof, and receipt suffixes stay on their own proof surface instead of being
+copied into the human-facing `changed` sentence.

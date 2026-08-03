@@ -94,6 +94,20 @@ class BrowserTests(unittest.TestCase):
         self.assertIsNone(record["contract_error"])
         self.assertEqual(record["briefing"]["changed"], "Choose the final review depth.")
 
+    def test_progress_brief_separates_prose_from_proof(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(
+                PLAN.replace(
+                    "The bounded implementation is ready for a decision.",
+                    "Keep the brief concise. Proof: 98 tests pass [receipt:1234567890abcdef]",
+                ),
+                encoding="utf-8",
+            )
+            record = server.plan_record(plan, repo)
+        self.assertIsNone(record["contract_error"])
+        self.assertEqual(record["briefing"]["changed"], "Keep the brief concise.")
+
     def test_decision_receipt_is_project_local_bounded_and_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_repo(Path(dirname))
