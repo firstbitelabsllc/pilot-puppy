@@ -196,6 +196,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   production/high-severity audits, gitleaks, and AI safety checks pass. The
   remaining two low esbuild findings are still confined to the Shopify CLI
   dev chain; forcing `@shopify/cli@4.6.0` would be a breaking change.
+- 2026-08-03T16:15:51Z: Pilot Puppy portfolio PR #99 is pushed at
+  `af363a82` with the refreshed ledger. Local `npm test` passes 3 JavaScript
+  and 86 Python tests, docs build, public-ready scan, and diff check; remote
+  Python 3.10/3.12/3.14, CodeQL, browser/docs, gitleaks, public-ready, and
+  mergeability checks all pass. The plan is current on the open PR branch but
+  is not yet public-main until the external merge occurs.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
