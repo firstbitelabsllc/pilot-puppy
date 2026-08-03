@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 26
-- Outcome Updated At: 2026-08-03T17:43:09Z
+- Outcome Revision: 27
+- Outcome Updated At: 2026-08-03T17:47:50Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -30,8 +30,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `main@1277dd8` with README `0721078`, current-main accessibility/plain-language proof, Snowcubes `origin/main@ecaa2b20` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, active cleaner resource readback, Codex Security CLI dry-run receipts, focused source/test receipts, and live public-surface readbacks.
-- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@ecaa2b20`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
+- Proof: Star67 `main@1277dd8` with README `0721078`, current-main accessibility/plain-language proof, Snowcubes `origin/main@ecaa2b20` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec` with current consignment/security proof, active cleaner resource readback, Codex Security CLI dry-run receipts, focused source/test receipts, and live public-surface readbacks.
+- Proof Summary: Star67 leads with its Vercel launch link and current `origin/main` includes keyboard-complete desk tabs plus plain-language guided-task/practice-set progress; supported data generation, casebook 18/18, typecheck, production build, and preview smoke 183/183 all pass. Current Snowcubes source audit is `ok: true` at `origin/main@ecaa2b20`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. Current Moussey `origin/main@3c44bbec` passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), 4 URL-boundary tests, 7 recorder tests, the consignment-surface check, production build, `npm audit --omit=dev` with 0 vulnerabilities, and clean diff proof. The Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Platform boundary
@@ -102,8 +102,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   history and absent from current tracker outputs. The 5/21 Marathon row is
   FREE/UNKNOWN, with no charge or payment row, and must not be reopened or
   collected. Clean Moussey `origin/main@3c44bbec` removes operator-page
-  clutter and strips credentials from user-facing URLs; its isolated current
-  build renders a private passcode gate and returns a safe unauthenticated 401.
+  clutter and strips credentials from user-facing URLs; its current clean-origin
+  proof passes the focused consignment/invoice, recorder, URL-boundary, surface,
+  build, audit, and diff checks. The existing `:4321` process still belongs to
+  a dirty primary checkout, so authenticated live readback remains owner-gated
+  and no restart was attempted.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
@@ -205,6 +208,18 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:47:50Z: Reproduced current Moussey `origin/main@3c44bbec`
+  consignment proof in a clean disposable worktree. `npm ci --include=dev
+  --ignore-scripts` reported 0 vulnerabilities; the consignment/invoice suite
+  passed 64/65 with one pre-existing skipped visit-delegation test, URL-boundary
+  tests passed 4/4, recorder tests passed 7/7, the consignment-surface check
+  passed, the production webpack build passed, `npm audit --omit=dev` returned
+  0 vulnerabilities, and `git diff --check` passed. Source inspection confirms
+  the old `$225.63`, `$342.04`, and `$57.75` values are a retired-open-balance
+  guard only, while passcodes stay in headers/cookies and the media capability
+  token is the documented exception. The stale owner `:4321` runtime was not
+  restarted; authenticated live browser readback remains owner-controlled.
 
 - 2026-08-03T17:43:09Z: Re-read current public refs and continued the next
   reachable product lane. Star67 `origin/main@1277dd8` already contains the
