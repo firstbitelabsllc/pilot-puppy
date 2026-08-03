@@ -38,10 +38,15 @@ class CiWorkflowTests(unittest.TestCase):
             self.assertIn(action, self.workflow)
         for action in expected_secret:
             self.assertIn(action, self.secret_workflow)
+        self.assertIn(
+            "actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
+            self.secret_workflow,
+        )
         for retired in (
             "11bd71901bbe5b1630ceea73d27597364c9af683",
             "49933ea5288caeca8642d1e84afbd3f7d6820020",
             "a26af69be951a213d495a4c3e4e4022e16d87065",
+            "0057852bfaa89a56745cba8c7296529d2fc39830",
         ):
             self.assertNotIn(retired, self.workflow + self.secret_workflow)
 
