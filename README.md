@@ -51,19 +51,38 @@ Outcome, one plain-language briefing, proof status, and up to three choices.
 `planner`, `bulk`, `debug`, `critic`, and `hard-ic`. It is not a model picker
 or dispatch system. Associate those generic names with your own native-tool
 setup privately; the browser, project status, and receipts never contain that
-mapping. There is no `route` command yet.
+mapping.
 
-To run a bounded task, write the complete task to a file, choose one native
-host, and list the only paths it may change:
+For a bounded handoff, first ask Pilot Puppy to make one transparent local
+selection. It chooses only among declared slots for the requested task kind,
+shows a same-role alternative and escalation point, and launches nothing:
+
+```bash
+pilot-puppy route \
+  --repo "$PWD" \
+  --task-id fix-login-copy \
+  --task-file /tmp/fix-login-copy.md \
+  --task-kind dev \
+  --out .pilot-puppy/evidence/fix-login-copy.route.json
+```
+
+The result might say `bulk via cursor`, `bulk via codex`, or that no declared
+slot is available. That choice is a local hint based only on the roster and a
+bounded version probe—never an account, quota, model, or billing claim.
+
+Then explicitly run the selected native host and list the only paths it may
+change. Passing the route packet makes the host fail closed if the frozen task,
+roster revision, or selected host changed in between:
 
 ```bash
 pilot-puppy host run \
-  --host codex \
+  --host cursor \
   --repo "$PWD" \
   --task-file /tmp/fix-login-copy.md \
   --task-id fix-login-copy \
   --allowed-path src/login.tsx \
   --allowed-path src/login.test.tsx \
+  --route-file .pilot-puppy/evidence/fix-login-copy.route.json \
   --out .pilot-puppy/evidence/fix-login-copy.json
 ```
 
@@ -86,14 +105,13 @@ reproduces the proof.
 
 ## Honest limitations
 
-- You choose the native host. The shipped roster is setup/display only; an
-  explainable route command is not shipped yet.
-- A future role selector can choose only a declared role and native-host
-  surface; it cannot guarantee a host's proprietary model or billing tier.
+- Route selects only a declared role and native-host surface; it cannot
+  guarantee a host's proprietary model, account state, quota, or billing tier.
+- Route never launches work, silently swaps a host, retries, or owns a queue.
+  The lead still chooses whether to run the selected host and accepts proof.
 - Host availability and authentication remain owned by Codex, Claude Code, or
   Cursor.
 - A receipt is evidence to review, not automatic acceptance.
-- Voice and remote-control clients are not included.
 
 ## Development
 

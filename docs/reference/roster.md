@@ -26,19 +26,21 @@ pilot-puppy roster show --file /safe/local/path/roster.json --json
 ```
 
 `init` never overwrites an existing roster. The default file stays outside the
-project; `--file` is an explicit local choice. The roster is a setup/display
-tool, not another plan or queue.
+project; `--file` is an explicit local choice. The roster is a local role map,
+not another plan or queue. It is created with owner-only permissions; show and
+route reject a group- or world-readable existing roster.
 
 ## What it does not do
 
 The roster does not choose a provider or model, measure account quota, start a
 native host, launch a worker, retry work, or dispatch anything automatically.
-There is no `route` command yet. You still choose when to run a native Codex,
-Claude Code, or Cursor task, and a lead still reviews its proof.
+[`pilot-puppy route`](routing.md) may choose only a declared generic role and
+native-host surface; it prints the choice, alternatives, and escalation and
+then stops. You still explicitly decide whether to run native Codex, Claude
+Code, or Cursor, and a lead still reviews the proof.
 
-If a future role selector is added, it can choose only a declared role and
-native-host surface. It cannot verify or guarantee the proprietary model or
-billing tier a host uses internally.
+Route cannot verify or guarantee the proprietary model or billing tier a host
+uses internally.
 
 It has no cloud executor, voice mode, credential relay, transcript store,
 background queue, daemon, or watcher. The roster itself never becomes another

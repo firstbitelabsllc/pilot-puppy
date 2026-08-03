@@ -18,7 +18,20 @@ source.
 generic labels to your own native tools privately; no roster mapping is copied
 into project status, the browser, or receipts.
 
-For execution, freeze one complete task in a file:
+For a bounded delegation, freeze one complete task in a file and choose a
+declared local role first:
+
+```bash
+pilot-puppy route \
+  --repo "$PWD" \
+  --task-id focused-fix \
+  --task-file /tmp/task.md \
+  --task-kind dev \
+  --out .pilot-puppy/evidence/focused-fix.route.json
+```
+
+Read the role/host choice, alternatives, and escalation. Then explicitly run
+the selected host:
 
 ```bash
 pilot-puppy host run \
@@ -28,6 +41,7 @@ pilot-puppy host run \
   --task-id focused-fix \
   --allowed-path src/fix.ts \
   --allowed-path src/fix.test.ts \
+  --route-file .pilot-puppy/evidence/focused-fix.route.json \
   --out .pilot-puppy/evidence/focused-fix.json
 ```
 

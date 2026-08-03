@@ -27,7 +27,9 @@ sys.modules[SPEC.name] = roster
 SPEC.loader.exec_module(roster)
 
 
-def run(*args: str, environment: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
+def run(
+    *args: str, environment: dict[str, str] | None = None, timeout: float = 5
+) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     if environment:
         env.update(environment)
@@ -38,6 +40,7 @@ def run(*args: str, environment: dict[str, str] | None = None) -> subprocess.Com
         text=True,
         check=False,
         env=env,
+        timeout=timeout,
     )
 
 
@@ -276,6 +279,34 @@ class RosterTests(unittest.TestCase):
         self.assertEqual(fingerprint["schema"], "pilot-puppy.roster-fingerprint.v1")
         self.assertEqual(fingerprint["revision"], 1)
         self.assertEqual(fingerprint["sha256"], roster.roster_sha256(first))
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "named pipes are unavailable on this platform")
+    def test_named_pipe_roster_fails_without_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = safe_root(dirname)
+            config = root / "config" / "roster.json"
+            config.parent.mkdir()
+            os.mkfifo(config)
+            result = run("show", "--file", str(config), timeout=2)
+        self.assert_safe_error(result, root)
+
+    def test_group_or_world_readable_roster_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = safe_root(dirname)
+            config = root / "config" / "roster.json"
+            self.assertEqual(run("init", "--file", str(config)).returncode, 0)
+            config.chmod(0o644)
+            result = run("show", "--file", str(config))
+        self.assert_safe_error(result, root)
+
+    def test_route_binding_hash_excludes_private_slot_identifiers(self) -> None:
+        first = default_payload()
+        renamed = copy.deepcopy(first)
+        renamed["slots"][2]["id"] = "fable-max"
+        changed_route = copy.deepcopy(first)
+        changed_route["slots"][2]["host"] = "codex"
+        self.assertEqual(roster.route_roster_sha256(first), roster.route_roster_sha256(renamed))
+        self.assertNotEqual(roster.route_roster_sha256(first), roster.route_roster_sha256(changed_route))
 
 
 if __name__ == "__main__":

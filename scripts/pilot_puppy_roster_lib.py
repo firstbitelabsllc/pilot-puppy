@@ -3,8 +3,9 @@
 
 This module stores only a small, provider-neutral list of role/host slots.  It
 does not store model names, accounts, credentials, prompts, provider payloads,
-or machine paths.  A later foreground router can consume ``load_roster`` and
-``roster_sha256`` without learning where the local configuration lives.
+or machine paths. A later foreground router can consume ``load_roster`` and a
+route-safe fingerprint without learning where the local configuration lives or
+publishing local slot identifiers.
 
 ``PILOT_PUPPY_ROSTER_FILE`` and the CLI ``--file`` flag are deliberately
 trusted, explicit local overrides.  The default lives under the current user's
@@ -183,6 +184,39 @@ def roster_sha256(roster: object) -> str:
     return hashlib.sha256(canonical_roster_bytes(roster)).hexdigest()
 
 
+def route_roster_projection(roster: object) -> dict[str, Any]:
+    """Return the route-relevant roster projection without local slot IDs.
+
+    Slot IDs are intentionally local display/configuration text and may carry
+    a personal seat nickname. They cannot affect selection because priorities
+    are unique within a role, so evidence binds only the fields that can
+    actually change routing.
+    """
+
+    safe = validate_roster(roster)
+    slots = [
+        {
+            "role": slot["role"],
+            "host": slot["host"],
+            "priority": slot["priority"],
+            "enabled": slot["enabled"],
+        }
+        for slot in safe["slots"]
+    ]
+    return {
+        "revision": safe["revision"],
+        "slots": sorted(slots, key=lambda slot: (slot["role"], slot["priority"], slot["host"])),
+    }
+
+
+def route_roster_sha256(roster: object) -> str:
+    """Return a route binding hash that cannot reveal local slot identifiers."""
+
+    projection = route_roster_projection(roster)
+    encoded = json.dumps(projection, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("ascii")
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def roster_fingerprint(roster: object) -> dict[str, Any]:
     """Return a path-free content/revision reference for a later route receipt."""
 
@@ -252,7 +286,12 @@ def _read_bounded(path: Path) -> bytes:
     if stat.S_ISLNK(link_information.st_mode):
         raise RosterError("local roster configuration is unsafe")
 
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_NONBLOCK", 0)
+    )
     try:
         descriptor = os.open(path, flags)
     except OSError:
@@ -261,6 +300,8 @@ def _read_bounded(path: Path) -> bytes:
         information = os.fstat(descriptor)
         if not stat.S_ISREG(information.st_mode):
             raise RosterError("local roster configuration is unsafe")
+        if stat.S_IMODE(information.st_mode) & 0o077:
+            raise RosterError("local roster configuration must not be group or world readable")
         if information.st_size > MAX_ROSTER_BYTES:
             raise RosterError("local roster configuration is too large")
         chunks: list[bytes] = []
