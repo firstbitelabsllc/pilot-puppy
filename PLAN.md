@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 69
-- Outcome Updated At: 2026-08-03T20:47:36Z
+- Outcome Revision: 70
+- Outcome Updated At: 2026-08-03T20:49:39Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate source at `bd7a60c` for promotion into canonical
+- Next: Review candidate source at `57f913f` for promotion into canonical
   mainline; hosted workflow proof still ends at `ccdcece`, and no merge, release,
   or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
@@ -496,6 +496,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   public-ready scan, whitespace checks, and release packaging also pass. The
   current 63-file package SHA-256 is
   `a6e0a2c025ddf015767eeef3bd842a5fa972332f9d6edd407d5955454e87b776`.
+  Hosted CI has not run for this source change because no PR was opened.
+- 2026-08-03: Commit `57f913f` redacts filesystem details from public-ready
+  failure output: Git command failures and metadata read errors now return
+  stable public-safe messages. The focused regression and full Python suite
+  pass (159 tests, 2 skipped); Ruff, the 100-file public-ready scan,
+  whitespace checks, and release packaging pass. The current 63-file package
+  SHA-256 is
+  `d27f580ae81811c952d1c563c2a8b9b8c87dae2bf157590bcaf42a0b701050ad`.
   Hosted CI has not run for this source change because no PR was opened.
 
 ## Deferred proof (not a global blocker)
