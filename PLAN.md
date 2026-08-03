@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 107
-- Outcome Updated At: 2026-08-03T22:29:07Z
+- Outcome Revision: 108
+- Outcome Updated At: 2026-08-03T22:33:57Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `0974038`
@@ -810,6 +810,31 @@ Code, or Cursor without taking custody of credentials or conversations.
   returned 11 checks, zero failures, and zero warnings. These are source,
   clean-install, installed-artifact, and hosted-check proofs only; no PR,
   review, merge, release, deployment, or runtime claim changed.
+
+- 2026-08-03: Commit `f01b751` makes malformed Outcome input errors stable and
+  public-safe: duplicate keys report `duplicate object key`, invalid UTF-8
+  reports `input encoding is invalid`, and malformed JSON reports `JSON is
+  malformed` without echoing input details. The new regression covers a
+  private-looking duplicate key and malformed payload; the exact source gate
+  passes 176 Python tests (2 skipped), 3 JavaScript tests, 6 desktop/phone
+  browser tests, docs, Ruff, public-ready, audit, and release packaging.
+
+- 2026-08-03: The same sealed Codex task was replayed against exact source head
+  `f01b751`. It returned `status: ok`, changed only `proof/codex-sealed.txt`,
+  reported a passing `lead-reproducible-check`, and passed the lead check
+  `test "$(cat proof/codex-sealed.txt)" = 'native proof'`. No `__pycache__`
+  appeared in the inspected worktree; the attempt receipt remains local
+  evidence and is not lead acceptance or release proof.
+
+- 2026-08-03: A fresh clone at exact head `f01b751` passed `npm ci` (186
+  packages, zero vulnerabilities), 3 JavaScript tests, 176 Python tests (2
+  skipped), 6 desktop/phone browser tests, docs, Ruff, public-ready, audit,
+  and release verification. Hosted CI run `30858957781` and Secret scan run
+  `30858959311` both passed for that exact head. An isolated npm-packed install
+  reported version `2.1.0` and `pilot-puppy doctor --json` returned 11 checks,
+  zero failures, and zero warnings. These are exact source, clean-install,
+  installed-artifact, and hosted-check proofs only; no PR, review, merge,
+  release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
