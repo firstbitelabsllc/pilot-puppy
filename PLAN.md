@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 99
-- Outcome Updated At: 2026-08-03T22:12:17Z
+- Outcome Revision: 101
+- Outcome Updated At: 2026-08-03T22:14:14Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `c868976`
+- Next: Choose the consolidation path for candidate source head `b70a6fe`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -28,7 +28,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
-- Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate c868976 has exact local, clean-clone, hosted CI/Secret Scan, and isolated install/doctor proof; it is not merged or released. Claude/Cursor receipts pass; Codex execution remains quota-blocked.
+- Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate b70a6fe has exact local, clean-clone, hosted CI/Secret Scan, and isolated install/doctor proof; it is not merged or released. Claude/Cursor receipts pass; Codex remains quota-blocked.
 - Proof Delivery: delivered
 
 ## Product boundary
@@ -720,11 +720,17 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 - 2026-08-03: Hardened `latest_progress()` to consider only top-level
   `Progress` bullets; indented nested evidence can no longer replace the
-  displayed latest change. The focused browser suite (9), full Python suite
-  (173, 2 skipped), JavaScript suite (3), desktop/phone browser suite (6),
-  docs build, Ruff, and public-ready scan all pass. Release verification was
-  intentionally rerun before commit and failed only on its expected dirty-file
-  guard for `browser/server.py`; rerun it after the source checkpoint.
+  displayed latest change. Source checkpoint `b70a6fe` passes the focused
+  browser suite (9), full Python suite (173, 2 skipped), JavaScript suite (3),
+  desktop/phone browser suite (6), docs build, Ruff, and public-ready scan.
+  Post-commit release verification passes with 64 files and SHA-256
+  `bcf7f39983e04dd2f55bdfffe4fe2aef29e2a0599c523cc1b8b9a50467340bfd`.
+  Hosted CI and Secret Scan still need a fresh exact-head run.
+
+- 2026-08-03: Hosted proof now covers exact source head `b70a6fe63189d79baed011a5002668e2bc900bbb`.
+  CI run `30857805277` and Secret Scan run `30857806864` both completed
+  successfully. These are source, package, and hosted-check proofs only; no
+  PR, review, merge, release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
