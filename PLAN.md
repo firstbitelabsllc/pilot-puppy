@@ -16,11 +16,11 @@ Cursor without taking custody of credentials or conversations.
 - Outcome Updated At: 2026-08-03T15:21:28Z
 - Outcome State: working
 - Outcome: Deliver the next highest-impact, reproducible improvement in Nicole's two public applications—the all-role local Job Hunt Board and the Star67 Pivot SQL desk—without paid runtime services or private-data leakage. Pilot Puppy is an optional execution front door, not the product under test.
-- Next: Finish the small public-board truth fix now in review, then inspect Pivot only for a reproduced high-impact regression. Keep green releases stable; do not manufacture work, add a platform, or reopen the retired LinkedIn arm.
+- Next: No product code remains in this bounded pass. Resume only from a new reproduced user harm or plainly false claim. Keep green releases stable; do not manufacture work, add a platform, or reopen the retired LinkedIn arm.
 - Proof ID: nicole-public-products-bounded-improvement-20260803
 - Proof: public finance-job-board PR #1 plus this plan's bounded product receipt
-- Proof Summary: the clean public board changed `+N this week` to `+N since last refresh` (the actual stored baseline), with 228 Python tests and the Chromium smoke green. Pivot remains on its proven release floor until a real user harm is reproduced.
-- Proof Delivery: finance board branch pushed; PR review pending; Pivot decision pending evidence.
+- Proof Summary: the clean public board changed `+N this week` to `+N since last refresh` (the actual stored baseline), merged to public `main` as `d993537d`, with 228 Python tests and the Chromium smoke green. Pivot remains on its proven release floor until a real user harm is reproduced.
+- Proof Delivery: finance board fix merged and remotely read back; Pivot decision closed with no patch.
 
 ## Tool boundary
 
@@ -54,10 +54,10 @@ Cursor without taking custody of credentials or conversations.
 
 ## Product unblock map
 
-- **Job Board: IN REVIEW.** PR #1 (`codex/truthful-refresh-momentum`) changes
-  the unsupported “this week” claim to “since last refresh”; 228 Python tests,
-  Chromium smoke, and `git diff --check` pass. Merge only after the normal CI
-  result is green.
+- **Job Board: DONE.** PR #1 (`codex/truthful-refresh-momentum`) changes the
+  unsupported “this week” claim to “since last refresh” and merged to public
+  `main` as `d993537d`. The 228 Python tests, Chromium smoke, all public CI
+  lanes, and `git diff --check` pass.
 - **Pivot SQL: PROVEN / NO OPEN REGRESSION.** Keep its production floor and
   inspect only a reproduced user-facing failure or a clearly stale claim.
 - **Nicole handoff: READY.** The public README setup paths and local-only
@@ -92,8 +92,9 @@ Cursor without taking custody of credentials or conversations.
   all changed repositories are clean, pushed, and remotely verified.
 - [completed] Land the first bounded public-board trust fix: describe the
   refresh baseline instead of claiming a seven-day window, with browser proof.
-- [in_progress] Review the Pivot public release for one reproduced high-impact
-  user harm; if none is found, leave it unchanged and close this product slice.
+- [completed] Review the Pivot public release for one reproduced high-impact
+  user harm; the local-only SQL guard and the full 183/183 browser proof are
+  green, so no patch was warranted and the product slice is closed.
 - [parked] Pilot Puppy cross-host portability remains available as tooling work
   only when a real product task needs it; do not spend the goal on a host test.
 
