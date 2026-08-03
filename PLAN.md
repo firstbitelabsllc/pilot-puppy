@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 77
-- Outcome Updated At: 2026-08-03T21:11:11Z
+- Outcome Revision: 78
+- Outcome Updated At: 2026-08-03T21:12:50Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `d392921` for promotion into canonical
@@ -573,6 +573,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   `e045906328c772064c25df22fd064850df2262807e434746c6ff5278a67009ce`.
   The clean clone matches its remote candidate ref. No PR, review, merge,
   release, deployment, or runtime claim changed.
+- 2026-08-03: Hosted proof now covers candidate head `df116a8`. CI run
+  `30853586092` passed all five jobs—Python 3.10, 3.12, and 3.14 tests plus
+  release verification, pinned Ruff, and browser/docs/public-ready—and Secret
+  scan run `30853587658` passed gitleaks and the public-ready gate. These are
+  exact-head hosted checks, not PR review, merge, release, deployment, or
+  runtime proof.
 
 ## Deferred proof (not a global blocker)
 
