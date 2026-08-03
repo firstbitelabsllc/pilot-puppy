@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 96
-- Outcome Updated At: 2026-08-03T22:11:00Z
+- Outcome Revision: 97
+- Outcome Updated At: 2026-08-03T22:14:00Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `c868976`
@@ -702,6 +702,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   for the exact source head. This audit found no additional release-boundary
   defect; the remaining pending row is consolidation, not another source fix.
   Cursor's separate writer lane was not inspected or modified.
+
+- 2026-08-03: Added a browser regression that keeps the final `Progress` row
+  as the displayed latest change, matching checkpoint append order. The
+  focused browser unit suite (9 tests), JavaScript suite (3 tests), desktop /
+  phone browser suite (6 tests), full Python suite (173 tests, 2 skipped),
+  docs build, 101-file public-ready scan, and reproducible 64-file release
+  verification all pass. The release SHA remains
+  `fbfc05d062b0239b868321e530a5f7007cf07faefbf125fd56982263372b6c04`; no
+  runtime behavior or consolidation surface changed.
 
 ## Deferred proof (not a global blocker)
 

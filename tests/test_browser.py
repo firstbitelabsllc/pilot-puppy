@@ -44,6 +44,7 @@ PLAN = """# Release notes
 
 ## Progress
 
+- 2026-08-02: The bounded implementation is still under review.
 - 2026-08-03: The bounded implementation is ready for a decision.
 """
 
@@ -77,6 +78,10 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(
             [item["id"] for item in record["briefing"]["choices"]],
             ["ship-now", "cold-review", "hold-release"],
+        )
+        self.assertEqual(
+            record["briefing"]["changed"],
+            "2026-08-03: The bounded implementation is ready for a decision.",
         )
         self.assertEqual(record["briefing"]["proof"]["locator"], "tests/test_browser.py")
         self.assertNotIn(dirname, json.dumps(record))
