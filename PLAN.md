@@ -140,7 +140,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Keep route-packet text public-safe when private paths follow
   punctuation, while preserving public HTTPS locators.
 - [completed] Keep the packaged route schema's public text bounds aligned with
-  runtime route validation, including punctuation-adjacent private paths.
+  runtime route validation, including private paths and control characters.
 - [deferred] R5: Add a local private seat overlay only if a real native-tool
   setup cannot express the generic role/host roster. It must stay owner-local
   and outside source, browser/status, route evidence, packages, and stranger
@@ -298,6 +298,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   run.
 - 2026-08-03: Mainline release proof omitted route-packet path privacy hardening; branch `77972f4` restores it, but canonical promotion awaits review.
 - 2026-08-03: Route schema and runtime validation share a printable, path-safe text boundary; HTTPS locators remain valid and focused parity tests pass.
+- 2026-08-03: Route schema/runtime parity audit found control-character drift; runtime now rejects tabs/newlines before normalization, with focused tests covering both consumers.
 
 ## Deferred proof (not a global blocker)
 

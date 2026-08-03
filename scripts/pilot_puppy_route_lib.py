@@ -106,13 +106,13 @@ def _host(value: object, noun: str, *, nullable: bool = False) -> str | None:
 def _text(value: object, noun: str, maximum: int = 280) -> str:
     if not isinstance(value, str) or not value.strip() or len(value) > maximum:
         raise RoutePacketError(f"route packet {noun} is invalid")
+    if CONTROL_RE.search(value) or any(ord(character) > 126 for character in value):
+        raise RoutePacketError(f"route packet {noun} is invalid")
     text = " ".join(value.split())
     if (
-        CONTROL_RE.search(text)
-        or PRIVATE_PATH_RE.search(text)
+        PRIVATE_PATH_RE.search(text)
         or ABSOLUTE_PATH_RE.search(text)
         or SECRET_SHAPE_RE.search(text)
-        or any(ord(character) > 126 for character in text)
     ):
         raise RoutePacketError(f"route packet {noun} is invalid")
     return text

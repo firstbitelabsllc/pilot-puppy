@@ -383,7 +383,13 @@ class RouteTests(unittest.TestCase):
         for forbidden in ("model", "provider", "account", "quota", "credential", "prompt", "transcript", "path", "command"):
             self.assertNotIn(forbidden, rendered)
         text_pattern = re.compile(schema["$defs"]["route_text"]["pattern"])
-        for value in ("path:/Users/person/private", "see(/tmp/private)", "path:$HOME/private"):
+        for value in (
+            "path:/Users/person/private",
+            "see(/tmp/private)",
+            "path:$HOME/private",
+            "line\tbreak",
+            "line\nbreak",
+        ):
             with self.subTest(value=value):
                 self.assertIsNone(text_pattern.fullmatch(value))
         self.assertIsNotNone(text_pattern.fullmatch("https://example.com/proof"))
@@ -398,7 +404,13 @@ class RouteTests(unittest.TestCase):
             host=None,
             availability="assume",
         )
-        for value in ("path:/Users/person/private", "see(/tmp/private)", "$HOME/private"):
+        for value in (
+            "path:/Users/person/private",
+            "see(/tmp/private)",
+            "$HOME/private",
+            "line\tbreak",
+            "line\nbreak",
+        ):
             with self.subTest(value=value):
                 forged = copy.deepcopy(document)
                 forged["escalation"]["when"] = value
