@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 10
-- Outcome Updated At: 2026-08-03T16:03:34Z
+- Outcome Revision: 11
+- Outcome Updated At: 2026-08-03T16:07:58Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work without waiting on the other computer or native-Codex quota. The immediate open item is the owner-admin GitHub repository update: rename `nlau1193/pivot-sql` to `star67-learn-sql` and set its public homepage/topics; product verification continues independently.
@@ -181,6 +181,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   mergeable. `npm audit --omit=dev` is zero and high-severity audit passes;
   only two low Shopify CLI/esbuild findings remain. No live deployment or
   Shopify mutation occurred.
+- 2026-08-03T16:07:58Z: Portfolio plan PR #99 is rebased on current public
+  main `396ae544` at `1086d2f9`. Remote CodeQL, gitleaks, public-ready,
+  browser/docs, Graphite, and Python 3.10/3.12/3.14 checks all pass. The PR
+  remains OPEN and unmerged; public main is therefore still the narrow
+  platform plan until the external merge step occurs. No merge or release is
+  claimed.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
@@ -244,18 +250,6 @@ Code, or Cursor without taking custody of credentials or conversations.
   support for a project's own plan, not a universal validation gate. One
   bounded task keeps a handoff reviewable; it does not stop other projects
   from shipping safe, high-value reachable work.
-- 2026-08-03: Branch `codex/python-floor-resolution-main@8e8f7b1` now resolves
-  a Python 3.10+ interpreter when bare `python3` is pinned below the floor,
-  carries the resolved interpreter through the CLI, browse launcher, and npm
-  Python gates, and passes 83 Python tests, 3 JavaScript tests, public-ready,
-  docs, desktop/phone browser, and release-package checks. This is branch and
-  CI handoff proof only; it is not merged or released yet.
-- 2026-08-03: PR #98's first CI run exposed an overstrong test assertion: a
-  valid interpreter override can execute `doctor` while an otherwise clean CI
-  runner still lacks optional native-host or mount readiness. The test now
-  asserts the selected interpreter and rejects only the dispatcher failure
-  code; this preserves the runtime contract without claiming environment
-  readiness.
 - 2026-08-03: PR #98 merged as `a24120ff`. Post-merge `origin/main` readback
   passes 83 Python tests, 3 JavaScript tests, public-ready, docs, desktop and
   phone browser, and release-package verification. This proves merged source
@@ -289,6 +283,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   deployed. Resume by merging it through the repository's normal review path,
   then rerun `npm ci`, high/production audit, and the focused gates. Do not
   force the breaking Shopify CLI upgrade just to claim zero total findings.
+- Pilot Puppy portfolio PR #99 is pushed and all required remote checks pass,
+  but it is still open. Resume with the repository's external merge action,
+  then read back `origin/main` and the public plan before treating the full
+  portfolio outcome as the public-main authority.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
