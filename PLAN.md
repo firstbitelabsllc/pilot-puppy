@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 15
-- Outcome Updated At: 2026-08-03T16:40:05Z
+- Outcome Revision: 16
+- Outcome Updated At: 2026-08-03T16:41:44Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
@@ -229,6 +229,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   true`; the full Node serial gate and consignment receipts remain from the
   same dependency state. This is the latest observed boundary; verify PR
   checks/mergeability before claiming it ready to merge.
+- 2026-08-03T16:41:44Z: Rechecked the two active control PRs after the latest
+  receipts. Snowcubes PR #1567 at `ca975aa4` is based on `b8b18e1f`,
+  lockfile-only, and `CLEAN` with mergeability passing. Pilot Puppy PR #99 at
+  `976796ff` is `CLEAN`; Python 3.10/3.12/3.14, browser/docs, CodeQL, gitleaks,
+  public-ready, and Graphite checks all pass. Neither PR is merged or deployed;
+  the next action remains the external merge/readback predicate plus the
+  owner-controlled Star67 metadata and Moussey authenticated-runtime gates.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
