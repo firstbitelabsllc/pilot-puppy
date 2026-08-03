@@ -12,23 +12,27 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 104
-- Outcome Updated At: 2026-08-03T22:17:13Z
+- Outcome Revision: 105
+- Outcome Updated At: 2026-08-03T22:24:16Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `b70a6fe`
+- Next: Choose the consolidation path for candidate source head `141d41d`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
-  clarified. Read-only audit shows #99 is a separate portfolio-level PLAN,
-  #105's Python-floor behavior is already superseded here by the shared
-  helper plus single-source dispatcher refactor, #106's receipt hardening is
-  already present in the stronger candidate host boundary, and #95 overlaps
-  #105. No sibling branch was edited; no merge, release, or deployment claim is
-  made yet.
+  clarified. The candidate now has local, clean-clone, installed-artifact,
+  hosted CI/Secret Scan, and real Codex sealed-task proof. Read-only audit
+  still shows #99 as a separate portfolio-level PLAN, #105's Python-floor
+  behavior as superseded here by the shared helper plus single-source
+  dispatcher refactor, #106's receipt hardening as present in the stronger
+  candidate host boundary, and #95 overlapping #105. No sibling branch was
+  edited; no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
-- Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate b70a6fe has exact local, clean-clone, hosted CI/Secret Scan, and isolated install/doctor proof; it is not merged or released. Claude/Cursor receipts pass; Codex remains quota-blocked.
+- Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate
+  `141d41d` has exact local, clean-clone, hosted CI/Secret Scan, isolated
+  install/doctor, and real Codex sealed-task proof; Claude/Cursor receipts also
+  pass. It is not merged or released.
 - Proof Delivery: delivered
 
 ## Product boundary
@@ -752,6 +756,36 @@ Code, or Cursor without taking custody of credentials or conversations.
   the package exposes only the `pilot-puppy` command. No source or runtime
   change was needed; the consolidation decision remains the next move.
 
+- 2026-08-03: The first fresh Codex sealed-task attempt exposed a real
+  worktree-seal defect: invoking the top-level CLI created ignored Python
+  bytecode before the host could launch, so the attempt failed closed as
+  `worktree_unsealed`. Commit `141d41d` exports `PYTHONDONTWRITEBYTECODE=1`
+  from the top-level CLI and shared Python resolver and adds a regression that
+  proves a CLI status read leaves no `__pycache__` in its inspected root.
+  Focused resolution tests pass (10), and the full candidate gate passes 174
+  Python tests (2 skipped), 3 JavaScript tests, 6 desktop/phone browser tests,
+  docs, Ruff, the 101-file public-ready scan, zero high-severity npm audit
+  findings, and a reproducible 64-file package with SHA-256
+  `6cf1573592dd6a55595480883dfc3a53d994ad0485733892fe6490a2481b3c60`.
+
+- 2026-08-03: After `141d41d`, the same sealed Codex task completed with
+  `status: ok`, changed only `proof/codex-sealed.txt`, returned a passing
+  `relevant-test`, and passed the lead-reproduced check `test "$(cat
+  proof/codex-sealed.txt)" = 'native proof'`. The public attempt receipt is
+  local evidence only; it contains no prompt, transcript, credential, or
+  private path, and lead acceptance remains separate.
+
+- 2026-08-03: A fresh clone at exact head `141d41d` passed `npm ci` (186
+  packages, zero vulnerabilities), 3 JavaScript tests, 174 Python tests (2
+  skipped), 6 desktop/phone browser tests, docs, Ruff, the 101-file
+  public-ready scan, and release verification. Hosted CI run
+  `30858399411` passed browser/docs, pinned Ruff, and Python 3.10/3.12/3.14;
+  Secret scan run `30858400761` passed gitleaks and public-ready. An isolated
+  npm-packed install reported version `2.1.0` and `pilot-puppy doctor --json`
+  returned 11 checks, zero failures, and zero warnings. These are source,
+  clean-install, installed-artifact, and hosted-check proofs only; no PR,
+  review, merge, release, deployment, or runtime claim changed.
+
 ## Deferred proof (not a global blocker)
 
 - The other-computer route is deferred by host availability. Resume only when
@@ -761,8 +795,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
-- Native Codex execution is also time-bound. If the target has a usable
-  account, run the same sealed task there; otherwise resume after 2026-08-07
-  23:52 America/New_York. In either route, it must return `status: ok`, change
-  only its allowed path, and pass the lead-reproduced check. A binary/version
-  probe does not satisfy this deferred receipt.
+- Local native-host execution is now proven on candidate head `141d41d`: the
+  Codex sealed task returned `status: ok`, changed only its allowed path, and
+  passed lead reproduction. A binary/version probe is not a substitute for
+  that receipt. If the target Mac becomes available, the same task may be
+  replayed there as portability evidence; it is not required to claim the
+  local candidate proof above.
