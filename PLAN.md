@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 108
-- Outcome Updated At: 2026-08-03T22:33:57Z
+- Outcome Revision: 109
+- Outcome Updated At: 2026-08-03T22:34:52Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Choose the consolidation path for candidate source head `0974038`
+- Next: Choose the consolidation path for candidate source head `f01b751`
   (plan-only checkpoints follow on the owned branch): (A) promote
   this candidate through one reviewed PR, (B) update the existing sibling PRs
   from this candidate, or (C) leave the siblings open while ownership is
@@ -30,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate
-  `0974038` has exact local, clean-clone, hosted CI/Secret Scan, isolated
+  `f01b751` has exact local, clean-clone, hosted CI/Secret Scan, isolated
   install/doctor, and real Codex sealed-task proof; Claude/Cursor receipts also
   pass. It is not merged or released.
 - Proof Delivery: delivered
@@ -845,7 +845,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
-- Local native-host execution is now proven on candidate head `0974038`: the
+- Local native-host execution is now proven on candidate head `f01b751`: the
   Codex sealed task returned `status: ok`, changed only its allowed path, and
   passed lead reproduction. A binary/version probe is not a substitute for
   that receipt. If the target Mac becomes available, the same task may be
