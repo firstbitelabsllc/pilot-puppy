@@ -122,6 +122,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   progress receipts singular.
 - [completed] Fail closed on duplicate Operator Brief keys and keep plan
   titles public-safe in status and browser output.
+- [completed] Reprove the pushed branch from a fresh clone with lockfile
+  install and public gates.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -243,6 +245,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Status now reports duplicate plan fields and sanitizes unsafe titles.
   Proof: 105 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
   public-ready scan, dev release package, and doctor pass [receipt:2d9c64df8c0e9ac9]
+- 2026-08-03: Fresh clone install, status, tests, public-ready, and release verification passed.
+  Proof: lockfile install had zero vulnerabilities, 105 Python tests, 3 JavaScript tests,
+  public-ready scan, and clean release SHA-256 `597e30ba8e78338b473d5284d0f40fc40ff4b8f0c658c557ea3d0461559bf31c` [receipt:fb3c9e4cd2f6a7b1]
 
 ## Deferred proof (not a global blocker)
 
