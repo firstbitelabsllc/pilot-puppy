@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 6
-- Outcome Updated At: 2026-08-03T15:35:25Z
+- Outcome Revision: 7
+- Outcome Updated At: 2026-08-03T15:44:37Z
 - Outcome State: needs_input
 - Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Continue reachable work from this computer; resume cross-host Codex proof only when the target Mac is reachable or local quota resets.
+- Next: Use the local CLI and browser now; Python selection no longer depends on a bare 3.9, while cross-host Codex proof remains deferred.
 - Decision ID: choose-local-path
 - Decision: What should Pilot Puppy do while the remote computer is unavailable?
 - Option A ID: local-dogfood
@@ -95,8 +95,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   all changed repositories are clean, pushed, and remotely verified.
 - [completed] Publish the portable other-computer handoff with bootstrap,
   mounting, proof, privacy, and one exact resume predicate.
-- [in_progress] Keep the local Outcome and A/B/C brief actionable when an
+- [completed] Keep the local Outcome and A/B/C brief actionable when an
   external host is unavailable; take reachable product work without waiting.
+- [completed] Resolve a Python 3.10+ interpreter from PATH or an explicit
+  override so local commands and the browser do not fail on a pinned bare
+  `python3`.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -120,6 +123,10 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Made the local-first boundary operational. The unavailable Jump
   route is deferred, while the Outcome now offers three honest local choices:
   dogfood here, take the next reachable product row, or defer cross-host proof.
+- 2026-08-03: Ported the local Python-floor fix. The dispatcher, browser
+  launcher, npm Python scripts, config reference, and five resolution tests
+  now share one fail-closed Python 3.10+ selection contract. The 84-test Python
+  suite passes with hermetic override and fallback tests.
 - 2026-08-02: Established one product authority. Outcome, briefing, decision,
   privacy, and native-host behavior stay; unrelated machinery is removed.
 - 2026-08-02: Public core gate passes 79 Python tests, 3 JavaScript tests,
@@ -174,18 +181,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   support for a project's own plan, not a universal validation gate. One
   bounded task keeps a handoff reviewable; it does not stop other projects
   from shipping safe, high-value reachable work.
-- 2026-08-03: Branch `codex/python-floor-resolution-main@8e8f7b1` now resolves
-  a Python 3.10+ interpreter when bare `python3` is pinned below the floor,
-  carries the resolved interpreter through the CLI, browse launcher, and npm
-  Python gates, and passes 83 Python tests, 3 JavaScript tests, public-ready,
-  docs, desktop/phone browser, and release-package checks. This is branch and
-  CI handoff proof only; it is not merged or released yet.
-- 2026-08-03: PR #98's first CI run exposed an overstrong test assertion: a
-  valid interpreter override can execute `doctor` while an otherwise clean CI
-  runner still lacks optional native-host or mount readiness. The test now
-  asserts the selected interpreter and rejects only the dispatcher failure
-  code; this preserves the runtime contract without claiming environment
-  readiness.
+- 2026-08-03: PR #98 merged the first Python-floor resolution pass into `main`.
+  Its `doctor`-based override test only asserted a non-127 exit code because a
+  clean CI runner can still lack optional native-host or mount readiness; that
+  assertion is now replaced by hermetic shim tests that prove which
+  interpreter the dispatcher actually executed.
 
 ## Deferred proof (not a global blocker)
 

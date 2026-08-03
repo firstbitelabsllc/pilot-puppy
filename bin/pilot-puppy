@@ -164,10 +164,10 @@ require_pilot_puppy_checkout() {
   fi
 }
 
-# Machines that pin bare `python3` below 3.10 for other tooling often carry a
-# newer versioned interpreter alongside it. Resolve the newest 3.10+ interpreter
-# on PATH instead of failing on the pin; a valid pre-set PILOT_PUPPY_PYTHON wins
-# and an invalid one fails closed.
+# Machines that pin the bare `python3` below 3.10 for other tooling often
+# carry a newer versioned interpreter alongside it. Resolve the newest
+# interpreter that satisfies the 3.10+ floor instead of failing on the pin;
+# a valid pre-set PILOT_PUPPY_PYTHON wins, an invalid one fails closed.
 python3_satisfies_floor() {
   "$1" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1
 }
@@ -191,7 +191,7 @@ require_python3() {
     fi
   done
   if command -v python3 >/dev/null 2>&1; then
-    echo "pilot-puppy ${cmd}: python3 on PATH is $(python3 -c 'import sys; print(\"%d.%d.%d\" % sys.version_info[:3])' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
+    echo "pilot-puppy ${cmd}: python3 on PATH is $(python3 -c 'import sys; print("%d.%d.%d" % sys.version_info[:3])' 2>/dev/null || echo 'unreadable'); this subcommand requires Python 3.10+." >&2
     echo "  Install a newer interpreter (kept alongside the existing one is fine) and re-run." >&2
   else
     echo "pilot-puppy ${cmd}: python3 not found on PATH." >&2
