@@ -4,39 +4,36 @@ This file is the sole plan, proof, and resume authority for Pilot Puppy.
 
 ## Outcome
 
-Give one person a calm chief-of-staff view of what their coding work is trying
-to achieve, what is happening now, what proof exists, and which A/B/C decision
-matters next—then drive bounded work through native Codex, Claude Code, or
-Cursor without taking custody of credentials or conversations.
+Make Nicole's two public apps ready to share and hand off: the category-neutral,
+local-first Job Hunt Board and the browser-local Star67/Pivot SQL learning desk.
+Pilot Puppy is only the brief, proof, and resume layer for this work; it is not
+the product under test and it does not own either app's acceptance evidence.
 
 ## Operator Brief
 
-- Outcome ID: cross-computer-resplit-cycle-20260803
-- Outcome Revision: 8
-- Outcome Updated At: 2026-08-03T15:53:44Z
+- Outcome ID: nicole-public-apps-finish-20260803
+- Outcome Revision: 9
+- Outcome Updated At: 2026-08-03T16:08:01Z
 - Outcome State: working
-- Outcome: Make Pilot Puppy the verified cross-computer execution surface for
-  the next Resplit/native development cycle. Keep it as the existing brief,
-  proof, and native-host handoff tool; do not add a second execution layer or
-  turn it into the product under development.
-- Next: Obtain a real second-computer handoff receipt. Clone the public
-  repository, install it, mount the canonical skill, run `pilot-puppy doctor`,
-  read the target project's `PLAN.md`, and record host, revision, mount source,
-  doctor result, and next move here. Then rerun the identical sealed native
-  Codex task after the named quota reset and reproduce its exact proof locally.
-- Proof ID: cross-computer-resplit-cycle-20260803
-- Proof: a fresh target-host identity/revision/doctor/mount/target-plan
-  receipt; one sealed native-host receipt with `status: ok`, exact allowed-path
-  change, passing proof command, and lead reproduction; and the named Codex
-  reset predicate if that gate is still waiting.
-- Proof Summary: local doctor and green PR checks are readiness evidence only.
-  Completion requires host-verified handoff and separately execution-proven
-  sealed work; merged, released, host-verified, and lead-reproduced remain
-  distinct claims.
+- Outcome: Finish only the highest-impact reproduced UX, setup, accessibility,
+  performance, or trust problem in the two public apps. Keep the Board useful
+  for any job, keep Pivot simple for non-coders, and preserve local-first,
+  deterministic, privacy-safe boundaries.
+- Next: Read Pivot PR #1 checks and public source status. If the scoped hierarchy
+  repair is green, merge or leave the exact PR receipt; then re-read public main
+  and record the next one-line resume decision. If a check is red, repair only
+  the reproduced failure. Do not churn the already-green Board.
+- Proof ID: nicole-public-apps-finish-20260803
+- Proof: Board `finance-job-board@d993537d` has 228 Python tests and Chromium
+  E2E green. Pivot branch `fc2059c` has Node 22 contracts/build, current-source
+  183/183 browser smoke, crew visual proof, and diff proof green; its public
+  main remains `0721078` until PR #1 is accepted.
+- Proof Summary: source, merged, deployed, live, and proven states remain
+  distinct. A Pilot Puppy doctor/host receipt is not product proof.
 - Proof Delivery: product code and source receipts remain separate from merged,
-  deployed, live, host-verified, and lead-reproduced state. The next Resplit
-  task remains owned by its canonical project plan; this plan records only the
-  handoff and execution evidence.
+  deployed, live, and customer/runtime state. This plan records the product
+  brief, bounded proof, and exact resume point; each app's owning repository is
+  the implementation authority.
 
 ## Tool boundary
 
@@ -81,10 +78,10 @@ Cursor without taking custody of credentials or conversations.
   local configuration boundaries, and current launch links are the source of
   truth. No Nicole-specific PII, LinkedIn session, or paid model belongs in
   either public repo.
-- **Pilot Puppy portability: ACTIVE / WAITING ON TARGET ACCESS.** The release
-  and local doctor are proven, but the cross-computer handoff is not. This
-  objective is about making the existing surface usable for the next Resplit
-  cycle, not adding a new Pilot Puppy feature.
+- **Pilot Puppy portability: PARKED.** The release and local doctor remain
+  available evidence, but cross-computer handoff is outside this product
+  outcome. Do not spend the product pass on target access, quota resets, or a
+  new Pilot Puppy platform layer.
 
 ## Privacy and safety
 
@@ -117,9 +114,9 @@ Cursor without taking custody of credentials or conversations.
 - [completed] Review the two public Nicole apps from their exact current refs;
   leave their existing product proofs intact and do not invent another slice
   while the platform handoff is unresolved.
-- [in progress] Verify the fresh second-computer Pilot Puppy handoff for the
-  next Resplit/native cycle, then rerun the identical sealed Codex task after
-  its named quota reset and reproduce the proof from the lead checkout.
+- [in progress] Finish the current bounded Pivot hierarchy repair through its
+  PR/public-main readback, then close this product pass with the exact next
+  decision recorded here. Keep the already-green Board unchanged.
 
 ## Mechanical proof required for this outcome
 
@@ -138,16 +135,23 @@ Cursor without taking custody of credentials or conversations.
   mechanics, not a reason to polish a broken flow.
 - Public history contains no personal data, credentials, raw transcripts, paid
   runtime dependency, or private absolute path.
-- A fresh target-host receipt must include host identity, exact revision,
-  install, canonical skill mount source, doctor result, target `PLAN.md`
-  readback, and the next move. A host receipt is not acceptance by itself.
-- The sealed native Codex gate must be the same task after the named reset,
-  return `status: ok`, change only its allowed path, pass its proof command,
-  and be reproduced from the lead checkout. A version probe or quota
-  projection is not execution proof.
+- A Pilot Puppy host receipt, provider label, or doctor result is never a
+  substitute for the owning app's tests and current rendered UI.
 
 ## Progress
 
+- 2026-08-03T16:08:01Z: The active outcome is product work for Nicole's two
+  public apps; the older cross-computer Resplit/target-access entries below
+  are historical routing context, not current scope. Fresh reads found the
+  Board public main at `d993537d` green with 228 Python tests and Chromium E2E.
+  Pivot public main `0721078` was green before one reproduced hierarchy issue:
+  the main Riff task and Frosty coaching action had competing filled-green
+  treatments. The bounded repair is on Pivot branch `fc2059c` / PR #1: “Start
+  here · Riff's task,” an “Optional coaching” Frosty label, and an outlined
+  Frosty action. Node 22 contracts/build, current-source `183/183` smoke,
+  crew visual proof, and `git diff --check` pass. Resume by reading PR #1's
+  checks, then re-read public main; do not add another queue, platform layer,
+  Board patch, LinkedIn automation, paid runtime, or speculative bug list.
 - 2026-08-03T15:53:44Z: Revalidated the active cross-computer gate. The saved
   target `Leos-Macbook-M4-Pro` resolves on the local network and answers one
   ICMP ping, but a read-only SSH probe in `BatchMode` timed out on port 22.
