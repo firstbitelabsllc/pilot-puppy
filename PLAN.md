@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 33
-- Outcome Updated At: 2026-08-03T18:01:37Z
+- Outcome Revision: 34
+- Outcome Updated At: 2026-08-03T18:04:59Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -265,6 +265,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T18:04:59Z: Re-read the Star67 public presentation against current
+  `origin/main@1277dd8`. The README is 37 lines, puts the Vercel launch link
+  before local setup, explains the no-account/local-browser boundary, and
+  keeps contributor commands below the user path. The live Vercel URL returned
+  HTTP 200 with the Star67 page title and branding. No copy change was needed;
+  the remaining Star67 predicate is GitHub owner-admin access for the rename,
+  homepage, and topic settings.
 
 - 2026-08-03T18:01:37Z: Ran the bounded Codex Security CLI dry-run against
   current Snowcubes `origin/main@29383d7f9` with
