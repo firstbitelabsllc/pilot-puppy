@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 9
-- Outcome Updated At: 2026-08-03T16:20:00Z
+- Outcome Revision: 10
+- Outcome Updated At: 2026-08-03T16:03:34Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Next: Resume each lane from its canonical plan and current ref. Continue reachable work without waiting on the other computer or native-Codex quota. The immediate open item is the owner-admin GitHub repository update: rename `nlau1193/pivot-sql` to `star67-learn-sql` and set its public homepage/topics; product verification continues independently.
@@ -29,8 +29,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `0721078`, Snowcubes `origin/main@1a2b5c6f`, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
-- Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures.
+- Proof: Star67 `0721078`, Snowcubes `origin/main@3be131f` plus security branch `83bc74c9` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
+- Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; current Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Platform boundary
@@ -81,7 +81,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   `https://learn-sql-peach.vercel.app/` before local setup. The live Vercel app
   is HTTP 200 with Star67 content and security headers. Repository rename is
   waiting on owner-admin access.
-- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@1a2b5c6f`
+- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@3be131f`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
   history and absent from current tracker outputs. The 5/21 Marathon row is
@@ -91,6 +91,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
+- **Security:** Snowcubes PR #1567 (`83bc74c9`) refreshes only
+  `package-lock.json`; production audit is zero, high-severity audit passes,
+  gitleaks/content secret checks are clean, and the remaining two low findings
+  require the breaking `@shopify/cli@4.6.0` upgrade. The full concurrent Node
+  gate had three timing-sensitive direct-email failures; both affected files
+  pass in isolation, so this is recorded as uncertainty rather than green.
 - **External gates:** GitHub repository name/homepage/topic settings, other-computer access, and native Codex
   quota remain explicit deferred predicates, not global blockers.
 
@@ -160,13 +166,21 @@ Code, or Cursor without taking custody of credentials or conversations.
   Python-floor and configuration-default receipts at revision 8. Star67 README
   commit
   `0721078` is pushed and the Vercel surface is live/healthy; clean Snowcubes
-  `origin/main@1a2b5c6f` passes the source-truth audit and focused FPA,
+  `origin/main@3be131f` passes the source-truth audit and focused FPA,
   consignment, cafe-doctor, and recorder suites; clean Moussey
   `origin/main@3c44bbec` passes the 65-test consignment/invoice suite, the
   credential-free URL suite, the consignment-surface check, and production
   build; `trysnowcubes.com` returns HTTP 200. The requested GitHub rename is
   the only current external blocker: the authenticated account has WRITE but
   not ADMIN permission, so the old repository name remains factual.
+- 2026-08-03T16:03:34Z: Revalidated current Snowcubes `origin/main@3be131f`.
+  Source audit remains `ok: true`; `npm test` is 1,669/1,669;
+  `npm run test:storefront` is 1,457/1,457; focused FPA/consignment/cafe
+  suites are 314/69/93/127; gitleaks and content secret checks are clean.
+  Lockfile-only security repair `83bc74c9` is pushed as PR #1567 and is
+  mergeable. `npm audit --omit=dev` is zero and high-severity audit passes;
+  only two low Shopify CLI/esbuild findings remain. No live deployment or
+  Shopify mutation occurred.
 - 2026-08-03T15:54:45Z: Re-read the public Star67 repository metadata. The
   description is branded, but homepage is unset and `star67` is absent from
   topics. GitHub returned HTTP 404 for both the rename/settings PATCH and the
@@ -271,6 +285,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   controlled rebuild/restart, then take authenticated `/consignment` browser
   readback against the current source; do not treat the stale process as
   current proof.
+- Snowcubes security repair PR #1567 is pushed and mergeable but not merged or
+  deployed. Resume by merging it through the repository's normal review path,
+  then rerun `npm ci`, high/production audit, and the focused gates. Do not
+  force the breaking Shopify CLI upgrade just to claim zero total findings.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
