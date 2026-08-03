@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 97
-- Outcome Updated At: 2026-08-03T22:14:00Z
+- Outcome Revision: 98
+- Outcome Updated At: 2026-08-03T22:10:21Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `c868976`
@@ -28,7 +28,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
-- Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
+- Proof Summary: Released v2.1.0 baseline is public at c7d63619. Candidate c868976 has exact local, clean-clone, hosted CI/Secret Scan, and isolated install/doctor proof; it is not merged or released. Claude/Cursor receipts pass; Codex execution remains quota-blocked.
 - Proof Delivery: delivered
 
 ## Product boundary
@@ -711,6 +711,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   verification all pass. The release SHA remains
   `fbfc05d062b0239b868321e530a5f7007cf07faefbf125fd56982263372b6c04`; no
   runtime behavior or consolidation surface changed.
+
+- 2026-08-03: Clarified the top-level proof summary so the released v2.1.0
+  baseline at `c7d63619` is not confused with candidate source `c868976`.
+  The status projection accepts the 251-character summary, reports no contract
+  error, and the 101-file public-ready scan remains clean. Candidate source is
+  still not merged or released.
 
 ## Deferred proof (not a global blocker)
 
