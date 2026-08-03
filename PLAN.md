@@ -12,16 +12,17 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 85
-- Outcome Updated At: 2026-08-03T21:36:49Z
+- Outcome Revision: 86
+- Outcome Updated At: 2026-08-03T21:41:13Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Reconcile candidate source `a8ce0d2` with open PRs #99, #105, #106,
-  and draft #95 before promotion into canonical mainline; the candidate now
-  carries the shared Python-floor behavior from #105 without editing that
-  sibling branch. #95 is an older Python-floor draft that overlaps #105.
-  Hosted checks cover this source, and no merge, release, or deployment claim
-  is made yet.
+- Next: Reconcile candidate source `4f36a4b` with open PRs #99, #105, #106,
+  and draft #95 before promotion into canonical mainline. The candidate now
+  keeps the Python-floor helper as the single resolver authority across the
+  dispatcher, direct browser, npm gates, and Playwright; sibling branches were
+  not edited. #95 is an older Python-floor draft that overlaps #105. Hosted
+  checks cover this source, and no merge, release, or deployment claim is made
+  yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -633,6 +634,18 @@ Code, or Cursor without taking custody of credentials or conversations.
   source head. This is source, clean-install, and hosted-check proof only;
   PR #105 remains a separate sibling branch and no merge, release, deployment,
   or runtime claim changed.
+- 2026-08-03: Candidate source `4f36a4b` removes the dispatcher's duplicate
+  Python-floor loop, leaving `scripts/pilot-puppy-python.sh` as the one resolver
+  used by every Python-bearing entry point while preserving the low-`python3`
+  fallback proof. An exact-head clean clone passes 3 JavaScript tests, 172
+  Python tests (2 skipped), 6 browser tests, docs, Ruff, the 101-file
+  public-source scan, zero high-severity npm audit findings, and reproducible
+  64-file release verification with SHA-256
+  `ed5b760157f1a45bd3ab153de2221ada673abaaee0aa4906b70de3f551552d44`.
+  Hosted CI run `30855561948` and Secret Scan run `30855563359` both pass with
+  `headSha=4f36a4b2142f03f8216caf9a757bf4de20a5b60d`. This is source,
+  clean-clone, and hosted-check proof only; no PR, review, merge, release,
+  deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
