@@ -23,6 +23,13 @@ class IssueTemplateTests(unittest.TestCase):
         self.assertTrue((ROOT / "SKILL.md").is_file())
         self.assertTrue((ROOT / "docs/reference/plan-fields.md").is_file())
 
+    def test_public_handoff_has_one_shipped_skill(self) -> None:
+        handoff = (ROOT / "docs/guide/other-computer-handoff.md").read_text(encoding="utf-8")
+        self.assertIn("This repository ships one skill: `/pilot-puppy`.", handoff)
+        self.assertIn("pilot-puppy doctor", handoff)
+        for name in ("amp", "ponytail", "thermo", "browse", "local", "skillbox", "github", "slop"):
+            self.assertNotIn("`/" + name + "`", handoff)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -47,22 +47,17 @@ substitutes a host. Keep evidence inside the project-local
 `.pilot-puppy/evidence/` path and never put credentials, prompts, raw
 transcripts, provider payloads, or absolute private paths in it.
 
-## Main skill map
+## One front door
 
-| Skill | Use it for |
-| --- | --- |
-| `/pilot-puppy` | Start/resume work, read the Outcome, drive one bounded host task, and leave proof plus a resume point. |
-| `/amp` | Turn a vague request into one short, repository-grounded prompt. It does not dispatch or own a queue. |
-| `/ponytail` | Decide what to delete, reuse, defer, or implement before adding scope. |
-| `/thermo` | Review the working implementation after correctness for ownership, duplication, and boundary failures. |
-| `/browse` | Research current external facts or projects; keep sources and uncertainty explicit. |
-| `/local` | Inspect local files, commands, and runtime state without assuming chat context is current. |
-| `/skillbox` | Mount or validate skills on this computer and confirm the resolved source path. |
-| `/github` | Read or change remote PR, check, release, and branch state when the task requires it. |
-| `/slop` | Remove duplicated or generated instructions when the handoff or plan becomes noisy. |
+This repository ships one skill: `/pilot-puppy`. Use it to start or resume
+work, read the Outcome, drive one bounded host task, and leave proof plus a
+resume point. Review, research, cleanup, and other supporting work may happen
+in the native host's own tools, but those tools are not additional Pilot Puppy
+products, aliases, queues, or plan authorities.
 
-Use native Codex, Claude Code, or Cursor for execution. Provider-specific
-helpers are adapters; none becomes the plan authority or stores credentials.
+Use native Codex, Claude Code, or Cursor for execution. Their authentication
+stays inside the native host, and no provider-specific helper becomes the plan
+authority or stores credentials.
 
 ## Read the public state
 
