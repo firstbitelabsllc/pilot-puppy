@@ -123,6 +123,39 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertIn("result.txt", prompt)
         self.assertIn("pilot-puppy.host-receipt.v1", prompt)
 
+    def test_host_receipt_projects_closed_safe_test_metadata(self) -> None:
+        base = {
+            "schema": "pilot-puppy.host-receipt.v1",
+            "task_id": "bounded-task",
+            "status": "ok",
+            "summary": "bounded task completed",
+            "proof_ref": "tests-green",
+            "changed_paths": ["result.txt"],
+            "tests": [{"name": "focused test", "status": "pass"}],
+        }
+        projected = pilot_puppy_host.validate_host_receipt(base, "bounded-task", ["result.txt"])
+        self.assertEqual(projected["tests"], [{"name": "focused test", "status": "pass"}])
+
+        invalid_tests = [
+            [{"name": "focused test", "status": "pass", "duration": 1}],
+            [{"name": "/tmp/private", "status": "pass"}],
+            [{"name": "safe\u200btext", "status": "pass"}],
+            [{"name": "cafe\u0301", "status": "pass"}],
+            [{"name": "xoxb-1234567890", "status": "pass"}],
+            [{"name": "x" * 161, "status": "pass"}],
+            [{"name": "focused test", "status": "unknown"}],
+            [{"name": "focused test", "status": "pass"}] * 65,
+            [
+                {"name": "xoxb-123", "status": "pass"},
+                {"name": "4567890", "status": "pass"},
+            ],
+        ]
+        for tests in invalid_tests:
+            with self.subTest(tests=tests):
+                candidate = {**base, "tests": tests}
+                with self.assertRaises(pilot_puppy_host.HostError):
+                    pilot_puppy_host.validate_host_receipt(candidate, "bounded-task", ["result.txt"])
+
     def test_probe_is_projection_only_and_reports_available_host(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)

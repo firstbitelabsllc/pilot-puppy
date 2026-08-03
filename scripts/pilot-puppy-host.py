@@ -24,6 +24,7 @@ import tempfile
 import threading
 import time
 from typing import Any
+import unicodedata
 
 
 PROBE_SCHEMA = "pilot-puppy.host-probe.v1"
@@ -36,6 +37,21 @@ MAX_TASK_BYTES = 120_000
 MAX_CAPTURE_BYTES = 64 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
 MAX_SUMMARY_CHARS = 280
+MAX_TESTS = 64
+MAX_TEST_NAME_CHARS = 160
+CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+PRIVATE_PATH_RE = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+SECRET_SHAPE_RE = re.compile(
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
+    re.IGNORECASE,
+)
 
 
 class HostError(ValueError):
@@ -264,6 +280,9 @@ Do not change any other path. Run the relevant tests. Finish by emitting exactly
 one JSON object with this shape and no additional JSON objects:
 {{"schema":"{HOST_RECEIPT_SCHEMA}","task_id":"{task_id}","status":"ok|blocked|failed","summary":"280 characters or fewer","proof_ref":"lowercase-id-or-null","changed_paths":["relative/path"],"tests":[{{"name":"test name","status":"pass|fail"}}]}}
 
+Keep test entries to exactly ``name`` and ``status``. Names must be short,
+public, and free of paths, credentials, and control characters.
+
 Frozen task:
 {task}
 """
@@ -427,6 +446,7 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
     summary = raw.get("summary")
     if not isinstance(summary, str) or not summary.strip() or len(summary) > MAX_SUMMARY_CHARS:
         raise HostError("host_receipt_invalid", "host receipt summary is invalid")
+    _public_text(summary, "host receipt summary", maximum=MAX_SUMMARY_CHARS)
     reported_paths = raw.get("changed_paths")
     if not isinstance(reported_paths, list) or any(not isinstance(item, str) for item in reported_paths):
         raise HostError("host_receipt_invalid", "host receipt changed_paths must be a string list")
@@ -434,9 +454,7 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
         candidate = Path(path)
         if candidate.is_absolute() or ".." in candidate.parts or not path_allowed(path, allowed):
             raise HostError("scope_violation", "host receipt reports a path outside the packet")
-    tests = raw.get("tests")
-    if not isinstance(tests, list) or any(not isinstance(item, dict) for item in tests):
-        raise HostError("host_receipt_invalid", "host receipt tests must be an object list")
+    tests = _project_tests(raw.get("tests"))
     proof_ref = raw.get("proof_ref")
     if status == "ok":
         identifier(proof_ref, "host proof_ref")
@@ -451,6 +469,47 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
         "changed_paths": sorted(set(reported_paths)),
         "tests": tests,
     }
+
+
+def _public_text(value: Any, label: str, *, maximum: int) -> str:
+    if not isinstance(value, str):
+        raise HostError("host_receipt_invalid", f"{label} must be a string")
+    clean = " ".join(value.split())
+    if not clean or len(clean) > maximum:
+        raise HostError("host_receipt_invalid", f"{label} is invalid")
+    if (
+        CONTROL_RE.search(clean)
+        or any(unicodedata.category(character) in {"Cc", "Cf"} for character in clean)
+        or unicodedata.normalize("NFC", clean) != clean
+        or PRIVATE_PATH_RE.search(clean)
+        or ABSOLUTE_PATH_RE.search(clean)
+        or SECRET_SHAPE_RE.search(clean)
+    ):
+        raise HostError("host_receipt_invalid", f"{label} contains private or unsafe text")
+    return clean
+
+
+def _project_tests(raw: Any) -> list[dict[str, str]]:
+    if not isinstance(raw, list) or not raw or len(raw) > MAX_TESTS:
+        raise HostError("host_receipt_invalid", "host receipt tests must be a bounded nonempty list")
+    projected: list[dict[str, str]] = []
+    names: list[str] = []
+    for index, item in enumerate(raw):
+        if not isinstance(item, dict) or set(item) != {"name", "status"}:
+            raise HostError("host_receipt_invalid", f"host receipt tests[{index}] has an invalid shape")
+        name = _public_text(item.get("name"), f"host receipt tests[{index}].name", maximum=MAX_TEST_NAME_CHARS)
+        status = item.get("status")
+        if status not in {"pass", "fail"}:
+            raise HostError("host_receipt_invalid", f"host receipt tests[{index}].status is invalid")
+        projected.append({"name": name, "status": status})
+        names.append(name)
+    for start in range(len(names)):
+        combined = ""
+        for name in names[start : start + 4]:
+            combined += name
+            if SECRET_SHAPE_RE.search(combined):
+                raise HostError("host_receipt_invalid", "host receipt tests contain a fragmented secret-shaped value")
+    return projected
 
 
 def write_json(path: str, payload: dict[str, Any], *, force: bool = False) -> None:
