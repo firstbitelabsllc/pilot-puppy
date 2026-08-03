@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 60
-- Outcome Updated At: 2026-08-03T20:29:11Z
+- Outcome Revision: 61
+- Outcome Updated At: 2026-08-03T20:30:14Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review the workflow-tested candidate source at `a3c2542` for promotion
+- Next: Review the workflow-tested candidate source at `ccdcece` for promotion
   into canonical mainline; no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
