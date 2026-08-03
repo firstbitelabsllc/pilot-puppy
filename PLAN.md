@@ -177,9 +177,25 @@ Cursor without taking custody of credentials or conversations.
   target-specific frozen task packet or second-computer execution receipt. The
   next move is to supply those bounded proof inputs, not to add another
   executor, router, queue, daemon, or control plane.
+- 2026-08-03T15:05:59Z: Fresh live audit confirms `origin/main@1dfc41b6`, PR #90
+  merged, and local `pilot-puppy doctor` 11/11. The Resplit Android target
+  remains `WAITING` with dirty A9/source/JVM and lane-doctor/test edits, so no
+  clean target revision or admissible task packet exists. This session has no
+  reachable second-computer host; no cross-host receipt is claimed. Resume
+  with the documented bootstrap after supplying the clean packet.
 
 ## Blocked proof
 
+- **Resplit target packet: WAITING.** The canonical Android mission is still
+  `WAITING`; its A9 source/JVM work and existing lane-local doctor/test edits
+  are not a clean target revision for a portable host run. **Need:** a fresh
+  green wake-gate receipt, a clean target revision, exact allowed paths, and a
+  passing proof command. Do not run a host against the dirty Android lane or
+  turn its source/JVM receipt into runtime proof.
+- **Other-computer access: WAITING IN THIS SESSION.** No second-computer shell
+  or native-host session is reachable here. Resume with the exact bootstrap in
+  `docs/guide/other-computer-handoff.md`, then record host identity, revision,
+  mount source, doctor result, target `PLAN.md` readback, and the next move.
 - The source and bootstrap are not code-blocked. The current gap is the
   target-specific frozen task packet and clean target revision. **Need:** a
   task ID/hash plus a second-computer receipt with `status: ok`, exact
