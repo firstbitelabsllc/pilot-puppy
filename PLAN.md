@@ -134,6 +134,16 @@ Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03T15:49:34Z: Fresh second-computer reachability attempt used the
+  saved Jump Desktop profile for `Leos-Macbook-M4-Pro`. The viewer stayed on
+  `Connecting...`; the local Jump log records `No route to host` for the
+  TURN/STUN paths and the RTC session closed. The profile is present and the
+  local Jump Connect service is running, but no target UI, shell, clone,
+  install, doctor, mount, or sealed-host receipt was produced. This is a
+  current transport/host wait, not a Pilot Puppy code failure. Resume when
+  the target accepts a connection, then run the documented bootstrap and
+  record host identity, revision, mount source, target-plan readback, and the
+  exact sealed-task receipt.
 - 2026-08-03T15:40:19Z: Reframed the active outcome from a narrow public-app
   slice to the full reachable product portfolio. Star67 README commit
   `0721078` is pushed and the Vercel surface is live/healthy; clean Snowcubes
@@ -247,9 +257,12 @@ Cursor without taking custody of credentials or conversations.
   green wake-gate receipt, a clean target revision, exact allowed paths, and a
   passing proof command. Do not run a host against the dirty Android lane or
   turn its source/JVM receipt into runtime proof.
-- **Other-computer access: WAITING IN THIS SESSION.** No second-computer shell
-  or native-host session is reachable here. Resume with the exact bootstrap in
-  `docs/guide/other-computer-handoff.md`, then record host identity, revision,
+- **Other-computer access: WAITING IN THIS SESSION.** The saved target profile
+  is `Leos-Macbook-M4-Pro`, but a fresh Jump attempt remains at
+  `Connecting...`; the viewer log reports `No route to host` and a closed RTC
+  session. No second-computer shell or native-host session is reachable here.
+  Resume with the exact bootstrap in `docs/guide/other-computer-handoff.md`
+  after the target accepts a connection, then record host identity, revision,
   mount source, doctor result, target `PLAN.md` readback, and the next move.
 - The source and bootstrap are not code-blocked. The current gap is the
   target-specific frozen task packet and clean target revision. **Need:** a
