@@ -248,6 +248,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Fresh clone install, status, tests, public-ready, and release verification passed.
   Proof: lockfile install had zero vulnerabilities, 105 Python tests, 3 JavaScript tests,
   public-ready scan, and clean release SHA-256 `597e30ba8e78338b473d5284d0f40fc40ff4b8f0c658c557ea3d0461559bf31c` [receipt:fb3c9e4cd2f6a7b1]
+- 2026-08-03: Bounded native Codex attempt timed out after 60 seconds with no host receipt.
+  It reported `status: failed`, `kind: host_timeout`, `proof_ref: null`, and only the allowed
+  `native-probe.txt` path in a disposable checkout; cross-host proof remains deferred.
 
 ## Deferred proof (not a global blocker)
 
