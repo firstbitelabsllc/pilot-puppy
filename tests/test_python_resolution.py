@@ -145,6 +145,12 @@ class PythonResolutionTests(unittest.TestCase):
             root = Path(dirname)
             bin_dir = root / "bin"
             bin_dir.mkdir()
+            tool_bin = root / "tools"
+            tool_bin.mkdir()
+            for tool in ("bash", "grep", "sort"):
+                target = shutil.which(tool)
+                assert target is not None
+                (tool_bin / tool).symlink_to(target)
             low = bin_dir / "python3"
             low.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
             low.chmod(0o755)
@@ -155,7 +161,7 @@ class PythonResolutionTests(unittest.TestCase):
                 cwd=ROOT,
                 env={
                     **os.environ,
-                    "PATH": f"{bin_dir}{os.pathsep}/usr/bin{os.pathsep}/bin",
+                    "PATH": f"{bin_dir}{os.pathsep}{tool_bin}",
                     "BASH_ENV": str(bash_env),
                     "PILOT_PUPPY_PYTHON": "",
                 },
