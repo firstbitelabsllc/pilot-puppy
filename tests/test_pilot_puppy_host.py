@@ -273,6 +273,22 @@ class PilotPuppyHostTests(unittest.TestCase):
                 pilot_puppy_host.status_paths(repo)
             self.assertEqual(status_context.exception.kind, "worktree_unsealed")
 
+    def test_host_failure_details_do_not_echo_private_paths(self) -> None:
+        private_marker = chr(47) + "Users/private"
+        with mock.patch.object(pilot_puppy_host.subprocess, "run", side_effect=OSError(private_marker)):
+            with self.assertRaises(pilot_puppy_host.HostError) as git_context:
+                pilot_puppy_host.git_value(Path("."), "status")
+            self.assertEqual(git_context.exception.detail, "cannot inspect worktree")
+
+        with mock.patch.object(pilot_puppy_host.subprocess, "run", side_effect=OSError(private_marker)):
+            with self.assertRaises(pilot_puppy_host.HostError) as status_context:
+                pilot_puppy_host.status_paths(Path("."))
+            self.assertEqual(status_context.exception.detail, "cannot read worktree status")
+
+        with mock.patch.object(pilot_puppy_host.subprocess, "Popen", side_effect=OSError(private_marker)):
+            result = pilot_puppy_host.run_bounded(["fake-host"], "task", Path("."), 1)
+        self.assertEqual(result["launch_error"], "host launch failed")
+
     def test_probe_is_projection_only_and_reports_available_host(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)

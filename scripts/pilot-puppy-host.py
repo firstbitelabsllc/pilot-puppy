@@ -107,8 +107,8 @@ def git_value(repo: Path, *args: str) -> str:
             timeout=5,
             check=False,
         )
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise HostError("git_unavailable", f"cannot inspect worktree: {exc}") from exc
+    except (OSError, subprocess.TimeoutExpired):
+        raise HostError("git_unavailable", "cannot inspect worktree") from None
     if result.returncode != 0:
         raise HostError("git_unavailable", "worktree is not a readable Git checkout")
     return result.stdout.strip()
@@ -132,8 +132,8 @@ def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
             timeout=5,
             check=False,
         )
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise HostError("git_unavailable", f"cannot read worktree status: {exc}") from exc
+    except (OSError, subprocess.TimeoutExpired):
+        raise HostError("git_unavailable", "cannot read worktree status") from None
     if result.returncode != 0:
         raise HostError("git_unavailable", "cannot read worktree status")
     raw = result.stdout
@@ -315,8 +315,8 @@ def run_bounded(command: list[str], task: str, repo: Path, timeout_seconds: int)
             stderr=subprocess.PIPE,
             start_new_session=True,
         )
-    except OSError as exc:
-        return {"returncode": None, "timed_out": False, "launch_error": str(exc), "duration_s": 0.0, "stdout": b"", "stderr": b""}
+    except OSError:
+        return {"returncode": None, "timed_out": False, "launch_error": "host launch failed", "duration_s": 0.0, "stdout": b"", "stderr": b""}
     assert process.stdin is not None and process.stdout is not None and process.stderr is not None
     stdout_state: dict[str, Any] = {"tail": bytearray(), "bytes": 0}
     stderr_state: dict[str, Any] = {"tail": bytearray(), "bytes": 0}
@@ -673,7 +673,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             if result.get("timed_out"):
                 raise HostError("host_timeout", "host exceeded the bounded execution timeout")
             if result.get("launch_error"):
-                raise HostError("host_launch_failed", str(result["launch_error"]))
+                raise HostError("host_launch_failed", "native host could not start")
             if result.get("returncode") != 0:
                 raise HostError("host_failed", "host exited non-zero")
             host_receipt = validate_host_receipt(extract_host_receipt(output_texts), task_id, allowed)
