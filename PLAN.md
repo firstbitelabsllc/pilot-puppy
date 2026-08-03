@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 102
-- Outcome Updated At: 2026-08-03T22:15:12Z
+- Outcome Revision: 103
+- Outcome Updated At: 2026-08-03T22:16:21Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `b70a6fe`
@@ -738,6 +738,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   at `2f0de9a`, one commit behind that remote mainline, with no source drift.
   Open PRs #99, #105, #106, and #95 remain unchanged; no sibling branch was
   edited and no merge or release action was taken.
+
+- 2026-08-03: The current `b70a6fe` package was packed and installed under an
+  isolated npm prefix and home. The installed command reports version 2.1.0;
+  three isolated skill mounts resolve to the installed package, and
+  `pilot-puppy doctor --json` returns 11 checks with zero failures and zero
+  warnings. This closes the post-fix installed-artifact readback gap; the
+  candidate is still not merged or released.
 
 ## Deferred proof (not a global blocker)
 
