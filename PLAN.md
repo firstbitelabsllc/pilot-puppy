@@ -12,22 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 8
-- Outcome Updated At: 2026-08-03T15:57:00Z
-- Outcome State: needs_input
-- Outcome: Keep one calm, local Pilot Puppy front door usable while cross-host proof is unavailable.
-- Next: Use the local CLI and browser now; Python selection no longer depends on a bare 3.9, while cross-host Codex proof remains deferred.
-- Decision ID: choose-local-path
-- Decision: What should Pilot Puppy do while the remote computer is unavailable?
-- Option A ID: local-dogfood
-- Option A: Run local dogfood
-- Option A Consequence: Use the browser and native local hosts to validate the current brief now.
-- Option B ID: local-product-row
-- Option B: Take the next local row
-- Option B Consequence: Ship the highest reachable product improvement without waiting on remote proof.
-- Option C ID: defer-cross-host
-- Option C: Defer cross-host proof
-- Option C Consequence: Resume when Jump Connect accepts the target or quota resets; no remote work is attempted now.
+- Outcome Revision: 12
+- Outcome Updated At: 2026-08-03T16:54:19Z
+- Outcome State: working
+- Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting expensive seats.
+- Next: Build R1, then immediately R2: a safe local roster followed by an explicit, explainable role route. Cross-host Codex proof remains deferred.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.0.0 is public and fresh-clone/install/readback passes; real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -46,13 +35,41 @@ Code, or Cursor without taking custody of credentials or conversations.
 - No aliases, hidden products, daemon, scheduler,
   watcher, credential relay, remote database, or background dispatch loop.
 
+## Delegation architecture
+
+- Pilot Puppy is one foreground umbrella: Outcome, durable plan/proof/resume,
+  explicit delegation roles, one bounded native-host packet, and lead
+  acceptance. It is not a second product per capability.
+- The public roster names only provider-neutral roles and native host surfaces:
+  `lead`, `planner`, `bulk`, `debug`, `critic`, and `hard-ic`. Concrete model,
+  account, quota, command, and machine bindings stay in a local private
+  overlay; prompts, transcripts, credentials, and provider payloads never
+  enter the plan, browser, or evidence.
+- A foreground smart router may deterministically choose one role and native
+  host surface from an explicit task class and local roster. It must print the
+  choice, reason, alternative, and escalation; it never launches work,
+  silently substitutes a provider, owns a queue, or persists a second mission
+  state. Native host authentication remains native.
+- The lead alone owns plan claims, task split, review, proof, merge, publish,
+  and acceptance. Workers return drafts plus bounded receipts. Fan-out stays
+  depth one and at most three path-disjoint slices only when the lead can fold
+  them in the same cycle; one batched bulk worker is the default.
+- Re-evaluate a role only at an evidence boundary: scout result, failed proof,
+  semantic uncertainty, compaction, or explicit escalation. No timer, retry,
+  watcher, or autonomous reroute exists.
+- Thermo and Ponytail remain separate review disciplines, not runtime roles or
+  a second agent system. Pilot Puppy records only their bounded decisions or
+  receipts when a task needs them.
+
 ## Platform alignment
 
 - The current platform effort is local-first product proof. Cross-host
   portability is a deferred receipt, not a gate on reachable work.
 - Existing plan, host, and project-local evidence boundaries are sufficient;
-  do not add a router, queue, watcher, relay, or compatibility product to work
-  around one unavailable Codex account.
+  do not add a background or autonomous router, queue, watcher, relay, or
+  compatibility product to work around one unavailable Codex account. A local
+  foreground role router is allowed only when it is explicit, explainable, and
+  cannot dispatch work by itself.
 - When the target is available, a usable Codex account there can complete the
   deferred receipt. The local quota reset is the alternate resume predicate,
   not a reason to expand the product.
@@ -102,6 +119,32 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3`.
 - [completed] Honor the documented local development-root and browser host/
   port environment defaults while preserving command-line precedence.
+- [in_progress] R1: Add a provider-neutral, local roster contract and safe
+  foreground display for explicit `lead`, `planner`, `bulk`, `debug`, `critic`,
+  and `hard-ic` roles. It must be local configuration only, no-overwrite,
+  bounded, and private-text safe. Local roster output may show safe role labels
+  and availability; concrete model, account, quota, command, and machine data
+  must stay out of browser/status/evidence output.
+- [pending] R2: Add a foreground smart role router that deterministically
+  selects a role and native-host surface from an explicit task class, prints
+  its reason, alternative, and escalation, and never launches work. Preserve
+  existing `host run --host` compatibility and bind a later packet to the
+  resolved roster revision.
+- [pending] R3: Add the bounded lead/follower lifecycle: one bulk worker by
+  default, optional at-most-three path-disjoint depth-one packets, checkpoint
+  and resume, and failure/empty-receipt detection. No nested delegation,
+  queue, daemon, or worker acceptance.
+- [pending] R4: Add evidence-boundary reroute and independent critic rules;
+  test every transition and keep final proof/acceptance with the lead.
+- [pending] R5: Define the local private binding and doctor contract so named
+  models, quotas, and authentication never leak into public source, browser,
+  receipts, packages, or stranger installs.
+- [pending] R6: Measure the four role shapes with sealed same-task proof;
+  publish measured quality/scope/proof/usage results or an honest null result,
+  never a performance claim by assertion.
+- [pending] R7: Complete OSS hardening: threat boundary, license/provenance,
+  fresh install, docs, loopback roster readback, package, privacy, and security
+  gates.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -122,6 +165,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03: User made local role-based smart routing and a usable roster P0.
+  Pilot Puppy will not add cloud execution, voice/on-the-go controls, a
+  credential relay, a transcript store, or autonomous dispatch. The direct
+  work starts with a secure generic roster, followed immediately by a
+  transparent role route that saves stronger native seats for work that needs
+  them.
 - 2026-08-03: Made the local-first boundary operational. The unavailable Jump
   route is deferred, while the Outcome now offers three honest local choices:
   dogfood here, take the next reachable product row, or defer cross-host proof.
@@ -192,6 +241,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   `PILOT_PUPPY_BROWSER_HOST`, and `PILOT_PUPPY_BROWSER_PORT`, and explicit flags
   win over environment defaults. Two hermetic tests cover the status path and
   parser precedence; full gates remain the resume proof for this row.
+- 2026-08-03: Architecture review restored the useful delegation policy that
+  earlier consolidation removed: a provider-neutral role roster, foreground
+  selection, bounded packets, lead-owned acceptance, and evidence-boundary
+  escalation. The public product will not restore a hidden queue, router,
+  daemon, credential relay, transcript store, or private provider roster.
 
 ## Deferred proof (not a global blocker)
 
