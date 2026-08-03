@@ -15,6 +15,7 @@ import sys
 from typing import Any
 
 from pilot_puppy_roster_lib import (
+    RosterError,
     RosterExistsError,
     initialize_roster,
     load_roster,
@@ -73,6 +74,9 @@ def main(argv: list[str] | None = None) -> int:
     except RosterExistsError:
         print("pilot-puppy roster: local roster already exists; refusing to overwrite", file=sys.stderr)
         return 1
+    except RosterError:
+        print("pilot-puppy roster: unable to use local roster configuration", file=sys.stderr)
+        return 2
     except Exception:
         # Configuration errors must stay local and must never print an absolute
         # config path, parser traceback, or arbitrary malformed JSON content.
