@@ -80,6 +80,36 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(record["briefing"]["proof"]["locator"], "tests/test_browser.py")
         self.assertNotIn(dirname, json.dumps(record))
 
+    def test_duplicate_operator_field_is_reported_not_overwritten(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(
+                PLAN.replace(
+                    "- Outcome: Publish release notes people can trust.",
+                    "- Outcome: Publish release notes people can trust.\n"
+                    "- Outcome-ID: duplicate field",
+                ),
+                encoding="utf-8",
+            )
+            record = server.plan_record(plan, repo)
+        self.assertIsNone(record["outcome"])
+        self.assertIsNone(record["briefing"])
+        self.assertIn("duplicate field", record["contract_error"])
+
+    def test_unsafe_plan_title_falls_back_to_project_name(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(plan.read_text(encoding="utf-8").replace("# Release notes", "# /tmp/private"), encoding="utf-8")
+            record = server.plan_record(plan, repo)
+        self.assertEqual(record["title"], "Project")
+
+    def test_secret_shaped_plan_title_falls_back_to_project_name(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            plan.write_text(plan.read_text(encoding="utf-8").replace("# Release notes", "# xoxb-1234567890"), encoding="utf-8")
+            record = server.plan_record(plan, repo)
+        self.assertEqual(record["title"], "Project")
+
     def test_unsafe_latest_progress_falls_back_to_outcome_move(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_repo(Path(dirname))

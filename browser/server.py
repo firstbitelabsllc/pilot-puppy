@@ -16,6 +16,7 @@ import sys
 import tempfile
 import threading
 from typing import Any
+import unicodedata
 from urllib.parse import urlparse
 import webbrowser
 
@@ -40,8 +41,17 @@ SKIP_DIRS = frozenset({".git", ".pilot-puppy", ".venv", "venv", "node_modules", 
 FIELD_RE = re.compile(r"^\s*-\s*([^:]+):\s*(.*?)\s*$")
 TASK_RE = re.compile(r"^\s*-\s*\[([^]]+)]\s*(.*?)\s*$")
 RECEIPT_MARKER_RE = re.compile(r"\s*\[receipt:[a-f0-9]{16}]\s*")
-UNSAFE_TITLE_RE = re.compile(
-    r"(?:/Users/|/home/|file:///|sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,})",
+TITLE_CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+TITLE_PRIVATE_PATH_RE = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+TITLE_ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+TITLE_SECRET_RE = re.compile(
+    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
+    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
+    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
+    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
     re.IGNORECASE,
 )
 ALLOWED_STATIC = {
@@ -89,6 +99,8 @@ def operator_brief(text: str) -> dict[str, str]:
         if not match:
             continue
         key = re.sub(r"[^a-z0-9]+", "_", match.group(1).lower()).strip("_")
+        if key in result:
+            raise BrowserError(f"Operator Brief contains duplicate field: {key}")
         result[key] = match.group(2).strip()
     return result
 
@@ -110,7 +122,16 @@ def title(text: str, fallback: str) -> str:
     for line in text.splitlines():
         if line.startswith("# "):
             clean = " ".join(line[2:].split())
-            if clean and UNSAFE_TITLE_RE.search(clean) is None:
+            if (
+                clean
+                and len(clean) <= 120
+                and TITLE_CONTROL_RE.search(clean) is None
+                and not any(unicodedata.category(character) in {"Cc", "Cf"} for character in clean)
+                and unicodedata.normalize("NFC", clean) == clean
+                and TITLE_PRIVATE_PATH_RE.search(clean) is None
+                and TITLE_ABSOLUTE_PATH_RE.search(clean) is None
+                and TITLE_SECRET_RE.search(clean) is None
+            ):
                 return clean[:120]
     return public_id(fallback).replace("-", " ").title()
 
@@ -136,25 +157,32 @@ def read_plan(path: Path) -> str:
 def plan_record(path: Path, root: Path) -> dict[str, Any]:
     text = read_plan(path)
     relative = path.relative_to(root).as_posix()
-    brief = operator_brief(text)
+    try:
+        brief = operator_brief(text)
+    except BrowserError as exc:
+        brief = {}
+        parse_error = str(exc)
+    else:
+        parse_error = None
     outcome = None
     decision = None
     chief = None
-    error = None
-    try:
-        outcome = project_plan_outcome(brief)
-        decision = project_decision(outcome)
-        plan_summary = {"latest_change": latest_progress(text)} if latest_progress(text) else None
+    error = parse_error
+    if error is None:
         try:
-            chief = project_chief_of_staff(outcome, plan_brief=plan_summary)
-        except DecisionInputError:
-            if plan_summary is None:
-                raise
-            # Progress is advisory; an unsafe or implementation-heavy line
-            # must not hide an otherwise valid Outcome from the status view.
-            chief = project_chief_of_staff(outcome)
-    except (OutcomeSourceError, DecisionInputError) as exc:
-        error = str(exc)
+            outcome = project_plan_outcome(brief)
+            decision = project_decision(outcome)
+            plan_summary = {"latest_change": latest_progress(text)} if latest_progress(text) else None
+            try:
+                chief = project_chief_of_staff(outcome, plan_brief=plan_summary)
+            except DecisionInputError:
+                if plan_summary is None:
+                    raise
+                # Progress is advisory; an unsafe or implementation-heavy line
+                # must not hide an otherwise valid Outcome from the status view.
+                chief = project_chief_of_staff(outcome)
+        except (OutcomeSourceError, DecisionInputError) as exc:
+            error = str(exc)
     return {
         "id": hashlib.sha256(relative.encode("utf-8")).hexdigest()[:16],
         "path": relative,

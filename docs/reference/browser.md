@@ -13,3 +13,7 @@ An unsafe optional progress line is dropped from the brief rather than hiding
 the valid Outcome; the Outcome's current move remains the fallback. Date,
 proof, and receipt suffixes stay on their own proof surface instead of being
 copied into the human-facing `changed` sentence.
+
+Duplicate normalized fields in an Operator Brief fail closed instead of being
+silently overwritten. Unsafe plan headings fall back to the project name
+before status or browser output is returned.

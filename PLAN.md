@@ -120,6 +120,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   fragmented-secret boundary.
 - [completed] Let checkpoint address wrapped task rows by full text and keep
   progress receipts singular.
+- [completed] Fail closed on duplicate Operator Brief keys and keep plan
+  titles public-safe in status and browser output.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -238,6 +240,9 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Checkpoint now matches wrapped plan rows and keeps one progress receipt.
   Proof: 102 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
   public-ready scan, dev release package, and doctor pass [receipt:9fcdbe7d02894b03]
+- 2026-08-03: Status now reports duplicate plan fields and sanitizes unsafe titles.
+  Proof: 105 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
+  public-ready scan, dev release package, and doctor pass [receipt:2d9c64df8c0e9ac9]
 
 ## Deferred proof (not a global blocker)
 
