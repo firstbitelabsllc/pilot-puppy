@@ -53,10 +53,7 @@ def working_paths(root: Path) -> list[Path]:
 
 
 def text(path: Path) -> str | None:
-    try:
-        data = path.read_bytes()
-    except OSError:
-        return None
+    data = path.read_bytes()
     if len(data) > MAX_TEXT_BYTES or b"\0" in data[:8192]:
         return None
     try:
@@ -110,7 +107,11 @@ def scan(root: Path, paths: list[Path], *, metadata: bool) -> dict:
         if path.name in FORBIDDEN_NAMES or path.suffix.lower() in FORBIDDEN_SUFFIXES:
             findings.append({"file": relative, "line": 0, "reason": "forbidden release file"})
             continue
-        content = text(path)
+        try:
+            content = text(path)
+        except OSError:
+            findings.append({"file": relative, "line": 0, "reason": "unreadable release path"})
+            continue
         if content is None:
             continue
         for number, line in enumerate(content.splitlines(), 1):

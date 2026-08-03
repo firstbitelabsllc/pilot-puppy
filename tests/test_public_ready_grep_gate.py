@@ -66,6 +66,16 @@ class PublicReadyTests(unittest.TestCase):
         self.assertFalse(report["ok"])
         self.assertEqual(report["findings"][0]["reason"], "symlinked release path")
 
+    def test_unreadable_release_path_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            path = root / "README.md"
+            path.write_text("safe public text\n", encoding="utf-8")
+            with mock.patch.object(Path, "read_bytes", side_effect=OSError("private path")):
+                report = mod.scan(root, [path], metadata=False)
+        self.assertFalse(report["ok"])
+        self.assertEqual(report["findings"][0]["reason"], "unreadable release path")
+
     def test_current_metadata_is_consistent(self) -> None:
         self.assertEqual(mod.metadata_errors(ROOT), [])
 
