@@ -332,6 +332,24 @@ class PilotPuppyHostTests(unittest.TestCase):
                     pilot_puppy_host.status_paths(repo)
         self.assertEqual(context.exception.kind, "worktree_unsealed")
 
+    def test_worktree_inspection_rejects_unreadable_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname).resolve()
+            repo = make_repo(root)
+            with mock.patch.object(pilot_puppy_host.os, "walk", side_effect=OSError("/Users/private")):
+                with self.assertRaises(pilot_puppy_host.HostError) as symlink_context:
+                    pilot_puppy_host.reject_worktree_symlinks(repo)
+            self.assertEqual(symlink_context.exception.kind, "worktree_unsealed")
+
+            evidence = repo / ".pilot-puppy" / "evidence"
+            evidence.mkdir(parents=True)
+            marker = evidence / "marker.json"
+            marker.write_text("{}\n", encoding="utf-8")
+            with mock.patch.object(pilot_puppy_host.Path, "read_bytes", side_effect=OSError("/Users/private")):
+                with self.assertRaises(pilot_puppy_host.HostError) as evidence_context:
+                    pilot_puppy_host.local_state_snapshot(repo)
+            self.assertEqual(evidence_context.exception.kind, "worktree_unsealed")
+
     def test_host_failure_details_do_not_echo_private_paths(self) -> None:
         private_marker = chr(47) + "Users/private"
         with mock.patch.object(pilot_puppy_host.subprocess, "run", side_effect=OSError(private_marker)):

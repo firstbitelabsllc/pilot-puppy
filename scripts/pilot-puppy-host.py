@@ -167,16 +167,24 @@ def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
 def reject_worktree_symlinks(repo: Path) -> None:
     """Reject link paths that could bypass the Git path-scope audit."""
 
-    for current, directories, files in os.walk(repo, followlinks=False):
-        current_path = Path(current)
-        for name in [*directories, *files]:
-            if name == ".git":
+    def inspection_error(_: OSError) -> None:
+        raise HostError("worktree_unsealed", "host worktree could not be inspected") from None
+
+    try:
+        for current, directories, files in os.walk(repo, followlinks=False, onerror=inspection_error):
+            current_path = Path(current)
+            for name in [*directories, *files]:
+                if name == ".git":
+                    if (current_path / name).is_symlink():
+                        raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
+                    continue
                 if (current_path / name).is_symlink():
                     raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
-                continue
-            if (current_path / name).is_symlink():
-                raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
-        directories[:] = [name for name in directories if name != ".git"]
+            directories[:] = [name for name in directories if name != ".git"]
+    except HostError:
+        raise
+    except OSError:
+        raise HostError("worktree_unsealed", "host worktree could not be inspected") from None
 
 
 def local_state_snapshot(repo: Path) -> dict[str, str]:
@@ -188,7 +196,10 @@ def local_state_snapshot(repo: Path) -> dict[str, str]:
         return {}
     if not state.is_dir():
         raise HostError("worktree_unsealed", "project evidence state must be a directory")
-    unexpected = [path for path in state.iterdir() if path.name != "evidence"]
+    try:
+        unexpected = [path for path in state.iterdir() if path.name != "evidence"]
+    except OSError:
+        raise HostError("worktree_unsealed", "project evidence state could not be inspected") from None
     if unexpected:
         raise HostError("worktree_unsealed", "project state contains material outside evidence")
     if not evidence.exists():
@@ -196,11 +207,20 @@ def local_state_snapshot(repo: Path) -> dict[str, str]:
     if not evidence.is_dir():
         raise HostError("worktree_unsealed", "project evidence must be a directory")
     snapshot: dict[str, str] = {}
-    for path in sorted(evidence.rglob("*")):
-        relative = path.relative_to(repo).as_posix()
-        if path.is_symlink() or not path.is_file():
-            raise HostError("worktree_unsealed", "project evidence must contain regular files only")
-        snapshot[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+    try:
+        paths = sorted(evidence.rglob("*"))
+        for path in paths:
+            relative = path.relative_to(repo).as_posix()
+            if path.is_symlink() or not path.is_file():
+                raise HostError("worktree_unsealed", "project evidence must contain regular files only")
+            try:
+                snapshot[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+            except OSError:
+                raise HostError("worktree_unsealed", "project evidence file could not be read") from None
+    except HostError:
+        raise
+    except OSError:
+        raise HostError("worktree_unsealed", "project evidence could not be inspected") from None
     return snapshot
 
 
