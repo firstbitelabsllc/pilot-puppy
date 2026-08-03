@@ -11,16 +11,29 @@ Cursor without taking custody of credentials or conversations.
 
 ## Operator Brief
 
-- Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 6
-- Outcome Updated At: 2026-08-03T15:40:19Z
+- Outcome ID: nicole-public-apps-finish-20260803
+- Outcome Revision: 7
+- Outcome Updated At: 2026-08-03T15:52:00Z
 - Outcome State: working
-- Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
-- Next: Resume each lane from its canonical plan and current ref. Continue reachable work without waiting on the other computer or native-Codex quota. The immediate open item is the owner-admin GitHub rename from `nlau1193/pivot-sql` to `star67-learn-sql`; product verification continues independently.
-- Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `0721078`, Snowcubes `origin/main@1a2b5c6f`, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
-- Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures.
-- Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename is not claimed because the current account has write but not admin permission.
+- Outcome: Make Nicole's two public apps ready to share and hand off: an
+  any-job, local-first Job Hunt Board and the browser-local Star67/Pivot SQL
+  learning desk. Keep the experience simple, truthful, useful to a non-coder,
+  and easy to install. Pilot Puppy is only the durable brief and execution
+  aid; it is not the product under test.
+- Next: Fresh-read the two public `main` refs, reproduce one highest-impact
+  user-facing defect or false claim, and make the smallest coherent repair.
+  If neither surface has a reproduced defect, stop without inventing work and
+  leave the next observation as the resume point.
+- Proof ID: nicole-public-apps-finish-20260803
+- Proof: `finance-job-board@d993537d` and `pivot-sql@0721078`, their focused
+  test/browser receipts, and current local/public UI readbacks.
+- Proof Summary: the Board is category-neutral and its refresh copy is
+  truthful; Pivot's local-only SQL boundary, authored coaching, progress, and
+  public launch path are proven. Remaining work must be a reproduced UX,
+  accessibility, performance, setup, or trust issue—not a feature wish list.
+- Proof Delivery: product code and source receipts remain separate from merged,
+  deployed, live, and proven state. Repository ownership transfer is not part
+  of this goal.
 
 ## Tool boundary
 
@@ -38,19 +51,15 @@ Cursor without taking custody of credentials or conversations.
 
 ## Product-work boundary
 
-- The active surfaces are each repo's canonical plan, clean isolated checkout,
-  current branch/ref, deployed URL, and proof ledger: the public Job Hunt Board
-  and Star67/Pivot SQL; private Moussey; and the Snowcubes storefront and
-  consignment source. Do not merge private operational data into public
-  history.
-- Pilot Puppy coordinates bounded work across those surfaces, but a doctor
-  result, host receipt, platform install, or Pilot Puppy test is not product
-  proof. Each owning repository's tests and real UI/source readback remain the
-  acceptance gate.
-- Keep each product's existing privacy and runtime boundary: Job Hunt Board
-  uses official ATS feeds, Star67 stays browser-local, Moussey stays private
-  and passcode-gated, and Snowcubes money truth remains source- and live-system
-  separated.
+- The active surfaces are the clean isolated public Job Hunt Board and
+  `pivot-sql` checkouts, each at its canonical ref with its own tests and real
+  UI/source readback. Private Nicole configuration never enters public history.
+- Pilot Puppy coordinates bounded work, but its doctor result, host receipt,
+  portability test, or browser status is not product proof. The owning repo's
+  focused tests and current UI are the acceptance gate.
+- Keep the Board on official ATS feeds with local preferences and no LinkedIn
+  login, scraping, messaging, or application automation. Keep Pivot browser-
+  local, deterministic, authored, and free of paid runtime dependencies.
 - Preserve one obvious user action and truthful copy. Do not add a second
   executor, queue, router, daemon, watcher, credential relay, transcript
   store, or compatibility alias.
@@ -64,20 +73,13 @@ Cursor without taking custody of credentials or conversations.
 - **Star67/Pivot SQL: PUBLIC FRONT DOOR UPDATED.** README commit `0721078` is
   pushed to `main` and puts `https://learn-sql-peach.vercel.app/` before local
   setup. The live Vercel app is HTTP 200 with Star67 content and security
-  headers. Repository rename is waiting on owner-admin access.
-- **Snowcubes/Moussey consignment: SOURCE-TRUTH GREEN.** Clean Snowcubes
-  `origin/main@1a2b5c6f` audits `ok: true`; Zack is `$0.00`, Marathon is
-  `$0.00`, Everyman is `$22.00`; the old `$225.63`, `$342.04`, and `$57.75`
-  amounts are fenced as history and absent from current tracker outputs. The
-  5/21 Marathon row is FREE/UNKNOWN, no charge, no payment row, and must not
-  be reopened or collected. Clean Moussey `origin/main@3c44bbec` removes the
-  operator-page clutter and strips credentials from user-facing URLs.
-- **Snowcubes storefront: LIVE.** `https://trysnowcubes.com/` returned HTTP
-  200; the public page did not expose the retired receivable figures or
-  consignment-only billing/source language.
-- **Pilot Puppy portability: PARKED.** Other-computer access and the native
-  Codex quota gate remain tooling proof gaps, not reasons to stop reachable
-  product work.
+  headers.
+- **Nicole handoff: READY WITH A BOUNDED FINISH PASS.** Public setup paths,
+  local configuration boundaries, and current launch links are the source of
+  truth. No Nicole-specific PII, LinkedIn session, or paid model belongs in
+  either public repo.
+- **Pilot Puppy portability: PARKED.** The release is proven; other-computer
+  testing is optional tooling work and must not displace the two products.
 
 ## Privacy and safety
 
@@ -107,10 +109,10 @@ Cursor without taking custody of credentials or conversations.
 - [completed] Review the Pivot public release for one reproduced high-impact
   user harm; the local-only SQL guard and the full 183/183 browser proof are
   green, so no patch was warranted and the product slice is closed.
-- [in progress] Coordinate the full product portfolio from this plan: resume
-  each lane from its own authority, keep source/merged/deployed/live/proven
-  states distinct, and close reachable Star67, Moussey, Snowcubes, security,
-  and handoff work without creating a second operating layer.
+- [in progress] Review and finish the two public Nicole apps from their exact
+  current refs. Repair one reproduced high-impact issue at a time, then run
+  the smallest real UI and repository proof before deciding whether another
+  slice exists.
 - [parked] Pilot Puppy cross-host portability remains available as tooling work
   only when a real product task needs it; do not spend the goal on a host test.
 
@@ -122,11 +124,13 @@ Cursor without taking custody of credentials or conversations.
   `git diff --check`; live refresh proof remains separate from fixture proof.
 - Pivot changes preserve its existing local and production smoke/ladders,
   deterministic build, no-paid/local-only boundary, and artifact identity.
-- Star67 proof includes the public launch URL, source branding, focused
-  contracts, typecheck, dependency audit, and a secret-scan disposition.
-- Moussey/Snowcubes proof includes source-authority audit, focused money/UI
-  tests, production build, credential-URL checks, and real public readback;
-  primary dirty/owned checkouts are never restarted or overwritten by proof.
+- Pivot proof includes the public launch URL, source branding, typecheck/build,
+  deterministic contracts, local-only/privacy checks, keyboard/responsive
+  smoke, and a current-source browser readback.
+- Both apps receive a Craft packet for any UI change: primary move, happy and
+  meaningful edge state, supported viewports, accessibility, copy honesty,
+  and the weakest unproven claim. Taste/impeccable is the final grade after
+  mechanics, not a reason to polish a broken flow.
 - Public history contains no personal data, credentials, raw transcripts, paid
   runtime dependency, or private absolute path.
 - Pilot Puppy receipts are optional execution evidence only; they never replace
@@ -134,6 +138,14 @@ Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-03T15:52:00Z: Replaced the broad portfolio outcome with the actual
+  Nicole handoff goal: finish the public any-job Job Hunt Board and the public
+  Star67/Pivot SQL desk. Current authorities are
+  `finance-job-board@d993537d` and `pivot-sql@0721078`. Pilot Puppy
+  portability, Snowcubes, Moussey, LinkedIn automation, paid runtime models,
+  and speculative bug-count work are outside this goal. Resume by reproducing
+  one high-impact UX, setup, accessibility, performance, or trust problem in
+  one of the two apps; if none reproduces, keep the green release unchanged.
 - 2026-08-03T15:49:34Z: Fresh second-computer reachability attempt used the
   saved Jump Desktop profile for `Leos-Macbook-M4-Pro`. The viewer stayed on
   `Connecting...`; the local Jump log records `No route to host` for the
