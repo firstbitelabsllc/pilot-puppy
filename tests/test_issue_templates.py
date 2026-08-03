@@ -19,7 +19,7 @@ class IssueTemplateTests(unittest.TestCase):
         retired_checkpoint = "pilot-puppy-" + "checkpoint.sh"
         self.assertNotIn(retired_loop, bug + feature)
         self.assertNotIn(retired_checkpoint, bug + feature)
-        self.assertNotIn("docs/reference/loop.md", feature)
+        self.assertNotIn("docs/reference/" + "loop.md", feature)
         self.assertTrue((ROOT / "SKILL.md").is_file())
         self.assertTrue((ROOT / "docs/reference/plan-fields.md").is_file())
 
