@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 101
-- Outcome Updated At: 2026-08-03T22:14:14Z
+- Outcome Revision: 102
+- Outcome Updated At: 2026-08-03T22:15:12Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose the consolidation path for candidate source head `b70a6fe`
@@ -731,6 +731,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   CI run `30857805277` and Secret Scan run `30857806864` both completed
   successfully. These are source, package, and hosted-check proofs only; no
   PR, review, merge, release, deployment, or runtime claim changed.
+
+- 2026-08-03: Cross-surface refresh confirms plan-only head `b577c18` is
+  clean and remote-synced; runtime source `b70a6fe` is based on current
+  `origin/main@2029756` (including #111). The local public checkout is clean
+  at `2f0de9a`, one commit behind that remote mainline, with no source drift.
+  Open PRs #99, #105, #106, and #95 remain unchanged; no sibling branch was
+  edited and no merge or release action was taken.
 
 ## Deferred proof (not a global blocker)
 
