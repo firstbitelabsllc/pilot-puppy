@@ -42,9 +42,11 @@ HOST_RECEIPT_SCHEMA = "pilot-puppy.host-receipt.v1"
 HOSTS = {"codex", "claude-code", "cursor"}
 ID_RE = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 JSON_FENCE_RE = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL)
+RECEIPT_OBJECT_START_RE = re.compile(r'\{\s*"schema"\s*:')
 MAX_CAPTURE_BYTES = 64 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
 MAX_SUMMARY_CHARS = 280
+MAX_NESTED_RESULT_DEPTH = 16
 
 
 class HostError(ValueError):
@@ -373,7 +375,7 @@ def run_bounded(command: list[str], task: str, repo: Path, timeout_seconds: int)
     }
 
 
-def json_objects(text: str) -> list[dict[str, Any]]:
+def json_objects(text: str, *, _depth: int = 0) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
 
     def add(value: Any) -> None:
@@ -381,24 +383,24 @@ def json_objects(text: str) -> list[dict[str, Any]]:
             return
         candidates.append(value)
         nested = value.get("result")
-        if isinstance(nested, str) and nested != text:
-            candidates.extend(json_objects(nested))
+        if isinstance(nested, str) and nested != text and _depth < MAX_NESTED_RESULT_DEPTH:
+            candidates.extend(json_objects(nested, _depth=_depth + 1))
 
     for raw in JSON_FENCE_RE.findall(text):
         try:
             value = json.loads(raw)
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, RecursionError):
             continue
         add(value)
     for line in text.splitlines():
         try:
             value = json.loads(line)
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, RecursionError):
             continue
         add(value)
     try:
         value = json.loads(text.strip())
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, RecursionError):
         value = None
 
     add(value)
@@ -414,19 +416,26 @@ def json_objects(text: str) -> list[dict[str, Any]]:
         start = text.find("{", offset)
         if start < 0:
             break
+        if RECEIPT_OBJECT_START_RE.match(text, start) is None:
+            offset = start + 1
+            continue
         try:
             value, end = decoder.raw_decode(text[start:])
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, RecursionError):
             offset = start + 1
             continue
         add(value)
         offset = start + max(end, 1)
 
-    unique = {
-        json.dumps(item, sort_keys=True, separators=(",", ":")): item
-        for item in candidates
-        if item.get("schema") == HOST_RECEIPT_SCHEMA
-    }
+    unique: dict[str, dict[str, Any]] = {}
+    for item in candidates:
+        if item.get("schema") != HOST_RECEIPT_SCHEMA:
+            continue
+        try:
+            key = json.dumps(item, sort_keys=True, separators=(",", ":"))
+        except (TypeError, RecursionError):
+            continue
+        unique[key] = item
     return list(unique.values())
 
 

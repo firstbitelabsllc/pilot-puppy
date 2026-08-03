@@ -198,6 +198,12 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertEqual(len(receipts), 1)
         self.assertEqual(receipts[0]["task_id"], "cursor-native-probe")
 
+    def test_deep_host_json_fails_closed_without_recursion_traceback(self) -> None:
+        hostile = "{" + '"result":{' * 1200 + '"ignored"' + "}" * 1200
+        with self.assertRaises(pilot_puppy_host.HostError) as context:
+            pilot_puppy_host.extract_host_receipt([hostile])
+        self.assertEqual(context.exception.kind, "host_receipt_missing")
+
     def test_cursor_command_shape_uses_agent_stdin_without_receipt_leak(self) -> None:
         repo = Path("/workspace/repo")
         final_message = Path("/tmp/final-message.txt")
