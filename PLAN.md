@@ -12,11 +12,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 53
-- Outcome Updated At: 2026-08-03T20:08:10Z
+- Outcome Revision: 54
+- Outcome Updated At: 2026-08-03T20:13:05Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate `9b754b7` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
+- Next: Review candidate `694d815` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -412,6 +412,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   docs, the 99-file public-ready scan, Ruff, and a 63-file package with SHA-256
   `01bc31734d344993f2845d9afca9ca5050c8b8ed590e2f4ff99041465659ebb3`.
   The candidate is review-only; canonical main remains unchanged.
+- 2026-08-03: Candidate commit `694d815` makes the public-ready and release
+  gates fail closed on invalid UTF-8 from `git ls-files` instead of leaking a
+  traceback. Clean-head proof passes 154 Python tests (3 skipped), 3
+  JavaScript tests, 6 browser checks, docs, the 99-file public-ready scan,
+  Ruff, and a 63-file package with SHA-256
+  `acc4404425e5185d60865c698c281ff26ac73e0fd561ae045c0d88c0567ce935`.
+  No canonical main, PR, merge, release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
