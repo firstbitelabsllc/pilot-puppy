@@ -56,9 +56,9 @@ def make_repo(root: Path) -> Path:
     return repo
 
 
-def make_task(root: Path, body: str = "Change the bounded file.\n") -> Path:
+def make_task(root: Path, contents: str = "Change the bounded file.\n") -> Path:
     task = root / "task.md"
-    task.write_text(body, encoding="utf-8")
+    task.write_text(contents, encoding="utf-8")
     return task
 
 
@@ -260,11 +260,11 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(third_document["binding"]["roster_revision"], 2)
 
     def test_route_output_never_contains_task_contents_paths_or_provider_details(self) -> None:
-        task_text = "Keep this task body out of route output. /Users/example/private.txt.\n"
+        marker_task = "Never serialize LEAK-MARKER-VALUE or /Users/example/private.txt.\n"
         with tempfile.TemporaryDirectory() as dirname:
             root = safe_root(dirname)
             repo = make_repo(root)
-            task = make_task(root, task_text)
+            task = make_task(root, marker_task)
             roster_file = make_roster(root)
             result = run(
                 "--repo", str(repo), "--task-id", "fix-file", "--task-file", str(task),
@@ -273,7 +273,7 @@ class RouteTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         rendered = result.stdout.lower()
-        self.assertNotIn(task_text.lower().strip(), rendered)
+        self.assertNotIn(marker_task.lower().strip(), rendered)
         self.assertNotIn(str(root).lower(), rendered)
         for forbidden in ("model", "account", "quota", "credential", "token", "password", "command", "/users"):
             self.assertNotIn(forbidden, rendered)
