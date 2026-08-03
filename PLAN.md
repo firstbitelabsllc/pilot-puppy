@@ -291,7 +291,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   and passed lead reproduction in 29.5 seconds. The host receipt explicitly
   records `projection_is_usage: false`; no token, cost, quota, model, or
   provider-performance claim is made. A literal valid receipt example fixed
-  the one malformed-proof-label block found in the first fresh attempt.
+  the one malformed-proof-label block found in the first fresh attempt. The
+  raw route and attempt receipt stay local because they are task- and
+  worktree-specific; this public record preserves only the safe mechanical
+  facts above.
 
 ## Deferred proof (not a global blocker)
 
