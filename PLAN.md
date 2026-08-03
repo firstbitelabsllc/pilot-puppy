@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 75
-- Outcome Updated At: 2026-08-03T21:03:38Z
+- Outcome Revision: 76
+- Outcome Updated At: 2026-08-03T21:09:53Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate source at `d392921` for promotion into canonical
@@ -552,6 +552,18 @@ Code, or Cursor without taking custody of credentials or conversations.
   `47dfaf500ae680686599e7a6ff1ee41b30cda7a0f41c7912c6efdce1628652be`.
   The clone is clean and matches its remote candidate ref. No PR, review,
   merge, release, deployment, or runtime claim changed.
+- 2026-08-03: Commit `72bca68` closes the next diagnostic boundary. Doctor
+  metadata and native-host probe failures stay stable, init fails cleanly when
+  Git is unavailable, and the browser canonicalizes its scan root before
+  resolving plans so macOS symlink prefixes cannot break a valid decision
+  write. The browser decision endpoint now redacts filesystem, encoding, and
+  malformed-request details. The full candidate gates pass: 167 Python tests
+  (2 skipped), 3 JavaScript tests, 6 desktop/phone browser tests, docs, Ruff,
+  the 100-file public-ready scan, zero high-severity npm audit findings, and a
+  reproducible 63-file package with SHA-256
+  `e045906328c772064c25df22fd064850df2262807e434746c6ff5278a67009ce`.
+  This remains source, test, and package proof only; no PR, review, merge,
+  release, deployment, or runtime claim changed.
 
 ## Deferred proof (not a global blocker)
 
