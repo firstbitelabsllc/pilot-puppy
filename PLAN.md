@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 21
-- Outcome Updated At: 2026-08-03T18:44:54Z
+- Outcome Revision: 22
+- Outcome Updated At: 2026-08-03T18:51:36Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -144,6 +144,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   secret-shaped strings.
 - [completed] Reject blank route text in the packaged schema as well as the
   runtime validator, with regression coverage for both paths.
+- [completed] Keep native-host receipt summaries, changed paths, and test
+  entries bounded and public-safe before they enter attempt evidence.
 - [deferred] R5: Add a local private seat overlay only if a real native-tool
   setup cannot express the generic role/host roster. It must stay owner-local
   and outside source, browser/status, route evidence, packages, and stranger
@@ -307,6 +309,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Current main passes 126 Python, 3 JavaScript, 6 browser, public-source, docs, and package gates; the hardening code merges cleanly and only the shared plan needs reconciliation.
 - 2026-08-03: A disposable candidate combining branch `58b5624` with main `2f0de9a` passed 127 Python, 3 JavaScript, 6 browser, public-source, docs, and clean package gates (`0d7b1e61530ca043035df173c8578732707b9efd7d8999cf1e4e684f9d05ea68`). No mainline ref changed.
 - 2026-08-03: Differential route-text audit checked 50,021 deterministic samples against the packaged schema and runtime validator with zero mismatches; the ECMAScript pattern also compiles and agrees on representative cases.
+- 2026-08-03: Host result notes now stay concise and share one public wording rule; malformed results are rejected. The complete test, scan, and docs gates pass.
 
 ## Deferred proof (not a global blocker)
 

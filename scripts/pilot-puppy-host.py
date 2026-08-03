@@ -26,7 +26,13 @@ import time
 from typing import Any
 
 from pilot_puppy_roster_lib import RosterError, load_roster, route_roster_sha256
-from pilot_puppy_route_lib import ROUTE_SCHEMA, RoutePacketError, load_route_packet, route_sha256
+from pilot_puppy_route_lib import (
+    ROUTE_SCHEMA,
+    RoutePacketError,
+    load_route_packet,
+    public_text as validate_public_text,
+    route_sha256,
+)
 from pilot_puppy_task_lib import TaskError, frozen_task_sha256
 
 
@@ -139,6 +145,12 @@ def status_paths(repo: Path, *, include_ignored: bool = False) -> list[str]:
         if chr(entry[0]) in {"R", "C"} or chr(entry[1]) in {"R", "C"}:
             raise HostError("scope_violation", "renames are not accepted by the host packet")
         path = entry[3:].decode("utf-8", errors="strict")
+        try:
+            safe_path = validate_public_text(path, "worktree path", maximum=512)
+        except RoutePacketError:
+            raise HostError("worktree_unsealed", "worktree contains unsafe public path text") from None
+        if safe_path != path:
+            raise HostError("worktree_unsealed", "worktree paths must remain exact public text")
         paths.append(path)
     return paths
 
@@ -182,6 +194,12 @@ def normalize_allowed(repo: Path, values: list[str]) -> list[str]:
             raise HostError("allowed_path_escape", "allowed path escapes the worktree") from exc
         if relative in {"", "."} or relative.startswith("../"):
             raise HostError("allowed_path_invalid", "the worktree root is not an allowed path")
+        try:
+            safe_relative = validate_public_text(relative, "allowed path", maximum=512)
+        except RoutePacketError:
+            raise HostError("allowed_path_invalid", "allowed path contains unsafe public text") from None
+        if safe_relative != relative:
+            raise HostError("allowed_path_invalid", "allowed path must remain exact public text")
         if relative not in normalized:
             normalized.append(relative)
     return normalized
@@ -414,18 +432,39 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
     if status not in {"ok", "blocked", "failed"}:
         raise HostError("host_receipt_invalid", "host receipt status is invalid")
     summary = raw.get("summary")
-    if not isinstance(summary, str) or not summary.strip() or len(summary) > MAX_SUMMARY_CHARS:
+    try:
+        safe_summary = validate_public_text(summary, "host receipt summary", maximum=MAX_SUMMARY_CHARS)
+    except RoutePacketError:
         raise HostError("host_receipt_invalid", "host receipt summary is invalid")
     reported_paths = raw.get("changed_paths")
     if not isinstance(reported_paths, list) or any(not isinstance(item, str) for item in reported_paths):
         raise HostError("host_receipt_invalid", "host receipt changed_paths must be a string list")
+    safe_paths: list[str] = []
     for path in reported_paths:
+        try:
+            safe_path = validate_public_text(path, "host receipt changed path", maximum=512)
+        except RoutePacketError:
+            raise HostError("host_receipt_invalid", "host receipt changed_paths contains unsafe text") from None
+        if safe_path != path:
+            raise HostError("host_receipt_invalid", "host receipt changed_paths must use exact relative paths")
         candidate = Path(path)
         if candidate.is_absolute() or ".." in candidate.parts or not path_allowed(path, allowed):
             raise HostError("scope_violation", "host receipt reports a path outside the packet")
+        safe_paths.append(path)
     tests = raw.get("tests")
-    if not isinstance(tests, list) or any(not isinstance(item, dict) for item in tests):
+    if not isinstance(tests, list) or len(tests) > 64 or any(not isinstance(item, dict) for item in tests):
         raise HostError("host_receipt_invalid", "host receipt tests must be an object list")
+    safe_tests: list[dict[str, str]] = []
+    for item in tests:
+        if set(item) != {"name", "status"}:
+            raise HostError("host_receipt_invalid", "host receipt test fields are invalid")
+        try:
+            safe_name = validate_public_text(item["name"], "host receipt test name", maximum=120)
+        except RoutePacketError:
+            raise HostError("host_receipt_invalid", "host receipt test name is invalid") from None
+        if not isinstance(item["status"], str) or item["status"] not in {"pass", "fail"}:
+            raise HostError("host_receipt_invalid", "host receipt test status is invalid")
+        safe_tests.append({"name": safe_name, "status": item["status"]})
     proof_ref = raw.get("proof_ref")
     if status == "ok":
         identifier(proof_ref, "host proof_ref")
@@ -435,10 +474,10 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
         identifier(proof_ref, "host proof_ref")
     return {
         "status": status,
-        "summary": summary.strip(),
+        "summary": safe_summary,
         "proof_ref": proof_ref,
-        "changed_paths": sorted(set(reported_paths)),
-        "tests": tests,
+        "changed_paths": sorted(set(safe_paths)),
+        "tests": safe_tests,
     }
 
 

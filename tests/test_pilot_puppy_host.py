@@ -206,6 +206,73 @@ class PilotPuppyHostTests(unittest.TestCase):
         self.assertIn("result.txt", prompt)
         self.assertIn("pilot-puppy.host-receipt.v1", prompt)
 
+    def test_host_receipt_public_fields_are_bounded_and_private_safe(self) -> None:
+        base = {
+            "schema": "pilot-puppy.host-receipt.v1",
+            "task_id": "add-proof",
+            "status": "ok",
+            "summary": "bounded fake host completed the task",
+            "proof_ref": "tests-green",
+            "changed_paths": ["result.txt"],
+            "tests": [{"name": "fake-test", "status": "pass"}],
+        }
+        safe = pilot_puppy_host.validate_host_receipt(
+            {**base, "summary": "  bounded   result  ", "tests": [{"name": "  fake   test  ", "status": "pass"}]},
+            "add-proof",
+            ["result.txt"],
+        )
+        self.assertEqual(safe["summary"], "bounded result")
+        self.assertEqual(safe["tests"], [{"name": "fake test", "status": "pass"}])
+
+        unsafe_summaries = (
+            "path:" + chr(47) + "Users/private",
+            "see(" + chr(47) + "tmp/private)",
+            "gh" + "p_" + "a" * 20,
+            "line\nbreak",
+            "café",
+            " ",
+        )
+        for summary in unsafe_summaries:
+            with self.subTest(summary=repr(summary)):
+                with self.assertRaises(pilot_puppy_host.HostError) as context:
+                    pilot_puppy_host.validate_host_receipt(
+                        {**base, "summary": summary}, "add-proof", ["result.txt"]
+                    )
+                self.assertEqual(context.exception.kind, "host_receipt_invalid")
+
+        unsafe_tests = (
+            [{"name": "path:" + chr(47) + "tmp/private", "status": "pass"}],
+            [{"name": "fake-test", "status": "pending"}],
+            [{"name": "fake-test", "status": "pass", "detail": "extra"}],
+        )
+        for tests in unsafe_tests:
+            with self.subTest(tests=tests):
+                with self.assertRaises(pilot_puppy_host.HostError) as context:
+                    pilot_puppy_host.validate_host_receipt(
+                        {**base, "tests": tests}, "add-proof", ["result.txt"]
+                    )
+                self.assertEqual(context.exception.kind, "host_receipt_invalid")
+
+        with self.assertRaises(pilot_puppy_host.HostError) as context:
+            pilot_puppy_host.validate_host_receipt(
+                {**base, "changed_paths": ["result.txt\nprivate"]}, "add-proof", ["result.txt\nprivate"]
+            )
+        self.assertEqual(context.exception.kind, "host_receipt_invalid")
+
+    def test_allowed_and_worktree_paths_reject_unsafe_public_text(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname).resolve()
+            repo = make_repo(root)
+            with self.assertRaises(pilot_puppy_host.HostError) as allowed_context:
+                pilot_puppy_host.normalize_allowed(repo, ["result.txt\nprivate"])
+            self.assertEqual(allowed_context.exception.kind, "allowed_path_invalid")
+
+            unsafe_path = repo / ("result" + "\n" + "private")
+            unsafe_path.write_text("unsafe\n", encoding="utf-8")
+            with self.assertRaises(pilot_puppy_host.HostError) as status_context:
+                pilot_puppy_host.status_paths(repo)
+            self.assertEqual(status_context.exception.kind, "worktree_unsealed")
+
     def test_probe_is_projection_only_and_reports_available_host(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)

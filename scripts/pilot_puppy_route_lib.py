@@ -103,7 +103,7 @@ def _host(value: object, noun: str, *, nullable: bool = False) -> str | None:
     return value
 
 
-def _text(value: object, noun: str, maximum: int = 280) -> str:
+def public_text(value: object, noun: str, maximum: int = 280) -> str:
     if not isinstance(value, str) or not value.strip() or len(value) > maximum:
         raise RoutePacketError(f"route packet {noun} is invalid")
     if CONTROL_RE.search(value) or any(ord(character) > 126 for character in value):
@@ -221,7 +221,7 @@ def validate_route_packet(value: object) -> dict[str, Any]:
         safe_selection = None
         safe_blocked: dict[str, str] | None = {
             "kind": blocked["kind"],
-            "summary": _text(blocked["summary"], "blocked summary"),
+            "summary": public_text(blocked["summary"], "blocked summary"),
         }
         if execution["next_action"] != "choose_or_configure_a_same_role_slot":
             raise RoutePacketError("blocked route packet next action is invalid")
@@ -275,7 +275,7 @@ def validate_route_packet(value: object) -> dict[str, Any]:
         "alternatives": safe_alternatives,
         "escalation": {
             "role": _role(escalation["role"], "escalation role"),
-            "when": _text(escalation["when"], "escalation condition"),
+            "when": public_text(escalation["when"], "escalation condition"),
         },
         "execution": {
             "performed": False,
