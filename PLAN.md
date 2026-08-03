@@ -12,11 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 57
-- Outcome Updated At: 2026-08-03T20:21:33Z
+- Outcome Revision: 58
+- Outcome Updated At: 2026-08-03T20:23:07Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
-- Next: Review candidate `9bab0aa` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
+- Next: Review the workflow-tested candidate source at `a3c2542` for promotion
+  into canonical mainline; no merge, release, or deployment claim is made yet.
 - Proof ID: pilot-puppy-v2-public-readback
 - Proof: tests/
 - Proof Summary: v2.1.0 is public at c7d63619 with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass, while Codex execution is quota-blocked.
@@ -437,6 +438,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   findings, and a reproducible 63-file package with SHA-256
   `acc4404425e5185d60865c698c281ff26ac73e0fd561ae045c0d88c0567ce935`.
   The candidate CI job has not run remotely because no PR was opened.
+- 2026-08-03: Workflow-dispatch run
+  `30849883208` on source head `a3c2542` passed hosted `python-lint`,
+  `test (3.10)`, `test (3.12)`, `test (3.14)`, and `browser-and-docs`.
+  This is CI proof for the pushed candidate source, not PR, merge, release,
+  deployment, or runtime proof.
 
 ## Deferred proof (not a global blocker)
 
