@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 56
-- Outcome Updated At: 2026-08-03T20:19:08Z
+- Outcome Revision: 57
+- Outcome Updated At: 2026-08-03T20:21:33Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate `9bab0aa` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
@@ -178,6 +178,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   `roster prefer` command that reprioritizes only declared, enabled generic
   role/host slots. It must not read providers/models/quotas, launch work, or
   create project evidence.
+- [completed] R9: Make the already-proven Python quality surface reproducible
+  in hosted CI with one pinned Ruff job over `scripts`, `tests`, and `browser`.
 - [pending] Promote the route, host-receipt, and worktree-seal privacy hardening
   into canonical mainline after review; candidate proof is not release proof.
 - [deferred] Close cross-host portability proof through the other-computer
@@ -428,6 +430,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   samples against the packaged schema regex and runtime validator with zero
   mismatches. Python compile checks and whitespace-diff checks also pass; no
   source change was needed for this audit.
+- 2026-08-03: Candidate commit `1a4c637` adds one pinned Ruff `0.15.20` CI job
+  and a regression contract for the workflow. Local proof passes 155 Python
+  tests (3 skipped), 3 JavaScript tests, 6 browser checks, docs, the 100-file
+  public-ready scan, Ruff, compile checks, zero high-severity npm audit
+  findings, and a reproducible 63-file package with SHA-256
+  `acc4404425e5185d60865c698c281ff26ac73e0fd561ae045c0d88c0567ce935`.
+  The candidate CI job has not run remotely because no PR was opened.
 
 ## Deferred proof (not a global blocker)
 
