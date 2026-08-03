@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 28
-- Outcome Updated At: 2026-08-03T19:00:43Z
+- Outcome Revision: 29
+- Outcome Updated At: 2026-08-03T19:03:53Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Promote the proven route-packet privacy hardening into canonical mainline after review; the R6 null result and cross-host Codex defer remain explicit.
@@ -318,6 +318,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Host probe output now applies the same public wording rule; 125 Python, 3 JavaScript, 4 browser, public-source, and docs gates pass.
 - 2026-08-03: Clean 2.1.0 package verification passes after probe-output hardening: 61 files, SHA-256 `22072247f2727caaa970acf79b3f32e0ec8ed385e7a9be561d420f885c8e3a78`.
 - 2026-08-03: A disposable candidate combining branch `7f9421c875dec9db8a8d4a94302a97ac0d61f0a3` with main `2f0de9ab325ec250c48a62f0922d631dd934a409` passed 131 Python, 3 JavaScript, 6 browser, public-source, docs, and clean package gates. The 61-file package SHA-256 is `b39ecb416fc25ddc58cfa58a212d22b5fc3e993f251887834a3c35b9cab0121`; no mainline ref changed.
+- 2026-08-03: Adversarial route-text parity fuzzing checked 50,021 deterministic printable, control, Unicode, path-like, and secret-shaped samples against the runtime validator and packaged schema with zero mismatches. The schema now uses an explicit end-of-input assertion so trailing newlines cannot bypass the printable-text rule.
 
 ## Deferred proof (not a global blocker)
 

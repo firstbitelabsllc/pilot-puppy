@@ -400,6 +400,7 @@ class RouteTests(unittest.TestCase):
             with self.subTest(value=value):
                 self.assertIsNone(text_pattern.fullmatch(value))
         self.assertIsNotNone(text_pattern.fullmatch("https://example.com/proof"))
+        self.assertIsNone(text_pattern.search("safe result\n"))
 
     def test_route_text_rejects_punctuation_adjacent_private_paths_but_keeps_https(self) -> None:
         document = route.route_document(
