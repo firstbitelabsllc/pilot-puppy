@@ -25,6 +25,11 @@ import threading
 import time
 from typing import Any
 
+from pilot_puppy_roster_lib import RosterError, load_roster, route_roster_sha256
+from pilot_puppy_route_lib import ROUTE_SCHEMA, RoutePacketError, load_route_packet, route_sha256
+from pilot_puppy_seat_lib import SeatError, load_seat_overlay, selector_for_route
+from pilot_puppy_task_lib import TaskError, frozen_task_sha256
+
 
 PROBE_SCHEMA = "pilot-puppy.host-probe.v1"
 ATTEMPT_SCHEMA = "pilot-puppy.host-attempt.v1"
@@ -32,14 +37,15 @@ HOST_RECEIPT_SCHEMA = "pilot-puppy.host-receipt.v1"
 HOSTS = {"codex", "claude-code", "cursor"}
 ID_RE = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 JSON_FENCE_RE = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL)
-MAX_TASK_BYTES = 120_000
 MAX_CAPTURE_BYTES = 64 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
 MAX_SUMMARY_CHARS = 280
-MAX_TEST_NAME_CHARS = 120
+MAX_TEST_NAME_CHARS = 160
 CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
+# Known-private markers match anywhere: a mid-string `/Users/...` behind a
+# backtick or parenthesis is still a private path.
 PRIVATE_PATH_RE = re.compile(
-    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
+    r"(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
     re.IGNORECASE,
 )
 ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
@@ -61,23 +67,31 @@ class HostError(ValueError):
         self.detail = detail
 
 
+class RouteReference:
+    """One validated route plus private local data that must never be emitted."""
+
+    __slots__ = ("public", "roster", "slot_id")
+
+    def __init__(self, public: dict[str, Any], roster: dict[str, Any], slot_id: str) -> None:
+        self.public = public
+        self.roster = roster
+        self.slot_id = slot_id
+
+
 def identifier(value: Any, label: str) -> str:
     if not isinstance(value, str) or not ID_RE.fullmatch(value):
         raise HostError("identifier_invalid", f"{label} must match the public identifier pattern")
     return value
 
 
-def receipt_text(value: Any, label: str, maximum: int) -> str:
-    if not isinstance(value, str) or not value.strip():
-        raise HostError("host_receipt_invalid", f"{label} must be a nonblank string")
-    text = value.strip()
-    if len(text) > maximum:
-        raise HostError("host_receipt_invalid", f"{label} exceeds {maximum} characters")
-    if CONTROL_RE.search(text) or PRIVATE_PATH_RE.search(text) or ABSOLUTE_PATH_RE.search(text):
-        raise HostError("host_receipt_invalid", f"{label} contains a private path or control character")
-    if SECRET_SHAPE_RE.search(text):
-        raise HostError("host_receipt_invalid", f"{label} contains a secret-shaped value")
-    return text
+def _scrub_detail(text: str) -> str:
+    """Redact private paths, secret shapes, and control characters from
+    adapter-written detail before it is persisted in a receipt."""
+
+    clean = CONTROL_RE.sub(" ", text)
+    clean = PRIVATE_PATH_RE.sub("<redacted-path>", clean)
+    clean = SECRET_SHAPE_RE.sub("<redacted-secret>", clean)
+    return clean
 
 
 def resolve_binary(host: str, explicit: str | None) -> str:
@@ -215,45 +229,26 @@ def path_allowed(path: str, allowed: list[str]) -> bool:
     return any(path == item or path.startswith(item.rstrip("/") + "/") for item in allowed)
 
 
-def read_task(path: Path) -> str:
-    if path.is_symlink() or not path.is_file():
-        raise HostError("task_unreadable", "task file must be a regular non-symlink file")
-    if path.stat().st_size > MAX_TASK_BYTES:
-        raise HostError("task_too_large", "task file exceeds the bounded packet limit")
-    try:
-        task = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeError) as exc:
-        raise HostError("task_unreadable", f"cannot read task file: {exc}") from exc
-    if not task.strip():
-        raise HostError("task_empty", "task file is empty")
-    return task
+def public_command_shape(host: str) -> list[str]:
+    """Return the static, non-secret shape that may enter an attempt receipt.
 
-
-def command_shape(host: str, binary: str, repo: Path, final_message: Path) -> list[str]:
-    """Build the current native CLI shape for one frozen task.
-
-    All three native CLIs consume the frozen task on stdin. Cursor's current
-    non-interactive CLI requires the explicit ``agent`` subcommand; passing the
-    task positionally changes its headless behavior, so the prompt stays on
-    stdin and never enters the public command-shape receipt.
+    The actual native argv is built separately below.  In particular, an
+    owner-local selector must never be constructed and then filtered out of a
+    public receipt: this projection has no selector input at all.
     """
 
     if host == "codex":
         return [
-            binary,
             "exec",
             "--json",
             "--ephemeral",
             "--sandbox",
             "workspace-write",
             "-C",
-            str(repo),
             "--output-last-message",
-            str(final_message),
         ]
     if host == "claude-code":
         return [
-            binary,
             "--print",
             "--output-format",
             "json",
@@ -261,10 +256,87 @@ def command_shape(host: str, binary: str, repo: Path, final_message: Path) -> li
             "--permission-mode",
             "acceptEdits",
             "--add-dir",
-            str(repo),
         ]
     if host == "cursor":
         return [
+            "--print",
+            "--output-format",
+            "json",
+            "--workspace",
+            "--trust",
+            "--force",
+            "agent",
+        ]
+    raise HostError("host_unknown", f"unsupported host: {host}")
+
+
+def selector_flag(host: str, selector: dict[str, str] | None) -> str | None:
+    """Make one safe single-token native selector option, or no option at all."""
+
+    if selector is None:
+        return None
+    kind = selector.get("kind")
+    value = selector.get("value")
+    if kind not in {"model", "profile"} or not isinstance(value, str):
+        raise HostError("seat_unconfigured", "private seat configuration is invalid")
+    if kind == "profile" and host != "codex":
+        raise HostError("seat_unconfigured", "private seat configuration is invalid")
+    # The selector library validates the value before this point.  Keeping it a
+    # single argv item prevents a local value from becoming a second CLI option.
+    return f"--{kind}={value}"
+
+
+def launch_command(
+    host: str,
+    binary: str,
+    repo: Path,
+    final_message: Path,
+    selector: dict[str, str] | None = None,
+) -> list[str]:
+    """Build the private native argv for one frozen task.
+
+    All three native CLIs receive the frozen task on stdin. Cursor's current
+    non-interactive CLI requires ``agent``; a local selector is deliberately
+    inserted before that subcommand.  This argv never becomes an attempt field.
+    """
+
+    selector_option = selector_flag(host, selector)
+    if host == "codex":
+        command = [binary, "exec"]
+        if selector_option is not None:
+            command.append(selector_option)
+        command.extend(
+            [
+                "--json",
+                "--ephemeral",
+                "--sandbox",
+                "workspace-write",
+                "-C",
+                str(repo),
+                "--output-last-message",
+                str(final_message),
+            ]
+        )
+        return command
+    if host == "claude-code":
+        command = [binary]
+        if selector_option is not None:
+            command.append(selector_option)
+        command.extend(
+            [
+                "--print",
+                "--output-format",
+                "json",
+                "--no-session-persistence",
+                "--permission-mode",
+                "acceptEdits",
+                "--add-dir",
+                str(repo),
+            ]
+        )
+        return command
+    if host == "cursor":
+        command = [
             binary,
             "--print",
             "--output-format",
@@ -273,9 +345,18 @@ def command_shape(host: str, binary: str, repo: Path, final_message: Path) -> li
             str(repo),
             "--trust",
             "--force",
-            "agent",
         ]
+        if selector_option is not None:
+            command.append(selector_option)
+        command.append("agent")
+        return command
     raise HostError("host_unknown", f"unsupported host: {host}")
+
+
+def command_shape(host: str, binary: str, repo: Path, final_message: Path) -> list[str]:
+    """Compatibility helper for tests of the selector-free native argv."""
+
+    return launch_command(host, binary, repo, final_message)
 
 
 def host_prompt(task: str, task_id: str, allowed: list[str], task_sha256: str) -> str:
@@ -289,7 +370,12 @@ Allowed paths:
 
 Do not change any other path. Run the relevant tests. Finish by emitting exactly
 one JSON object with this shape and no additional JSON objects:
-{{"schema":"{HOST_RECEIPT_SCHEMA}","task_id":"{task_id}","status":"ok|blocked|failed","summary":"280 characters or fewer","proof_ref":"lowercase-id-or-null","changed_paths":["relative/path"],"tests":[{{"name":"test name","status":"pass|fail"}}]}}
+{{"schema":"{HOST_RECEIPT_SCHEMA}","task_id":"{task_id}","status":"ok","summary":"short result summary","proof_ref":"bounded-proof","changed_paths":["one-allowed-relative-path"],"tests":[{{"name":"relevant-test","status":"pass"}}]}}
+
+For a successful result, use the exact Task ID above and a lowercase proof_ref
+identifier such as `bounded-proof`. Do not use spaces or prose for proof_ref.
+If the task is blocked or fails, emit the same one object with status `blocked`
+or `failed`, `proof_ref`: null, and no passing-test claim.
 
 Frozen task:
 {task}
@@ -443,7 +529,44 @@ def extract_host_receipt(texts: list[str]) -> dict[str, Any]:
     return next(iter(unique.values()))
 
 
-def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str]) -> dict[str, Any]:
+def _private_selector_present(text: str, private_values: tuple[str, ...]) -> bool:
+    """Detect an owner-local selector before any receipt field can retain it."""
+
+    folded = text.casefold()
+    for value in private_values:
+        if not value:
+            continue
+        # Long selector strings are safe to reject as a plain substring; short
+        # aliases use token boundaries so ordinary words do not false-positive.
+        if len(value) >= 4 and value.casefold() in folded:
+            return True
+        boundary = r"(?<![A-Za-z0-9._:+,=\[\]-])" + re.escape(value) + r"(?![A-Za-z0-9._:+,=\[\]-])"
+        if re.search(boundary, text, flags=re.IGNORECASE):
+            return True
+    return False
+
+
+def _receipt_text(value: object, label: str, maximum: int, private_values: tuple[str, ...]) -> str:
+    if not isinstance(value, str):
+        raise HostError("host_receipt_invalid", f"host receipt {label} is invalid")
+    clean = value.strip()
+    if not clean or len(clean) > maximum or any(ord(character) < 32 or ord(character) == 127 for character in clean):
+        raise HostError("host_receipt_invalid", f"host receipt {label} is invalid")
+    if _private_selector_present(clean, private_values):
+        raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
+    if PRIVATE_PATH_RE.search(clean) or ABSOLUTE_PATH_RE.search(clean):
+        raise HostError("host_receipt_invalid", f"host receipt {label} contains a private path")
+    if SECRET_SHAPE_RE.search(clean):
+        raise HostError("host_receipt_invalid", f"host receipt {label} contains a secret-shaped value")
+    return clean
+
+
+def validate_host_receipt(
+    raw: dict[str, Any], task_id: str, allowed: list[str], private_values: tuple[str, ...] = ()
+) -> dict[str, Any]:
+    expected_fields = {"schema", "task_id", "status", "summary", "proof_ref", "changed_paths", "tests"}
+    if set(raw) != expected_fields:
+        raise HostError("host_receipt_invalid", "host receipt fields are invalid")
     if raw.get("schema") != HOST_RECEIPT_SCHEMA:
         raise HostError("host_receipt_invalid", "host receipt schema is invalid")
     if raw.get("task_id") != task_id:
@@ -451,11 +574,18 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
     status = raw.get("status")
     if status not in {"ok", "blocked", "failed"}:
         raise HostError("host_receipt_invalid", "host receipt status is invalid")
-    summary = receipt_text(raw.get("summary"), "host receipt summary", MAX_SUMMARY_CHARS)
+    summary = _receipt_text(raw.get("summary"), "summary", MAX_SUMMARY_CHARS, private_values)
     reported_paths = raw.get("changed_paths")
     if not isinstance(reported_paths, list) or any(not isinstance(item, str) for item in reported_paths):
         raise HostError("host_receipt_invalid", "host receipt changed_paths must be a string list")
+    safe_paths: list[str] = []
     for path in reported_paths:
+        if not path or any(ord(character) < 32 or ord(character) == 127 for character in path):
+            raise HostError("host_receipt_invalid", "host receipt changed path is invalid")
+        if _private_selector_present(path, private_values):
+            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
+        if SECRET_SHAPE_RE.search(path):
+            raise HostError("host_receipt_invalid", "host receipt changed path contains a secret-shaped value")
         candidate = Path(path)
         if (
             not path
@@ -466,35 +596,37 @@ def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str])
             or not path_allowed(path, allowed)
         ):
             raise HostError("scope_violation", "host receipt reports a path outside the packet")
+        safe_paths.append(path)
     tests = raw.get("tests")
     if not isinstance(tests, list) or any(not isinstance(item, dict) for item in tests):
         raise HostError("host_receipt_invalid", "host receipt tests must be an object list")
-    normalized_tests = []
-    for index, item in enumerate(tests):
-        if set(item) != {"name", "status"}:
-            raise HostError("host_receipt_invalid", f"host receipt test {index} contains unknown fields")
-        test_status = item.get("status")
-        if test_status not in {"pass", "fail"}:
-            raise HostError("host_receipt_invalid", f"host receipt test {index} status is invalid")
-        normalized_tests.append(
+    safe_tests: list[dict[str, str]] = []
+    for item in tests:
+        if set(item) != {"name", "status"} or item.get("status") not in {"pass", "fail"}:
+            raise HostError("host_receipt_invalid", "host receipt test is invalid")
+        safe_tests.append(
             {
-                "name": receipt_text(item.get("name"), f"host receipt test {index} name", MAX_TEST_NAME_CHARS),
-                "status": test_status,
+                "name": _receipt_text(item.get("name"), "test name", MAX_TEST_NAME_CHARS, private_values),
+                "status": item["status"],
             }
         )
     proof_ref = raw.get("proof_ref")
     if status == "ok":
         identifier(proof_ref, "host proof_ref")
-        if not normalized_tests or any(item["status"] != "pass" for item in normalized_tests):
+        if _private_selector_present(proof_ref, private_values):
+            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
+        if not safe_tests or any(item["status"] != "pass" for item in safe_tests):
             raise HostError("proof_missing", "successful host receipt requires passing tests")
     elif proof_ref is not None:
         identifier(proof_ref, "host proof_ref")
+        if _private_selector_present(proof_ref, private_values):
+            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
     return {
         "status": status,
         "summary": summary,
         "proof_ref": proof_ref,
-        "changed_paths": sorted(set(reported_paths)),
-        "tests": normalized_tests,
+        "changed_paths": sorted(set(safe_paths)),
+        "tests": safe_tests,
     }
 
 
@@ -528,18 +660,94 @@ def write_json(path: str, payload: dict[str, Any], *, force: bool = False) -> No
         temporary_path.unlink(missing_ok=True)
 
 
-def validate_output_path(repo: Path, value: str) -> None:
+def validate_output_path(repo: Path, value: str) -> Path | None:
     if value == "-":
-        return
+        return None
     state = repo / ".pilot-puppy"
     evidence = state / "evidence"
     if state.is_symlink() or evidence.is_symlink():
         raise HostError("output_unsafe", "project evidence path must not be a symlink")
-    destination = Path(value).expanduser().resolve(strict=False)
+    supplied = Path(value).expanduser()
+    destination = (supplied if supplied.is_absolute() else repo / supplied).resolve(strict=False)
     try:
         destination.relative_to(evidence.resolve(strict=False))
     except ValueError as exc:
         raise HostError("output_unsafe", "host output must stay in .pilot-puppy/evidence") from exc
+    return destination
+
+
+def route_file_path(repo: Path, value: str) -> Path:
+    """Constrain a route packet to one regular file inside project evidence."""
+
+    state = repo / ".pilot-puppy"
+    evidence = state / "evidence"
+    if state.is_symlink() or evidence.is_symlink():
+        raise HostError("route_invalid", "project evidence path must not be a symlink")
+    supplied = Path(value).expanduser()
+    candidate_input = supplied if supplied.is_absolute() else repo / supplied
+    if candidate_input.is_symlink():
+        raise HostError("route_invalid", "route packet must be a regular evidence file")
+    candidate = candidate_input.resolve(strict=False)
+    evidence_root = evidence.resolve(strict=False)
+    try:
+        candidate.relative_to(evidence_root)
+    except ValueError as exc:
+        raise HostError("route_invalid", "route packet must stay in project evidence") from exc
+    if candidate.parent != evidence_root or candidate.suffix != ".json":
+        raise HostError("route_invalid", "route packet must be one direct JSON evidence file")
+    return candidate
+
+
+def route_reference(
+    args: argparse.Namespace, repo: Path, task_id: str, task_sha256: str, route_path: Path | None
+) -> RouteReference | None:
+    """Validate an optional explicit route before launching its selected host."""
+
+    if route_path is None:
+        return None
+    try:
+        packet = load_route_packet(route_path)
+        current_roster = load_roster(args.roster_file)
+    except (RoutePacketError, RosterError):
+        raise HostError("route_invalid", "route packet or local roster is invalid") from None
+    if packet["status"] == "manual":
+        raise HostError("route_manual", "manual routes cannot launch a native host")
+    if packet["status"] != "ready" or packet["selection"] is None:
+        raise HostError("route_blocked", "route packet is not ready for native execution")
+    binding = packet["binding"]
+    if binding["task_id"] != task_id or binding["task_sha256"] != task_sha256:
+        raise HostError("route_task_mismatch", "route packet does not match the frozen task")
+    if (
+        binding["roster_revision"] != current_roster["revision"]
+        or binding["route_roster_sha256"] != route_roster_sha256(current_roster)
+    ):
+        raise HostError("route_stale", "route packet does not match the current local roster")
+    selection = packet["selection"]
+    if selection["host"] != args.host:
+        raise HostError("route_host_mismatch", "route packet selected a different native host")
+    # A roster validates unique role priorities, so this is one exact private
+    # slot lookup without adding that slot ID to the public route packet.
+    selected_slots = [
+        slot
+        for slot in current_roster["slots"]
+        if slot["role"] == selection["role"]
+        and slot["host"] == selection["host"]
+        and slot["priority"] == selection["priority"]
+        and slot["enabled"]
+    ]
+    if len(selected_slots) != 1:
+        raise HostError("route_invalid", "route packet selection is not an enabled declared local slot")
+    return RouteReference(
+        public={
+            "schema": ROUTE_SCHEMA,
+            "sha256": route_sha256(packet),
+            "role": selection["role"],
+            "host": selection["host"],
+            "priority": selection["priority"],
+        },
+        roster=current_roster,
+        slot_id=selected_slots[0]["id"],
+    )
 
 
 def probe(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
@@ -572,13 +780,37 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     repo = Path(args.repo).expanduser().resolve()
     exact_git_root(repo)
     allowed = normalize_allowed(repo, args.allowed_path)
-    validate_output_path(repo, args.out)
-    task_path = Path(args.task_file).expanduser().resolve()
-    task = read_task(task_path)
-    task_sha256 = hashlib.sha256(task.encode("utf-8")).hexdigest()
+    destination = validate_output_path(repo, args.out)
+    try:
+        task, task_sha256 = frozen_task_sha256(Path(args.task_file).expanduser())
+    except TaskError as exc:
+        kind = "task_too_large" if "exceeds" in str(exc) else "task_unreadable"
+        raise HostError(kind, str(exc)) from None
+    route_path = route_file_path(repo, args.route_file) if args.route_file else None
+    if args.seat_file and not args.use_seat:
+        raise HostError("seat_not_enabled", "private seat configuration requires --use-seat")
+    if args.use_seat and route_path is None:
+        raise HostError("seat_requires_route", "private seat configuration requires a ready sealed route")
+    if route_path is not None and destination is not None and route_path == destination:
+        raise HostError("route_output_collision", "host output cannot replace the active route packet")
+    route = route_reference(args, repo, task_id, task_sha256, route_path)
+    selector: dict[str, str] | None = None
+    if args.use_seat:
+        if route is None:  # Guard the invariant above if this function is called directly.
+            raise HostError("seat_requires_route", "private seat configuration requires a ready sealed route")
+        try:
+            selector = selector_for_route(
+                load_seat_overlay(args.seat_file), route.roster, route.slot_id, args.host
+            )
+        except SeatError:
+            raise HostError(
+                "seat_unconfigured", "private seat configuration is unavailable or does not match the sealed route"
+            ) from None
     prompt = host_prompt(task, task_id, allowed, task_sha256)
+    state_before = local_state_snapshot(repo)
     before = status_paths(repo)
-    if before:
+    source_changes = [path for path in before if path not in state_before]
+    if source_changes:
         raise HostError("worktree_dirty", "host packet requires a clean assigned worktree")
     before_all = status_paths(repo, include_ignored=True)
     before_ignored = set(before_all) - set(before)
@@ -591,11 +823,10 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     ]
     if unsafe_ignored:
         raise HostError("worktree_unsealed", "ignored files outside the packet are not allowed")
-    state_before = local_state_snapshot(repo)
     binary = resolve_binary(args.host, args.binary)
     with tempfile.TemporaryDirectory(prefix="pilot-puppy-host-") as temp_dir:
         final_message = Path(temp_dir) / "final-message.txt"
-        command = command_shape(args.host, binary, repo, final_message)
+        command = launch_command(args.host, binary, repo, final_message, selector)
         result = run_bounded(command, prompt, repo, args.timeout_seconds)
         output_texts = [result.get("stdout", b"").decode("utf-8", errors="replace")]
         output_texts.append(result.get("stderr", b"").decode("utf-8", errors="replace"))
@@ -617,7 +848,10 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
                 raise HostError("host_launch_failed", str(result["launch_error"]))
             if result.get("returncode") != 0:
                 raise HostError("host_failed", "host exited non-zero")
-            host_receipt = validate_host_receipt(extract_host_receipt(output_texts), task_id, allowed)
+            private_values = (selector["value"],) if selector is not None else ()
+            host_receipt = validate_host_receipt(
+                extract_host_receipt(output_texts), task_id, allowed, private_values
+            )
             outside = [path for path in changed if not path_allowed(path, allowed)]
             if outside:
                 raise HostError("scope_violation", "host changed a path outside the packet")
@@ -633,7 +867,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             if status == "ok" and not host_receipt["proof_ref"]:
                 raise HostError("proof_missing", "host returned success without proof")
         except HostError as exc:
-            blocked_reason = {"kind": exc.kind, "detail": exc.detail}
+            blocked_reason = {"kind": exc.kind, "detail": _scrub_detail(exc.detail)}
             status = "blocked" if exc.kind not in {"host_failed", "host_launch_failed", "host_timeout"} else "failed"
         payload = {
             "schema": ATTEMPT_SCHEMA,
@@ -642,21 +876,24 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             "task_id": task_id,
             "task_sha256": task_sha256,
             "status": status,
+            "summary": (host_receipt or {}).get("summary"),
             "proof_ref": (host_receipt or {}).get("proof_ref"),
-            "changed_paths": changed,
+            "changed_paths": [_scrub_detail(path) for path in changed],
             "tests": (host_receipt or {}).get("tests", []),
             "host_exit_code": result.get("returncode"),
             "timed_out": bool(result.get("timed_out")),
             "duration_s": round(time.monotonic() - started, 3),
             "stdout_bytes": result.get("stdout_bytes", 0),
             "stderr_bytes": result.get("stderr_bytes", 0),
-            "command_shape": [item for item in command if item not in {binary, str(repo), str(final_message)}],
+            "command_shape": public_command_shape(args.host),
             "blocked": blocked_reason,
             "unreviewed_claim": True,
             "accepted_by_lead": False,
             "projection_is_usage": False,
         }
-    write_json(args.out, payload, force=args.force)
+        if route is not None:
+            payload["route"] = route.public
+    write_json("-" if destination is None else str(destination), payload, force=args.force)
     return payload, 0 if status == "ok" else 1
 
 
@@ -675,6 +912,14 @@ def parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--task-file", required=True)
     run_parser.add_argument("--task-id", required=True)
     run_parser.add_argument("--allowed-path", action="append", default=[])
+    run_parser.add_argument("--route-file", help="optional bounded route packet inside .pilot-puppy/evidence")
+    run_parser.add_argument("--roster-file", help="trusted local roster used to verify --route-file")
+    run_parser.add_argument(
+        "--use-seat",
+        action="store_true",
+        help="attach one private local selector to the exact route-selected native slot",
+    )
+    run_parser.add_argument("--seat-file", help="trusted private local selector overlay used only with --use-seat")
     run_parser.add_argument("--out", default="-")
     run_parser.add_argument("--force", action="store_true")
     run_parser.add_argument("--timeout-seconds", type=int, default=900)
