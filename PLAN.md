@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 55
-- Outcome Updated At: 2026-08-03T20:17:55Z
+- Outcome Revision: 56
+- Outcome Updated At: 2026-08-03T20:19:08Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review candidate `9bab0aa` for promotion into canonical mainline; no merge, release, or deployment claim is made yet.
@@ -424,6 +424,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   with its hosted checks green; Ruff remains a local supplemental gate because
   CI does not run it. The candidate is pushed and clean, but still has no PR,
   merge, release, deployment, or runtime proof.
+- 2026-08-03: A differential route-text audit reran 50,000 deterministic
+  samples against the packaged schema regex and runtime validator with zero
+  mismatches. Python compile checks and whitespace-diff checks also pass; no
+  source change was needed for this audit.
 
 ## Deferred proof (not a global blocker)
 
