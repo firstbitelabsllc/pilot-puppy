@@ -31,8 +31,10 @@ def identity_check() -> dict[str, Any]:
         package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
         version = (ROOT / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
         plugin = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError, IndexError) as exc:
-        return check("product identity", "fail", f"metadata is unreadable: {exc}")
+    except (OSError, UnicodeError, json.JSONDecodeError, IndexError):
+        return check("product identity", "fail", "metadata is unreadable")
+    if not isinstance(package, dict) or not isinstance(plugin, dict):
+        return check("product identity", "fail", "metadata is unreadable")
     valid = (
         package.get("name") == "pilot-puppy"
         and package.get("version") == version
@@ -72,19 +74,23 @@ def host_checks() -> list[dict[str, Any]]:
     results = []
     available = 0
     for host in HOSTS:
-        result = subprocess.run(
-            [sys.executable, str(script), "probe", "--host", host, "--json"],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        try:
+            result = subprocess.run(
+                [sys.executable, str(script), "probe", "--host", host, "--json"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            results.append(check(f"native host: {host}", "warn", "not available"))
+            continue
         if result.returncode == 0:
             available += 1
             try:
                 payload = json.loads(result.stdout)
                 detail = payload.get("version") or payload.get("command") or "available"
-            except json.JSONDecodeError:
+            except (AttributeError, json.JSONDecodeError):
                 detail = "available"
             results.append(check(f"native host: {host}", "pass", str(detail)))
         else:

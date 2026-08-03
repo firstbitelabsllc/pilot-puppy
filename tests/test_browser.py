@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 import threading
 import unittest
+from unittest import mock
 
 from browser import server
 
@@ -165,6 +166,38 @@ class BrowserTests(unittest.TestCase):
                 connection.request("GET", "/api/plan?path=project/PLAN.md")
                 self.assertEqual(connection.getresponse().status, 404)
                 connection.close()
+            finally:
+                service.shutdown()
+                service.server_close()
+                thread.join(timeout=2)
+
+    def test_decision_filesystem_error_is_public_safe(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, _ = self.make_repo(Path(dirname))
+            service = server.Server(("127.0.0.1", 0), repo)
+            service.RequestHandlerClass.log_message = lambda *args: None
+            thread = threading.Thread(target=service.serve_forever, daemon=True)
+            thread.start()
+            port = service.server_address[1]
+            try:
+                body = json.dumps({"plan": "project/PLAN.md", "option_id": "ship-now", "revision": 7})
+                with mock.patch.object(server, "write_decision_receipt", side_effect=OSError("/Users/private/secret")):
+                    connection = http.client.HTTPConnection("127.0.0.1", port)
+                    connection.request(
+                        "POST",
+                        "/api/decision",
+                        body=body,
+                        headers={
+                            "Content-Type": "application/json",
+                            "Origin": f"http://127.0.0.1:{port}",
+                        },
+                    )
+                    response = connection.getresponse()
+                    payload = json.loads(response.read())
+                    connection.close()
+                self.assertEqual(response.status, 400)
+                self.assertEqual(payload, {"error": "filesystem unavailable"})
+                self.assertNotIn("/Users/private/secret", json.dumps(payload))
             finally:
                 service.shutdown()
                 service.server_close()

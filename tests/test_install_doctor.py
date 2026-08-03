@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -51,6 +52,27 @@ class DoctorTests(unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertEqual(result.returncode, 1)
         self.assertFalse(report["ok"])
+        self.assertNotIn("Traceback", result.stderr)
+
+    def test_malformed_metadata_fails_without_private_details(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            (root / "package.json").write_text("[]\n", encoding="utf-8")
+            (root / ".claude-plugin").mkdir()
+            (root / ".claude-plugin" / "plugin.json").write_text("{}\n", encoding="utf-8")
+            (root / "VERSION").write_text("2.1.0\n", encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(DOCTOR), "--json"],
+                cwd=ROOT,
+                env={**os.environ, "PILOT_PUPPY_ROOT": str(root)},
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        report = json.loads(result.stdout)
+        identity = next(item for item in report["checks"] if item["name"] == "product identity")
+        self.assertEqual(identity["detail"], "metadata is unreadable")
+        self.assertNotIn("object has no attribute", json.dumps(identity))
         self.assertNotIn("Traceback", result.stderr)
 
     def test_text_output_is_human_readable(self) -> None:

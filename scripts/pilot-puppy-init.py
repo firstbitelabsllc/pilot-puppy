@@ -14,12 +14,15 @@ import tempfile
 
 
 def repository_root(path: Path) -> Path:
-    result = subprocess.run(
-        ["git", "-C", str(path), "rev-parse", "--show-toplevel"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(path), "rev-parse", "--show-toplevel"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except (OSError, UnicodeError):
+        raise ValueError("current directory is not inside a Git worktree") from None
     if result.returncode:
         raise ValueError("current directory is not inside a Git worktree")
     return Path(result.stdout.strip()).resolve()

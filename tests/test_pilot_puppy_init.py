@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -14,10 +15,11 @@ ROOT = Path(__file__).resolve().parent.parent
 INIT = ROOT / "scripts" / "pilot-puppy-init.py"
 
 
-def run(*args: str, cwd: Path) -> subprocess.CompletedProcess[str]:
+def run(*args: str, cwd: Path, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [sys.executable, str(INIT), *args],
         cwd=cwd,
+        env=env,
         capture_output=True,
         text=True,
         check=False,
@@ -67,6 +69,16 @@ class InitTests(unittest.TestCase):
             result = run("--here", cwd=nested)
         self.assertEqual(result.returncode, 2)
         self.assertIn("project root", result.stderr)
+
+    def test_missing_git_fails_without_traceback(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = self.make_repo(Path(dirname))
+            empty_path = Path(dirname) / "empty-bin"
+            empty_path.mkdir()
+            result = run("--here", cwd=repo, env={**os.environ, "PATH": str(empty_path)})
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("not inside a Git worktree", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
 
 
 if __name__ == "__main__":

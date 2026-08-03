@@ -400,8 +400,14 @@ class Handler(BaseHTTPRequestHandler):
                 payload["revision"],
             )
             self._json(200, {"ok": True, "receipt": receipt})
-        except (BrowserError, DecisionInputError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+        except (BrowserError, DecisionInputError) as exc:
             self._json(400, {"error": str(exc)})
+        except OSError:
+            self._json(400, {"error": "filesystem unavailable"})
+        except UnicodeError:
+            self._json(400, {"error": "input encoding invalid"})
+        except json.JSONDecodeError:
+            self._json(400, {"error": "request is invalid"})
 
     def log_message(self, format: str, *args: Any) -> None:
         if os.environ.get("PILOT_PUPPY_BROWSER_QUIET") != "1":
@@ -413,7 +419,7 @@ class Server(ThreadingHTTPServer):
 
     def __init__(self, address: tuple[str, int], root: Path) -> None:
         super().__init__(address, Handler)
-        self.scan_root = root
+        self.scan_root = root.expanduser().resolve()
 
 
 def parser() -> argparse.ArgumentParser:
