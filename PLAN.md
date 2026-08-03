@@ -12,11 +12,12 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 22
-- Outcome Updated At: 2026-08-03T17:13:44Z
+- Outcome Revision: 23
+- Outcome Updated At: 2026-08-03T17:17:49Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
-- Next: Resume each lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
+- Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
+- Next: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. Keep owner-admin, authenticated-runtime, merge/deploy, and portability predicates explicit while reachable product proof continues independently.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -29,7 +30,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@0109759c` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
+- Proof: Star67 `main@1277dd8` with README `0721078`, Snowcubes `origin/main@c16d1f93` plus security branch `77e2bb5e` / PR #1567, Moussey `origin/main@3c44bbec`, focused source/test receipts, and live public-surface readbacks.
 - Proof Summary: Star67 now leads with its Vercel launch link and is pushed to `main`; current Snowcubes source truth is `ok: true` with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row; Moussey's simplified consignment surface and credential-free URL boundary build and test cleanly; the Snowcubes storefront returns HTTP 200 without the retired receivable figures. Snowcubes PR #1567 removes all high and production npm audit findings without a breaking Shopify CLI upgrade; two low `esbuild` findings remain explicitly bounded to that toolchain.
 - Proof Delivery: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
@@ -65,8 +66,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   unrelated product from shipping the highest-value reachable row in *its* own
   canonical plan.
 - “One bounded task” means one reviewable handoff with an exact scope. It does
-  not mean only one project may move, nor that a safe, obvious in-scope
-  improvement must wait for an unrelated host, quota, or portability check.
+  not mean only one project may move, nor that the Outcome has only one
+  deliverable. It is an execution-granularity and safety rule: after one packet
+  is proven, resume the next highest-value reachable lane in this same plan.
+  A safe, obvious in-scope improvement must not wait for an unrelated host,
+  quota, or portability check.
 - Use Pilot Puppy where its briefing, bounded execution, or resume record helps.
   Otherwise work directly in the product lane and prove the real user-visible
   outcome there. Amp only sharpens that lane's brief; it does not dispatch,
@@ -85,7 +89,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   rows, makes Riff's task primary and Frosty's coaching visibly optional, and
   runs the guided query to a `✓ delivered` result of 2,736,642 GL lines.
   Repository rename is waiting on owner-admin access.
-- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@0109759c`
+- **Snowcubes/Moussey consignment:** clean Snowcubes `origin/main@c16d1f93`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
   history and absent from current tracker outputs. The 5/21 Marathon row is
@@ -96,8 +100,10 @@ Code, or Cursor without taking custody of credentials or conversations.
 - **Snowcubes storefront:** `https://trysnowcubes.com/` returned HTTP 200; the
   public page did not expose the retired receivable figures or consignment-only
   billing/source language.
-- **Security:** Snowcubes PR #1567 (`77e2bb5e`) is based on current public main
-  `27665b6e` and refreshes only `package-lock.json`; 208/208 Jest suites and
+- **Security:** Snowcubes PR #1567 (`77e2bb5e`) was verified as a lockfile-only
+  repair against public main `27665b6e`; Snowcubes main has since advanced to
+  `c16d1f93` with unrelated product/docs changes. The recorded security proof
+  remains valid for the reviewed diff, but post-merge reruns are required; 208/208 Jest suites and
   1,672/1,672 tests pass, the 800-test Python suite and serial Node gate pass,
   production/high-severity audit is clean, source truth is `ok: true`,
   `cafe:doctor` has no blocking failures, and gitleaks is clean. The remaining
@@ -167,6 +173,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T17:17:49Z: Amp review corrected the operating brief: the active
+  goal is the full Star67, Moussey, Snowcubes, security, deployment, and
+  handoff portfolio. “One bounded task” is only the safe execution packet; it
+  is not a one-feature or one-repository finish line. Refreshed the external
+  readback to Snowcubes `origin/main@c16d1f93`; PR #1567 remains OPEN/CLEAN at
+  `77e2bb5e` against its previously reviewed `27665b6e` base. No product code
+  was changed. Continue all reachable lanes; leave owner-admin, authenticated
+  runtime, merge/deploy, and portability predicates explicit.
 
 - 2026-08-03T17:13:44Z: Audited the complete current Moussey runtime source for
   the password-URL requirement, not just consignment. `lib/moussey-url.ts`
