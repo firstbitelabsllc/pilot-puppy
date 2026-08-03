@@ -178,13 +178,18 @@ def reject_worktree_symlinks(repo: Path) -> None:
         for current, directories, files in os.walk(repo, followlinks=False, onerror=inspection_error):
             current_path = Path(current)
             for name in [*directories, *files]:
-                if name == ".git":
-                    if (current_path / name).is_symlink():
-                        raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
-                    continue
-                if (current_path / name).is_symlink():
+                candidate = current_path / name
+                if candidate.is_symlink():
                     raise HostError("worktree_unsealed", "host worktree must not contain symlinked paths")
-            directories[:] = [name for name in directories if name != ".git"]
+                if name == ".git" and current_path == repo:
+                    continue
+                # A submodule's .git file is normal, but a nested Git directory
+                # can hide links and an unsealed repository from the path audit.
+                if name == ".git" and candidate.is_dir():
+                    raise HostError("worktree_unsealed", "host worktree must not contain nested Git directories")
+            directories[:] = [
+                name for name in directories if not (name == ".git" and current_path == repo)
+            ]
     except HostError:
         raise
     except OSError:

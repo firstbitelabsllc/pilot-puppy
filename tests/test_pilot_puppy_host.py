@@ -739,6 +739,25 @@ class PilotPuppyHostTests(unittest.TestCase):
 
         self.assertEqual(context.exception.kind, "worktree_unsealed")
 
+    def test_nested_git_files_are_allowed_but_directories_are_checked(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            nested_git = repo / "vendor" / ".git"
+            nested_git.parent.mkdir()
+            nested_git.write_text("gitdir: ../../.git/modules/vendor\n", encoding="utf-8")
+            pilot_puppy_host.reject_worktree_symlinks(repo)
+
+            nested_git.unlink()
+            nested_git.mkdir()
+            outside = root / "outside-target"
+            outside.mkdir()
+            (nested_git / "link").symlink_to(outside, target_is_directory=True)
+            with self.assertRaises(pilot_puppy_host.HostError) as context:
+                pilot_puppy_host.reject_worktree_symlinks(repo)
+
+        self.assertEqual(context.exception.kind, "worktree_unsealed")
+
     def test_symlink_created_under_allowed_path_is_rejected_after_run(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             root = Path(dirname)
