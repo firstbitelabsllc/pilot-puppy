@@ -183,6 +183,13 @@ Cursor without taking custody of credentials or conversations.
   clean target revision or admissible task packet exists. This session has no
   reachable second-computer host; no cross-host receipt is claimed. Resume
   with the documented bootstrap after supplying the clean packet.
+- 2026-08-03T15:07:19Z: PR #92 merged as `5d987b5d`. A read-only Jump Desktop
+  attempt to the other-computer route returned `Computer is offline`; no
+  remote UI, install, doctor, skill mount, or native-host receipt was
+  produced. This is host availability, not a Pilot Puppy code failure. Exact
+  resume: bring the target Mac online with Jump Connect, then run the
+  documented clone/install/mount/doctor bootstrap and record the target
+  `PLAN.md` readback and sealed-task receipt.
 
 ## Blocked proof
 
