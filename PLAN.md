@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 61
-- Outcome Updated At: 2026-08-03T20:30:14Z
+- Outcome Revision: 62
+- Outcome Updated At: 2026-08-03T20:31:06Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review the workflow-tested candidate source at `ccdcece` for promotion
@@ -457,6 +457,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   all five jobs, and secret-scan run `30850320418` passed both gitleaks and
   public-ready jobs on head `ccdcece`; the prior Node 20 annotations did not
   recur. No PR, merge, release, deployment, or runtime proof exists.
+- 2026-08-03: Candidate-local `pilot-puppy doctor --json` reports 4/11 fails
+  only because PATH and the three native skill mounts still resolve the primary
+  `/Users/lkwan/Snapchat/Dev/pilot-puppy` checkout instead of this disposable
+  candidate. Python, Git, product identity, all three native hosts, and the host
+  floor pass. This is an environment-boundary receipt; do not remount shared
+  roots from the candidate or count it as a source defect.
 
 ## Deferred proof (not a global blocker)
 
