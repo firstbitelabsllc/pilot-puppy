@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 58
-- Outcome Updated At: 2026-08-03T20:23:07Z
+- Outcome Revision: 59
+- Outcome Updated At: 2026-08-03T20:23:38Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Review the workflow-tested candidate source at `a3c2542` for promotion
@@ -443,6 +443,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   `test (3.10)`, `test (3.12)`, `test (3.14)`, and `browser-and-docs`.
   This is CI proof for the pushed candidate source, not PR, merge, release,
   deployment, or runtime proof.
+- 2026-08-03: The same hosted run emitted non-blocking GitHub annotations that
+  the pinned checkout, setup-node, and setup-python actions target deprecated
+  Node 20 and are being forced onto Node 24. No job failed; action-refresh
+  compatibility is the next separate build-maintenance audit, not part of this
+  candidate’s Ruff change.
 
 ## Deferred proof (not a global blocker)
 
