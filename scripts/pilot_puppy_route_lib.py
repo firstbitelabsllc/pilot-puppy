@@ -40,7 +40,15 @@ BLOCKED_KINDS: Final = frozenset({"no_declared_slot", "no_available_slot"})
 ID_RE: Final = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 SHA256_RE: Final = re.compile(r"^[0-9a-f]{64}$")
 CONTROL_RE: Final = re.compile(r"[\x00-\x1f\x7f]")
-PRIVATE_PATH_RE: Final = re.compile(r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///)", re.IGNORECASE)
+PRIVATE_PATH_RE: Final = re.compile(
+    r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|"
+    r"\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]|\\\\)",
+    re.IGNORECASE,
+)
+ABSOLUTE_PATH_RE: Final = re.compile(
+    r"(?<![A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?",
+    re.IGNORECASE,
+)
 SECRET_SHAPE_RE: Final = re.compile(
     r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
     r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
@@ -102,6 +110,7 @@ def _text(value: object, noun: str, maximum: int = 280) -> str:
     if (
         CONTROL_RE.search(text)
         or PRIVATE_PATH_RE.search(text)
+        or ABSOLUTE_PATH_RE.search(text)
         or SECRET_SHAPE_RE.search(text)
         or any(ord(character) > 126 for character in text)
     ):

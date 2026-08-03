@@ -382,6 +382,27 @@ class RouteTests(unittest.TestCase):
         for forbidden in ("model", "provider", "account", "quota", "credential", "prompt", "transcript", "path", "command"):
             self.assertNotIn(forbidden, rendered)
 
+    def test_route_text_rejects_punctuation_adjacent_private_paths_but_keeps_https(self) -> None:
+        document = route.route_document(
+            task_id="fix-file",
+            task_hash="a" * 64,
+            roster=copy.deepcopy(roster.DEFAULT_ROSTER),
+            task_kind="dev",
+            role="bulk",
+            host=None,
+            availability="assume",
+        )
+        for value in ("path:/Users/person/private", "see(/tmp/private)", "$HOME/private"):
+            with self.subTest(value=value):
+                forged = copy.deepcopy(document)
+                forged["escalation"]["when"] = value
+                with self.assertRaises(route.RoutePacketError):
+                    route.validate_route_packet(forged)
+
+        safe = copy.deepcopy(document)
+        safe["escalation"]["when"] = "https://example.com/proof"
+        self.assertEqual(route.validate_route_packet(safe)["escalation"]["when"], "https://example.com/proof")
+
 
 def git_status(repo: Path) -> str:
     result = subprocess.run(

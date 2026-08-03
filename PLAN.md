@@ -137,6 +137,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] R4: Keep rerouting and independent criticism at an evidence
   boundary. A `review` route remains a manual critic decision; the lead starts
   any new route explicitly and retains final proof/acceptance.
+- [completed] Keep route-packet text public-safe when private paths follow
+  punctuation, while preserving public HTTPS locators.
 - [deferred] R5: Add a local private seat overlay only if a real native-tool
   setup cannot express the generic role/host roster. It must stay owner-local
   and outside source, browser/status, route evidence, packages, and stranger
@@ -274,6 +276,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   slots, route/output collisions, private roster permissions, and host
   substitution before launch. Remote merge, tag, and release readback remain
   the only R7 actions.
+- 2026-08-03: Route-packet text now rejects punctuation-adjacent absolute and
+  private paths while preserving HTTPS locators. The canonical main-based
+  branch passes the focused route regression; full R7 gates remain next.
 
 ## Deferred proof (not a global blocker)
 
