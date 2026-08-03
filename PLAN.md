@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 62
-- Outcome Updated At: 2026-08-03T23:22:37Z
+- Outcome Revision: 63
+- Outcome Updated At: 2026-08-03T23:28:18Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring every active product lane to a clean, user-ready state: Star67, Moussey consignment and cleaner, Snowcubes, security cleanup, and release handoff. It coordinates the portfolio; it is not the product under test.
 - Outcome Detail: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
@@ -168,10 +168,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   post-merge reruns are still required. Forcing the breaking Shopify CLI
   upgrade is not justified. PR #1567 is now OPEN/CLEAN/mergeable after the
   refresh; no merge or deployment is claimed.
-- **Codex Security:** the official plugin now has a standard workspace open on
-  clean Moussey `origin/main@3c44bbec`, with setup valid and the bounded scan
-  start surface awaiting its handshake. No plugin findings or remediation are
-  claimed until a report is delivered. The earlier official
+- **Codex Security:** the official plugin workspace is open on clean Moussey
+  `origin/main@3c44bbec`; setup is valid but `setup.submitted=false`, so the
+  app is still waiting for the user to press Start scan. The required wait was
+  left without a scan ID or report; no plugin findings or remediation are
+  claimed. The earlier official
   `@openai/codex-security@0.1.5` input-only dry-runs and canceled Pilot Puppy
   attempt remain historical receipts; CodeQL, gitleaks, npm audit, and focused
   source-security receipts remain the authoritative completed checks.
@@ -286,6 +287,23 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T23:28:18Z: Re-audited the full portfolio and reopened the existing
+  Codex Security workspace rather than creating a second scan. Pilot Puppy
+  revision 62 is clean at `76754c0`; PR #99 is OPEN/CLEAN with all listed
+  checks passing, and Snowcubes PR #1567 remains OPEN/CLEAN/mergeable at
+  `8d6ae00c`. Star67 main remains `1277dd8` with its Vercel front door returning
+  HTTP 200. Snowcubes main `c48ace456` source audit remains `ok: true` with
+  Zack `$0.00`, Marathon `$0.00`, and Everyman `$22.00`; the public storefront
+  remains HTTP 200 without retired receivable figures or removed billing/source
+  labels. Nicole's MacBook Air target is online; fresh `/api/health` and
+  `/api/consignment?view=summary` responses are HTTP 200, but the summary body
+  remains `data_unavailable`, so C11 is still open. The Codex Security workspace
+  targets clean Moussey `origin/main@3c44bbec` with `setup.submitted=false`; the
+  bounded wait ended without a scan ID, report, or findings. Host pressure is
+  still unsafe for cleaner build/browser/media work. No dirty primary, owner
+  process, credential, payment, Shopify, merge, deploy, or cleaner mutation
+  occurred.
 
 - 2026-08-03T23:22:37Z: Pushed the revision-61 receipt as commit `1f801a1`.
   Because this is a plan-only change, PR #99 checks reran on the new head; the
