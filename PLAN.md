@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: ship-pilot-puppy
-- Outcome Revision: 119
-- Outcome Updated At: 2026-08-03T23:02:49Z
+- Outcome Revision: 120
+- Outcome Updated At: 2026-08-03T23:05:20Z
 - Outcome State: working
 - Outcome: Keep one calm, local Pilot Puppy front door useful while restoring explicit, safe delegation that sends each task to the right role without wasting stronger native seats.
 - Next: Choose A/B/C consolidation path for candidate `a60f996` before any external PR action.
@@ -925,6 +925,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   source drift was found. #99 now has a newer dirty PLAN-only head, and #105,
   #106, and #95 remain dirty drafts. The owned candidate still has no PR; no
   sibling branch, PR, merge, release, or deployment action was taken.
+
+- 2026-08-03: Reran the full local gate at the current candidate head. Vitest
+  passed 3 tests; Python unittest passed 178 tests with 2 intentional skips;
+  Playwright passed all 6 desktop/phone tests; docs build, the 102-file
+  public-ready scan, pinned Ruff lint, release verification, and high-severity
+  npm audit all passed. The release package remains 65 files with SHA-256
+  `1910ae707bc31fd47fae19a76adf7441c571b912dfe7647c13bbd0c1ddd0ee7a`.
 
 ## Deferred proof (not a global blocker)
 
