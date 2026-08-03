@@ -125,6 +125,8 @@ class ChiefOfStaffTests(unittest.TestCase):
     def test_rejects_public_brief_privacy_fragments(self):
         for plan_brief in (
             {"summary": "/tmp/private"},
+            {"summary": "path:/tmp/private"},
+            {"summary": "see(/tmp/private)"},
             {"summary": "safe\u200btext"},
             {"summary": "cafe\u0301"},
             {"summary": "xoxb-1234567890"},

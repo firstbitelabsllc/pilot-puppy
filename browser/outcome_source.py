@@ -36,7 +36,7 @@ HOME_PATH_RE = re.compile(
     re.IGNORECASE,
 )
 ABSOLUTE_PATH_RE = re.compile(
-    r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?",
+    r"(?<![A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?",
     re.IGNORECASE,
 )
 SECRET_SHAPE_RE = re.compile(

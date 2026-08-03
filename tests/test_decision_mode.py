@@ -119,7 +119,14 @@ class DecisionModeTests(unittest.TestCase):
         )
         with self.assertRaises(decision.DecisionInputError):
             decision.project_decision(fragmented)
-        for value in ("/tmp/private/file", "$HOME/private", "xoxb-1234567890", "AKIA1234567890123456"):
+        for value in (
+            "/tmp/private/file",
+            "path:/tmp/private/file",
+            "see(/tmp/private/file)",
+            "$HOME/private",
+            "xoxb-1234567890",
+            "AKIA1234567890123456",
+        ):
             with self.subTest(value=value):
                 source = document()
                 source["outcome"]["current_move"] = value

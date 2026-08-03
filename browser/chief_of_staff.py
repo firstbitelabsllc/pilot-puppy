@@ -29,7 +29,9 @@ PRIVATE_TEXT_RE = re.compile(
     r"\b(?:provider|model|prompt|transcript|credential|secret|password|token)\b)",
     re.IGNORECASE,
 )
-ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+# Reject a path after punctuation as well as whitespace while leaving normal
+# ``https://`` URLs outside the absolute-path match.
+ABSOLUTE_PATH_RE = re.compile(r"(?<![A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
 SECRET_SHAPE_RE = re.compile(
     r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
     r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"

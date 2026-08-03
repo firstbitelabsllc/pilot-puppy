@@ -32,7 +32,9 @@ PRIVATE_PATH_RE = re.compile(
     r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|file:///|\$HOME(?:[/\\]|$)|[A-Za-z]:[\\/]Users[\\/])",
     re.IGNORECASE,
 )
-ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
+# Reject a path after punctuation as well as whitespace.  The slash-boundary
+# guards keep ordinary ``https://`` URLs out of this check.
+ABSOLUTE_PATH_RE = re.compile(r"(?<![A-Za-z0-9/])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
 OUTCOME_STATES = {"working", "needs_input", "blocked", "finished_with_proof", "not_delivered"}
 CATEGORIES = {"product_choice", "security", "money", "external_communication", "irreversible_action"}
 PROOF_TYPES = {"test", "runtime", "ui", "release", "document", "other"}

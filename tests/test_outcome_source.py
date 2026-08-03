@@ -59,6 +59,12 @@ class OutcomeSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(OutcomeSourceError, "private filesystem"):
             project_plan_outcome(brief)
 
+        for value in ("path:/tmp/private/file", "see(/tmp/private/file)"):
+            with self.subTest(value=value):
+                brief["next"] = value
+                with self.assertRaisesRegex(OutcomeSourceError, "private filesystem"):
+                    project_plan_outcome(brief)
+
     def test_needs_input_requires_exactly_abc(self) -> None:
         brief = canonical_brief() | {
             "outcome_state": "needs_input",

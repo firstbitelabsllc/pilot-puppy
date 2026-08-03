@@ -125,6 +125,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 - [completed] Reprove the pushed branch from a fresh clone with lockfile
   install and public gates.
 - [completed] Count only `## Work` checkboxes in status task summaries.
+- [completed] Keep public-text absolute-path checks closed when a path follows
+  punctuation instead of whitespace.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
@@ -255,6 +257,11 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-03: Status task counts now reflect only the Work section.
   Proof: 106 Python tests, 3 JavaScript tests, 4 browser tests, docs build,
   public-ready scan, dev release package, and doctor pass [receipt:18d79afcdab177be]
+- 2026-08-03: Public-text privacy checks now reject punctuation-adjacent absolute paths; HTTPS locators remain valid.
+  Proof: 106 Python tests,
+  3 JavaScript tests, 4 browser tests, docs build, public-ready scan, dev
+  release package SHA-256 `9f96c1bc2ffbe85efde35eb6d66d5843661fa7ebfd60d6e515e141782e8e389a`,
+  and doctor pass.
 
 ## Deferred proof (not a global blocker)
 
