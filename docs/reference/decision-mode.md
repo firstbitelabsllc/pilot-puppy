@@ -14,4 +14,5 @@ The server compares that revision with current authority. A current choice is
 The projected Outcome, ask, options, and proof entries are closed contracts;
 unknown fields, unsupported states, and unsafe or oversized public text fail
 before the decision payload is rendered. IDs must be unique across the complete
-projection, and `finished_with_proof` requires at least one delivered proof.
+projection, `finished_with_proof` requires at least one delivered proof, and
+proof locators must be HTTPS or repository-relative paths.

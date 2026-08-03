@@ -91,6 +91,28 @@ class DecisionModeTests(unittest.TestCase):
         self.assertEqual(result["outcome"]["state"], "finished_with_proof")
         self.assertEqual(result["proof"][0]["delivery"], "delivered")
 
+    def test_scalar_bounds_match_canonical_validator(self) -> None:
+        mutations = (
+            lambda source: source.update(updated_at="2026-99-99T99:99:99Z"),
+            lambda source: source["outcome"].update({"summary": "cafe\u0301"}),
+            lambda source: source["outcome"].update({"summary": "safe\u200btext"}),
+            lambda source: source["ask"]["options"][0].update({"label": "x" * 81}),
+            lambda source: source["proof"][0].update({"locator": "relative path with spaces"}),
+            lambda source: source["proof"][0].update({"locator": "ftp://example.com/proof"}),
+        )
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                source = document()
+                mutation(source)
+                with self.assertRaises(decision.DecisionInputError):
+                    decision.project_decision(source)
+
+    def test_https_locator_is_allowed(self) -> None:
+        source = document()
+        source["proof"][0]["locator"] = "https://example.com/proof"
+        result = decision.project_decision(source)
+        self.assertEqual(result["proof"][0]["locator"], "https://example.com/proof")
+
     def test_choice_is_closed_and_typed(self) -> None:
         result = decision.build_choice(document(), "full-review")
         self.assertEqual(

@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from datetime import datetime, timezone
 import re
 from typing import Any
+from urllib.parse import urlparse
+import unicodedata
 
 
 OUTCOME_SCHEMA = "pilot-puppy.outcome.v1"
@@ -14,6 +17,9 @@ RECEIPT_SCHEMA = "pilot-puppy.decision-receipt.v1"
 MAX_REVISION = 2_147_483_647
 IDENTIFIER_RE = re.compile(r"^[a-z][a-z0-9_-]{2,63}$")
 UTC_RE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z$")
+RELATIVE_LOCATOR_RE = re.compile(
+    r"^(?!\.\.(?:/|$))(?!.*(?:^|/)\.\.(?:/|$))[A-Za-z0-9][A-Za-z0-9._/-]{0,511}$"
+)
 CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
 PRIVATE_PATH_RE = re.compile(
     r"(?:^|[\s\"'=])(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
@@ -47,7 +53,13 @@ def text(value: Any, label: str, *, maximum: int = 280) -> str:
     value = " ".join(value.split())
     if len(value) > maximum:
         raise DecisionInputError(f"{label} exceeds {maximum} characters")
-    if CONTROL_RE.search(value) or PRIVATE_PATH_RE.search(value) or SECRET_SHAPE_RE.search(value):
+    if (
+        CONTROL_RE.search(value)
+        or any(unicodedata.category(character) in {"Cc", "Cf"} for character in value)
+        or unicodedata.normalize("NFC", value) != value
+        or PRIVATE_PATH_RE.search(value)
+        or SECRET_SHAPE_RE.search(value)
+    ):
         raise DecisionInputError(f"{label} contains private or unsafe text")
     return value
 
@@ -65,6 +77,29 @@ def revision(value: Any, label: str) -> int:
     return value
 
 
+def timestamp(value: Any, label: str) -> str:
+    if not isinstance(value, str) or UTC_RE.fullmatch(value) is None:
+        raise DecisionInputError(f"{label} must be an RFC3339 UTC timestamp")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise DecisionInputError(f"{label} must be a real timestamp") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() != timezone.utc.utcoffset(parsed):
+        raise DecisionInputError(f"{label} must be an RFC3339 UTC timestamp")
+    return value
+
+
+def locator(value: Any, label: str) -> str:
+    value = text(value, label, maximum=512)
+    if value.startswith("https://"):
+        parsed = urlparse(value)
+        if not parsed.netloc or parsed.username or parsed.password:
+            raise DecisionInputError(f"{label} must be a public HTTPS or relative locator")
+    elif RELATIVE_LOCATOR_RE.fullmatch(value) is None:
+        raise DecisionInputError(f"{label} must be a public HTTPS or relative locator")
+    return value
+
+
 def outcome_document(value: Any) -> Mapping[str, Any]:
     document = mapping(value, "document")
     if document.get("schema") != OUTCOME_SCHEMA:
@@ -72,8 +107,7 @@ def outcome_document(value: Any) -> Mapping[str, Any]:
     if set(document) != {"schema", "revision", "updated_at", "outcome", "ask", "proof"}:
         raise DecisionInputError("document contains fields outside the Outcome contract")
     revision(document.get("revision"), "document.revision")
-    if not isinstance(document.get("updated_at"), str) or UTC_RE.fullmatch(document["updated_at"]) is None:
-        raise DecisionInputError("document.updated_at must be an RFC3339 UTC timestamp")
+    timestamp(document.get("updated_at"), "document.updated_at")
     return document
 
 
@@ -126,7 +160,7 @@ def project_ask(document: Mapping[str, Any], outcome: Mapping[str, Any]) -> dict
         projected.append(
             {
                 "id": option_id,
-                "label": text(option.get("label"), f"ask.options[{index}].label"),
+                "label": text(option.get("label"), f"ask.options[{index}].label", maximum=80),
                 "consequence": text(option.get("consequence"), f"ask.options[{index}].consequence"),
             }
         )
@@ -160,7 +194,7 @@ def project_proof(document: Mapping[str, Any]) -> list[dict[str, Any]]:
             {
                 "id": identifier(source.get("id"), f"proof[{index}].id"),
                 "type": proof_type,
-                "locator": text(source.get("locator"), f"proof[{index}].locator", maximum=512),
+                "locator": locator(source.get("locator"), f"proof[{index}].locator"),
                 "verification_summary": text(
                     source.get("verification_summary"),
                     f"proof[{index}].verification_summary",
