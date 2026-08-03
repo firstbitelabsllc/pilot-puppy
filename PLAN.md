@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 43
-- Outcome Updated At: 2026-08-03T18:51:47Z
+- Outcome Revision: 44
+- Outcome Updated At: 2026-08-03T18:53:27Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
 - Execution rule: this is a portfolio outcome, not a one-deliverable task. Keep every named lane active in the same Outcome; split execution into small reviewable packets only to protect ownership, reversibility, and proof. A finished packet advances the portfolio and never closes the Outcome by itself.
@@ -273,6 +273,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-03T18:53:27Z: Portfolio PR #99 reached its final post-push proof at
+  `164644b37246df1cd7edf53162e27024fc3d12b2`: OPEN/CLEAN/MERGEABLE, with CI
+  3.10/3.12/3.14, browser/docs, CodeQL, gitleaks, public-ready, and Graphite
+  checks passing. `[code]smith` is skipped because this receipt changes only
+  the durable plan. The PR remains unmerged; public-main readback is still the
+  external next move.
 
 - 2026-08-03T18:51:47Z: Revalidated the whole portfolio instead of collapsing it
   into one deliverable. Clean Moussey `origin/main@3c44bbec` passed the focused
@@ -785,13 +792,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   path, then rerun `npm ci`, high/production audit, and the focused gates. Do
   not force the breaking Shopify CLI upgrade just to claim zero total
   findings.
-- Pilot Puppy portfolio PR #99 remains OPEN/CLEAN/MERGEABLE. At the latest
-  readback, Graphite, all required CI, CodeQL, gitleaks, browser/docs, and
-  public-ready checks pass; `[code]smith` is skipped for this docs-only
-  receipt.
-  Resume with the repository's external merge action, then read back
-  `origin/main` and the public plan before treating the full portfolio
-  outcome as the public-main authority.
+- Pilot Puppy portfolio PR #99 is at
+  `164644b37246df1cd7edf53162e27024fc3d12b2`, OPEN/CLEAN/MERGEABLE. At the
+  latest readback, Graphite, all required CI, CodeQL, gitleaks, browser/docs,
+  and public-ready checks pass; `[code]smith` is skipped for this docs-only
+  receipt. Resume with the repository's external merge action, then read back
+  `origin/main` and the public plan before treating the full portfolio outcome
+  as the public-main authority.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
