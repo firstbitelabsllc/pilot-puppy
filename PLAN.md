@@ -2226,3 +2226,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   `git diff --check` passes. This is source/dependency proof only; it does not
   resolve the four live agent-discovery contract errors or authorize a Shopify,
   Worker, Admin, deployment, or customer-data mutation.
+- 2026-08-04T16:57:38Z: Fresh direct readback of the existing Star67 deployment
+  `https://learn-sql-peach.vercel.app/` returned HTTP 200 with the Star67 title,
+  HSTS, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, restrictive
+  Permissions-Policy, and strict referrer policy. Vercel reports a cache hit;
+  this proves the existing deployment only. It still does not prove that the
+  staged browser-first README commit `4f2ecba` is merged or deployed, and no
+  GitHub-admin or deployment mutation was attempted.
