@@ -1619,3 +1619,22 @@ Code, or Cursor without taking custody of credentials or conversations.
   23:52 America/New_York. In either route, it must return `status: ok`, change
   only its allowed path, and pass the lead-reproduced check. A binary/version
   probe does not satisfy this deferred receipt.
+- 2026-08-04T06:08:51Z: Fresh target-host recheck found
+  `Leos-Macbook-M4-Pro.local` online at the network layer: one bounded ICMP
+  probe replied in 15.351 ms. Read-only TCP/22 checks were refused or timed
+  out, so no SSH shell was available. One documented Jump Desktop attempt
+  opened the target window but remained `Connecting...` for 15 seconds and
+  was closed. No clone, install, `pilot-puppy doctor`, skill mount,
+  Outcome/A/B/C readback, or native-host receipt was produced. This is a
+  fresh reachability receipt only, not cross-computer proof. Keep the target
+  handoff WAITING until Jump Connect reaches a usable desktop or an authorized
+  remote shell is available; do not retry in a loop.
+- 2026-08-04T06:11:32Z: Native Codex remains WAITING on the named account
+  reset predicate at 2026-08-07 23:52 America/New_York. Do not substitute a
+  version probe or provider projection. After that time, rerun the exact
+  sealed task `host-prompt-heading-guard` at target revision
+  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, allow only
+  `tests/test_pilot_puppy_host.py`, require `status: ok`, and reproduce
+  `python3 -m unittest tests.test_pilot_puppy_host -v` from the lead
+  checkout. The packet metadata/hash remains authoritative; do not invent a
+  replacement task body.
