@@ -2102,3 +2102,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   authenticated browser state was changed. Resume with PR review/merge and an
   owner-controlled authenticated runtime/browser readback; this is product
   progress, not a Pilot Puppy test objective.
+- 2026-08-04T16:36:22Z: Reproduced the Snowcubes consignment source lane at
+  fresh `origin/main@69041ac` in an isolated sparse checkout. The focused
+  Python consignment/cafe suite passes 289/289, `scripts/audit-consignment-
+  source-truth.py` passes every check, and the Nicole consignment contract
+  passes 2/2. The current ledger keeps Marathon's 2026-05-21 stock-add
+  explicitly FREE with payment status UNKNOWN and no payment row; the audit's
+  current open totals are 7 Bagels Deli `$0.00`, Everyman Espresso `$22.00`,
+  and Marathon Cafe `$0.00`. No Shopify/admin, customer, money, deployment,
+  or protected checkout state changed. Remaining resume predicate is the
+  already-recorded owner/deployment alignment for the live agentic-discovery
+  surface; source truth is not the same as live proof.
