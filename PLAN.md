@@ -2166,3 +2166,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   probes returned 200. Resume predicate: authorized Shopify/Worker owner
   aligns one canonical endpoint and capability profile, then rerun this guard
   and public readback; no storefront workaround was made.
+- 2026-08-04T16:49:12Z: Ran supplementary security checks on Moussey PR
+  commit `7507ab9`: `npm audit --omit=dev` reports zero vulnerabilities;
+  full redacted gitleaks finds 38 matches, all in `.test.*` fixtures, including
+  an intentionally secret-shaped GitLab fixture used to test sanitization; a
+  clean archived copy with test fixtures removed scans 17.26 MB with zero
+  findings. This supports source triage only; the official Codex Security scan
+  is still unstarted and authenticated runtime proof remains owner-controlled.
