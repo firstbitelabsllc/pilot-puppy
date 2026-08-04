@@ -2090,3 +2090,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   local Node/clone/`./start` README copy, and the GitHub rename/homepage/topic
   metadata remains admin-gated; no merge, deploy, or metadata mutation was
   claimed.
+- 2026-08-04T16:34:44Z: Advanced the reachable Moussey URL-privacy lane from
+  clean `origin/main@40a487c` in isolated worktree commit `7507ab9`, published
+  as `codex/moussey-credential-free-phone-origin-20260804`. The shared URL
+  helper now owns the phone landing page's credential-free HTTPS `:9443`
+  origin behavior; userinfo, path, query, and fragment state are removed, and
+  invalid input fails closed. The focused URL suite passes 6/6 and `git diff
+  --check` passes. The borrowed full TypeScript check remains red on existing
+  cleaner/Slack/control-plane type mismatches, with no diagnostic in the three
+  touched files; no protected Moussey checkout, runtime, credentials, or
+  authenticated browser state was changed. Resume with PR review/merge and an
+  owner-controlled authenticated runtime/browser readback; this is product
+  progress, not a Pilot Puppy test objective.
