@@ -2032,3 +2032,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   no `star67` topic, `WRITE` permission, and `viewerCanAdminister=false`; no
   unauthorized metadata mutation was attempted. PR #5 restarted CI at this
   head and remains open.
+- 2026-08-04T16:09:21Z: Snowcubes advanced independently to
+  `main@c68223e`, adding a guarded stories visual-smoke harness; the current
+  consignment ledger and summary still prove Marathon 2026-05-21 as
+  FREE/UNKNOWN with no payment row. Star67 remains clean at `abf56d6` with the
+  browser-only README; PR #5's two current build jobs are still in
+  `npm run build`. Moussey remains `main@40a487c`. No product surface was
+  changed in this readback.
