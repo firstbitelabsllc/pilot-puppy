@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 86
-- Outcome Updated At: 2026-08-04T01:58:50Z
+- Outcome Revision: 87
+- Outcome Updated At: 2026-08-04T02:01:22Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -50,10 +50,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   billing/source labels.
 - Snowcubes security PR #1567 is now rebased at `6f24d97` against
   `426938ab`; its diff is only `package-lock.json`, `git diff --check` passes,
-  the full audit leaves only two low `esbuild` findings in the Shopify CLI
-  dev-chain, and the production-only audit reports 0 vulnerabilities. `npm
-  ci` remains the next security proof after the host resource gate recovers;
-  the breaking Shopify CLI upgrade is not being forced.
+  the PR is OPEN/CLEAN/mergeable with Graphite mergeability passing and policy
+  scans skipped, the full audit leaves only two low `esbuild` findings in the
+  Shopify CLI dev-chain, and the production-only audit reports 0
+  vulnerabilities. `npm ci` remains the next security proof after the host
+  resource gate recovers; the breaking Shopify CLI upgrade is not being
+  forced.
 - The current read-only host sample is constrained: memory free `63%`, swap
   `13.97/15.36 GiB` used, and only `13 GiB` free on the data volume. Cleaner
   MPCLEAN-254/253 heavy test, build, restart, and browser work remains paused;
@@ -62,7 +64,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   and production-only audit `0`; its owner-controlled authenticated runtime
   readback remains open. Star67's Vercel-first README and hosted/browser/CI
   proof remain green at `5d6f005`, while the repository rename/homepage/topic
-  write remains owner-admin gated. Pilot Puppy PR #99 at `51b5678` is
+  write remains owner-admin gated. Pilot Puppy PR #99 at `2452399` is
   OPEN/CLEAN with all required checks passing. No merge, deploy, admin,
   credential-rotation, payment, ledger, or production-runtime write was made.
 
@@ -1226,11 +1228,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   treat either the stale process or the isolated unauthenticated shell as
   current customer proof.
 - Snowcubes security repair PR #1567 is pushed at `6f24d97` against current
-  public main `426938ab`; the PR remains OPEN with its current checks/readback
-  still settling, and is not merged or deployed. Resume by letting the current
-  base checks finish, then run `npm ci`, high/production audit, and the focused
-  gates after the host resource gate recovers. Do not force the breaking
-  Shopify CLI upgrade just to claim zero total findings.
+  public main `426938ab`; the PR is OPEN/CLEAN/mergeable with Graphite
+  mergeability passing and policy scans skipped, and is not merged or
+  deployed. Resume with `npm ci`, high/production audit, and the focused gates
+  after the host resource gate recovers. Do not force the breaking Shopify CLI
+  upgrade just to claim zero total findings.
 - Pilot Puppy portfolio PR #99 is OPEN/CLEAN/MERGEABLE after its latest
   docs-only checkpoint. The current required CI, browser/docs, CodeQL,
   gitleaks, public-ready, and Graphite checks pass; `[code]smith` is skipped by
