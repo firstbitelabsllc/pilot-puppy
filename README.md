@@ -4,10 +4,11 @@
 
 Your chief of staff for AI coding work.
 
-Pilot Puppy tells you what work is trying to achieve, what is happening, what
-proof exists, and which A/B/C choice needs you. It helps you name the right
-local role for a task, drives an existing native coding tool only when you ask,
-and reports the proof without taking custody of your login or conversation.
+Pilot Puppy tells you the goal, what is happening, what has been checked, and
+when you need to pick the next step. When a choice is needed, it gives you up
+to three simple buttons—A, B, or C. It helps you line up the right kind of
+help, drives an existing native coding tool only when you ask, and reports
+back without taking custody of your login or conversation.
 
 It supports a project's own work lane; it is not a gate that pauses unrelated
 projects. One sealed task makes a handoff reviewable, while each project keeps
@@ -44,8 +45,9 @@ pilot-puppy status
 pilot-puppy browse
 ```
 
-`PLAN.md` is durable authority. The loopback browser renders its current
-Outcome, one plain-language briefing, proof status, and up to three choices.
+`PLAN.md` is durable authority. The loopback browser renders the current goal,
+a plain-language briefing, what has been checked, and up to three choices.
+Nothing starts until you choose.
 
 `roster init` creates a generic local list of six work roles: `lead`,
 `planner`, `dev`, `debug`, `review`, and `hard-dev`. It is not a model picker

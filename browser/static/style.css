@@ -38,8 +38,9 @@ main:focus { outline: none; }
 .card > .eyebrow { margin-top: 42px; }
 .card h2 { max-width: 16ch; margin-top: 0; margin-bottom: 18px; font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing: -.055em; }
 .current { margin-top: 0; margin-bottom: 42px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.55; }
-.role-guide { margin-top: 0; margin-bottom: 42px; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--accent-soft) 34%, var(--surface)); }
-.role-guide .eyebrow { margin-bottom: 14px; }
+.role-guide { margin-top: 0; margin-bottom: 42px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--accent-soft) 34%, var(--surface)); }
+.role-guide summary { cursor: pointer; color: var(--accent); font-weight: 800; }
+.role-guide-intro { margin: 16px 0 14px; color: var(--muted); line-height: 1.45; }
 .role-guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
 .role-guide-item { min-width: 0; padding: 12px; border-radius: 12px; background: var(--surface); }
 .role-guide-item dt { color: var(--muted); font-size: .8rem; font-weight: 650; line-height: 1.35; }
@@ -50,6 +51,8 @@ main:focus { outline: none; }
 .brief dt { color: var(--muted); font-size: .82rem; font-weight: 700; }
 .brief dd { margin: 0; line-height: 1.5; }
 .choices { margin: 0; padding: 34px clamp(24px, 5vw, 56px); background: color-mix(in srgb, var(--warm-soft) 50%, var(--surface)); }
+.choices h3 { margin: 0 0 8px; font-size: clamp(1.35rem, 3vw, 2rem); letter-spacing: -.03em; }
+.choice-intro { margin: 0 0 18px; color: var(--muted); line-height: 1.45; }
 .choice { width: 100%; display: flex; align-items: center; gap: 16px; margin: 10px 0; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; }
 .choice:hover { border-color: var(--accent); transform: translateY(-1px); }
 .choice:disabled { opacity: .58; cursor: default; transform: none; }

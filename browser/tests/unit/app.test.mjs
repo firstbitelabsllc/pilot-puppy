@@ -20,11 +20,16 @@ describe('Pilot Puppy browser shell', () => {
     expect(app).not.toContain('WebSocket');
   });
 
-  it('names the chief-of-staff brief sections plainly', () => {
-    expect(app).toContain("text: 'Now'");
-    expect(app).toContain("row('Change', briefing.changed)");
-    expect(app).toContain("text: 'A/B/C decision'");
-    expect(app).toContain("briefing.proof ? 'Proof' : 'Proof not available yet'");
+  it('names the chief-of-staff brief and choice feature plainly', () => {
+    expect(app).toContain("text: 'The goal'");
+    expect(app).toContain("text: 'Right now'");
+    expect(app).toContain("row(\"What's new\", briefing.changed)");
+    expect(app).toContain("text: 'Your next choice'");
+    expect(app).toContain("text: 'Pick what happens next'");
+    expect(app).toContain("text: 'This is the multiple-choice step: pick A, B, or C.'");
+    expect(app).toContain("text: 'Nothing starts until you choose.'");
+    expect(app).toContain("briefing.proof ? 'What we checked' : 'What we checked (not ready yet)'");
+    expect(app).not.toContain("text: 'A/B/C decision'");
   });
 
   it('keeps responsive and reduced-motion behavior', () => {

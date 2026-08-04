@@ -48,7 +48,7 @@ async function choose(plan, option) {
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'Choice could not be saved.');
-  status.textContent = 'Choice received locally. Your coding host still needs to apply it.';
+  status.textContent = 'Saved. Pilot Puppy is ready for the next step.';
   document.querySelectorAll('.choice').forEach((button) => { button.disabled = true; });
 }
 
@@ -77,19 +77,23 @@ function renderPlan(plan) {
   head.append(el('span', { className: 'status', text: briefing.state.replaceAll('_', ' ') }));
   head.append(el('span', { className: 'project-name', text: plan.title }));
   card.append(head);
-  card.append(el('p', { className: 'eyebrow', text: 'Outcome' }));
+  card.append(el('p', { className: 'eyebrow', text: 'The goal' }));
   card.append(el('h2', { text: outcome.summary }));
-  card.append(el('p', { className: 'eyebrow', text: 'Now' }));
+  card.append(el('p', { className: 'eyebrow', text: 'Right now' }));
   card.append(el('p', { className: 'current', text: outcome.current_move }));
 
-  const roleGuide = el('section', { className: 'role-guide' });
-  roleGuide.append(el('p', { className: 'eyebrow', text: 'Choose the work shape' }));
+  const roleGuide = el('details', { className: 'role-guide' });
+  roleGuide.append(el('summary', { text: 'How Pilot Puppy helps' }));
+  roleGuide.append(el('p', {
+    className: 'role-guide-intro',
+    text: 'Optional: see the kinds of help Pilot Puppy can line up.',
+  }));
   const roles = el('dl', { className: 'role-guide-list' });
   [
-    ['Ambiguous decision', 'planner'],
-    ['Ordinary bounded change', 'dev'],
-    ['Reproducible failure', 'debug'],
-    ['Difficult, proof-heavy build', 'hard-dev'],
+    ['When the next step is unclear', 'Make a plan'],
+    ['A small, focused change', 'Build it'],
+    ['A problem we can repeat', 'Find the fix'],
+    ['A big change that needs extra checking', 'Handle the hard part'],
   ].forEach(([work, role]) => {
     const item = el('div', { className: 'role-guide-item' });
     item.append(el('dt', { text: work }), el('dd', { text: role }));
@@ -98,19 +102,24 @@ function renderPlan(plan) {
   roleGuide.append(roles);
   roleGuide.append(el('p', {
     className: 'role-guide-note',
-    text: 'Run pilot-puppy route explicitly when the task is ready. It launches nothing.',
+    text: 'Pilot Puppy waits for you to choose before anything starts.',
   }));
   card.append(roleGuide);
 
   const brief = el('dl', { className: 'brief' });
-  brief.append(row('Change', briefing.changed));
+  brief.append(row("What's new", briefing.changed));
   brief.append(row('Why it matters', briefing.matters));
-  brief.append(row('Recommendation', briefing.recommendation));
+  brief.append(row('Our suggestion', briefing.recommendation));
   card.append(brief);
 
   if (briefing.choices.length) {
     const choices = el('section', { className: 'choices' });
-    choices.append(el('p', { className: 'eyebrow', text: 'A/B/C decision' }));
+    choices.append(el('p', { className: 'eyebrow', text: 'Your next choice' }));
+    choices.append(el('h3', { text: 'Pick what happens next' }));
+    choices.append(el('p', {
+      className: 'choice-intro',
+      text: 'This is the multiple-choice step: pick A, B, or C.',
+    }));
     choices.append(el('p', { className: 'choice-question', text: briefing.blocker || 'Choose the next move' }));
     briefing.choices.forEach((option, index) => {
       const button = el('button', { className: 'choice', type: 'button' });
@@ -123,12 +132,12 @@ function renderPlan(plan) {
       });
       choices.append(button);
     });
-    choices.append(el('p', { id: 'choice-status', className: 'choice-status', text: 'Nothing is sent until you choose.' }));
+    choices.append(el('p', { id: 'choice-status', className: 'choice-status', text: 'Nothing starts until you choose.' }));
     card.append(choices);
   }
 
   const proof = el('details', { className: 'proof' });
-  proof.append(el('summary', { text: briefing.proof ? 'Proof' : 'Proof not available yet' }));
+  proof.append(el('summary', { text: briefing.proof ? 'What we checked' : 'What we checked (not ready yet)' }));
   if (briefing.proof) {
     proof.append(el('p', { text: briefing.proof.verification_summary }));
     proof.append(el('code', { text: briefing.proof.locator }));

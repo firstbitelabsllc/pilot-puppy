@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 207
-- Outcome Updated At: 2026-08-04T16:29:20Z
+- Outcome Revision: 208
+- Outcome Updated At: 2026-08-04T16:56:30Z
 - Outcome State: working
 - Outcome: Make Pilot Puppy the single local work front door for the active product portfolio: brief the work, route one transparent role/native host, drive one bounded packet, and preserve proof without taking custody of credentials or conversations.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67 (formerly Pivot SQL) and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; StrongYes's current Code Reps/Game Plan authority; Resplit 2.0 launch readiness; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary. Nicole's shipped SQL trainer and archived/paused StrongYes queues are mapped for truth but are not new work.
@@ -48,6 +48,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 <!-- Historical duplicate operator-detail receipts end here. -->
 
 ## Current authority override
+
+- 2026-08-04T16:56:30Z: The person-facing brief now says The goal, Right now,
+  What's new, What we checked, and Pick what happens next. The A/B/C area is
+  explicitly described as the multiple-choice step; the optional help guide is
+  collapsed and uses everyday language. Choice IDs, payloads, routing, native
+  execution, privacy boundaries, and local custody are unchanged. Proof: 4
+  JavaScript tests, 142 Python tests, docs build, public-ready scan (99 files /
+  0 findings), and 6/6 desktop+phone loopback tests on system Chrome.
 
 - 2026-08-04T16:29:20Z: Completion audit closed the last presentation mismatch. The loopback brief now labels Outcome, Now, Change, Proof, and A/B/C decision while keeping the existing provider-neutral data and local-choice contract. Proof: 4 JavaScript tests, 142 Python tests, docs build, public-ready scan (99 files/0 findings), and 6/6 desktop+phone loopback tests on system Chrome. No runtime, credential, transcript, or external mutation.
 
@@ -865,6 +873,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T16:56:30Z: Pilot Puppy now explains the goal, the current step,
+  what is new, what was checked, and the next step in everyday language. The
+  multiple-choice area says exactly what it is and waits for the person's
+  choice; the optional help guide stays tucked away. No execution or data
+  contract changed.
 
 - 2026-08-04T16:29:20Z: The chief-of-staff surface now names the required operator sequence directly: Outcome, Now, Change, Proof, and A/B/C decision. The existing local role/host, sealed packet, privacy, and lead-acceptance contracts are unchanged.
 

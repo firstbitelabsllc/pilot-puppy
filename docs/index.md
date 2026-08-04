@@ -15,7 +15,7 @@ hero:
 
 features:
   - title: Calm briefing
-    details: One Outcome, what changed, why it matters, proof, and at most A/B/C.
+    details: A calm view of the goal, what is new, what was checked, and the next step you can pick.
   - title: Durable truth
     details: PLAN.md survives sessions and remains the only work authority.
   - title: Explicit delegation
