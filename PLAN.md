@@ -1030,6 +1030,17 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-04T22:16:03Z: Real local dogfood now proves the foreground path,
+  not just a fake adapter: a disposable, one-file Drive task selected native
+  Codex from the local roster, wrote a green kept review-branch commit, and
+  left its source checkout clean. A separate detached lead checkout reproduced
+  the named check and `git diff --check`; the only tracked change was the
+  declared one file. This is local execution and lead reproduction evidence
+  only—no remote branch, pull request, merge, deployment, publication, or
+  customer project was touched. R10's next smallest gap is an explicit,
+  lead-reviewed handoff from that kept branch into ordinary delivery, without
+  adding automatic GitHub or deployment behavior.
+
 - 2026-08-04T22:14:00Z: Pushed the reviewed R10 implementation as public
   branch `codex/pilot-puppy-drive-langfuse-20260804` at `7ce87de5` from its
   isolated worktree. No pull request, merge, release, or deploy was created.
