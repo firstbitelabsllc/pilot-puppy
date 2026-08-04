@@ -12,15 +12,15 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 128
-- Outcome Updated At: 2026-08-04T06:07:17Z
+- Outcome Revision: 130
+- Outcome Updated At: 2026-08-04T15:58:28Z
 - Outcome State: working
-- Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
+- Outcome: Make Pilot Puppy the single local work front door for the active product portfolio: brief the work, route one transparent role/native host, drive one bounded packet, and preserve proof without taking custody of credentials or conversations.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; StrongYes's current Code Reps/Game Plan authority; Resplit 2.0 launch readiness; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary. Nicole's shipped SQL trainer and archived/paused StrongYes queues are mapped for truth but are not new work.
 - Execution rule: "one bounded packet" describes only the size of a reviewable execution unit; it does not narrow the Outcome to one project, one fix, or one delivery. Keep every named lane in this same Outcome, fan out only across disjoint owned surfaces when useful, fold receipts back into this plan, and resume the next highest-value reachable lane after each packet. A finished packet advances the portfolio and never closes the Outcome by itself.
 - Next: Resume every lane from its canonical plan and current ref, without waiting on the other computer or native-Codex quota. Keep the Moussey C11 runtime, owner-admin, cleaner host-resource, and merge/deploy predicates open until each is proven.
 - Next Detail: Resume every named lane from its canonical plan and current ref without waiting on the other computer or native-Codex quota. Snowcubes' 2026-05-21 Marathon row remains FREE/UNKNOWN with no charge or payment row; C14 remains source-cited read-only Messages metadata with no ledger or Shopify write. Snowcubes current public main is `405ae96` after PR #1419 plus PR #1683 and merged security PR #1567 (`7fd0a06`); the source audit is `ok: true`, the package-lock production audit is 0 vulnerabilities, and the resolver suite is 22/22 with dropped-pack language routing to the FPA-owned consignment capability and its money stop. The storefront remains live, but POST `/api/ucp/mcp` currently returns HTTP 422 `invalid_profile_url`, while `agents.md`, `llms.txt`, and `/.well-known/ucp` advertise cart/checkout/payment/order capabilities not proven in the served contract. The existing agentic-discovery/Shopify/Worker owner must align one profile, endpoint, capability set, and tool list; this is an owner/deploy handoff, not a storefront workaround. Open PR #1537 remains based on older `f0685821c` and is not a merge candidate from this goal. Moussey PR #121 is merged at `d7553fb`; authenticated C11/runtime remains owner-controlled. The official Codex Security workspace `c3dd6b8f-8936-468d-8a8a-6e2d18d4b827` targets current Moussey `d7553fb` but still awaits setup/start; manual gitleaks found only intentional fixtures/docs and Star67's local-storage namespace, with no credential value printed or treated as AI-scan proof. Star67 security hardening is merged to `main@1dece78`; post-merge GitHub CI is green and Vercel deployment `dpl_3Nor5q7RFLrE4bfRNG5zjt49Xvww` is READY at the public alias with the restrictive live headers, while owner-admin metadata remains unavailable. StrongYes `main@9f82c3cf` now includes merged PR #1467's bounded PostHog exception telemetry, PR #1469's safe lockfile repair, PR #1455's signal-specific OTLP header precedence, and PR #1458's independent error-log flush. The new server-exception path sends only an allow-listed source, error type, environment, build SHA, and synthetic exception; it excludes the original message, stack, arbitrary properties, request path, tokens, and user payload. Current-main reproof passes the five observability suites (66/66), typecheck, and diff check; the full local smoke gate passed all 24 Jest batches with only existing lint warnings; production audit remains 16 findings (3 high, 0 critical). Live `https://strongyes.io/api/health` and `/game-plan` return HTTP 200 and the health response reports commit `9f82c3cf`; this proves source-to-live deployment, while deliberate Grafana correlation remains unproven. The tested Next 16.3.0/ESLint 9 migration still fails the existing typecheck, `next lint`, and build contracts, so the remaining major upgrades are an owner-controlled framework migration. Resplit remains dirty and owner-bound with unresolved release/device gates. Keep owner-admin, authenticated-runtime, cleaner host-resource, official security scan, exact consumer/device, agentic-discovery owner, StrongYes Grafana correlation, Resplit device/runtime, and portability predicates explicit while reachable proof continues independently.
-- Current publication state (2026-08-04T06:07:17Z): Star67 PR #3 is merged at `1dece78`; Moussey PR #121 is merged at `d7553fb`; Snowcubes PR #1419 is merged at `405ae96` on public main, alongside security PR #1567 at `7fd0a06`; StrongYes PR #1467 is merged at `9f82c3cf`, PR #1469 is merged at `eb48309`, PR #1455 is merged at `5a2cec3`, and PR #1458 is merged at `1f444be`; Pilot Puppy PR #127 is merged at `4e3d866`, PR #128 is merged at `139a519`, PR #130 is merged at `7f697d1`, PR #131 is merged at `5d55273`, PR #132 is merged at `acb8d45`, PR #133 is merged at `839512e`, PR #135 is merged at `1d3e0ae`, and PR #136 is merged at `ad4cea9`. The StrongYes, Snowcubes, and latest portfolio receipts are now public in this plan revision. StrongYes source and live endpoint readback are proven at `9f82c3cf`; deployment, repository metadata, authenticated-runtime, official-security-scan, cleaner-resource, exact consumer/device, agentic-discovery owner alignment, StrongYes live Grafana correlation, Snowcubes PR #1537 product-owner decision, and Resplit device/runtime predicates remain separate and open.
+- Current publication state (2026-08-04T15:58:28Z): Star67 PR #3 is merged at `1dece78`; Moussey PR #121 is merged at `d7553fb`; Snowcubes PR #1419 is merged at `405ae96` on public main, alongside security PR #1567 at `7fd0a06`; StrongYes PR #1467 is merged at `9f82c3cf`, PR #1469 is merged at `eb48309`, PR #1455 is merged at `5a2cec3`, and PR #1458 is merged at `1f444be`; Pilot Puppy PR #127 is merged at `4e3d866`, PR #128 is merged at `139a519`, PR #130 is merged at `7f697d1`, PR #131 is merged at `5d55273`, PR #132 is merged at `acb8d45`, PR #133 is merged at `839512e`, PR #135 is merged at `1d3e0ae`, and PR #136 is merged at `ad4cea9`. The StrongYes, Snowcubes, and latest portfolio receipts are now public in this plan revision. StrongYes source and live endpoint readback are proven at `9f82c3cf`; deployment, repository metadata, authenticated-runtime, official-security-scan, cleaner-resource, exact consumer/device, agentic-discovery owner alignment, StrongYes live Grafana correlation, Snowcubes PR #1537 product-owner decision, and Resplit device/runtime predicates remain separate and open.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
@@ -34,14 +34,25 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
 - Proof: Public source and live readbacks are recorded for Star67, Moussey, Snowcubes, StrongYes, Resplit, and Pilot Puppy; external owner/admin, runtime, security, deployment, device, and portability gates remain explicit.
-- Proof Detail: Star67's Vercel-first README and hosted/browser/CI proof remain green; the live URL returns HTTP 200 with Star67 branding, no stale product names, and the merged restrictive `Permissions-Policy`. Snowcubes current main contains the exact-consumer readiness fix, merged lockfile security repair, and PR #1419's dropped-pack consignment route; `audit-consignment-source-truth.py` passes with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`, and the 5/21 FREE/UNKNOWN row with no charge/payment row. The resolver suite is 22/22, the exact dropped-pack query routes to the FPA owner, and the skill/routing audits are clean. The live storefront returns HTTP 200, while its UCP POST still fails discovery with `invalid_profile_url` and its public capability docs overstate the proven endpoint. Moussey's merged source fix is proven and the current source surface no longer exposes billing-model/data-source jargon, while authenticated runtime/C11 remains owner-controlled. StrongYes public `/game-plan` and `/api/health` both return HTTP 200; `/api/health` reports live commit `9f82c3cf`. Current public main includes the bounded PostHog exception telemetry from PR #1467, which excludes original error messages/stacks and arbitrary request properties, plus the signal-specific OTLP credential-boundary fix from PR #1455, independent error-log flushing from PR #1458, and the safe lockfile repair from PR #1469. The five current-main observability suites pass 66/66, `npm run smoke:local` passes all 24 Jest batches with existing lint warnings, typecheck passes, and `git diff --check` passes. The merged source and live endpoint are proven; live Grafana deliberate-error correlation is not claimed. The remaining Next 16.3.0/ESLint 9 migration remains unmerged because typecheck, `next lint`, and build fail. The current public Pilot Puppy plan is revision 128; current-main manual gitleaks triage found only intentional secret-shaped fixtures/docs and the Star67 local-storage namespace, while the official Codex Security scan is correctly scoped to current Moussey `d7553fb` but still awaits setup/start; Resplit release/device gates remain open.
+- Proof Detail: Star67's Vercel-first README and hosted/browser/CI proof remain green; the live URL returns HTTP 200 with Star67 branding, no stale product names, and the merged restrictive `Permissions-Policy`. Snowcubes current main contains the exact-consumer readiness fix, merged lockfile security repair, and PR #1419's dropped-pack consignment route; `audit-consignment-source-truth.py` passes with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`, and the 5/21 FREE/UNKNOWN row with no charge/payment row. The resolver suite is 22/22, the exact dropped-pack query routes to the FPA owner, and the skill/routing audits are clean. The live storefront returns HTTP 200, while its UCP POST still fails discovery with `invalid_profile_url` and its public capability docs overstate the proven endpoint. Moussey's merged source fix is proven and the current source surface no longer exposes billing-model/data-source jargon, while authenticated runtime/C11 remains owner-controlled. StrongYes public `/game-plan` and `/api/health` both return HTTP 200; `/api/health` reports live commit `9f82c3cf`. Current public main includes the bounded PostHog exception telemetry from PR #1467, which excludes original error messages/stacks and arbitrary request properties, plus the signal-specific OTLP credential-boundary fix from PR #1455, independent error-log flushing from PR #1458, and the safe lockfile repair from PR #1469. The five current-main observability suites pass 66/66, `npm run smoke:local` passes all 24 Jest batches with existing lint warnings, typecheck passes, and `git diff --check` passes. The merged source and live endpoint are proven; live Grafana deliberate-error correlation is not claimed. The remaining Next 16.3.0/ESLint 9 migration remains unmerged because typecheck, `next lint`, and build fail. The current public Pilot Puppy plan is revision 130; current-main manual gitleaks triage found only intentional secret-shaped fixtures/docs and the Star67 local-storage namespace, while the official Codex Security scan is correctly scoped to current Moussey `d7553fb` but still awaits setup/start; Resplit release/device gates remain open.
 - Proof Summary: Star67 and Moussey source/UI/security work is merged and proven; Snowcubes source/readiness proof is green; StrongYes is live; Resplit and external security/device/runtime gates remain open; the portfolio remains working.
 - Proof Summary Detail: Live and source proofs are kept separate. No owner-admin rename, authenticated-runtime, deployment, customer/admin, payment, ledger, Shopify, credential, or production-runtime mutation was claimed. The manual gitleaks scan did not print or validate any credential; its fixture matches are not a substitute for the official AI scan. Exact consumer/device proof, official security scan start, host-resource recovery, and Resplit release/device gates remain the explicit resume predicates.
-- Publication correction: Earlier proof-detail entries are retained as historical pre-merge receipts. Current publication is Star67 `main@1dece78` with production deployment `dpl_3Nor5q7RFLrE4bfRNG5zjt49Xvww` and live alias readback, Moussey `main@d7553fb`, Snowcubes `main@405ae96` (current main after merged security/readiness/agentic-discovery lineage and PR #1419), StrongYes `main@9f82c3cf` (PR #1467 bounded PostHog exception telemetry, PR #1469 safe lockfile repair plus PRs #1455/#1458, and live `/api/health`/`/game-plan` readback), and public Pilot Puppy plan revision 128 (PR #99 plus receipt PRs #115/#116/#117/#118/#119/#120/#123/#125/#126/#127/#128/#130/#131/#132/#133/#135/#136); the remaining open items are admin metadata, authenticated runtime, official security scan, exact consumer/device, host resources, StrongYes major framework migration and live Grafana correlation, agentic-discovery owner alignment, open Snowcubes marketing decisions, and Resplit authority/device gates.
+- Publication correction: Earlier proof-detail entries are retained as historical pre-merge receipts. Current publication is Star67 `main@1dece78` with production deployment `dpl_3Nor5q7RFLrE4bfRNG5zjt49Xvww` and live alias readback, Moussey `main@d7553fb`, Snowcubes `main@405ae96` (current main after merged security/readiness/agentic-discovery lineage and PR #1419), StrongYes `main@9f82c3cf` (PR #1467 bounded PostHog exception telemetry, PR #1469 safe lockfile repair plus PRs #1455/#1458, and live `/api/health`/`/game-plan` readback), and public Pilot Puppy plan revision 130 (PR #99 plus receipt PRs #115/#116/#117/#118/#119/#120/#123/#125/#126/#127/#128/#130/#131/#132/#133/#135/#136); the remaining open items are admin metadata, authenticated runtime, official security scan, exact consumer/device, host resources, StrongYes major framework migration and live Grafana correlation, agentic-discovery owner alignment, open Snowcubes marketing decisions, and Resplit authority/device gates.
 - Proof Delivery: source + live readback
 - Proof Delivery Detail: product code and source receipts remain separated from merged, deployed, live, and proven state; Star67 now has all four source/merge/deploy/live receipts. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Current portfolio readback
+
+- 2026-08-04T15:58:28Z: Closed the P0 role-vocabulary gap in the local Pilot
+  Puppy front door. Fresh rosters and route packets now use `planner`, `dev`,
+  `debug`, `review`, `hard-dev`, and `lead`; existing local `bulk`, `critic`,
+  and `hard-ic` files are accepted and normalized on read/write. The loopback
+  guide, README, routing/roster references, host receipts, and focused tests
+  all use the current names. Proof is 3 JavaScript tests, 138 Python tests,
+  6 loopback desktop/phone tests, docs build, public-ready scan (98 files),
+  release package (63 files), and canonical doctor 11/11. No provider, model,
+  credential, queue, daemon, or execution behavior changed. Next: keep these
+  six names as the only public role vocabulary for the next bounded route.
 
 - 2026-08-04T06:07:17Z: Repaired the umbrella Operator Brief contract without
   changing product behavior. The top-level Proof and Proof Summary are now
@@ -272,7 +283,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   explicit delegation roles, one bounded native-host packet, and lead
   acceptance. It is not a second product per capability.
 - The public roster names only provider-neutral roles and native host surfaces:
-  `lead`, `planner`, `bulk`, `debug`, `critic`, and `hard-ic`. Concrete model,
+  `lead`, `planner`, `dev`, `debug`, `review`, and `hard-dev`. Concrete model,
   account, quota, command, and machine bindings stay in a local private
   overlay; prompts, transcripts, credentials, and provider payloads never
   enter the plan, browser, or evidence.
@@ -284,7 +295,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 - The lead alone owns plan claims, task split, review, proof, merge, publish,
   and acceptance. Workers return drafts plus bounded receipts. Fan-out stays
   depth one and at most three path-disjoint slices only when the lead can fold
-  them in the same cycle; one batched bulk worker is the default.
+  them in the same cycle; one batched dev worker is the default.
 - Re-evaluate a role only at an evidence boundary: scout result, failed proof,
   semantic uncertainty, compaction, or explicit escalation. No timer, retry,
   watcher, or autonomous reroute exists.
@@ -471,8 +482,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   states distinct, and close reachable Star67, Moussey, Snowcubes, security,
   and handoff work without creating a second operating layer.
 - [completed] R1: Add a provider-neutral, local roster contract and safe
-  foreground display for explicit `lead`, `planner`, `bulk`, `debug`, `critic`,
-  and `hard-ic` roles. It must be local configuration only, no-overwrite,
+  foreground display for explicit `lead`, `planner`, `dev`, `debug`, `review`,
+  and `hard-dev` roles. It must be local configuration only, no-overwrite,
   bounded, and private-text safe. Local roster output may show safe role labels
   and availability; concrete model, account, quota, command, and machine data
   must stay out of browser/status/evidence output.
@@ -485,8 +496,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   host handoff. Reject unsafe, stale, forged, task-mismatched, host-mismatched,
   or self-overwriting route packets before a host starts. Keep one explicit
   packet at a time; do not add a fan-out manager, queue, daemon, or retries.
-- [completed] R4: Keep rerouting and independent criticism at an evidence
-  boundary. A `review` route remains a manual critic decision; the lead starts
+- [completed] R4: Keep rerouting and independent review at an evidence
+  boundary. A `review` route remains a manual review decision; the lead starts
   any new route explicitly and retains final proof/acceptance.
 - [completed] R5: Add a local private seat overlay because a real native-tool
   setup needs more than the generic role/host roster. It may select only a
@@ -494,7 +505,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   owner-local, with its configuration absent from browser/status, plans, route
   evidence, attempt receipts, packages, and stranger installs. It may never hold credentials,
   prompts, provider payloads, profile guesses, or arbitrary command arguments.
-- [completed] R6: Prove the default `planner`, `bulk`, `debug`, and `hard-ic`
+- [completed] R6: Prove the default `planner`, `dev`, `debug`, and `hard-dev`
   route shapes without launch, and publish their honest calibration boundary.
   A native-host calibration is valid only for the same role and frozen task in
   separate clean worktrees. Report route, scope, proof, lead reproduction, and
@@ -508,6 +519,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   `roster prefer` command that reprioritizes only declared, enabled generic
   role/host slots. It must not read providers/models/quotas, launch work, or
   create project evidence.
+- [completed] R9: Align the public roster and route vocabulary with the six
+  user-facing work roles `planner`, `dev`, `debug`, `review`, `hard-dev`, and
+  `lead`. Existing local `bulk`, `critic`, and `hard-ic` labels remain readable
+  as compatibility aliases, but normalized roster views, route packets, docs,
+  and the loopback guide emit only the current names.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
