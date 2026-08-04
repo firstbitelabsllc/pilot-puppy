@@ -1502,6 +1502,23 @@ if not ok:
         self.assertIn("style-src 'unsafe-inline'", policy)
         self.assertNotIn("style-src 'self'", policy)
 
+    def test_artifact_lookup_does_not_scan_plan_tree_first(self):
+        # Artifact delivery is the hot path for the private Snowcubes wrapper.
+        # Do not pay the full DEV_ROOT plan-discovery cost before checking the
+        # exact already-catalogued artifact target.
+        self.artifacts_dir.mkdir(parents=True)
+        artifact = self.artifacts_dir / "cold-route.html"
+        artifact.write_text("<h1>Cold route</h1>", encoding="utf-8")
+
+        with mock.patch.object(
+            browser_server,
+            "_browser_file_catalog",
+            side_effect=AssertionError("artifact lookup scanned DEV_ROOT first"),
+        ):
+            resolved = browser_server.safe_resolve_any(str(artifact))
+
+        self.assertEqual(resolved, artifact.resolve())
+
     def test_artifact_file_response_supports_explicit_inline_view(self):
         self.artifacts_dir.mkdir(parents=True)
         artifact = self.artifacts_dir / "inline.html"

@@ -2808,10 +2808,8 @@ def safe_resolve(raw: str) -> Path | None:
 def safe_resolve_any(raw: str) -> Path | None:
     """safe_resolve() OR one exact discovered HTML artifact. Read-only either way."""
     return _select_catalog_file(
-        raw, _browser_file_catalog(), DEV_ROOT
-    ) or _select_catalog_file(
         raw, _artifact_file_catalog(), ARTIFACTS_DIR
-    )
+    ) or _select_catalog_file(raw, _browser_file_catalog(), DEV_ROOT)
 
 
 def is_artifact_file(path: Path) -> bool:
