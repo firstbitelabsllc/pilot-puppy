@@ -2191,3 +2191,23 @@ Code, or Cursor without taking custody of credentials or conversations.
   `pivot.navigatorWidth.v1`, not a credential; no secret was exposed. This is
   a triaged manual result, not completion of the still-unstarted official
   Codex Security scan or proof that the staged README commit is deployed.
+- 2026-08-04T16:55:40Z: Revalidated Snowcubes against fresh `origin/main@40170f9`
+  after the source advanced past the prior `3b48a4a` receipt. The focused
+  consignment/cafe suite remains 289/289, the source-truth audit remains fully
+  green, and the Nicole contract remains 2/2. Marathon's 2026-05-21 row is
+  still explicitly FREE/UNKNOWN with no payment row; open totals remain 7
+  Bagels `$0.00`, Everyman `$22.00`, Marathon `$0.00`. Read-only agent discovery
+  still returns exactly four HTTP-200-surface errors: unsupported cart/checkout
+  claims in `/agents.md` and `/llms.txt`, UCP capability drift, and configured
+  custom-domain versus discovered Shopify MCP endpoint drift. Resume remains
+  the authorized Shopify/Worker owner aligning one endpoint and capability
+  profile before rerunning the guard and public readback.
+- 2026-08-04T16:55:40Z: Rechecked Moussey current `origin/main@67ade314` without
+  touching the dirty owner checkout. The current consignment surface contract
+  asserts the old screenshot markers (`Data source`, `Technical source
+  details`, `billing model`) are absent while retaining plain-language
+  balances, visits, payments, history, and the non-invoice note. The existing
+  local `/consignment` listener returned HTTP 200 and its HTML response exposed
+  none of those stale markers. This is fresh source plus unauthenticated
+  runtime readback; authenticated browser proof and any runtime restart remain
+  owner-controlled.
