@@ -1990,6 +1990,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   `git diff --check` and a four-commit gitleaks diff scan pass with zero
   findings. PR #5 restarted its two build checks at this head; no Vercel
   deployment claim or GitHub admin metadata claim was made.
+- 2026-08-04T16:05:18Z: Fresh Star67 readback found commit `d3f418f` had
+  reintroduced the local Node/clone/`./start` section after the browser-only
+  trim. That contradicted the explicit non-developer GitHub front-door goal,
+  so commit `39484c9` reverses only that documentation addition and restores
+  the verified 16-line / 74-word browser-only README. `git diff --check` and
+  the no-install/no-clone/no-npm assertion pass; the PR remains open and its
+  current-head CI is the next proof gate.
 - 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
   browser-first branch. `npm audit --omit=optional --json` reports zero
   vulnerabilities; gitleaks reports zero findings in the README diff and one
