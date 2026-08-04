@@ -295,6 +295,16 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-04T01:51:43Z: Completed the next full-portfolio receipt sweep. The
+  umbrella Outcome remains active; no packet or PR closes it. Pilot Puppy PR
+  #99 is OPEN/CLEAN/MERGEABLE with all current required checks passing.
+  Star67 PR #2 is OPEN/CLEAN with build and Chromium/Firefox/WebKit checks
+  passing; Snowcubes PR #1567 is OPEN/CLEAN/mergeable at its current base; and
+  Moussey PR #121 is OPEN/CLEAN with no configured remote checks. No merge,
+  deployment, owner-admin rename, credential rotation, payment, ledger, or
+  production-runtime write was made. Continue the next reachable lane while
+  keeping those external and owner-controlled predicates explicit.
+
 - 2026-08-04T01:48:13Z: Re-read current public refs before another portfolio
   claim. Snowcubes `main@41e778148` explicitly records Marathon's 2026-05-21
   nine-pack stock-add as FREE/UNKNOWN with no charge or payment row; current
@@ -1194,12 +1204,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   path, then rerun `npm ci`, high/production audit, and the focused gates. Do
   not force the breaking Shopify CLI upgrade just to claim zero total
   findings.
-- Pilot Puppy portfolio PR #99 remains OPEN/CLEAN/MERGEABLE; its current
-  required checks must be read back after the latest docs-only checkpoint.
-  `[code]smith` is skipped by policy. Resume with the repository's external
-  merge action only after the current checks pass, then read back `origin/main`
-  and the public plan before treating the full portfolio outcome as the
-  public-main authority.
+- Pilot Puppy portfolio PR #99 is OPEN/CLEAN/MERGEABLE after its latest
+  docs-only checkpoint. The current required CI, browser/docs, CodeQL,
+  gitleaks, public-ready, and Graphite checks pass; `[code]smith` is skipped by
+  policy. Resume with the repository's external merge action, then read back
+  `origin/main` and the public plan before treating the full portfolio outcome
+  as the public-main authority.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
