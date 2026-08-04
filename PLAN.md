@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 97
-- Outcome Updated At: 2026-08-04T02:36:24Z
+- Outcome Revision: 98
+- Outcome Updated At: 2026-08-04T02:37:36Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -175,11 +175,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   collected. The older Moussey consignment-hardening plan is reconciled to that
   same decision is now present on current main; the older consignment-plan
   branch is historical and is not a second merge target. Clean Moussey
-  `origin/main@3c44bbec` removes operator-page
-  clutter and strips credentials from user-facing URLs; its current clean-origin
-  proof passes the focused consignment/invoice, recorder, URL-boundary, surface,
-  build, audit, and diff checks. The existing `:4321` process still belongs to
-  a dirty primary checkout. The reachable Tailscale target serves `/consignment`
+  `origin/main@3c44bbec` removes operator-page clutter and strips credentials
+  from user-facing URLs; it still carries the residual `any amount due` form
+  copy and `due` history label that the user rejected. The isolated repair/UI
+  branch `codex/moussey-dependency-audit-20260804@e6dd162` replaces those with
+  current-balance/recorded language and passes fresh focused tests, surface
+  proof, production-only audit, build, and diff checks, but PR #121 remains
+  unmerged. The existing `:4321` process still belongs to a dirty primary
+  checkout. The reachable Tailscale target serves `/consignment`
   but its summary API reports that consignment data is not configured, so the
   protected-401 then authenticated-summary-200 predicate (C11) remains open;
   no restart or credential retrieval was attempted. Snowcubes C14 is now
@@ -198,13 +201,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   dry run found only 51 MiB of DerivedData and no meaningful safe reclaim. The
   cleaner build/browser/media ladder is therefore paused; no process, cache,
   source, or personal-media mutation was attempted.
-- **Security:** Snowcubes PR #1567 is at `f51e2d90`; current public main is
-  `41e778148`, and the branch is a lockfile-only repair against that exact
-  source base. `git diff --check` passes and the production-only lockfile
-  audit reports 0 vulnerabilities. The earlier full audit showed only two low
-  `esbuild` findings confined to the Shopify CLI dev chain; forcing the
-  breaking Shopify CLI upgrade is not justified. PR #1567 is OPEN/CLEAN/
-  mergeable after the rebase; no merge or deployment is claimed.
+- **Security:** Snowcubes PR #1567 is at `6f24d97` against current public
+  `main@426938ab`; it remains a lockfile-only repair. `git diff --check` passes
+  and the production-only lockfile audit reports 0 vulnerabilities. The full
+  audit shows only two low `esbuild` findings confined to the Shopify CLI
+  dev-chain; forcing the breaking Shopify CLI upgrade is not justified. PR
+  #1567 is OPEN/CLEAN/mergeable; no merge or deployment is claimed.
 - **Codex Security:** the official plugin workspace is open on clean Moussey
   `origin/main@3c44bbec`; setup is valid but `setup.submitted=false`, so the
   app is still waiting for the user to press Start scan. The required wait was
