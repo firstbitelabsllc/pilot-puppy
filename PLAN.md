@@ -1955,3 +1955,21 @@ Code, or Cursor without taking custody of credentials or conversations.
   23:52 America/New_York. In either route, it must return `status: ok`, change
   only its allowed path, and pass the lead-reproduced check. A binary/version
   probe does not satisfy this deferred receipt.
+- 2026-08-04T06:08:51Z: Fresh target-host recheck found
+  `Leos-Macbook-M4-Pro.local` online at the network layer: one bounded ICMP
+  probe replied in 15.351 ms. Read-only TCP/22 checks were refused or timed
+  out, so no SSH shell was available. One documented Jump Desktop attempt
+  opened the target window but remained `Connecting...` for 15 seconds and
+  was closed. No clone, install, `pilot-puppy doctor`, skill mount,
+  Outcome/A/B/C readback, or native-host receipt was produced. This is a
+  fresh reachability receipt only, not cross-computer proof. Keep the target
+  handoff WAITING until Jump Connect reaches a usable desktop or an authorized
+  remote shell is available; do not retry in a loop.
+- 2026-08-04T15:51:07Z: Advanced the reachable Star67 public-presentation lane
+  directly. Commit `edd0055b` on
+  `codex/nicole-readme-human-prose-20260804` keeps the Vercel launch link first,
+  adds the tracked landing/practice-desk screenshots, clarifies the browser
+  warehouse, and removes contributor-only install/test commands from the
+  non-developer front door. Asset existence and `git diff --check` pass. PR #5
+  is open with two GitHub build checks in progress; repository rename/homepage
+  metadata remains owner-admin bound and is not claimed.
