@@ -2064,3 +2064,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   press authority packet; its source ledger and current summary still prove
   Marathon 2026-05-21 FREE/UNKNOWN, `$0.00` open, and no payment row.
   Moussey remains `main@40a487c`; no new consignment or URL change is needed.
+- 2026-08-04T16:24:11Z: Started the bounded Codex Security standard-scan
+  setup for the current Star67 repository, session
+  `09af5c9d-bdc1-4c38-b292-ac202fb40782`. The desktop setup remained waiting
+  for the explicit Start-scan choice and produced no scan ID, findings,
+  coverage, or security acceptance; no product, deployment, credential, or
+  runtime state changed. Resume by choosing Start scan (or the setup's
+  prompt-only option), then complete the repository-wide scan and record its
+  measured coverage here. Do not claim manual checks as a substitute for
+  this official scan.
