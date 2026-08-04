@@ -2039,3 +2039,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   browser-only README; PR #5's two current build jobs are still in
   `npm run build`. Moussey remains `main@40a487c`. No product surface was
   changed in this readback.
+- 2026-08-04T16:13:43Z: Repeated Star67 README drift was made durablely
+  reviewable in product commit `913dd44`. It removes the local setup section,
+  adds `scripts/readme-contract.mjs`, and runs that contract at the start of
+  the existing `npm test` gate. The full local gate passed: README contract
+  `PASS lines=16`, determinism 14/14 across three builds, concurrency green,
+  and all existing error/format/pack/progression/crew/casebook/contrast/
+  navigator/progress/screen/coaching contracts green. PR #5 restarted from
+  this head; this is product proof, not a Pilot Puppy test objective.
