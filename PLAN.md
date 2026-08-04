@@ -2183,3 +2183,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   external-authorized, while the protected checkout is dirty with unresolved
   conflicts and was not touched. These are exact owner predicates, not Pilot
   Puppy test work.
+- 2026-08-04T16:53:20Z: Ran supplementary Star67 security checks from the clean
+  owner checkout at `codex/nicole-readme-human-prose-20260804@0c0f013`.
+  `npm audit --omit=dev --audit-level=moderate` reports zero vulnerabilities;
+  `git diff --check` passes. Redacted gitleaks reports one `generic-api-key`
+  match at `src/Workspace.tsx:87`, which is the literal local-storage key
+  `pivot.navigatorWidth.v1`, not a credential; no secret was exposed. This is
+  a triaged manual result, not completion of the still-unstarted official
+  Codex Security scan or proof that the staged README commit is deployed.
