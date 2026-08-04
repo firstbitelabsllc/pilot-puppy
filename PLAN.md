@@ -1983,6 +1983,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   Moussey runtime remains untouched; authenticated UI proof is still
   owner-controlled. Star67 PR #5 is open at `d9bbf97` with both build checks
   still running. No duplicate data, UI, or security patch was created.
+- 2026-08-04T16:03:39Z: Tightened Star67's non-developer front door in commit
+  `a3d288c`. README is now 16 lines / 74 words, puts the browser launch link
+  first, keeps the two useful screenshots and local-first privacy statement,
+  and removes all install, clone, Node, npm, and contributor instructions.
+  `git diff --check` and a four-commit gitleaks diff scan pass with zero
+  findings. PR #5 restarted its two build checks at this head; no Vercel
+  deployment claim or GitHub admin metadata claim was made.
 - 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
   browser-first branch. `npm audit --omit=optional --json` reports zero
   vulnerabilities; gitleaks reports zero findings in the README diff and one
