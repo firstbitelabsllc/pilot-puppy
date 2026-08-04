@@ -2220,3 +2220,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   states, payment safety, touch targets, and reduced motion. This is source
   proof only; it does not replace an authenticated browser/runtime release
   receipt.
+- 2026-08-04T16:57:18Z: Ran supplementary security checks on fresh Snowcubes
+  `origin/main@40170f9`: `npm audit --omit=dev --audit-level=moderate` reports
+  zero vulnerabilities, redacted gitleaks scans 9.08 MB with no leaks, and
+  `git diff --check` passes. This is source/dependency proof only; it does not
+  resolve the four live agent-discovery contract errors or authorize a Shopify,
+  Worker, Admin, deployment, or customer-data mutation.
