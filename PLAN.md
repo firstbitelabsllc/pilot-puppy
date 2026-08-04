@@ -2233,3 +2233,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   this proves the existing deployment only. It still does not prove that the
   staged browser-first README commit `4f2ecba` is merged or deployed, and no
   GitHub-admin or deployment mutation was attempted.
+- 2026-08-04T17:00:44Z: Moussey PR #127 merged to `main` as `fbe36506` after
+  exact-head review. From a clean detached worktree at current main, the
+  consignment surface contract passes 15/15 and the merged URL/privacy suite
+  passes 9/9 (`page.phone-secure` 3/3 plus `moussey-url` 6/6), including
+  credential-bearing phone input, invalid-input fail-closed behavior, app URL
+  query stripping, and STT WebSocket credential stripping. The first combined
+  run lacked dependencies in the clean worktree; the rerun used the existing
+  owner dependency installation without changing source. Authenticated browser
+  and runtime deployment proof remain owner-controlled.
