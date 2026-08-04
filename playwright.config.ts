@@ -1,7 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { resolve } from 'node:path';
 
 const PORT = process.env.PILOT_PUPPY_TEST_PORT ?? String(7400 + (process.pid % 1000));
 process.env.PILOT_PUPPY_TEST_PORT = PORT;
