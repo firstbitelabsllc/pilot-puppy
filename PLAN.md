@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 92
-- Outcome Updated At: 2026-08-04T02:12:44Z
+- Outcome Revision: 93
+- Outcome Updated At: 2026-08-04T02:17:54Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -324,6 +324,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T02:17:54Z: Revalidated the reachable Star67 public lane at branch
+  `codex/star67-smoke-proof-20260804@5d6f005`. The Vercel front door returns
+  HTTP 200; the Vercel-first README and source contain no `pivot-sql` or
+  `nlau1193/pivot-sql` residue outside a dated historical audit receipt; and
+  both full and production-only `npm audit --audit-level=high` runs report 0
+  vulnerabilities. The remaining repository rename, homepage, and topic
+  metadata write is still owner-admin gated (`admin:false`, `homepage:null`),
+  so no cosmetic source edit or false rename claim was made. Star67 is closed
+  for reachable implementation work and remains in the umbrella only for the
+  owner-admin predicate and future live/merge/deploy readback.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
