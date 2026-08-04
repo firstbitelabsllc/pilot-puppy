@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 95
-- Outcome Updated At: 2026-08-04T02:30:27Z
+- Outcome Revision: 96
+- Outcome Updated At: 2026-08-04T02:34:41Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -352,6 +352,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   report, so no security result is claimed and no terminal fallback or second
   workspace was created. Resume from this same workspace after Start scan, then
   carry its canonical artifacts back into this umbrella plan.
+
+- 2026-08-04T02:34:41Z: Advanced the reachable Moussey repair lane without
+  touching the dirty primary or live owner runtime. Clean branch
+  `codex/moussey-dependency-audit-20260804@e6dd162` passed a fresh production
+  `npm audit --omit=dev --audit-level=high` with 0 vulnerabilities, the full
+  consignment/invoice suite with 64 pass and 1 pre-existing skip, and the
+  consignment surface check. The repair PR #121 remains OPEN/CLEAN and
+  unmerged; authenticated production readback is still owner-controlled. The
+  same receipt sweep confirms Pilot Puppy PR #99 at `36c3d1a` is
+  OPEN/CLEAN/MERGEABLE with all required checks passing. No merge, deploy,
+  credential, payment, ledger, or production-runtime write was made.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
