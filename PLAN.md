@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 96
-- Outcome Updated At: 2026-08-04T02:34:41Z
+- Outcome Revision: 97
+- Outcome Updated At: 2026-08-04T02:36:24Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -363,6 +363,16 @@ Code, or Cursor without taking custody of credentials or conversations.
   same receipt sweep confirms Pilot Puppy PR #99 at `36c3d1a` is
   OPEN/CLEAN/MERGEABLE with all required checks passing. No merge, deploy,
   credential, payment, ledger, or production-runtime write was made.
+
+- 2026-08-04T02:36:24Z: Re-read the reachable public surfaces. The Snowcubes
+  source-of-truth audit returned `ok: true` with Zack `$0.00`, Marathon
+  `$0.00`, and Everyman `$22.00`; its 2026-05-21 Marathon record remains the
+  explicit FREE/UNKNOWN row with no charge or payment row. `https://trysnowcubes.com/`
+  returned HTTP 200 and no retired receivable or consignment-only billing/source
+  labels. `https://learn-sql-peach.vercel.app/` returned HTTP 200 with Star67
+  branding and no old repository-name text in the public HTML. No deployed
+  surface or source data was changed; Snowcubes merge/deploy and Star67
+  owner-admin metadata remain external predicates.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
