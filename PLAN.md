@@ -2173,3 +2173,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   clean archived copy with test fixtures removed scans 17.26 MB with zero
   findings. This supports source triage only; the official Codex Security scan
   is still unstarted and authenticated runtime proof remains owner-controlled.
+- 2026-08-04T16:49:40Z: Refreshed the two protected portfolio lanes from their
+  canonical plans. StrongYes public `main@7c990f69` has only T-10 open in its
+  voice-harness plan: a signed-in, real DSA voice run must produce a product-ASR
+  WER number while the same spec fails on silence; it requires the owner
+  runtime, credentials, audible headed browser, and authorized spend. Resplit
+  public `main@77f1b483` retains the submitted 2.0.0 build 5469 release packet;
+  developer release and any screenshot replacement remain separately Leo/
+  external-authorized, while the protected checkout is dirty with unresolved
+  conflicts and was not touched. These are exact owner predicates, not Pilot
+  Puppy test work.
