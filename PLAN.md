@@ -2113,3 +2113,6 @@ Code, or Cursor without taking custody of credentials or conversations.
   or protected checkout state changed. Remaining resume predicate is the
   already-recorded owner/deployment alignment for the live agentic-discovery
   surface; source truth is not the same as live proof.
+- 2026-08-04T16:36:50Z: Opened Moussey PR #127 for the URL-privacy patch:
+  https://github.com/leojkwan/moussey/pull/127. The PR is reviewable from
+  commit `7507ab9`; no merge or owner-controlled runtime restart was performed.
