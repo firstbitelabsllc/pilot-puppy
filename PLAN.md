@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 80
-- Outcome Updated At: 2026-08-04T01:25:54Z
+- Outcome Revision: 81
+- Outcome Updated At: 2026-08-04T01:28:53Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -129,7 +129,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   passed 183/183 with no uncaught errors or hosted-sync requests. The separate
   accessibility branch was therefore not opened as a redundant PR.
   Repository rename is waiting on owner-admin access.
-- **Snowcubes/Moussey consignment:** clean Snowcubes `main@c48ace456`
+- **Snowcubes/Moussey consignment:** clean Snowcubes `main@cafb80c9`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
   history and absent from current tracker outputs. The 5/21 Marathon row is
@@ -160,8 +160,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   dry run found only 51 MiB of DerivedData and no meaningful safe reclaim. The
   cleaner build/browser/media ladder is therefore paused; no process, cache,
   source, or personal-media mutation was attempted.
-- **Security:** Snowcubes PR #1567 is at `8d6ae00c`; current public main is
-  `c48ace456`, and the branch remains the lockfile-only repair against the
+- **Security:** Snowcubes PR #1567 is at `479c48a4`; current public main is
+  `cafb80c9`, and the branch remains the lockfile-only repair against the
   same source base. `git diff --check` passes, the production-only lockfile
   audit reports 0 vulnerabilities, and the full audit at the PR head reports
   only two low `esbuild` findings confined to the Shopify CLI dev chain. The
@@ -289,6 +289,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T01:28:53Z: The full-portfolio control PR #99 is now
+  OPEN/MERGEABLE at `39f36f7`; all required CI, CodeQL, gitleaks,
+  browser/docs, public-ready, and mergeability checks pass, while
+  `[code]smith` is skipped by policy. This proves the portfolio-plan change
+  is reviewable; it is not a merge or deployment claim. A fresh readback of
+  `https://trysnowcubes.com/` also returned HTTP 200 with HSTS, CSP,
+  `x-frame-options: DENY`, and no retired receivable figures or consignment
+  billing/source labels in the public body.
 
 - 2026-08-04T01:25:54Z: Branch-owned Moussey production proof passed on
   isolated port `45123` from `codex/moussey-dependency-audit-20260804` at
@@ -1121,19 +1130,18 @@ Code, or Cursor without taking custody of credentials or conversations.
   authenticated `/consignment` browser readback against `3c44bbec`; do not
   treat either the stale process or the isolated unauthenticated shell as
   current customer proof.
-- Snowcubes security repair PR #1567 is pushed at `48121626`; current public
-  main is `f3f877eed`, and the PR remains OPEN/CLEAN/mergeable but not merged
+- Snowcubes security repair PR #1567 is pushed at `479c48a4` against current
+  public main `cafb80c9`; the PR remains OPEN/CLEAN/mergeable but not merged
   or deployed. Resume by merging it through the repository's normal review
   path, then rerun `npm ci`, high/production audit, and the focused gates. Do
   not force the breaking Shopify CLI upgrade just to claim zero total
   findings.
-- Pilot Puppy portfolio PR #99 is at
-  `850068f6f108454098c69a31a6ea9ff18cf3b701`, OPEN/CLEAN/MERGEABLE. At the
-  latest readback, Graphite, all required CI, CodeQL, gitleaks, browser/docs,
-  and public-ready checks pass; `[code]smith` is skipped for this docs-only
-  receipt. Resume with the repository's external merge action, then read back
-  `origin/main` and the public plan before treating the full portfolio outcome
-  as the public-main authority.
+- Pilot Puppy portfolio PR #99 is at `39f36f7`, OPEN/CLEAN/MERGEABLE, with
+  all required CI, CodeQL, gitleaks, browser/docs, public-ready, and
+  mergeability checks passing; `[code]smith` is skipped by policy. Resume with
+  the repository's external merge action, then read back `origin/main` and the
+  public plan before treating the full portfolio outcome as the public-main
+  authority.
 - The other-computer route is deferred by host availability. Resume only when
   the target Mac is online and Jump Connect accepts the connection; then run
   the documented clone, install, doctor, skill-mount, and Outcome/A/B/C path.
