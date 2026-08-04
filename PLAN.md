@@ -2156,3 +2156,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   and STT WebSocket query stripping. The temporary dependency link was removed;
   no protected runtime or checkout changed. Full TypeScript remains a known
   baseline failure and authenticated browser proof remains owner-controlled.
+- 2026-08-04T16:45:12Z: Re-ran Snowcubes `npm run ai:discovery -- --json` at
+  source `origin/main@3b48a4a`. The read-only guard still fails on exactly four
+  external mismatches: `/agents.md` and `/llms.txt` claim unsupported cart/
+  checkout mutation tools; UCP capabilities advertise cart, checkout,
+  discount, fulfillment, and order while catalog `tools/list` serves only
+  `get_product`, `lookup_catalog`, and `search_catalog`; and the discovered
+  Shopify endpoint differs from the configured custom-domain endpoint. All
+  probes returned 200. Resume predicate: authorized Shopify/Worker owner
+  aligns one canonical endpoint and capability profile, then rerun this guard
+  and public readback; no storefront workaround was made.
