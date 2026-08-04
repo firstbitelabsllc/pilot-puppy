@@ -2149,3 +2149,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   commits / 3.79 KB with no leaks. This is documentation-diff security proof;
   it does not replace the still-unstarted official Codex Security scan or
   prove deployment.
+- 2026-08-04T16:44:50Z: Expanded the Moussey URL privacy reproduction on PR
+  commit `7507ab9`: shared URL and WebSocket helpers plus the voice secure-link
+  contract now pass 9/9 focused tests, including credential-bearing phone-link
+  input, LAN secure redirect, invalid input fail-closed, app query stripping,
+  and STT WebSocket query stripping. The temporary dependency link was removed;
+  no protected runtime or checkout changed. Full TypeScript remains a known
+  baseline failure and authenticated browser proof remains owner-controlled.
