@@ -2211,3 +2211,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   none of those stale markers. This is fresh source plus unauthenticated
   runtime readback; authenticated browser proof and any runtime restart remain
   owner-controlled.
+- 2026-08-04T16:56:54Z: Reproduced the Moussey consignment surface contract from
+  a clean detached worktree at current `origin/main@67ade314`, using the
+  owner checkout's existing `tsx` loader without installing or modifying either
+  checkout. `node --test --import .../tsx/dist/loader.mjs
+  app/consignment/surface.test.ts` passes 15/15, covering removal of invoice/
+  technical/billing-era chrome, plain-language entry points, source-boundary
+  states, payment safety, touch targets, and reduced motion. This is source
+  proof only; it does not replace an authenticated browser/runtime release
+  receipt.
