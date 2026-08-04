@@ -2047,3 +2047,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   and all existing error/format/pack/progression/crew/casebook/contrast/
   navigator/progress/screen/coaching contracts green. PR #5 restarted from
   this head; this is product proof, not a Pilot Puppy test objective.
+- 2026-08-04T16:15:24Z: Current Star67 branch readback found another
+  committed owner change, `0c0f013`, removing the README contract and restoring
+  local Node/clone/`./start` instructions. PR #5 now has no active checks and
+  reports `UNKNOWN` merge state. The accepted browser-first implementation and
+  full proof remain available at prior commit `913dd44`, but I did not
+  force-push over the newer committed owner work. Resume Star67 only when this
+  branch owner stops rewriting the public front door or an explicit branch/PR
+  authority is chosen. Continue Snowcubes/Moussey and other reachable lanes
+  independently.
