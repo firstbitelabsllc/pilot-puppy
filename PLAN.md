@@ -2143,3 +2143,9 @@ Code, or Cursor without taking custody of credentials or conversations.
   referrer policy. This is live readback of the existing deployment only; it
   does not prove that the staged README commit `4f2ecba` is deployed, and no
   deployment or GitHub admin mutation was attempted.
+- 2026-08-04T16:44:17Z: Reproduced the staged Star67 README branch from remote
+  commit `4f2ecba` in a clean worktree. `git diff origin/main..HEAD --check`
+  passes and `gitleaks git --log-opts='origin/main..HEAD' --redact` scans 11
+  commits / 3.79 KB with no leaks. This is documentation-diff security proof;
+  it does not replace the still-unstarted official Codex Security scan or
+  prove deployment.
