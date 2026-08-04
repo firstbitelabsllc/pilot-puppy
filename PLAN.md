@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 89
-- Outcome Updated At: 2026-08-04T02:06:18Z
+- Outcome Revision: 90
+- Outcome Updated At: 2026-08-04T02:08:33Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -324,6 +324,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T02:08:33Z: The clarified full-portfolio umbrella receipt is now
+  pushed at Pilot Puppy PR #99 head `27045aa`. Its required checks pass across
+  CodeQL, gitleaks, public-ready, Python 3.10/3.12/3.14, browser/docs, and
+  Graphite; `[code]smith` remains skipped by policy. This validates the
+  orchestration-plan correction only: PR #99 remains OPEN/MERGEABLE/unmerged,
+  and the active Star67, Moussey, Snowcubes, security, deployment, and handoff
+  lanes remain in the same working Outcome.
 
 - 2026-08-04T01:51:43Z: Completed the next full-portfolio receipt sweep. The
   umbrella Outcome remains active; no packet or PR closes it. Pilot Puppy PR
