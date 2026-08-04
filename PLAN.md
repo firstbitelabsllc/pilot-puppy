@@ -2127,3 +2127,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   open a duplicate PR while owner-controlled PR #5 remains open at `0c0f013`
   with the conflicting local-setup README; resume when one branch/PR authority
   is chosen. GitHub repository rename/homepage/topics remain admin-gated.
+- 2026-08-04T16:42:51Z: Rebuilt the Snowcubes consignment source receipt after
+  `origin/main` advanced to `3b48a4a` (`docs(plan): record current Snowcubes
+  unblock rerank`). The focused Python consignment/cafe suite remains 289/289,
+  the source-truth audit remains fully green, and the Nicole contract remains
+  2/2. The current ledger still marks Marathon 2026-05-21 FREE/UNKNOWN with no
+  payment row and reports open totals of 7 Bagels `$0.00`, Everyman `$22.00`,
+  and Marathon `$0.00`. This is fresh source proof; the canonical plan still
+  leaves live deploy/admin rows owner-gated, so no Shopify mutation or live
+  claim is made.
