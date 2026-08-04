@@ -1638,3 +1638,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   `python3 -m unittest tests.test_pilot_puppy_host -v` from the lead
   checkout. The packet metadata/hash remains authoritative; do not invent a
   replacement task body.
+- Exact resume once the target session is usable: on
+  `Leos-Macbook-M4-Pro.local`, run
+  `git clone https://github.com/firstbitelabsllc/pilot-puppy.git && cd pilot-puppy && npm install -g . && pilot-puppy doctor`;
+  then mount the canonical checkout with
+  `ln -sfn "$(pwd)" "$HOME/.claude/skills/pilot-puppy"`,
+  `ln -sfn "$(pwd)" "$HOME/.agents/skills/pilot-puppy"`, and
+  `ln -sfn "$(pwd)" "$HOME/.cursor/skills/pilot-puppy"`. Require the
+  target checkout's doctor to be 11/11, read the target project's PLAN, and
+  record its exact host, revision, doctor result, mount source, and next move
+  before any native task. Until then, the portability predicate is WAITING.
