@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 98
-- Outcome Updated At: 2026-08-04T02:37:36Z
+- Outcome Revision: 99
+- Outcome Updated At: 2026-08-04T02:38:11Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -375,6 +375,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   branding and no old repository-name text in the public HTML. No deployed
   surface or source data was changed; Snowcubes merge/deploy and Star67
   owner-admin metadata remain external predicates.
+
+- 2026-08-04T02:38:11Z: Reproduced the Moussey repair branch's focused privacy
+  boundary on `codex/moussey-dependency-audit-20260804@e6dd162`:
+  `lib/moussey-url.test.ts` passes 4/4, covering removal of query credentials,
+  URL userinfo, and STT WebSocket query credentials while preserving safe media
+  capability tokens. This is branch proof only; PR #121 remains unmerged and
+  the owner-controlled production runtime was not restarted.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
