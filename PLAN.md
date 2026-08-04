@@ -2056,3 +2056,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   branch owner stops rewriting the public front door or an explicit branch/PR
   authority is chosen. Continue Snowcubes/Moussey and other reachable lanes
   independently.
+- 2026-08-04T16:16:30Z: Current remote readback keeps the Star67 branch owner
+  conflict open: `0c0f013` still restores local setup copy and PR #5's two
+  builds are running against that head. No force-push or duplicate PR was
+  created. Snowcubes has independently advanced to `main@e159bea` with a
+  press authority packet; its source ledger and current summary still prove
+  Marathon 2026-05-21 FREE/UNKNOWN, `$0.00` open, and no payment row.
+  Moussey remains `main@40a487c`; no new consignment or URL change is needed.
