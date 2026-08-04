@@ -1997,6 +1997,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   the verified 16-line / 74-word browser-only README. `git diff --check` and
   the no-install/no-clone/no-npm assertion pass; the PR remains open and its
   current-head CI is the next proof gate.
+- 2026-08-04T16:06:18Z: Fresh remote-head readback supersedes older ref
+  snapshots. Snowcubes is now `main@f46f6ad` after the independent featured-
+  ingredient label-escaping fix; its consignment ledger and current summary
+  still contain the verified Marathon 2026-05-21 FREE/UNKNOWN row with no
+  payment row. Moussey remains `main@40a487c` with the simplified consignment
+  copy and credential-free URL helpers. Star67 PR #5 is clean at `39484c9`
+  with the browser-only README; both current build checks remain in progress.
+  No stale ref was used as current proof.
 - 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
   browser-first branch. `npm audit --omit=optional --json` reports zero
   vulnerabilities; gitleaks reports zero findings in the README diff and one
