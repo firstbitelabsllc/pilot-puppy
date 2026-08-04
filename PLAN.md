@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 100
-- Outcome Updated At: 2026-08-04T02:39:25Z
+- Outcome Revision: 101
+- Outcome Updated At: 2026-08-04T02:41:26Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -382,6 +382,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   URL userinfo, and STT WebSocket query credentials while preserving safe media
   capability tokens. This is branch proof only; PR #121 remains unmerged and
   the owner-controlled production runtime was not restarted.
+
+- 2026-08-04T02:41:26Z: Re-read Pilot Puppy PR #99 after the latest plan
+  correction. Head `7d90140` is OPEN/CLEAN with every required check passing:
+  CI Python 3.10/3.12/3.14, browser-and-docs, CodeQL and its actions/
+  JavaScript/Python analyses, gitleaks, public-ready-gate, and Graphite
+  mergeability; `[code]smith` is skipped by policy. This closes the Pilot
+  Puppy receipt gate only. The PR remains unmerged and the product, admin,
+  runtime, deployment, and official-security predicates remain independent.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
