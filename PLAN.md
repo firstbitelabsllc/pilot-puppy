@@ -2116,3 +2116,14 @@ Code, or Cursor without taking custody of credentials or conversations.
 - 2026-08-04T16:36:50Z: Opened Moussey PR #127 for the URL-privacy patch:
   https://github.com/leojkwan/moussey/pull/127. The PR is reviewable from
   commit `7507ab9`; no merge or owner-controlled runtime restart was performed.
+- 2026-08-04T16:39:48Z: Fresh Star67 `origin/main@6ebcb93` already carries the
+  Star67 product name, `star67-learn-sql` package name, and Vercel launch URL.
+  Prepared a clean non-developer README from that current base in commit
+  `4f2ecba` on `codex/star67-browser-first-readme-20260804`: 12 lines, launch
+  link first, one truthful product sentence, one image, and no install,
+  contributor, Node, or local-run instructions. `git diff --check` and the
+  focused README contract pass. The isolated full npm runner hung in its
+  determinism step and was stopped; no green test claim is made. I did not
+  open a duplicate PR while owner-controlled PR #5 remains open at `0c0f013`
+  with the conflicting local-setup README; resume when one branch/PR authority
+  is chosen. GitHub repository rename/homepage/topics remain admin-gated.
