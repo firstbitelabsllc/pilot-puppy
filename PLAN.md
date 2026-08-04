@@ -2005,6 +2005,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   copy and credential-free URL helpers. Star67 PR #5 is clean at `39484c9`
   with the browser-only README; both current build checks remain in progress.
   No stale ref was used as current proof.
+- 2026-08-04T16:07:25Z: The same conflicting Star67 README addition appeared
+  again as `add3042`, reintroducing Node/clone/`./start` instructions. The
+  explicit non-developer front-door requirement remains the controlling
+  product decision, so `abf56d6` removes only that addition and restores the
+  16-line / 74-word browser-only README. The branch is clean and pushed; PR
+  #5 checks restarted from this head. This conflict is recorded so a future
+  agent does not mistake the repeated local-start commit for accepted scope.
 - 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
   browser-first branch. `npm audit --omit=optional --json` reports zero
   vulnerabilities; gitleaks reports zero findings in the README diff and one
