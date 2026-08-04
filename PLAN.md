@@ -1973,3 +1973,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   non-developer front door. Asset existence and `git diff --check` pass. PR #5
   is open with two GitHub build checks in progress; repository rename/homepage
   metadata remains owner-admin bound and is not claimed.
+- 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
+  browser-first branch. `npm audit --omit=optional --json` reports zero
+  vulnerabilities; gitleaks reports zero findings in the README diff and one
+  documented false positive in `src/Workspace.tsx:87` for the compatibility
+  storage key `pivot.navigatorWidth.v1`; the static sink and sensitive-file
+  sweeps found no production match or tracked credential file. The live
+  Vercel URL returned HTTP 200 with the Star67 title and expected hardening
+  headers. `SECURITY.md` now records the bounded result and keeps the Codex
+  Security AI scan explicitly incomplete rather than claiming coverage. The
+  product PR is now head `057e90b`; owner-admin repository rename metadata is
+  still the only Star67 delivery blocker. This is product security evidence,
+  not a Pilot Puppy test objective.
