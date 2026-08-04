@@ -2136,3 +2136,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   and Marathon `$0.00`. This is fresh source proof; the canonical plan still
   leaves live deploy/admin rows owner-gated, so no Shopify mutation or live
   claim is made.
+- 2026-08-04T16:43:33Z: Read the public Star67 Vercel surface directly at
+  `https://learn-sql-peach.vercel.app/`: HTTP 200, Star67 title and practice
+  metadata present, with HSTS, `X-Content-Type-Options: nosniff`,
+  `X-Frame-Options: DENY`, restrictive Permissions-Policy, and strict
+  referrer policy. This is live readback of the existing deployment only; it
+  does not prove that the staged README commit `4f2ecba` is deployed, and no
+  deployment or GitHub admin mutation was attempted.
