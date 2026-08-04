@@ -1985,3 +1985,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   product PR is now head `057e90b`; owner-admin repository rename metadata is
   still the only Star67 delivery blocker. This is product security evidence,
   not a Pilot Puppy test objective.
+- 2026-08-04T15:59:16Z: Removed the remaining public-facing `pivot` asset name
+  from Star67. Commit `d9bbf97` renames the tracked screenshot to
+  `docs/star67-practice-desk.png` and updates the README and quality-audit
+  links; internal browser-storage and compatibility IDs were intentionally
+  preserved. GitHub readback still shows `nlau1193/pivot-sql`, empty homepage,
+  no `star67` topic, `WRITE` permission, and `viewerCanAdminister=false`; no
+  unauthorized metadata mutation was attempted. PR #5 restarted CI at this
+  head and remains open.
