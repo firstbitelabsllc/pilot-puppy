@@ -12,19 +12,19 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 101
-- Outcome Updated At: 2026-08-04T02:41:26Z
+- Outcome Revision: 102
+- Outcome Updated At: 2026-08-04T02:49:56Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
-- Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
+- Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; StrongYes's current Code Reps/Game Plan authority; Resplit 2.0 launch readiness; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary. Nicole's shipped SQL trainer and archived/paused StrongYes queues are mapped for truth but are not new work.
 - Execution rule: "one bounded packet" describes only the size of a reviewable execution unit; it does not narrow the Outcome to one project, one fix, or one delivery. Keep every named lane in this same Outcome, fan out only across disjoint owned surfaces when useful, fold receipts back into this plan, and resume the next highest-value reachable lane after each packet. A finished packet advances the portfolio and never closes the Outcome by itself.
 - Next: Resume every lane from its canonical plan and current ref, without waiting on the other computer or native-Codex quota. Keep the Moussey C11 runtime, owner-admin, cleaner host-resource, and merge/deploy predicates open until each is proven.
-- Next Detail: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is already present on current public main and verified from current source; the older consignment-plan branch is historical, not a second merge target. Snowcubes C14 has a source-cited 2026-07-25 10-pack count receipt from read-only Messages metadata; no ledger or Shopify write was made and the unavailable JPEG was not interpreted. Current public Pilot Puppy main is `d8c9bb0`, which retains the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface and frozen portable-task metadata; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Snowcubes current public main is `426938ab`; security PR #1567 is at `6f24d97` against that current base, OPEN and currently mergeable, so no merge/deploy claim is made. Current Moussey main `3c44bbec` has a fresh production dependency audit finding 1 moderate and 2 high transitive vulnerabilities; the isolated repair and UI-clarity branch `codex/moussey-dependency-audit-20260804` at `e6dd162` reports 0 vulnerabilities and passes focused tests, surface proof, build, and branch-owned authenticated browser proof, but remains unmerged. Current Moussey main still carries residual billing/source/amount-due wording; the repair branch removes it, and passcode text is confined to the operator gate. The remaining product predicate is owner-controlled production runtime readback because the existing `:4321` process belongs to the dirty primary checkout. Star67 hosted smoke is 183/183; branch `codex/star67-smoke-proof-20260804` is at `5d6f005`, and both CI runs `30867642389` and `30867639603` completed successfully across build, Chromium, Firefox, and WebKit after restoring the full generated `public/data` artifact. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, security-scan, and portability predicates explicit while reachable product proof continues independently.
+- Next Detail: Resume every lane from its canonical plan and current ref. Continue reachable work across Star67, Moussey consignment and cleaner, Snowcubes, StrongYes, Resplit, security, deployment, and handoff without waiting on the other computer or native-Codex quota. The Snowcubes 5/21 Marathon decision is already present on current public main and verified from current source; the older consignment-plan branch is historical, not a second merge target. Snowcubes C14 has a source-cited 2026-07-25 10-pack count receipt from read-only Messages metadata; no ledger or Shopify write was made and the unavailable JPEG was not interpreted. Current public Pilot Puppy main is `d8c9bb0`, which retains the delivered R5 owner-local, route-bound native seat overlay alongside the R8 generic role-routing surface and frozen portable-task metadata; use it only for an explicit native selector and keep the selector out of plans, browser/status, receipts, packages, and stranger installs. Snowcubes current public main is `426938ab`; security PR #1567 is at `6f24d97` against that current base, OPEN and currently mergeable, so no merge/deploy claim is made. Current Moussey main `3c44bbec` has a fresh production dependency audit finding 1 moderate and 2 high transitive vulnerabilities; the isolated repair and UI-clarity branch `codex/moussey-dependency-audit-20260804` at `e6dd162` reports 0 vulnerabilities and passes focused tests, surface proof, build, and branch-owned authenticated browser proof, but remains unmerged. Current Moussey main still carries residual billing/source/amount-due wording; the repair branch removes it, and passcode text is confined to the operator gate. The remaining product predicate is owner-controlled production runtime readback because the existing `:4321` process belongs to the dirty primary checkout. Star67 hosted smoke is 183/183; branch `codex/star67-smoke-proof-20260804` is at `5d6f005`, and both CI runs `30867642389` and `30867639603` completed successfully across build, Chromium, Firefox, and WebKit after restoring the full generated `public/data` artifact. StrongYes PR #1450 is merged at `f6b65e7`, but production/live readback remains open. Resplit's canonical launch plan still carries unresolved iOS/TestFlight/Sentry/on-device and web-chaos gates; its primary iOS and web checkouts are dirty and owner-bound. Keep owner-admin, authenticated-runtime, cleaner host-resource, credential-rotation, merge/deploy, security-scan, StrongYes live, Resplit device/runtime, and portability predicates explicit while reachable product proof continues independently.
 - Decision ID: choose-reachable-portfolio-work
 - Decision: What deserves action next across the portfolio?
 - Option A ID: continue-reachable-lanes
 - Option A: Continue reachable lanes
-- Option A Consequence: Advance Star67, Moussey, Snowcubes, security, and handoff work from their own plans while preserving owner boundaries.
+- Option A Consequence: Advance Star67, Moussey, Snowcubes, StrongYes, Resplit, security, and handoff work from their own plans while preserving owner boundaries.
 - Option B ID: close-source-truth-receipts
 - Option B: Close source-truth receipts
 - Option B Consequence: Reconcile current refs, tests, deployed surfaces, and proof ledgers before any new feature work.
@@ -32,14 +32,22 @@ Code, or Cursor without taking custody of credentials or conversations.
 - Option C: Defer external gates
 - Option C Consequence: Park the GitHub admin rename, other-computer access, and Codex quota without blocking reachable product work.
 - Proof ID: portfolio-product-closeout-20260803
-- Proof: Star67 `1277dd8` + hosted smoke `5b4c7ec`/CI `5d6f005`/runs `30867642389`,`30867639603`/PR2; Snowcubes `426938ab` + security `6f24d97`/PR1567 + current-main consignment proof; Moussey `3c44bbec` + repair `e6dd162`; Pilot Puppy `d8c9bb0`/v2.1.0 + PR #99; live readbacks.
+- Proof: Star67 `1277dd8` + hosted smoke `5b4c7ec`/CI `5d6f005`/runs `30867642389`,`30867639603`/PR2; Snowcubes `426938ab` + security `6f24d97`/PR1567 + current-main consignment proof; Moussey `3c44bbec` + repair `e6dd162`; StrongYes PR #1450 merge `f6b65e7` + focused source proof; Resplit canonical launch-plan gate readback; Pilot Puppy `d8c9bb0`/v2.1.0 + PR #99; live readbacks.
 - Proof Detail: Star67 `main@1277dd8` with README `0721078`, current-main accessibility/plain-language proof, PR #2's hosted Vercel smoke receipt, and the pushed build-once/full-data CI fix at `5d6f005`; both CI runs completed green across build, Chromium, Firefox, and WebKit. Snowcubes `main@426938ab` has current-main consignment/source proof; security PR #1567 is at `6f24d97` against that exact base; its production-only audit reports 0 vulnerabilities, while `npm ci` remains deferred until the host resource gate recovers. Moussey `origin/main@3c44bbec` has current consignment proof plus repair/UI branch `e6dd162`; active cleaner resource readback; Codex Security CLI dry-run receipts plus the current official-scan setup; Pilot Puppy `main@d8c9bb0` R5/R8 public role-routing readback, frozen packet metadata, and the `v2.1.0` release proof; focused source/test receipts; and live public-surface readbacks.
-- Proof Summary: Star67 smoke 183/183 and full-data CI green in both workflows (build + 3 browsers); Snowcubes source/live clean, PR1567 OPEN/mergeable, Marathon 5/21 FREE/UNKNOWN; Moussey UI/tests/build pass, repair 0 vulns; Pilot Puppy v2.1.0 reads back.
+- Proof Summary: Star67 smoke 183/183 and full-data CI green in both workflows (build + 3 browsers); Snowcubes source/live clean, PR1567 OPEN/mergeable, Marathon 5/21 FREE/UNKNOWN; Moussey UI/tests/build pass, repair 0 vulns; StrongYes focused source proof 56/56 and PR #1450 merged but live-unproven; Resplit launch gates remain open; Pilot Puppy v2.1.0 reads back.
 - Proof Summary Detail: Star67 leads with its Vercel launch link; the live run against `https://learn-sql-peach.vercel.app/` is 183/183 with no uncaught errors or hosted-sync requests, and both branch CI workflows now pass after restoring all generated `public/data`. Current Snowcubes source audit is `ok: true` at `main@426938ab`, with Zack `$0.00`, Marathon `$0.00`, Everyman `$22.00`; the 5/21 Marathon row is explicitly FREE/UNKNOWN with no charge or payment row. The live storefront returned HTTP 200 with none of the retired figures or consignment-only billing/source labels. Snowcubes security PR head `6f24d97` is a lockfile-only diff against `426938ab`; `git diff --check` passes, production-only audit reports 0 vulnerabilities, and `npm ci` remains deferred until the host resource gate recovers. PR #1567 is OPEN/CLEAN/mergeable, but merge and deployment remain unclaimed. Clean Moussey `origin/main@3c44bbec` current-main proof passes the 65-test consignment/invoice suite (64 pass, 1 pre-existing skip), the consignment-surface check, and production build, but its fresh production-only audit found 1 moderate and 2 high transitive vulnerabilities. The pushed Moussey branch `codex/moussey-dependency-audit-20260804` at `e6dd162` contains the lockfile repair plus two residual UI-copy fixes, reports 0 vulnerabilities, passes the focused suite, surface proof, build, diff check, and branch-owned desktop/mobile browser proof on isolated port `45123`; remote auth returned 401 without credentials and 200 with the Authorization header, with no passcode in the URL. The dirty Moussey primary and live runtime remain separate. On the Pilot Puppy lane itself, public `main@d8c9bb0` contains the R5 owner-local route-bound seat overlay, R8 generic role-routing surface, and frozen packet metadata; the `v2.1.0` release remains public at `c7d63619` with a verified 61-file release asset and fresh tag-clone/install/readback. Real Claude Code and Cursor tasks pass and Codex execution stays quota-blocked. Portfolio PR #99 remains OPEN/MERGEABLE/unmerged; its required checks are a separate current gate and no external merge is claimed. `[code]smith` is skipped by policy.
 - Proof Delivery: source proof only
 - Proof Delivery Detail: product code and source receipts are separated from merged, deployed, live, and proven state. The GitHub rename and metadata update are not claimed because the current account has write but not admin permission.
 
 ## Current portfolio readback
+
+- 2026-08-04T02:49:56Z: Expanded the portfolio map from the named
+  Star67/Moussey/Snowcubes lanes to include the current StrongYes Code
+  Reps/Game Plan authority and Resplit 2.0 launch authority. StrongYes PR
+  #1450 is merged at `f6b65e7`, but live proof is still open; focused source
+  reproof passed 56/56 tests. Resplit remains owner-bound with unresolved
+  iOS/TestFlight/Sentry/on-device and web-chaos gates. Nicole's SQL trainer is
+  shipped and StrongYes archived/paused queues are not being reactivated.
 
 - 2026-08-04T01:58:50Z: Current public Snowcubes `main@426938ab` is the
   authority, not the stale local-primary mirror named `origin/main` in the
@@ -147,9 +155,11 @@ Code, or Cursor without taking custody of credentials or conversations.
   outcome there. Amp only sharpens that lane's brief; it does not dispatch,
   validate, or become its authority.
 - The current portfolio lanes are Star67/Pivot SQL, Moussey consignment,
-  Moussey cleaner/host safety, Snowcubes consignment/storefront, and
-  security/privacy plus release handoff. Each lane keeps its own canonical plan
-  and owner/worktree boundary.
+  Moussey cleaner/host safety, Snowcubes consignment/storefront, StrongYes
+  Code Reps/Game Plan, Resplit 2.0 launch readiness, and security/privacy plus
+  release handoff. Each lane keeps its own canonical plan and owner/worktree
+  boundary. Nicole's shipped SQL trainer and StrongYes archived/paused queues
+  are mapped but do not create new work.
 
 ## Portfolio map
 
@@ -167,6 +177,20 @@ Code, or Cursor without taking custody of credentials or conversations.
   passed 183/183 with no uncaught errors or hosted-sync requests. The separate
   accessibility branch was therefore not opened as a redundant PR.
   Repository rename is waiting on owner-admin access.
+- **StrongYes:** the live authority is the current Code Reps/Game Plan
+  `vidux/launch-validation/PLAN.md`, not the dirty voice-debug checkout or its
+  archived queues. Game Plan PR #1450 is merged at `f6b65e7`; source and local
+  browser proof exist, but production/live readback remains unclaimed. A clean
+  source reproof in this cycle passed the marquee/catalog, description-override,
+  language-switch, and run-on-example suites (56/56 focused tests). Preserve
+  the existing owner lane for any remaining merge/deploy/runtime work.
+- **Resplit 2.0:** the canonical authorities are
+  `resplit-web/vidux/resplit-2.0-launch/PLAN.md` and `INBOX.md`, with the iOS
+  plan's release evidence kept separate. The launch plan still carries
+  unresolved iOS/TestFlight/Sentry/on-device and web-chaos gates; the primary
+  iOS and web checkouts are dirty and owner-bound. Do not revive historical
+  worktree queues or start a build, upload, merge, or device mutation from this
+  umbrella lane.
 - **Snowcubes/Moussey consignment:** clean Snowcubes `main@426938ab`
   audits `ok: true`; Zack is `$0.00`, Marathon is `$0.00`, Everyman is
   `$22.00`; old `$225.63`, `$342.04`, and `$57.75` amounts are fenced as
