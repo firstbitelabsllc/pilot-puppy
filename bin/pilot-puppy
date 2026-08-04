@@ -168,6 +168,7 @@ pilot-puppy drive — prepare and explicitly start a small local work batch.
 
 usage: pilot-puppy drive prepare --repo PATH [--plan PLAN.md] [--roster-file PATH] [--availability probe|assume] [--json]
        pilot-puppy drive launch --repo PATH --session SESSION [--plan PLAN.md] [--roster-file PATH] [--timeout-seconds N] [--json]
+       pilot-puppy drive accept --repo PATH --session SESSION [--plan PLAN.md] [--timeout-seconds N] [--json]
 
 Drive Packets live in the project's existing PLAN.md. prepare reads that plan,
 chooses up to three ready pieces of work only when their allowed paths and
@@ -177,7 +178,11 @@ It starts nothing.
 launch is the explicit foreground action. It rechecks the frozen plan and Git
 revision, creates one clean worktree per prepared lane, runs the chosen native
 host, rechecks scope, runs the plan's named local check, and commits a green
-change on its kept review branch. It does not push, open a PR, merge, deploy,
+change on its kept review branch.
+
+accept is a separate explicit local action for a fully checked session. It
+reproduces each named check in a separate clean lead checkout, then creates one
+local Git merge commit in this project. It does not push, open a PR, deploy,
 publish, spend money, delete a worktree, or silently retry/reroute.
 EOF
       ;;

@@ -182,6 +182,35 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(projection["finished_count"], 0)
         self.assertEqual(projection["needs_attention_count"], 1)
 
+    def test_drive_accept_projects_only_fully_rechecked_local_work(self) -> None:
+        session = {
+            "schema": "pilot-puppy.drive-session.v1",
+            "revision": 1,
+            "session_id": "a" * 32,
+            "state": "accepted",
+            "plan_sha256": "b" * 64,
+            "base_sha256": "c" * 40,
+            "lanes": [{"status": "passed", "scope_ok": True, "proof_ok": True, "merge_ok": True}],
+        }
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_repo(Path(dirname))
+            completed = subprocess.CompletedProcess([], 0, json.dumps(session), "")
+            with (
+                mock.patch.object(server, "repository_root", return_value=repo),
+                mock.patch.object(server.subprocess, "run", return_value=completed) as run,
+            ):
+                projection = server.run_drive_action(plan, action="accept", session_id="a" * 32)
+        self.assertEqual(projection, {
+            "session": "a" * 32,
+            "state": "accepted",
+            "work_count": 1,
+            "finished_count": 1,
+            "needs_attention_count": 0,
+        })
+        command = run.call_args.args[0]
+        self.assertEqual(command[:3], [sys.executable, str(server.SCRIPTS / "pilot-puppy-drive.py"), "accept"])
+        self.assertIn("--session", command)
+
     def test_decision_receipt_is_project_local_bounded_and_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_repo(Path(dirname))

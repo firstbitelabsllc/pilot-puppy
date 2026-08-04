@@ -39,6 +39,7 @@ SESSION_SCHEMA = "pilot-puppy.drive-session.v1"
 MAX_PLAN_BYTES = 1_000_000
 MAX_SESSION_BYTES = 64 * 1024
 SESSION_ID_RE = re.compile(r"^[0-9a-f]{32}$")
+ACCEPTED_SESSION_STATE = "accepted"
 
 
 class DriveError(ValueError):
@@ -254,7 +255,7 @@ def validate_session(value: object, session_id: str) -> dict[str, Any]:
         or value["revision"] != 1
         or value["session_id"] != session_id
         or not isinstance(value["state"], str)
-        or value["state"] not in {"prepared", "running", "finished"}
+        or value["state"] not in {"prepared", "running", "finished", ACCEPTED_SESSION_STATE}
         or not isinstance(value["plan_sha256"], str)
         or not re.fullmatch(r"[0-9a-f]{64}", value["plan_sha256"])
         or not isinstance(value["base_sha256"], str)
@@ -388,6 +389,156 @@ def create_worktree(repo: Path, session_id: str, lane_id: str, base_sha256: str)
     if result.returncode:
         raise DriveError("a clean worktree could not be created for this piece of work")
     return destination
+
+
+def new_review_attempt(repo: Path, session_id: str) -> Path:
+    """Reserve a fresh kept review attempt without deleting a failed attempt."""
+
+    parent = repo.parent / f"{repo.name}-pilot-puppy-lead-review"
+    session_root = parent / session_id
+    for path in (parent, session_root):
+        if path.is_symlink():
+            raise DriveError("lead review location is unsafe")
+    parent.mkdir(mode=0o700, exist_ok=True)
+    session_root.mkdir(mode=0o700, exist_ok=True)
+    for number in range(1, 100):
+        attempt = session_root / f"attempt-{number:02d}"
+        if attempt.is_symlink():
+            raise DriveError("lead review location is unsafe")
+        if attempt.exists():
+            continue
+        attempt.mkdir(mode=0o700)
+        return attempt
+    raise DriveError("too many kept lead review attempts exist for this Drive session")
+
+
+def drive_branch_name(session_id: str, lane_id: str) -> str:
+    return f"pilot-puppy/drive-{session_id[:12]}-{lane_id}"
+
+
+def git_completed(repo: Path, *args: str, timeout: int = 30) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(
+            ["git", "-C", str(repo), *args],
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise DriveError("project Git state cannot be read") from exc
+
+
+def branch_commit(repo: Path, session_id: str, lane_id: str) -> tuple[str, str]:
+    branch = drive_branch_name(session_id, lane_id)
+    result = git_completed(repo, "rev-parse", "--verify", f"{branch}^{{commit}}")
+    if result.returncode:
+        raise DriveError("the kept review branch is unavailable")
+    return branch, result.stdout.strip()
+
+
+def branch_contains_base(repo: Path, base_sha256: str, commit: str) -> bool:
+    result = git_completed(repo, "merge-base", "--is-ancestor", base_sha256, commit)
+    if result.returncode not in {0, 1}:
+        raise DriveError("the kept review branch cannot be verified")
+    return result.returncode == 0
+
+
+def changed_paths_between(repo: Path, base_sha256: str, commit: str) -> list[str]:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(repo), "diff", "--name-only", "-z", base_sha256, commit],
+            capture_output=True,
+            timeout=15,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise DriveError("the kept review branch cannot be verified") from exc
+    if result.returncode:
+        raise DriveError("the kept review branch cannot be verified")
+    try:
+        return [item.decode("utf-8", errors="strict") for item in result.stdout.split(b"\0") if item]
+    except UnicodeDecodeError as exc:
+        raise DriveError("the kept review branch cannot be verified") from exc
+
+
+def commit_diff_is_clean(repo: Path, base_sha256: str, commit: str) -> bool:
+    result = git_completed(repo, "diff", "--check", base_sha256, commit)
+    return result.returncode == 0
+
+
+def cached_diff_is_clean(repo: Path) -> bool:
+    result = git_completed(repo, "diff", "--cached", "--check")
+    return result.returncode == 0
+
+
+def create_lead_review_worktree(repo: Path, attempt: Path, lane_id: str, commit: str) -> Path:
+    destination = attempt / lane_id
+    if destination.is_symlink() or destination.exists():
+        raise DriveError("lead review location is unsafe")
+    result = git_completed(repo, "worktree", "add", "--detach", str(destination), commit, timeout=30)
+    if result.returncode:
+        raise DriveError("a clean lead review checkout could not be created")
+    return destination
+
+
+def lead_review_passes(worktree: Path, proof: list[str], timeout_seconds: int) -> bool:
+    if not proof_passes(worktree, proof, timeout_seconds):
+        return False
+    try:
+        return not HOST.status_paths(worktree)
+    except HOST.HostError:
+        return False
+
+
+def commit_identity_is_ready(repo: Path) -> bool:
+    return git_completed(repo, "var", "GIT_COMMITTER_IDENT").returncode == 0
+
+
+def merge_in_progress(repo: Path) -> bool:
+    return git_completed(repo, "rev-parse", "-q", "--verify", "MERGE_HEAD").returncode == 0
+
+
+def abort_our_merge(repo: Path) -> None:
+    if not merge_in_progress(repo):
+        return
+    result = git_completed(repo, "merge", "--abort")
+    if result.returncode:
+        raise DriveError("the local merge needs manual recovery")
+
+
+def merge_review_branches(
+    *,
+    repo: Path,
+    branches: list[str],
+    allowed_paths: list[str],
+    proofs: list[list[str]],
+    timeout_seconds: int,
+    session_id: str,
+) -> None:
+    """Merge only already-reviewed local branches as one explicit action."""
+
+    result = git_completed(repo, "merge", "--no-ff", "--no-commit", *branches, timeout=60)
+    if result.returncode:
+        abort_our_merge(repo)
+        raise DriveError("the checked work could not be brought together safely")
+    try:
+        changed = HOST.status_paths(repo)
+        if not changed or not all(HOST.path_allowed(path, allowed_paths) for path in changed):
+            raise DriveError("the checked work changed outside its declared files")
+        if not cached_diff_is_clean(repo):
+            raise DriveError("the checked work has a whitespace error")
+        if not all(proof_passes(repo, proof, timeout_seconds) for proof in proofs):
+            raise DriveError("the checked work did not pass its named check after review")
+        changed = HOST.status_paths(repo)
+        if not changed or not all(HOST.path_allowed(path, allowed_paths) for path in changed):
+            raise DriveError("the checked work changed outside its declared files")
+        committed = git_completed(repo, "commit", "-m", f"pilot-puppy accept: {session_id}", timeout=30)
+        if committed.returncode:
+            raise DriveError("the local acceptance commit could not be created")
+    except DriveError:
+        abort_our_merge(repo)
+        raise
 
 
 def task_file(text: str) -> Path:
@@ -635,6 +786,93 @@ def launch(
     return session
 
 
+def accept(
+    *,
+    repo: Path,
+    plan: Path,
+    session_id: str,
+    timeout_seconds: int,
+) -> dict[str, Any]:
+    """Reproduce finished work, then explicitly merge it only into this local repo."""
+
+    session_path, session = read_session(repo, session_id)
+    if session["state"] == ACCEPTED_SESSION_STATE:
+        raise DriveError("this Drive session was already brought into the project")
+    if session["state"] != "finished" or any(
+        lane["status"] != "passed" or lane["scope_ok"] is not True or lane["proof_ok"] is not True
+        for lane in session["lanes"]
+    ):
+        raise DriveError("only fully checked Drive work can be brought into the project")
+    source = read_plan(plan)
+    if plan_sha256(source) != session["plan_sha256"]:
+        raise DriveError("the plan changed after preparation; prepare ready work again")
+    if launch_head(repo) != session["base_sha256"]:
+        raise DriveError("the project changed after preparation; prepare ready work again")
+    document = extract_document(source)
+    if document is None:
+        raise DriveError("this plan no longer has a Drive Packet")
+    packet_lanes = {lane["id"]: lane for lane in document["lanes"]}
+    if any(lane["id"] not in packet_lanes for lane in session["lanes"]):
+        raise DriveError("the checked work no longer exists in the plan")
+    if not commit_identity_is_ready(repo):
+        raise DriveError("this project needs a local Git commit identity before accepting work")
+
+    candidates: list[tuple[dict[str, Any], dict[str, Any], str, str]] = []
+    allowed_paths: list[str] = []
+    proofs: list[list[str]] = []
+    for session_lane in session["lanes"]:
+        packet_lane = packet_lanes[session_lane["id"]]
+        route = route_for_lane(repo, session_id, session_lane)
+        expected_hash = hashlib.sha256(packet_lane["task"].encode("utf-8")).hexdigest()
+        if route["binding"]["task_id"] != packet_lane["id"] or route["binding"]["task_sha256"] != expected_hash:
+            raise DriveError("the checked work no longer matches the plan")
+        branch, commit = branch_commit(repo, session_id, packet_lane["id"])
+        if not branch_contains_base(repo, session["base_sha256"], commit):
+            raise DriveError("the kept review branch does not start from the prepared project")
+        changed = changed_paths_between(repo, session["base_sha256"], commit)
+        if not changed or not all(HOST.path_allowed(path, packet_lane["allowed_paths"]) for path in changed):
+            raise DriveError("the kept review branch changed outside its declared files")
+        if not commit_diff_is_clean(repo, session["base_sha256"], commit):
+            raise DriveError("the kept review branch has a whitespace error")
+        candidates.append((session_lane, packet_lane, branch, commit))
+        allowed_paths.extend(packet_lane["allowed_paths"])
+        proofs.append(packet_lane["proof"])
+
+    attempt = new_review_attempt(repo, session_id)
+    for _session_lane, packet_lane, _branch, commit in candidates:
+        review = create_lead_review_worktree(repo, attempt, packet_lane["id"], commit)
+        if not lead_review_passes(review, packet_lane["proof"], timeout_seconds):
+            raise DriveError("the checked work did not reproduce in its lead review checkout")
+
+    merge_review_branches(
+        repo=repo,
+        branches=[branch for _session_lane, _packet_lane, branch, _commit in candidates],
+        allowed_paths=allowed_paths,
+        proofs=proofs,
+        timeout_seconds=timeout_seconds,
+        session_id=session_id,
+    )
+    session["state"] = ACCEPTED_SESSION_STATE
+    for lane in session["lanes"]:
+        lane["merge_ok"] = True
+    replace_session(session_path, session)
+    telemetry.record_drive(
+        event="drive_accepted",
+        session_id=session_id,
+        lane_id=None,
+        role=None,
+        host=None,
+        state="ok",
+        duration=None,
+        lane_count=len(session["lanes"]),
+        path_count=None,
+        scope_ok=True,
+        proof_ok=True,
+        merge_ok=True,
+    )
+    return session
+
+
 def render(session: dict[str, Any], lanes: list[dict[str, Any]], notices: list[dict[str, str]]) -> str:
     lines = ["Ready work", ""]
     for lane in lanes:
@@ -672,6 +910,14 @@ def render_launch(session: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_accept(session: dict[str, Any]) -> str:
+    return (
+        "Work brought into this project\n\n"
+        f"Finished and checked: {len(session['lanes'])}\n"
+        "No remote branch, pull request, deployment, publication, or message was created.\n"
+    )
+
+
 def parser() -> argparse.ArgumentParser:
     root = argparse.ArgumentParser(prog="pilot-puppy drive", description=__doc__)
     sub = root.add_subparsers(dest="command", required=True)
@@ -688,6 +934,12 @@ def parser() -> argparse.ArgumentParser:
     launch_parser.add_argument("--roster-file", type=Path, default=default_roster_path())
     launch_parser.add_argument("--timeout-seconds", type=int, default=900)
     launch_parser.add_argument("--json", action="store_true")
+    accept_parser = sub.add_parser("accept", help="reproduce and bring checked local work into this project")
+    accept_parser.add_argument("--repo", required=True, type=Path, help="exact Git worktree root")
+    accept_parser.add_argument("--plan", default="PLAN.md", help="relative canonical PLAN.md path")
+    accept_parser.add_argument("--session", required=True, help="finished local Drive session ID")
+    accept_parser.add_argument("--timeout-seconds", type=int, default=900)
+    accept_parser.add_argument("--json", action="store_true")
     return root
 
 
@@ -713,20 +965,28 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         if args.timeout_seconds < 1 or args.timeout_seconds > 3_600:
             raise DriveError("timeout must be between 1 and 3600 seconds")
-        session = launch(
-            repo=repo,
-            plan=plan,
-            roster_path=args.roster_file,
-            session_id=args.session,
-            timeout_seconds=args.timeout_seconds,
-        )
+        if args.command == "launch":
+            session = launch(
+                repo=repo,
+                plan=plan,
+                roster_path=args.roster_file,
+                session_id=args.session,
+                timeout_seconds=args.timeout_seconds,
+            )
+        else:
+            session = accept(
+                repo=repo,
+                plan=plan,
+                session_id=args.session,
+                timeout_seconds=args.timeout_seconds,
+            )
     except (DriveError, DrivePacketError, OSError, UnicodeError) as exc:
         print(f"pilot-puppy drive: {exc}", file=sys.stderr)
         return 1
     if args.json:
         print(json.dumps(session, indent=2, sort_keys=True))
     else:
-        print(render_launch(session), end="")
+        print(render_launch(session) if args.command == "launch" else render_accept(session), end="")
     return 0 if all(lane["status"] == "passed" for lane in session["lanes"]) else 1
 
 

@@ -164,12 +164,22 @@ Drive rechecks the unchanged plan and Git revision, gives each lane its own
 clean worktree and branch, uses the selected native host, checks the change and
 the plan's named test command, then commits a green result for review. It
 prepares at most three lanes, never overlaps allowed paths or a native host,
-and keeps every worktree/branch rather than deleting it. Current Drive stops
-there: it never pushes, opens a PR, merges, deploys, publishes, spends money,
-or silently retries a failed lane.
+and keeps every worktree/branch rather than deleting it. If every piece is
+green, you can take one separate local acceptance step:
+
+```bash
+pilot-puppy drive accept --repo "$PWD" --session SESSION_ID
+```
+
+Acceptance repeats each named check in a separate clean lead checkout, then
+creates one local Git merge commit in the source project. Drive never pushes,
+opens a PR, deploys, publishes, spends money, or silently retries a failed
+lane.
 
 The loopback browser shows this as **Ready work**. It can prepare the work,
-then offers a separate **Start ready work** button. Neither page load nor
+then offers a separate **Start ready work** button. When every piece passes, it
+offers **Bring checked work into this project**; that repeats the check in a
+separate clean copy before making the local merge. Neither page load nor
 preparation starts a coding tool, and the browser never shows the task text,
 file list, test command, provider, or credentials.
 

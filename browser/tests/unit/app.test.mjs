@@ -17,6 +17,7 @@ describe('Pilot Puppy browser shell', () => {
     expect(app).toContain("fetch('/api/decision'");
     expect(app).toContain("'/api/drive/prepare'");
     expect(app).toContain("'/api/drive/launch'");
+    expect(app).toContain("'/api/drive/accept'");
     expect(app).toContain("{ plan: plan.path, option_id: option.id, revision: plan.outcome.revision }");
     expect(app).not.toContain('localStorage');
     expect(app).not.toContain('WebSocket');
@@ -28,6 +29,7 @@ describe('Pilot Puppy browser shell', () => {
     expect(app).toContain("text: 'Choose what happens next'");
     expect(app).toContain("text: 'How Pilot Puppy can help'");
     expect(app).toContain("'Start ready work'");
+    expect(app).toContain("'Bring checked work into this project'");
     expect(app).toContain("briefing.proof ? 'Proof' : 'Proof not available yet'");
     expect(app).not.toContain("text: 'planner'");
     expect(app).not.toContain("text: 'hard-dev'");

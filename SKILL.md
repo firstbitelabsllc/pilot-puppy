@@ -75,9 +75,19 @@ pilot-puppy drive launch --repo <exact-clean-worktree> --session <session-id>
 Launch rechecks the plan and Git revision, creates isolated worktrees, invokes
 the sealed native-host contract, reruns the plan's local proof command, and
 commits green results to kept review branches. It does not push, open a PR,
-merge, deploy, publish, spend, delete worktrees, retry, or silently choose a
-different host. Treat failed lanes as a clear next move, not a reason to stop
-unrelated reachable work.
+deploy, publish, spend, delete worktrees, retry, or silently choose a different
+host. Treat failed lanes as a clear next move, not a reason to stop unrelated
+reachable work.
+
+If every lane is green, the lead may take one separate explicit local step:
+
+```bash
+pilot-puppy drive accept --repo <exact-clean-worktree> --session <session-id>
+```
+
+Acceptance reruns each named proof in a separate clean lead checkout, then
+creates one local Git merge commit in that project. It does not push, open a
+pull request, deploy, publish, spend, delete, or contact another computer.
 
 ## Brief the person
 

@@ -997,10 +997,10 @@ Code, or Cursor without taking custody of credentials or conversations.
   and `lead`. Existing local `bulk`, `critic`, and `hard-ic` labels remain
   readable as compatibility aliases, but normalized roster views, route packets,
   docs, and the loopback guide emit only the current names.
-- [in_progress] R10: Build foreground Supervised Drive for one project: read
+- [completed] R10: Build foreground Supervised Drive for one project: read
   its current `PLAN.md`, prepare up to three path-disjoint sealed lanes, and
   wait for one explicit local launch before reusing native host runs, local
-  proof, and ordinary green merging. Add optional, off-by-default,
+  proof, and one explicit lead-reproduced local merge. Add optional, off-by-default,
   metadata-only Langfuse observation after local truth exists; it may never
   receive task, plan, code, prompt, path, provider, or credential data, and it
   may never route, launch, retry, accept, or alter a local result.
@@ -1029,6 +1029,17 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T22:29:33Z: R10 now closes the local work loop without becoming an
+  autonomous delivery system. After a real disposable native-Codex Drive task
+  produced a green kept review commit, an explicit acceptance action created a
+  separate clean lead checkout, reran the named proof, and made one local
+  acceptance commit. The resulting diff contained only the declared file;
+  source and review checkouts stayed clean. Full Python (163), JavaScript (4),
+  desktop/phone browser (6), docs, public-readiness, and development-package
+  gates pass. No remote branch, pull request, deployment, publication, or
+  external message was created. The browser now calls this final step **Bring
+  checked work into this project** and keeps it an explicit foreground action.
 
 - 2026-08-04T22:16:03Z: Real local dogfood now proves the foreground path,
   not just a fake adapter: a disposable, one-file Drive task selected native

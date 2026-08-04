@@ -44,6 +44,7 @@ MAX_PLANS = 250
 MAX_DRIVE_OUTPUT_BYTES = 64 * 1024
 DRIVE_PREPARE_TIMEOUT_SECONDS = 30
 DRIVE_LAUNCH_TIMEOUT_SECONDS = 3_000
+DRIVE_ACCEPT_TIMEOUT_SECONDS = 3_000
 DRIVE_SESSION_RE = re.compile(r"^[0-9a-f]{32}$")
 SKIP_DIRS = frozenset({".git", ".pilot-puppy", ".venv", "venv", "node_modules", "dist", "build"})
 FIELD_RE = re.compile(r"^\s*-\s*([^:]+):\s*(.*?)\s*$")
@@ -261,7 +262,7 @@ def public_drive_session(value: object, *, action: str) -> dict[str, Any]:
     session_id = value["session_id"]
     state = value["state"]
     lanes = value["lanes"]
-    expected_state = "prepared" if action == "prepare" else "finished"
+    expected_state = {"prepare": "prepared", "launch": "finished", "accept": "accepted"}.get(action)
     if (
         value["schema"] != "pilot-puppy.drive-session.v1"
         or value["revision"] != 1
@@ -281,6 +282,13 @@ def public_drive_session(value: object, *, action: str) -> dict[str, Any]:
             raise BrowserError("Pilot Puppy could not safely read the local work update")
         if action == "launch" and status not in {"passed", "needs_attention"}:
             raise BrowserError("Pilot Puppy could not safely read the local work update")
+        if action == "accept" and (
+            status != "passed"
+            or lane.get("scope_ok") is not True
+            or lane.get("proof_ok") is not True
+            or lane.get("merge_ok") is not True
+        ):
+            raise BrowserError("Pilot Puppy could not safely read the local work update")
         statuses.append(status)
     return {
         "session": session_id,
@@ -294,7 +302,7 @@ def public_drive_session(value: object, *, action: str) -> dict[str, Any]:
 def run_drive_action(plan: Path, *, action: str, session_id: str | None = None) -> dict[str, Any]:
     """Use the checked-in local Drive command with a fixed, browser-safe packet."""
 
-    if action not in {"prepare", "launch"}:
+    if action not in {"prepare", "launch", "accept"}:
         raise BrowserError("Pilot Puppy cannot start that kind of work")
     repo = repository_root(plan)
     relative_plan = plan.relative_to(repo).as_posix()
@@ -309,11 +317,11 @@ def run_drive_action(plan: Path, *, action: str, session_id: str | None = None) 
         "--json",
     ]
     timeout = DRIVE_PREPARE_TIMEOUT_SECONDS
-    if action == "launch":
+    if action in {"launch", "accept"}:
         if not isinstance(session_id, str) or DRIVE_SESSION_RE.fullmatch(session_id) is None:
-            raise BrowserError("Choose a prepared piece of work before starting it")
+            raise BrowserError("Choose ready work before taking that step")
         command.extend(["--session", session_id])
-        timeout = DRIVE_LAUNCH_TIMEOUT_SECONDS
+        timeout = DRIVE_LAUNCH_TIMEOUT_SECONDS if action == "launch" else DRIVE_ACCEPT_TIMEOUT_SECONDS
     try:
         result = subprocess.run(
             command,
@@ -485,7 +493,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         endpoint = urlparse(self.path).path
-        if endpoint not in {"/api/decision", "/api/drive/prepare", "/api/drive/launch"}:
+        if endpoint not in {"/api/decision", "/api/drive/prepare", "/api/drive/launch", "/api/drive/accept"}:
             self._json(404, {"error": "not found"})
             return
         if not self._loopback() or not self._valid_host() or not self._same_origin():
@@ -525,12 +533,14 @@ class Handler(BaseHTTPRequestHandler):
                 raise BrowserError("ready-work request has unknown or missing fields")
             plan = resolve_plan(self.scan_root, payload["plan"])
             if not self.server.drive_lock.acquire(blocking=False):  # type: ignore[attr-defined]
-                raise BrowserError("Pilot Puppy is already preparing or starting work. Please wait for that update.")
+                raise BrowserError("Pilot Puppy is already getting work ready, starting it, or bringing it into the project. Please wait for that update.")
             try:
                 if endpoint == "/api/drive/prepare":
                     drive = run_drive_action(plan, action="prepare")
-                else:
+                elif endpoint == "/api/drive/launch":
                     drive = run_drive_action(plan, action="launch", session_id=payload["session"])
+                else:
+                    drive = run_drive_action(plan, action="accept", session_id=payload["session"])
             finally:
                 self.server.drive_lock.release()  # type: ignore[attr-defined]
             self._json(200, {"ok": True, "drive": drive})

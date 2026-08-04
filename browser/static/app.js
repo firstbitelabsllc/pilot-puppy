@@ -53,7 +53,11 @@ async function choose(plan, option) {
 }
 
 async function drive(plan, action, session) {
-  const endpoint = action === 'prepare' ? '/api/drive/prepare' : '/api/drive/launch';
+  const endpoint = {
+    prepare: '/api/drive/prepare',
+    launch: '/api/drive/launch',
+    accept: '/api/drive/accept',
+  }[action];
   const body = action === 'prepare' ? { plan: plan.path } : { plan: plan.path, session };
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -88,11 +92,34 @@ function renderReadyWork(plan) {
     return work;
   }
   const remembered = state.drives[plan.id];
+  if (remembered?.state === 'accepted') {
+    work.append(el('p', { className: 'eyebrow', text: 'Work update' }));
+    work.append(el('h3', { text: 'The checked work is in this project.' }));
+    work.append(el('p', { text: `Finished and checked: ${remembered.finished_count}.` }));
+    work.append(el('p', { className: 'work-note', text: 'Pilot Puppy checked it again in a separate clean copy, then added it here. Nothing was sent anywhere.' }));
+    return work;
+  }
   if (remembered?.state === 'finished') {
     work.append(el('p', { className: 'eyebrow', text: 'Work update' }));
-    work.append(el('h3', { text: 'Your work update is ready.' }));
+    const allFinished = remembered.finished_count === remembered.work_count;
+    work.append(el('h3', { text: allFinished ? 'Your checked work is ready.' : 'Some work needs your attention.' }));
     work.append(el('p', { text: `Finished and checked: ${remembered.finished_count}. Needs your attention: ${remembered.needs_attention_count}.` }));
-    work.append(el('p', { className: 'work-note', text: 'Each separate review branch was kept. Nothing was sent anywhere.' }));
+    work.append(el('p', { className: 'work-note', text: allFinished ? 'Nothing has been added to this project yet. Nothing was sent anywhere.' : 'The finished changes are kept safely aside. Nothing was added to this project or sent anywhere.' }));
+    if (allFinished) {
+      const status = el('p', { className: 'work-status', text: 'Pilot Puppy will check this work again before adding it here.' });
+      const button = workButton('Bring checked work into this project', async () => {
+        button.disabled = true;
+        status.textContent = 'Checking the work one more time, then adding it here…';
+        try {
+          state.drives[plan.id] = await drive(plan, 'accept', remembered.session);
+          render();
+        } catch (error) {
+          status.textContent = error.message;
+          button.disabled = false;
+        }
+      });
+      work.append(button, status);
+    }
     return work;
   }
   work.append(el('p', { className: 'eyebrow', text: remembered ? 'Ready to start' : 'Ready work' }));

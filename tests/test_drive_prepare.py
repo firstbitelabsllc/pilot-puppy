@@ -318,6 +318,127 @@ print("```")
         self.assertNotIn("Traceback", malformed_session.stderr)
         self.assertFalse(worktree_exists)
 
+    def test_explicit_accept_reproduces_and_brings_checked_work_into_the_source_project(self) -> None:
+        fake_host = r'''#!/usr/bin/env python3
+import json
+import pathlib
+import sys
+if "--version" in sys.argv:
+    print("fake-host 1.0")
+    raise SystemExit(0)
+pathlib.Path.cwd().joinpath("result.txt").write_text("changed\n", encoding="utf-8")
+print("```json")
+print(json.dumps({
+  "schema": "pilot-puppy.host-receipt.v1",
+  "task_id": "write-result",
+  "status": "ok",
+  "summary": "bounded change completed",
+  "proof_ref": "result-proof",
+  "changed_paths": ["result.txt"],
+  "tests": [{"name": "host receipt", "status": "pass"}],
+}))
+print("```")
+'''
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname).resolve()
+            repo, roster = make_repo(root)
+            payload = packet()
+            payload["lanes"] = [
+                {
+                    "id": "write-result",
+                    "state": "ready",
+                    "task_kind": "dev",
+                    "summary": "Write the bounded result file.",
+                    "task": "Write the requested result file and report the focused proof.",
+                    "allowed_paths": ["result.txt"],
+                    "proof": ["python3", "-c", "import pathlib; assert pathlib.Path('result.txt').read_text() == 'changed\\n'"],
+                    "merge": "manual",
+                }
+            ]
+            (repo / "PLAN.md").write_text(
+                "# Example\n\n## Pilot Puppy Drive\n\n<!-- pilot-puppy-drive.v1\n"
+                + json.dumps(payload, indent=2)
+                + "\n-->\n",
+                encoding="utf-8",
+            )
+            git(repo, "add", "PLAN.md")
+            git(repo, "commit", "-qm", "add drive packet")
+            prepared = run(
+                "prepare",
+                "--repo",
+                str(repo),
+                "--roster-file",
+                str(roster),
+                "--availability",
+                "assume",
+                "--json",
+            )
+            session = json.loads(prepared.stdout)
+            binary = root / "fake-cursor"
+            binary.write_text(fake_host, encoding="utf-8")
+            binary.chmod(0o755)
+            environment = {**os.environ, "PILOT_PUPPY_CURSOR_BIN": str(binary)}
+            launched = run(
+                "launch",
+                "--repo",
+                str(repo),
+                "--roster-file",
+                str(roster),
+                "--session",
+                session["session_id"],
+                "--timeout-seconds",
+                "20",
+                "--json",
+                env=environment,
+            )
+            (repo / "unrelated.txt").write_text("leave this alone\n", encoding="utf-8")
+            blocked = run(
+                "accept",
+                "--repo",
+                str(repo),
+                "--session",
+                session["session_id"],
+                "--timeout-seconds",
+                "20",
+                "--json",
+            )
+            review_root = repo.parent / f"{repo.name}-pilot-puppy-lead-review"
+            review_exists_before_accept = review_root.exists()
+            (repo / "unrelated.txt").unlink()
+            accepted = run(
+                "accept",
+                "--repo",
+                str(repo),
+                "--session",
+                session["session_id"],
+                "--timeout-seconds",
+                "20",
+                "--json",
+            )
+            result = json.loads(accepted.stdout)
+            review = repo.parent / f"{repo.name}-pilot-puppy-lead-review" / session["session_id"] / "attempt-01" / "write-result"
+            review_exists = review.is_dir()
+            source_text = (repo / "result.txt").read_text(encoding="utf-8")
+            source_status = git(repo, "status", "--porcelain=v1")
+            accepted_commit = git(repo, "log", "-1", "--pretty=%s")
+            changed = git(repo, "diff", "--name-only", session["base_sha256"], "HEAD")
+
+        self.assertEqual(prepared.returncode, 0, prepared.stderr)
+        self.assertEqual(launched.returncode, 0, launched.stderr + launched.stdout)
+        self.assertEqual(blocked.returncode, 1)
+        self.assertIn("save or commit project changes", blocked.stderr)
+        self.assertFalse(review_exists_before_accept)
+        self.assertEqual(accepted.returncode, 0, accepted.stderr + accepted.stdout)
+        self.assertEqual(result["state"], "accepted")
+        self.assertTrue(result["lanes"][0]["scope_ok"])
+        self.assertTrue(result["lanes"][0]["proof_ok"])
+        self.assertTrue(result["lanes"][0]["merge_ok"])
+        self.assertTrue(review_exists)
+        self.assertEqual(source_text, "changed\n")
+        self.assertEqual(source_status, "")
+        self.assertEqual(accepted_commit, f"pilot-puppy accept: {session['session_id']}")
+        self.assertEqual(changed, "result.txt")
+
 
 if __name__ == "__main__":
     unittest.main()
