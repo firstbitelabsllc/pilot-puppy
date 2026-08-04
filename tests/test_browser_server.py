@@ -1555,6 +1555,42 @@ if not ok:
             'inline; filename="vidux-artifact.html"',
         )
 
+    def test_artifact_file_response_resolves_slug_without_private_path(self):
+        self.artifacts_dir.mkdir(parents=True)
+        artifact = self.artifacts_dir / "friendly.html"
+        artifact.write_text("<h1>Friendly</h1>", encoding="utf-8")
+
+        status, text = self.get("/api/file?artifact=friendly&view=inline")
+
+        self.assertEqual(status, 200, text)
+        self.assertEqual(text, "<h1>Friendly</h1>")
+
+        head_status, head_headers, head_body = self.head(
+            "/api/file?artifact=friendly&view=inline"
+        )
+        self.assertEqual(head_status, 200)
+        self.assertEqual(head_body, b"")
+        self.assertEqual(
+            head_headers.get("Content-Disposition"),
+            'inline; filename="vidux-artifact.html"',
+        )
+
+    def test_artifact_file_response_rejects_ambiguous_or_unsafe_slug(self):
+        self.artifacts_dir.mkdir(parents=True)
+        (self.artifacts_dir / "friendly.html").write_text(
+            "<h1>Friendly</h1>", encoding="utf-8"
+        )
+
+        status, text = self.get(
+            "/api/file?path=%2Ftmp%2Fother.html&artifact=friendly"
+        )
+        self.assertEqual(status, 400)
+        self.assertEqual(text, "choose path or artifact, not both")
+
+        status, text = self.get("/api/file?artifact=..%2Ffriendly")
+        self.assertEqual(status, 403)
+        self.assertEqual(text, "forbidden")
+
     def test_plain_text_error_backstop_redacts_sensitive_filename(self):
         secret = synthetic_secret()
         missing = self.artifacts_dir / f"{secret}.html"

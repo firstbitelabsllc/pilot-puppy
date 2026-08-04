@@ -2812,6 +2812,15 @@ def safe_resolve_any(raw: str) -> Path | None:
     ) or _select_catalog_file(raw, _browser_file_catalog(), DEV_ROOT)
 
 
+def resolve_artifact_slug(raw: object) -> Path | None:
+    """Resolve one discovered HTML artifact without exposing its filesystem path."""
+    slug = _request_path_text(raw)
+    if slug is None or ARTIFACT_SLUG_RE.fullmatch(slug) is None:
+        return None
+    requested = str(ARTIFACTS_DIR / f"{slug}.html")
+    return _select_catalog_file(requested, _artifact_file_catalog(), ARTIFACTS_DIR)
+
+
 def is_artifact_file(path: Path) -> bool:
     """Return True only for a canonical file under the configured artifact root."""
     try:
@@ -3438,7 +3447,20 @@ class Handler(BaseHTTPRequestHandler):
             })
         elif route == "/api/file":
             raw = (qs.get("path") or [""])[0]
-            p = safe_resolve_any(raw)  # plans + artifacts
+            artifact_slug = (qs.get("artifact") or [""])[0]
+            if raw and artifact_slug:
+                self._send(400, "choose path or artifact, not both")
+                return
+            if artifact_slug:
+                if ARTIFACT_SLUG_RE.fullmatch(artifact_slug) is None:
+                    self._send(403, "forbidden")
+                    return
+                p = resolve_artifact_slug(artifact_slug)
+                if not p:
+                    self._send(404, f"artifact missing: {artifact_slug}")
+                    return
+            else:
+                p = safe_resolve_any(raw)  # plans + artifacts
             if not p:
                 if is_allowed_file_target(raw):
                     self._send(404, f"file missing: {raw.rsplit(os.sep, 1)[-1]}")
