@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 74
-- Outcome Updated At: 2026-08-04T01:05:11Z
+- Outcome Revision: 75
+- Outcome Updated At: 2026-08-04T01:07:11Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring every active product lane to a clean, user-ready state: Star67, Moussey consignment and cleaner, Snowcubes, security cleanup, and release handoff. It coordinates the portfolio; it is not the product under test.
 - Outcome Detail: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
@@ -289,6 +289,13 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T01:07:11Z: Re-read the deployed Star67 public surface while the
+  full-data branch CI was still running. `https://learn-sql-peach.vercel.app/`
+  returned HTTP 200 from Vercel with `strict-transport-security`,
+  `x-content-type-options: nosniff`, and `x-frame-options: DENY`; the body
+  contained Star67 markers and no stale Pivot SQL marker. This is live-main
+  evidence only; the pending branch has not been deployed.
 
 - 2026-08-04T01:05:11Z: Consumed the first full-data CI correction. The build
   job passed and the artifact restored `manifest.json`, but WebKit preview
