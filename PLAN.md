@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 69
-- Outcome Updated At: 2026-08-04T00:36:07Z
+- Outcome Revision: 70
+- Outcome Updated At: 2026-08-04T00:38:42Z
 - Outcome State: working
 - Outcome: Use Pilot Puppy as the single operating layer to bring every active product lane to a clean, user-ready state: Star67, Moussey consignment and cleaner, Snowcubes, security cleanup, and release handoff. It coordinates the portfolio; it is not the product under test.
 - Outcome Detail: Use Pilot Puppy as the single operating layer to bring all currently active product work to a clean, trustworthy, user-ready state: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Pilot Puppy coordinates the portfolio; it is not the product under test.
@@ -289,6 +289,15 @@ Code, or Cursor without taking custody of credentials or conversations.
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
 ## Progress
+
+- 2026-08-04T00:38:42Z: Advanced the Moussey security/clarity lane without touching
+  the dirty primary or live runtime. The pushed repair/UI branch `e6dd162` was
+  checked against `origin/main@3c44bbec` and opened as PR #121:
+  https://github.com/leojkwan/moussey/pull/121. It contains only the lockfile
+  vulnerability repair and two residual consignment-copy fixes; prior proof
+  remains 0 production audit vulnerabilities, focused consignment surface and
+  invoice tests green, production build green, and diff clean. PR #121 is
+  OPEN/CLEAN with no checks reported yet; merge/deploy remains unclaimed.
 
 - 2026-08-04T00:36:07Z: Continued the whole-portfolio Outcome with a reachable
   Star67 proof slice. The current harness reproduced 182/183 against the live
