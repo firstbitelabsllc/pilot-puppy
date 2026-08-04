@@ -12,8 +12,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Operator Brief
 
 - Outcome ID: portfolio-product-closeout-20260803
-- Outcome Revision: 94
-- Outcome Updated At: 2026-08-04T02:23:22Z
+- Outcome Revision: 95
+- Outcome Updated At: 2026-08-04T02:30:27Z
 - Outcome State: working
 - Outcome: Coordinate the entire active product portfolio through Pilot Puppy toward clean, trustworthy, user-ready surfaces; Pilot Puppy is the orchestrator, not the product under test.
 - Outcome Detail: This is one umbrella outcome with many active workstreams and user-visible deliverables—not a request to ship one thing. Keep all currently active product work in scope: Star67/Pivot SQL and its public Vercel front door; Moussey consignment UI, source truth, billing language, stale figures, password URLs, and the 5/21 Marathon record; related Snowcubes data and storefront surfaces; security/privacy cleanup; and remaining release or handoff work. Move the highest-value reachable lane, then continue through the next lane while preserving each repository's canonical plan, owner, and proof boundary.
@@ -344,6 +344,14 @@ Code, or Cursor without taking custody of credentials or conversations.
   official security predicate open and resume it from the existing workspace
   when the app/tooling handoff is healthy; the independent npm, CodeQL,
   gitleaks, and source-boundary receipts remain the only current evidence.
+
+- 2026-08-04T02:30:27Z: Reopened the existing official Codex Security workspace
+  successfully against clean Moussey `main@3c44bbec`. Setup validation is
+  valid, but `setup.submitted=false`; the app is waiting for the user to press
+  Start scan. The bounded wait ended without a scan ID, preflight, findings, or
+  report, so no security result is claimed and no terminal fallback or second
+  workspace was created. Resume from this same workspace after Start scan, then
+  carry its canonical artifacts back into this umbrella plan.
 
 - 2026-08-04T02:12:44Z: Revalidated the full portfolio against current
   external state. Pilot Puppy PR #99 is `1836bcf` and OPEN/CLEAN/MERGEABLE with
