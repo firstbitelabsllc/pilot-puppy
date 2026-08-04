@@ -1973,6 +1973,16 @@ Code, or Cursor without taking custody of credentials or conversations.
   non-developer front door. Asset existence and `git diff --check` pass. PR #5
   is open with two GitHub build checks in progress; repository rename/homepage
   metadata remains owner-admin bound and is not claimed.
+- 2026-08-04T16:00:58Z: Fresh cross-lane readback kept the money and runtime
+  receipts current. Snowcubes remote `main@5f655431` still contains Marathon's
+  2026-05-21 FREE/UNKNOWN nine-pack row with `$0.00` open and no payment row;
+  the new head is docs-only. Moussey remote `main@40a487c` adds the shoppy
+  pouch guide but its consignment source still uses the simplified
+  `awaiting payment` / `No payment due` language and its URL sanitizers still
+  clear username, password, and credential query parameters. The dirty local
+  Moussey runtime remains untouched; authenticated UI proof is still
+  owner-controlled. Star67 PR #5 is open at `d9bbf97` with both build checks
+  still running. No duplicate data, UI, or security patch was created.
 - 2026-08-04T15:56:33Z: Re-ran the reachable Star67 security lane on the
   browser-first branch. `npm audit --omit=optional --json` reports zero
   vulnerabilities; gitleaks reports zero findings in the README diff and one
