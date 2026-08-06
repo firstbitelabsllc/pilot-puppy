@@ -19,6 +19,7 @@ MAX_FILE_COUNT = 100
 MAX_UNPACKED_BYTES = 2_000_000
 REQUIRED_FILES = {
     ".claude-plugin/plugin.json",
+    "AGENT.md",
     "LICENSE",
     "README.md",
     "SECURITY.md",
@@ -48,7 +49,8 @@ REQUIRED_FILES = {
     "schemas/roster.v1.json",
     "scripts/shadow-checkpoint.py",
     "scripts/shadow-doctor.py",
-    "scripts/shadow-drive.py",
+    "scripts/shadow-accept.py",
+    "scripts/shadow-lint.py",
     "scripts/shadow-host.py",
     "scripts/shadow-init.py",
     "scripts/shadow-outcome-validate.py",
