@@ -1065,6 +1065,17 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-06T16:35:00Z PARK seat=chief — v4 (PR #254) is green locally
+  (Python 131, JS 4, Playwright 10, docs, privacy, 4.0.0 package) and pushed,
+  but merge is blocked by a GitHub Actions outage: every job fails at "Set up
+  job" with "Failed to resolve action download info: Service Unavailable" —
+  GitHub cannot fetch actions/checkout etc. Not our code; two re-triggers hit
+  the same infra failure. Not retry-looping. RESUME: when Actions recovers,
+  `gh run rerun` the failed workflows (or push an empty commit), and on green
+  merge #254, cut v4.0.0, reinstall on the operator machine (flips DOD d2
+  ~z7e5 Unknown->Verified), tear down the worktree.
+
+
 - 2026-08-06T15:30:00Z ~h4v1 PROOF npm run test:py -> 124 pass, lint 0 blocking (accept)
 - 2026-08-06T15:30:00Z POSTURE Broad->Close | harness: the v4.0.0 full gate matrix
 
