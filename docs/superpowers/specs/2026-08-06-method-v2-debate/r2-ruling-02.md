@@ -12,7 +12,7 @@ Exact sentence: *"BROAD exploration is boxed up front and must end with a writte
 What pays rent is the box and the forced exit verdict — that is what the adversarial gate's "just exploring" answer lands on (chair core #5), and it survives fully as a behavior sentence. The mode wrapper pays nothing: no seat found a Spike-mode plan (r1-seat-06.md, r1-seat-09.md), and Spike's must-commit (pushed `spike/*` branch + log line) was always a write obligation, never a plan state. The chair is right that Spike is a broad-time behavior.
 
 **3. Defer — FOLD into the Deferred-row write (chair core #4).**
-Exact sentence: *"Defer is a write, never a state: one row — what | why-not-now | wake: <predicate> — and a row without a wake predicate is deletion in denial."*
+Exact sentence: *"Defer is a write, never a state: one row — what | why-not-now | `wake: <predicate>` — and a row without a wake predicate is deletion in denial."*
 Defer-as-mode was redundant with the Method's own grammar on day one: method.md already carries `## Deferred` as a section with the wake-predicate invariant, so the mode duplicated its own row type — exactly the internal-overlap disease r1-seat-05.md prosecuted in Drive. The fleet already treats Defer as a row property, not a plan state: r1-seat-07.md's constitution clause classifies rows as "Defer by definition." A whole-plan-deferred state is derivable at read time from its rows, consistent with "milestone status is derived, never stored." Mode-Defer deletes; row-Defer is core and untouched.
 
 **4. Challenge — FOLD into BROAD plus the written-demotion law.**
