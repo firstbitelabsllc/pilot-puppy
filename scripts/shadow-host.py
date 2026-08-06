@@ -25,11 +25,7 @@ import threading
 import time
 from typing import Any
 
-from shadow_roster_lib import RosterError, load_roster, route_roster_sha256
-from shadow_route_lib import ROUTE_SCHEMA, RoutePacketError, load_route_packet, route_sha256
-from shadow_seat_lib import SeatError, load_seat_overlay, selector_for_route
 from shadow_task_lib import TaskError, frozen_task_sha256
-import shadow_telemetry as telemetry
 
 
 PROBE_SCHEMA = "shadow.host-probe.v1"
@@ -68,16 +64,6 @@ class HostError(ValueError):
         self.kind = kind
         self.detail = detail
 
-
-class RouteReference:
-    """One validated route plus private local data that must never be emitted."""
-
-    __slots__ = ("public", "roster", "slot_id")
-
-    def __init__(self, public: dict[str, Any], roster: dict[str, Any], slot_id: str) -> None:
-        self.public = public
-        self.roster = roster
-        self.slot_id = slot_id
 
 
 def identifier(value: Any, label: str) -> str:
@@ -307,41 +293,22 @@ def public_command_shape(host: str) -> list[str]:
     raise HostError("host_unknown", f"unsupported host: {host}")
 
 
-def selector_flag(host: str, selector: dict[str, str] | None) -> str | None:
-    """Make one safe single-token native selector option, or no option at all."""
-
-    if selector is None:
-        return None
-    kind = selector.get("kind")
-    value = selector.get("value")
-    if kind not in {"model", "profile"} or not isinstance(value, str):
-        raise HostError("seat_unconfigured", "private seat configuration is invalid")
-    if kind == "profile" and host != "codex":
-        raise HostError("seat_unconfigured", "private seat configuration is invalid")
-    # The selector library validates the value before this point.  Keeping it a
-    # single argv item prevents a local value from becoming a second CLI option.
-    return f"--{kind}={value}"
-
 
 def launch_command(
     host: str,
     binary: str,
     repo: Path,
     final_message: Path,
-    selector: dict[str, str] | None = None,
 ) -> list[str]:
     """Build the private native argv for one frozen task.
 
     All three native CLIs receive the frozen task on stdin. Cursor's current
-    non-interactive CLI requires ``agent``; a local selector is deliberately
-    inserted before that subcommand.  This argv never becomes an attempt field.
+    non-interactive CLI requires ``agent``.  This argv never becomes an
+    attempt field.
     """
 
-    selector_option = selector_flag(host, selector)
     if host == "codex":
         command = [binary, "exec"]
-        if selector_option is not None:
-            command.append(selector_option)
         command.extend(
             [
                 "--json",
@@ -357,8 +324,6 @@ def launch_command(
         return command
     if host == "claude-code":
         command = [binary]
-        if selector_option is not None:
-            command.append(selector_option)
         command.extend(
             [
                 "--print",
@@ -383,15 +348,13 @@ def launch_command(
             "--trust",
             "--force",
         ]
-        if selector_option is not None:
-            command.append(selector_option)
         command.append("agent")
         return command
     raise HostError("host_unknown", f"unsupported host: {host}")
 
 
 def command_shape(host: str, binary: str, repo: Path, final_message: Path) -> list[str]:
-    """Compatibility helper for tests of the selector-free native argv."""
+    """Compatibility helper for tests of the native argv."""
 
     return launch_command(host, binary, repo, final_message)
 
@@ -727,78 +690,6 @@ def validate_output_path(repo: Path, value: str) -> Path | None:
     return destination
 
 
-def route_file_path(repo: Path, value: str) -> Path:
-    """Constrain a route packet to one regular file inside project evidence."""
-
-    state = repo / ".shadow"
-    evidence = state / "evidence"
-    if state.is_symlink() or evidence.is_symlink():
-        raise HostError("route_invalid", "project evidence path must not be a symlink")
-    supplied = Path(value).expanduser()
-    candidate_input = supplied if supplied.is_absolute() else repo / supplied
-    if candidate_input.is_symlink():
-        raise HostError("route_invalid", "route packet must be a regular evidence file")
-    candidate = candidate_input.resolve(strict=False)
-    evidence_root = evidence.resolve(strict=False)
-    try:
-        candidate.relative_to(evidence_root)
-    except ValueError as exc:
-        raise HostError("route_invalid", "route packet must stay in project evidence") from exc
-    if candidate.parent != evidence_root or candidate.suffix != ".json":
-        raise HostError("route_invalid", "route packet must be one direct JSON evidence file")
-    return candidate
-
-
-def route_reference(
-    args: argparse.Namespace, repo: Path, task_id: str, task_sha256: str, route_path: Path | None
-) -> RouteReference | None:
-    """Validate an optional explicit route before launching its selected host."""
-
-    if route_path is None:
-        return None
-    try:
-        packet = load_route_packet(route_path)
-        current_roster = load_roster(args.roster_file)
-    except (RoutePacketError, RosterError):
-        raise HostError("route_invalid", "route packet or local roster is invalid") from None
-    if packet["status"] == "manual":
-        raise HostError("route_manual", "manual routes cannot launch a native host")
-    if packet["status"] != "ready" or packet["selection"] is None:
-        raise HostError("route_blocked", "route packet is not ready for native execution")
-    binding = packet["binding"]
-    if binding["task_id"] != task_id or binding["task_sha256"] != task_sha256:
-        raise HostError("route_task_mismatch", "route packet does not match the frozen task")
-    if (
-        binding["roster_revision"] != current_roster["revision"]
-        or binding["route_roster_sha256"] != route_roster_sha256(current_roster)
-    ):
-        raise HostError("route_stale", "route packet does not match the current local roster")
-    selection = packet["selection"]
-    if selection["host"] != args.host:
-        raise HostError("route_host_mismatch", "route packet selected a different native host")
-    # A roster validates unique role priorities, so this is one exact private
-    # slot lookup without adding that slot ID to the public route packet.
-    selected_slots = [
-        slot
-        for slot in current_roster["slots"]
-        if slot["role"] == selection["role"]
-        and slot["host"] == selection["host"]
-        and slot["priority"] == selection["priority"]
-        and slot["enabled"]
-    ]
-    if len(selected_slots) != 1:
-        raise HostError("route_invalid", "route packet selection is not an enabled declared local slot")
-    return RouteReference(
-        public={
-            "schema": ROUTE_SCHEMA,
-            "sha256": route_sha256(packet),
-            "role": selection["role"],
-            "host": selection["host"],
-            "priority": selection["priority"],
-        },
-        roster=current_roster,
-        slot_id=selected_slots[0]["id"],
-    )
 
 
 def probe(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
@@ -837,26 +728,6 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     except TaskError as exc:
         kind = "task_too_large" if "exceeds" in str(exc) else "task_unreadable"
         raise HostError(kind, str(exc)) from None
-    route_path = route_file_path(repo, args.route_file) if args.route_file else None
-    if args.seat_file and not args.use_seat:
-        raise HostError("seat_not_enabled", "private seat configuration requires --use-seat")
-    if args.use_seat and route_path is None:
-        raise HostError("seat_requires_route", "private seat configuration requires a ready sealed route")
-    if route_path is not None and destination is not None and route_path == destination:
-        raise HostError("route_output_collision", "host output cannot replace the active route packet")
-    route = route_reference(args, repo, task_id, task_sha256, route_path)
-    selector: dict[str, str] | None = None
-    if args.use_seat:
-        if route is None:  # Guard the invariant above if this function is called directly.
-            raise HostError("seat_requires_route", "private seat configuration requires a ready sealed route")
-        try:
-            selector = selector_for_route(
-                load_seat_overlay(args.seat_file), route.roster, route.slot_id, args.host
-            )
-        except SeatError:
-            raise HostError(
-                "seat_unconfigured", "private seat configuration is unavailable or does not match the sealed route"
-            ) from None
     prompt = host_prompt(task, task_id, allowed, task_sha256)
     state_before = local_state_snapshot(repo)
     before = status_paths(repo)
@@ -880,7 +751,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     binary = resolve_binary(args.host, args.binary)
     with tempfile.TemporaryDirectory(prefix="shadow-host-") as temp_dir:
         final_message = Path(temp_dir) / "final-message.txt"
-        command = launch_command(args.host, binary, repo, final_message, selector)
+        command = launch_command(args.host, binary, repo, final_message)
         result = run_bounded(command, prompt, repo, args.timeout_seconds)
         output_texts = [result.get("stdout", b"").decode("utf-8", errors="replace")]
         output_texts.append(result.get("stderr", b"").decode("utf-8", errors="replace"))
@@ -907,7 +778,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
                 raise HostError("host_launch_failed", str(result["launch_error"]))
             if result.get("returncode") != 0:
                 raise HostError("host_failed", "host exited non-zero")
-            private_values = (selector["value"],) if selector is not None else ()
+            private_values: tuple[str, ...] = ()
             host_receipt = validate_host_receipt(
                 extract_host_receipt(output_texts), task_id, allowed, private_values
             )
@@ -951,11 +822,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             "accepted_by_lead": False,
             "projection_is_usage": False,
         }
-        if route is not None:
-            payload["route"] = route.public
     write_json("-" if destination is None else str(destination), payload, force=args.force)
-    if destination is not None:
-        telemetry.record_host(payload, allowed_path_count=len(allowed))
     return payload, 0 if status == "ok" else 1
 
 
@@ -974,14 +841,6 @@ def parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--task-file", required=True)
     run_parser.add_argument("--task-id", required=True)
     run_parser.add_argument("--allowed-path", action="append", default=[])
-    run_parser.add_argument("--route-file", help="optional bounded route packet inside .shadow/evidence")
-    run_parser.add_argument("--roster-file", help="trusted local roster used to verify --route-file")
-    run_parser.add_argument(
-        "--use-seat",
-        action="store_true",
-        help="attach one private local selector to the exact route-selected native slot",
-    )
-    run_parser.add_argument("--seat-file", help="trusted private local selector overlay used only with --use-seat")
     run_parser.add_argument("--out", default="-")
     run_parser.add_argument("--force", action="store_true")
     run_parser.add_argument("--timeout-seconds", type=int, default=900)
