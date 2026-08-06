@@ -1,12 +1,12 @@
 # The Method v2 — core design (tribunal spec, awaiting operator review)
 
-Status: **DESIGN — not yet law.** Produced by a three-round adversarial debate
-(2026-08-05→06): ten Round 1 seats across /thermo /ponytail /brand-resplit
-/shadow lenses, a five-judge simplification tribunal plus chief judge in
-Round 2, and Round 3 cross-examination (one of four examiners completed
-before an API session limit; three remain — see Open Items). Full records:
-`2026-08-06-method-v2-debate/`. Binding operator steer: *"this method
-shouldn't bake TOO many concepts."*
+Status: **DESIGN — complete, awaiting operator review.** Produced by a
+three-round adversarial debate (2026-08-05→06): ten Round 1 seats across
+/thermo /ponytail /brand-resplit /shadow lenses, a five-judge simplification
+tribunal plus chief judge in Round 2, and four Round 3 cross-examiners (all
+completed; the session-limit interruption was resumed from cache). Full
+records: `2026-08-06-method-v2-debate/`. Binding operator steer: *"this
+method shouldn't bake TOO many concepts."*
 
 Nothing in this spec changes shipped behavior until the operator approves it
 and an implementation plan lands. One Round 1 finding was urgent enough to
@@ -49,6 +49,21 @@ grammar v2 file contract are in
 rationale: r2-ruling-01 (verification), -02 (modes), -03 (surfaces),
 -04 (structure), -05 (row tokens).
 
+### Round 3 amendments now folded into the ruling
+
+- **Postures** (`r3-crossexam-postures.md`): the two-posture collapse stands,
+  amended — the exploration box becomes enforceable grammar: two typed
+  Progress heads (`BOX ~hash … | ends: <date>` and
+  `VERDICT ~hash keep|kill|promote -> <line>`) plus four named lint checks
+  (BOX-NO-END and BOX-EXPIRED-NO-VERDICT blocking; CLOSE-OVER-OPEN-BOX
+  refusing the posture flip; ORPHAN-VERDICT warning). This discharges
+  dissent D3 mechanically.
+- **Roster** (`r3-crossexam-roster.md`): deletion affirmed; two surviving
+  demotion fragments reworded so they no longer dereference deleted grammar
+  (provider/model/cost selection lives outside Shadow; the frozen-task
+  SHA-256 preflight survives roster-free; bare `shadow host run --host X`
+  is already the complete sealed path — zero new code required).
+
 ### Notable deletions (with their reactivation triggers)
 
 - **CLAIM/DONE bookkeeping** — deleted; git merges identical edits silently,
@@ -58,18 +73,29 @@ rationale: r2-ruling-01 (verification), -02 (modes), -03 (surfaces),
 - **Four-mode vocabulary + 4×4 transition law** — collapsed to the two
   postures; Spike/Challenge survive as folded sentences (boxed exploration
   with a forced keep/kill/promote verdict; written demotion).
-- **Drive packet/lane vocabulary** (#33/#34) — fold to `shadow accept
-  --row` keeping the clean-checkout mechanical acceptance. *Contested;
-  cross-exam unfinished — see Open Items.*
+- **Drive packet/lane vocabulary** (#33/#34) — DELETE, **amended with two
+  binding conditions** (`r3-crossexam-drive.md`): the deletion is void unless
+  the same release ships `shadow accept --row` carrying Drive's
+  `create_lead_review_worktree` + `lead_review_passes` engine verbatim, and
+  the same closeout rewrites PLAN.md's pending multi-lane successor row to
+  the composed path. The cross-exam also corrected the record: Drive is
+  serial (a for-loop over ≤3 lanes), zero real packets exist in the wild,
+  and v2.2.1's hardening was Drive defending against its own bookkeeping —
+  a spike ending in kill-with-lesson, not churn.
 - **roster/route/seat (1,777 lines)** (#35) — DELETE **as amended by the
   completed Round 3 cross-exam** (`r3-crossexam-roster.md`): the deletion is
   affirmed but must land in the same commit as the Drive change with the
   full excision manifest (bin dispatch, release manifest, host.py route
   plumbing); bare `shadow host run --host <name>` is already the shipped
   roster-free sealed path, so zero new code is required.
-- **Langfuse seam** (#38) — deleted by the tribunal (cannot attribute any
-  real failure class). *Directly conflicts with an operator request the same
-  night; cross-exam unfinished — operator decision, see below.*
+- **Langfuse seam** (#38) — DELETE **AFFIRMED** (`r3-crossexam-langfuse.md`):
+  the seam has emitted zero events in its entire life (off by default, never
+  configured, and its emitters die with #33/#35); non-attribution is
+  constitutional (privacy.md bans every field the failure classes need).
+  The stress-test observability story is the deterministic crash rig
+  (`tests/test_method_stress.py`), git history as the attributed trace
+  store, and the existing Grafana/Phoenix substrate for any future fleet
+  telemetry as a fresh proposal.
 - **`size:` tokens, sha256 mint recipe, M-id machinery, mass thresholds,
   stored `- Milestone:` line, `- Loop:` line (when derivable)** — deleted,
   folded, or deferred per the table.
@@ -80,23 +106,27 @@ rationale: r2-ruling-01 (verification), -02 (modes), -03 (surfaces),
   Shadow; provider/model/account selection lives in delegate/routing.json/
   env. B — keep one dumb `--profile` passthrough (~15 lines). Flip to B only
   when a sealed run needs a pin env config cannot express.
-- **D-2 Langfuse:** A — accept the deletion; stress-test observability =
-  git history + `shadow lint` trends + the deterministic stress rig
-  (`tests/test_method_stress.py`, proposed by the Round 1 stress seat).
-  B — keep the seam for Drive-fever dashboards. Default pends the unfinished
-  cross-exam; no default is claimed here.
-- **D-3 Two postures vs four modes:** tribunal ruled two; dissent D3
-  (exploration/interrogation blur) reactivates the explicit exploration box
-  after two consecutive Closes with no written Broad verdict. Cross-exam
-  unfinished; the ruling stands as the proposal.
+- **D-2 Langfuse:** A (default, per the affirmed cross-exam) — accept the
+  deletion; observability = the deterministic stress rig + git history +
+  the existing Grafana/Phoenix substrate. B — keep the seam anyway.
+- **D-3 Drive's last outing:** A (default) — delete now under the binding
+  conditions; zero real packets exist and the evidence is sufficient. B —
+  run one bounded 2–3-lane Drive session on a real repo first and fold the
+  receipts; reopen #33 only if the batch measurably beats the composed
+  path. Silence = A.
+- *(resolved)* Two postures vs four modes: stands as amended — the BOX/
+  VERDICT grammar and lint checks make the collapse enforceable.
 
-## Open items — exact resume predicate
+## Next step — the operator gate
 
-Session limit hit 2026-08-06 ~02:10 ET (resets 04:10 ET). Resume move:
+The debate is complete. Remaining sequence:
 
-1. Re-run Round 3: `Workflow({scriptPath: ".../shadow-crossexam-r3-wf_1cbfdc76-3f3.js", resumeFromRunId: "wf_1cbfdc76-3f3"})` — the roster seat replays from cache; drive, langfuse, postures run live.
-2. Fold the three verdicts into this spec; resolve D-2's default.
-3. Operator reviews this spec (the brainstorming user-review gate).
-4. On approval: superpowers:writing-plans → implementation plan for the v2
-   rewrite (AGENT.md v2 + grammar v2 + shadow-lint.py + the amended
-   deletions), executed as Method-shaped checkpoints under `Mode: Close`.
+1. **Operator reviews this spec** (the brainstorming user-review gate) and
+   rules D-1 (account pinning; default: none in Shadow), D-2 (Langfuse;
+   default: delete), D-3 (Drive's last outing; default: delete now).
+2. On approval: superpowers:writing-plans → one implementation plan for the
+   v2 rewrite — AGENT.md v2 + grammar v2 (with BOX/VERDICT heads) +
+   scripts/shadow-lint.py (the binding condition) + `shadow accept --row`
+   carrying Drive's clean-checkout engine + the amended deletions with
+   their excision manifests — executed as Method-shaped checkpoints under
+   `Mode: Close`.
