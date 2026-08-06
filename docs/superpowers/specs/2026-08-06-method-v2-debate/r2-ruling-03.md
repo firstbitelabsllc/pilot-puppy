@@ -1,6 +1,6 @@
 # ROUND 2 RULING — Cluster: Product Surfaces
 
-Files read: chair-position.md, r1-seat-01 through r1-seat-10, `/opt/homebrew/lib/node_modules/@firstbitelabs/shadow/docs/reference/method.md`, `~/Development/pilot-puppy-worktrees/agent-md-ship-20260806/AGENT.md`.
+Files read: chair-position.md, r1-seat-01 through r1-seat-10, the installed `@firstbitelabs/shadow` package's `docs/reference/method.md`, and the pre-rename `agent-md-ship-20260806` worktree's `AGENT.md`.
 
 ---
 

@@ -1,6 +1,6 @@
 # CHIEF JUDGE — FINAL VERDICT (Shadow Method Simplification Tribunal, Round 2)
 
-Basis: `/private/tmp/claude-501/-Users-leokwan-Development/2d135e8d-7366-472b-a066-aa71de42e50e/scratchpad/debate/chair-position.md`, `r1-seat-01.md` through `r1-seat-10.md`, and the five cluster rulings. Chair's Approach A (core rewrite) is adopted. One binding condition carried from the gates ruling: **every DELETE of prose law is void unless `scripts/shadow-lint.py` lands in the same commit** — Shadow is 0-for-1 on shipping the file it points at (AGENT.md missing from the v3.0.0 npm package, found independently by all ten seats).
+Basis: the debate scratchpad's `chair-position.md`, `r1-seat-01.md` through `r1-seat-10.md`, and the five cluster rulings. Chair's Approach A (core rewrite) is adopted. One binding condition carried from the gates ruling: **every DELETE of prose law is void unless `scripts/shadow-lint.py` lands in the same commit** — Shadow is 0-for-1 on shipping the file it points at (AGENT.md missing from the v3.0.0 npm package, found independently by all ten seats).
 
 ---
 
