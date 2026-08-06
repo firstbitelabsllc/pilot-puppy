@@ -13,13 +13,12 @@ Skip it for a factual answer or an obvious one-step edit with no handoff.
 ## The Method
 
 Standing behavior for every session rides in `AGENT.md` at this skill's root;
-the file contract (entity/milestone/checkpoint grammar, PLAN-LINT, the Close
-coverage matrix and lesson delta, steering) is `docs/reference/method.md`.
-Follow both: declare a mode (Spike, Defer, Challenge, or Close) as the first
-move of a cycle, run PLAN-LINT before honoring a mode transition, write plans
-as you execute, and close only through the DoD coverage matrix. Modes and the
-adversarial gate are the process law; the sections below are the delegation
-and proof mechanics underneath them.
+the file contract is `docs/reference/method.md`, enforced by
+`scripts/shadow-lint.py`. Follow both: declare a posture (Broad or Close) as
+the first move of a cycle, run `shadow lint` before honoring a posture flip,
+write plans as you execute, and close only through proof lines per DoD
+clause. The eight core concepts and the gate pair are the process law; the
+sections below are the delegation and proof mechanics underneath them.
 
 ## Worklane boundary
 

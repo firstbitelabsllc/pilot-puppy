@@ -33,39 +33,36 @@ class MethodContractTests(unittest.TestCase):
     def test_agent_md_carries_the_standing_behaviors(self) -> None:
         text = AGENT.read_text(encoding="utf-8")
         for anchor in (
-            "One chief of staff",
-            "SPIKE",
-            "DEFER",
-            "CHALLENGE",
-            "CLOSE",
-            "Existential",
-            "Contradiction",
-            "PLAN-LINT",
-            "Transfer the lesson",
-            "lesson delta",
-            "read-only projection",
+            "plan file",
+            "checkpoint row",
+            "Broad",
+            "Close",
+            "Defer is a write",
+            "gate pair",
+            "shadow lint",
+            "lesson",
+            "read-only",
         ):
             self.assertIn(anchor, text, anchor)
 
     def test_method_grammar_is_pinned(self) -> None:
         text = METHOD.read_text(encoding="utf-8")
         for anchor in (
-            "- Entity: resplit",
-            "Spike | Defer | Challenge | Close",
+            "- Entity:",
+            "Broad | Close",
             "(DoD)",
             "| proof:",
-            "| size:",
             "needs:",
-            "from:",
-            "CLAIM",
             "PROOF",
-            "DONE",
-            "PLAN-LINT",
+            "POSTURE",
+            "BOX",
+            "VERDICT",
             "LESSON none",
-            "Default if silent",
+            "shadow-lint.py",
+            "ARCHIVE",
         ):
             self.assertIn(anchor, text, anchor)
-        self.assertRegex(text, r"C\d+~[0-9a-z]{4}")
+        self.assertRegex(text, r"~[0-9a-z]{4}")
         self.assertIn("^[a-z][a-z0-9-]{1,31}$", text)
 
     def test_grammar_matches_the_shipped_board_scanner(self) -> None:
