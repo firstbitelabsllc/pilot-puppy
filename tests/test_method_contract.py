@@ -73,8 +73,12 @@ class MethodContractTests(unittest.TestCase):
         self.assertIn(entity_re.group(1), method)
         mode_re = re.search(r'MODE_VALUE_RE = re\.compile\(r"([^"]+)"\)', server)
         self.assertIsNotNone(mode_re)
-        for mode in ("spike", "defer", "challenge", "close"):
+        # Two postures, and the board's vocabulary is exactly the grammar's.
+        for mode in ("broad", "close"):
             self.assertIn(mode, mode_re.group(1))
+            self.assertIn(f"Mode: {mode.capitalize()}", method)
+        for legacy in ("spike", "defer", "challenge"):
+            self.assertNotIn(legacy, mode_re.group(1))
 
 
 if __name__ == "__main__":

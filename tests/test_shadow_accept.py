@@ -100,6 +100,35 @@ class ShadowAcceptTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertIn("gate", result.stderr.lower() + result.stdout.lower())
 
+    def test_unrelated_staged_files_stay_out_of_the_acceptance_commit(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "other.txt").write_text("staged elsewhere\n", encoding="utf-8")
+            git(repo, "add", "--", "other.txt")
+            result = run_accept(repo, "~ab12")
+            files = git(repo, "show", "--name-only", "--pretty=format:", "HEAD").split()
+            staged = git(repo, "diff", "--cached", "--name-only").split()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(files, ["PLAN.md"])
+        self.assertEqual(staged, ["other.txt"])
+
+    def test_a_failed_commit_restores_the_plan(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            before_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            # Refuse the commit itself: the proof still passes, so this exercises
+            # the write-then-commit window.
+            git(repo, "config", "commit.gpgsign", "true")
+            git(repo, "config", "gpg.program", str(repo / "no-such-gpg"))
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+            staged = git(repo, "diff", "--cached", "--name-only").split()
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(before_plan, after_plan)
+        self.assertEqual(commits, "1")
+        self.assertEqual(staged, [])
+
     def test_unknown_row_is_refused(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo = make_repo(Path(dirname).resolve())

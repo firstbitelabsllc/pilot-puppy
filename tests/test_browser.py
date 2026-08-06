@@ -323,6 +323,21 @@ class BoardProjectionTests(unittest.TestCase):
         self.assertIsInstance(record["lint"]["blocking"], int)
         self.assertIsInstance(record["lint"]["warning"], int)
 
+    def test_broad_posture_earns_a_chip(self) -> None:
+        broad = BOARD_PLAN.replace("- Mode: Close", "- Mode: Broad")
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), broad)
+            record = server.plan_record(plan, repo)
+        self.assertEqual(record["mode"], "broad")
+
+    def test_legacy_modes_earn_no_chip(self) -> None:
+        legacy = BOARD_PLAN.replace("- Mode: Close", "- Mode: Spike")
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), legacy)
+            record = server.plan_record(plan, repo)
+        self.assertIsNone(record["mode"])
+        self.assertGreaterEqual(record["lint"]["blocking"], 1)
+
     def test_lint_flags_a_bad_plan(self) -> None:
         bad = BOARD_PLAN.replace("- Mode: Close", "- Mode: turbo")
         with tempfile.TemporaryDirectory() as dirname:

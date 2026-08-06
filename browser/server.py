@@ -60,7 +60,9 @@ UNSAFE_TITLE_RE = re.compile(
 # Board fields are closed vocabularies or title-gated text, so a plan line can
 # never carry a path or secret onto the board projection.
 ENTITY_VALUE_RE = re.compile(r"^[a-z][a-z0-9-]{1,31}$")
-MODE_VALUE_RE = re.compile(r"^(?:spike|defer|challenge|close)$")
+# Grammar v2 has two postures. Legacy v1 modes are lint-blocking, so they
+# never earn a chip; the board shows the finding instead.
+MODE_VALUE_RE = re.compile(r"^(?:broad|close)$")
 CHECKPOINT_STATES = ("pending", "in_progress", "blocked", "completed")
 CHECKPOINT_ALIASES = {"x": "completed", "done": "completed", "working": "in_progress"}
 ALLOWED_STATIC = {

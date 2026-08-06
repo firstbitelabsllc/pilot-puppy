@@ -150,11 +150,33 @@ def main(argv: list[str] | None = None) -> int:
         if "## Progress" not in updated:
             raise AcceptError("the plan has no Progress section")
         updated = updated.rstrip() + "\n" + proof_line
+        staged_before = git_completed(repo, "diff", "--cached", "--quiet", "--", "PLAN.md").returncode != 0
         plan_path.write_text(updated, encoding="utf-8")
         added = git_completed(repo, "add", "--", "PLAN.md")
-        committed = git_completed(repo, "commit", "-m", f"shadow accept: {row_id} proven in a clean checkout")
+        # --only with a pathspec keeps unrelated already-staged files out of the
+        # acceptance commit: the flip and its PROOF line travel alone.
+        committed = (
+            git_completed(
+                repo,
+                "commit",
+                "--only",
+                "-m",
+                f"shadow accept: {row_id} proven in a clean checkout",
+                "--",
+                "PLAN.md",
+            )
+            if added.returncode == 0
+            else added
+        )
         if added.returncode or committed.returncode:
-            raise AcceptError("the acceptance commit could not be created")
+            # A flipped row with no acceptance commit would read as completed
+            # and refuse the rerun, so the plan goes back exactly as it was.
+            plan_path.write_text(plan_text, encoding="utf-8")
+            if staged_before:
+                git_completed(repo, "add", "--", "PLAN.md")
+            else:
+                git_completed(repo, "reset", "--quiet", "HEAD", "--", "PLAN.md")
+            raise AcceptError("the acceptance commit could not be created; the plan was restored")
     except AcceptError as exc:
         print(f"shadow accept: {exc}", file=sys.stderr)
         return 1
