@@ -1065,6 +1065,15 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-06T15:30:00Z ~h4v1 PROOF npm run test:py -> 124 pass, lint 0 blocking (accept)
+- 2026-08-06T15:30:00Z POSTURE Broad->Close | harness: the v4.0.0 full gate matrix
+
+### Close
+
+- DOD d1 Method reduced to eight concepts, lint-enforced | C: ~h4v1 | proof: cmd npm run test:py -> pass, shadow lint 0 blocking | status: Verified
+- DOD d2 v4.0.0 released, installed, doctor green | C: ~z7e5 | proof: read shadow doctor -> pending reinstall on the operator machine | status: Unknown
+- LESSON folded into AGENT.md v2 + docs/reference/method.md: a method that needs a glossary fails its own readability test; every concept must pay rent (name a failure it prevents) or fold. Preemptive machinery (the beads-derived concurrency tokens) was deferred until a real collision occurs.
+
 - 2026-08-06T06:25:00Z POSTURE note seat=chief — Method v2 simplification
   debate ran three adversarial rounds (10 seats + 5 judges + chief + 1 of 4
   cross-examiners); verdict: ~28 concepts -> 8 core. Spec + debate records
