@@ -657,10 +657,10 @@ def all_changes_are_allowed(worktree: Path, allowed_paths: list[str]) -> bool:
         changed = HOST.status_paths(worktree)
     except HOST.HostError:
         return False
+    # A lane runs in a fresh worktree, so pre-rename evidence there could only
+    # come from the host itself; it stays a scope violation.
     return all(
-        HOST.path_allowed(path, allowed_paths)
-        or path.startswith(".shadow/evidence/")
-        or HOST.is_legacy_state_path(path)
+        HOST.path_allowed(path, allowed_paths) or path.startswith(".shadow/evidence/")
         for path in changed
     )
 

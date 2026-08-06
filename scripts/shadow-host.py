@@ -195,7 +195,30 @@ def is_legacy_state_path(path: str) -> bool:
     return trimmed == LEGACY_STATE_DIR or trimmed.startswith(f"{LEGACY_STATE_DIR}/")
 
 
+def assert_legacy_state_sealed(repo: Path) -> None:
+    """Pre-rename evidence earns its sealing exemption only when it is inert.
+
+    A symlinked or non-directory .pilot-puppy could redirect host writes outside
+    the assigned worktree while Git status still looked clean, so the exemption
+    never applies to one.
+    """
+
+    state = repo / LEGACY_STATE_DIR
+    if state.is_symlink():
+        raise HostError("worktree_unsealed", "pre-rename evidence path must not be a symlink")
+    if not state.exists():
+        return
+    if not state.is_dir():
+        raise HostError("worktree_unsealed", "pre-rename evidence state must be a directory")
+    for path in state.rglob("*"):
+        if path.is_symlink() or not (path.is_dir() or path.is_file()):
+            raise HostError("worktree_unsealed", "pre-rename evidence must contain regular files only")
+
+
 def local_state_snapshot(repo: Path) -> dict[str, str]:
+    # Every flow that snapshots product state also exempts pre-rename evidence
+    # from its sealing checks, so validate that directory's shape here.
+    assert_legacy_state_sealed(repo)
     state = repo / ".shadow"
     evidence = state / "evidence"
     if state.is_symlink() or evidence.is_symlink():

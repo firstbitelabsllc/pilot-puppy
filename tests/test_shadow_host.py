@@ -678,6 +678,22 @@ class ShadowHostTests(unittest.TestCase):
                 self.assertEqual(payload["status"], "ok")
                 self.assertEqual(payload["changed_paths"], ["result.txt"])
 
+    def test_symlinked_pre_rename_evidence_is_never_exempt_from_sealing(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            root = Path(dirname)
+            repo = make_repo(root)
+            outside = root / "outside"
+            outside.mkdir()
+            (repo / ".pilot-puppy").symlink_to(outside, target_is_directory=True)
+            binary = make_host(root)
+            task = root / "task.txt"
+            task.write_text("Do the bounded task.\n", encoding="utf-8")
+            output = repo / ".shadow" / "evidence" / "attempt.json"
+            result = run_host(repo, binary, task, output, host="codex")
+            self.assertEqual(result.returncode, 1)
+            self.assertFalse(output.exists())
+            self.assertEqual(json.loads(result.stdout)["blocked"]["kind"], "worktree_unsealed")
+
     def test_private_seat_model_is_bound_to_the_selected_route_and_never_enters_attempt(self) -> None:
         cases = (
             ("cursor", "dev", "dev-cursor"),
