@@ -9,9 +9,6 @@
 | `shadow roster init\|show\|prefer` | Create, show, or locally prioritize a declared generic work-role slot. |
 | `shadow seat init\|show\|set` | Configure one owner-local model/profile selector for an existing native slot. |
 | `shadow route …` | Explain one explicit generic role/native-host choice without launching it. |
-| `shadow drive prepare …` | Freeze up to three path-disjoint, PLAN-owned local handoffs without starting a host. |
-| `shadow drive launch …` | Explicitly run one frozen local Drive session through native hosts, checks, and kept review commits. |
-| `shadow drive accept …` | Recheck a fully green Drive session in a separate lead checkout, then explicitly create one local merge commit. |
 | `shadow accept --row ~hash --repo PATH` | Rerun one row's `cmd` proof in a clean detached checkout; on success flip the row with its paired PROOF line in one commit — the only code path that flips a row. |
 | `shadow host probe --host HOST` | Check a native host without using it. |
 | `shadow host run …` | Run one sealed task in one clean worktree. |
@@ -29,13 +26,3 @@ accounts, quota, prices, or models; start a host automatically; dispatch work;
 or create a queue. See [foreground routing](routing.md) and
 [native hosts](native-hosts.md).
 
-Drive Packet input belongs in the project's existing `PLAN.md`, inside one
-`shadow-drive.v1` JSON comment block. `prepare` starts no process. A later
-`launch` rechecks the plan hash and source revision, works only in clean
-isolated worktrees, and stops each failed lane without retrying or switching
-tools. `accept` is a separate foreground action: it repeats each named check in
-a clean detached lead checkout, then merges only fully green kept branches into
-the local project. Each lane declares `merge`: `"ordinary"` work enters the one
-local acceptance commit, while `"manual"` work is checked and reproduced the
-same way but stays on its kept branch for the person to merge themselves.
-Drive never pushes, opens a PR, deploys, publishes, spends, or deletes.

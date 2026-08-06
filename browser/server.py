@@ -33,7 +33,6 @@ except ModuleNotFoundError:
     from browser.chief_of_staff import project_chief_of_staff
     from browser.decision_mode import DecisionInputError, build_choice, project_decision, receive_choice
     from browser.outcome_source import OutcomeSourceError, project_plan_outcome
-from shadow_drive_lib import DrivePacketError, extract_document, public_preview
 from shadow_drive_lib import PRIVATE_PATH_RE as DRIVE_PRIVATE_PATH_RE
 from shadow_drive_lib import SECRET_SHAPE_RE as DRIVE_SECRET_SHAPE_RE
 
@@ -44,16 +43,6 @@ VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").splitlines()[0].strip()
 MAX_REQUEST_BYTES = 16 * 1024
 MAX_PLAN_BYTES = 1_000_000
 MAX_PLANS = 250
-MAX_DRIVE_OUTPUT_BYTES = 64 * 1024
-DRIVE_PREPARE_TIMEOUT_SECONDS = 30
-# The CLI owns the real deadline: every bounded step (host run, proof) gets
-# DRIVE_STEP_TIMEOUT_SECONDS, and the browser ceiling sits above the CLI's
-# worst case (three lanes x two bounded steps) so the browser never kills a
-# legitimately running drive out from under its own supervision.
-DRIVE_STEP_TIMEOUT_SECONDS = 900
-DRIVE_LAUNCH_TIMEOUT_SECONDS = 3 * 2 * DRIVE_STEP_TIMEOUT_SECONDS + 600
-DRIVE_ACCEPT_TIMEOUT_SECONDS = 3 * 2 * DRIVE_STEP_TIMEOUT_SECONDS + 600
-DRIVE_SESSION_RE = re.compile(r"^[0-9a-f]{32}$")
 SKIP_DIRS = frozenset({".git", ".shadow", ".venv", "venv", "node_modules", "dist", "build"})
 FIELD_RE = re.compile(r"^\s*-\s*([^:]+):\s*(.*?)\s*$")
 TASK_RE = re.compile(r"^\s*-\s*\[([^]]+)]\s*(.*?)\s*$")
@@ -148,23 +137,6 @@ def latest_progress(text: str) -> str | None:
     return RECEIPT_MARKER_RE.sub(" ", rows[-1]).strip()[:280]
 
 
-def drive_preview(text: str) -> dict[str, Any] | None:
-    """Project a valid Drive Packet without exposing its instructions or scope."""
-
-    try:
-        document = extract_document(text)
-    except DrivePacketError:
-        return {"state": "needs_attention"}
-    preview = public_preview(document)
-    if preview is None:
-        return None
-    state = "ready" if preview["ready_count"] else "nothing_ready"
-    return {
-        "state": state,
-        "ready_count": preview["ready_count"],
-        "lanes": preview["lanes"],
-    }
-
 
 def read_plan(path: Path) -> str:
     if path.is_symlink() or not path.is_file() or path.name != "PLAN.md":
@@ -238,7 +210,6 @@ def plan_record(path: Path, root: Path) -> dict[str, Any]:
         "outcome": outcome,
         "decision": decision,
         "briefing": chief,
-        "drive": drive_preview(text),
         "contract_error": error,
     }
 
@@ -315,130 +286,6 @@ def repository_root(plan: Path) -> Path:
         raise BrowserError("plan escapes its Git worktree") from exc
     return repo
 
-
-def public_drive_session(value: object, *, action: str) -> dict[str, Any]:
-    """Return only the browser-safe result of a foreground local Drive run."""
-
-    fields = {"schema", "revision", "session_id", "state", "plan_sha256", "base_sha256", "lanes"}
-    if not isinstance(value, dict) or set(value) != fields:
-        raise BrowserError("Shadow could not safely read the local work update")
-    session_id = value["session_id"]
-    state = value["state"]
-    lanes = value["lanes"]
-    expected_state = {"prepare": "prepared", "launch": "finished", "accept": "accepted"}.get(action)
-    if (
-        value["schema"] != "shadow.drive-session.v1"
-        or value["revision"] != 1
-        or not isinstance(session_id, str)
-        or DRIVE_SESSION_RE.fullmatch(session_id) is None
-        or state != expected_state
-        or not isinstance(lanes, list)
-        or not 1 <= len(lanes) <= 3
-    ):
-        raise BrowserError("Shadow could not safely read the local work update")
-    statuses: list[str] = []
-    for lane in lanes:
-        if not isinstance(lane, dict) or not isinstance(lane.get("status"), str):
-            raise BrowserError("Shadow could not safely read the local work update")
-        status = lane["status"]
-        if action == "prepare" and status != "prepared":
-            raise BrowserError("Shadow could not safely read the local work update")
-        if action == "launch" and status not in {"passed", "needs_attention"}:
-            raise BrowserError("Shadow could not safely read the local work update")
-        if action == "accept" and (
-            status != "passed"
-            or lane.get("scope_ok") is not True
-            or lane.get("proof_ok") is not True
-            or not (
-                lane.get("merge_ok") is True
-                or (lane.get("merge") == "manual" and lane.get("merge_ok") is None)
-            )
-        ):
-            raise BrowserError("Shadow could not safely read the local work update")
-        statuses.append(status)
-    return {
-        "session": session_id,
-        "state": state,
-        "work_count": len(statuses),
-        "finished_count": statuses.count("passed"),
-        "needs_attention_count": statuses.count("needs_attention"),
-    }
-
-
-def run_drive_subprocess(command: list[str], repo: Path, timeout: int) -> subprocess.CompletedProcess[str]:
-    """Run the drive CLI as its own process group; the browser kill is a backstop."""
-
-    try:
-        process = subprocess.Popen(
-            command,
-            cwd=repo,
-            stdin=subprocess.DEVNULL,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            start_new_session=True,
-        )
-    except OSError as exc:
-        raise BrowserError("Shadow could not finish that local step. Nothing was sent anywhere.") from exc
-    try:
-        stdout, stderr = process.communicate(timeout=timeout)
-    except subprocess.TimeoutExpired:
-        # Backstop only: the CLI's own bounded step timeouts fire first in
-        # normal operation. Stop the whole supervisor process group and say
-        # honestly that the work was stopped, not that nothing happened.
-        for stop_signal in (signal.SIGTERM, signal.SIGKILL):
-            try:
-                os.killpg(os.getpgid(process.pid), stop_signal)
-            except (OSError, ProcessLookupError):
-                break
-            try:
-                process.wait(timeout=10)
-                break
-            except subprocess.TimeoutExpired:
-                continue
-        raise BrowserError(
-            "That local step ran past its time budget and was stopped. "
-            "Review the plan and any kept branches before starting it again."
-        ) from None
-    return subprocess.CompletedProcess(command, process.returncode, stdout=stdout, stderr=stderr)
-
-
-def run_drive_action(plan: Path, *, action: str, session_id: str | None = None) -> dict[str, Any]:
-    """Use the checked-in local Drive command with a fixed, browser-safe packet."""
-
-    if action not in {"prepare", "launch", "accept"}:
-        raise BrowserError("Shadow cannot start that kind of work")
-    repo = repository_root(plan)
-    relative_plan = plan.relative_to(repo).as_posix()
-    command = [
-        sys.executable,
-        str(SCRIPTS / "shadow-drive.py"),
-        action,
-        "--repo",
-        str(repo),
-        "--plan",
-        relative_plan,
-        "--json",
-    ]
-    timeout = DRIVE_PREPARE_TIMEOUT_SECONDS
-    if action in {"launch", "accept"}:
-        if not isinstance(session_id, str) or DRIVE_SESSION_RE.fullmatch(session_id) is None:
-            raise BrowserError("Choose ready work before taking that step")
-        command.extend(["--session", session_id])
-        command.extend(["--timeout-seconds", str(DRIVE_STEP_TIMEOUT_SECONDS)])
-        timeout = DRIVE_LAUNCH_TIMEOUT_SECONDS if action == "launch" else DRIVE_ACCEPT_TIMEOUT_SECONDS
-    result = run_drive_subprocess(command, repo, timeout)
-    expected_partial_result = action == "launch" and result.returncode == 1
-    if (result.returncode and not expected_partial_result) or len(result.stdout.encode("utf-8")) > MAX_DRIVE_OUTPUT_BYTES:
-        raise BrowserError("Shadow could not prepare or start this work safely. Nothing was sent anywhere.")
-    try:
-        payload = json.loads(result.stdout)
-    except json.JSONDecodeError as exc:
-        raise BrowserError("Shadow could not safely read the local work update") from exc
-    projection = public_drive_session(payload, action=action)
-    if session_id is not None and projection["session"] != session_id:
-        raise BrowserError("Shadow could not safely read the local work update")
-    return projection
 
 
 def write_decision_receipt(plan: Path, document: dict[str, Any], option_id: Any, revision: Any) -> dict[str, Any]:
@@ -587,7 +434,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         endpoint = urlparse(self.path).path
-        if endpoint not in {"/api/decision", "/api/drive/prepare", "/api/drive/launch", "/api/drive/accept"}:
+        if endpoint != "/api/decision":
             self._json(404, {"error": "not found"})
             return
         if not self._loopback() or not self._valid_host() or not self._same_origin():
@@ -622,22 +469,7 @@ class Handler(BaseHTTPRequestHandler):
                 )
                 self._json(200, {"ok": True, "receipt": receipt})
                 return
-            expected = {"plan"} if endpoint == "/api/drive/prepare" else {"plan", "session"}
-            if set(payload) != expected:
-                raise BrowserError("ready-work request has unknown or missing fields")
-            plan = resolve_plan(self.scan_root, payload["plan"])
-            if not self.server.drive_lock.acquire(blocking=False):  # type: ignore[attr-defined]
-                raise BrowserError("Shadow is already getting work ready, starting it, or bringing it into the project. Please wait for that update.")
-            try:
-                if endpoint == "/api/drive/prepare":
-                    drive = run_drive_action(plan, action="prepare")
-                elif endpoint == "/api/drive/launch":
-                    drive = run_drive_action(plan, action="launch", session_id=payload["session"])
-                else:
-                    drive = run_drive_action(plan, action="accept", session_id=payload["session"])
-            finally:
-                self.server.drive_lock.release()  # type: ignore[attr-defined]
-            self._json(200, {"ok": True, "drive": drive})
+            raise BrowserError("request has unknown or missing fields")
         except (BrowserError, DecisionInputError) as exc:
             self._json(400, {"error": str(exc)})
         except (OSError, UnicodeError, json.JSONDecodeError):
@@ -659,7 +491,6 @@ class Server(ThreadingHTTPServer):
     def __init__(self, address: tuple[str, int], root: Path) -> None:
         super().__init__(address, Handler)
         self.scan_root = root
-        self.drive_lock = threading.Lock()
 
 
 def parser() -> argparse.ArgumentParser:

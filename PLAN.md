@@ -1037,9 +1037,8 @@ Code, or Cursor without taking custody of credentials or conversations.
   path-disjoint lanes on distinct declared hosts, driven prepare → launch →
   accept with kept-branch review, receipts folded back here. Exact resume
   move: pick the highest-value reachable repo from its own canonical plan,
-  write the `shadow-drive.v1` packet into that repo's PLAN.md, then
-  `shadow drive prepare --repo <clean worktree>` (the renamed CLI also reads
-  legacy `pilot-puppy-drive.v1` packets).
+  run one real delegated row through a fresh worktree + `shadow host run` +
+  `shadow accept --row` on a customer repository.
 - [deferred] Close cross-host portability proof through the other-computer
   route or the local quota-reset fallback; require the same sealed task, exact
   allowed-path change, and lead-reproduced check.
