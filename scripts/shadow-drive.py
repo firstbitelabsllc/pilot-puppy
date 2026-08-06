@@ -399,7 +399,7 @@ def launch_head(repo: Path) -> str:
         changed = HOST.status_paths(repo)
     except HOST.HostError as exc:
         raise DriveError("project is not sealed for a Drive launch") from exc
-    if any(path not in state for path in changed):
+    if any(path not in state and not HOST.is_legacy_state_path(path) for path in changed):
         raise DriveError("save or commit project changes before launching ready work")
     return git(repo, "rev-parse", "--verify", "HEAD")
 
@@ -658,7 +658,9 @@ def all_changes_are_allowed(worktree: Path, allowed_paths: list[str]) -> bool:
     except HOST.HostError:
         return False
     return all(
-        HOST.path_allowed(path, allowed_paths) or path.startswith(".shadow/evidence/")
+        HOST.path_allowed(path, allowed_paths)
+        or path.startswith(".shadow/evidence/")
+        or HOST.is_legacy_state_path(path)
         for path in changed
     )
 

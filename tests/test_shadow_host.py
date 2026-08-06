@@ -653,6 +653,31 @@ class ShadowHostTests(unittest.TestCase):
             self.assertIn(".env", payload["ignored_artifact_paths"])
             self.assertNotIn(".env", payload["changed_paths"])
 
+    def test_pre_rename_evidence_directory_never_blocks_a_packet(self) -> None:
+        for ignore_legacy in (False, True):
+            with self.subTest(ignore_legacy=ignore_legacy), tempfile.TemporaryDirectory() as dirname:
+                root = Path(dirname)
+                repo = make_repo(root)
+                if ignore_legacy:
+                    ignore_file = repo / ".gitignore"
+                    ignore_file.write_text(
+                        ignore_file.read_text(encoding="utf-8") + ".pilot-puppy/\n", encoding="utf-8"
+                    )
+                    git(repo, "add", ".gitignore")
+                    git(repo, "commit", "-qm", "ignore pre-rename evidence")
+                legacy = repo / ".pilot-puppy" / "evidence"
+                legacy.mkdir(parents=True)
+                (legacy / "old-attempt.json").write_text("{}\n", encoding="utf-8")
+                binary = make_host(root)
+                task = root / "task.txt"
+                task.write_text("Add the proof marker and run the bounded test.\n", encoding="utf-8")
+                output = repo / ".shadow" / "evidence" / "attempt.json"
+                result = run_host(repo, binary, task, output, host="codex")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                payload = json.loads(output.read_text(encoding="utf-8"))
+                self.assertEqual(payload["status"], "ok")
+                self.assertEqual(payload["changed_paths"], ["result.txt"])
+
     def test_private_seat_model_is_bound_to_the_selected_route_and_never_enters_attempt(self) -> None:
         cases = (
             ("cursor", "dev", "dev-cursor"),
