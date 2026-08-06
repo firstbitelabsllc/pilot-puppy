@@ -20,7 +20,7 @@ SPEC.loader.exec_module(mod)
 
 def baseline() -> tuple[dict, dict, dict, set[str]]:
     package = {
-        "name": "shadow",
+        "name": "@firstbitelabs/shadow",
         "version": VERSION,
         "private": False,
         "bin": {"shadow": "bin/shadow"},

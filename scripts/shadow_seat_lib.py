@@ -67,7 +67,12 @@ def default_seat_path() -> Path:
     override = os.environ.get("SHADOW_SEATS_FILE")
     if override:
         return lexical_absolute(Path(override))
-    return lexical_absolute(Path.home() / ".config" / "shadow" / "seats.json")
+    current = lexical_absolute(Path.home() / ".config" / "shadow" / "seats.json")
+    if not current.exists():
+        legacy = lexical_absolute(Path.home() / ".config" / "pilot-puppy" / "seats.json")
+        if legacy.exists():
+            return legacy
+    return current
 
 
 def configuration_path(value: str | Path | None = None) -> Path:
@@ -146,7 +151,7 @@ def validate_seat_overlay(value: object) -> dict[str, Any]:
 
     _check_json_depth(value)
     root = _exact_object(value, {"schema", "revision", "seats"}, "root object")
-    if root["schema"] != SEAT_SCHEMA:
+    if root["schema"] not in (SEAT_SCHEMA, "pilot-puppy.seats.v1"):
         raise SeatError("local seat schema is unsupported")
     revision = root["revision"]
     if type(revision) is not int or not (1 <= revision <= MAX_REVISION):

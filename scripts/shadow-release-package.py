@@ -117,8 +117,8 @@ def validate_release_candidate(
     expected_repo = "https://github.com/firstbitelabsllc/shadow"
     if expected_version and version != expected_version:
         errors.append("VERSION does not match --expect-version")
-    if package.get("name") != "shadow" or plugin.get("name") != "shadow":
-        errors.append("package and plugin names must be shadow")
+    if package.get("name") != "@firstbitelabs/shadow" or plugin.get("name") != "shadow":
+        errors.append("package must be @firstbitelabs/shadow, plugin shadow")
     if package.get("private") is not False:
         errors.append("package must be public")
     if package.get("version") != wanted_version or plugin.get("version") != wanted_version or pack.get("version") != wanted_version:

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://shadow.dev/schemas/decision-receipt.v1.json",
+  "$id": "shadow.decision-receipt.v1",
   "title": "Shadow Decision Receipt v1",
   "description": "A bounded local compare-and-set receipt for one typed Decision choice. It does not claim execution or route a provider.",
   "type": "object",

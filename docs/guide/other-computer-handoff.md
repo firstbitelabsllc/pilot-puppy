@@ -1,7 +1,6 @@
 # Other-computer handoff
 
-This is the portable starting point for Shadow on another Mac. Pilot
-Puppy is the one chief-of-staff surface for coding work: it reads the owning
+This is the portable starting point for Shadow on another Mac. Shadow is the one chief-of-staff surface for coding work: it reads the owning
 repository's `PLAN.md`, explains the Outcome and current proof, offers the next
 decision, and drives one bounded task through native Codex, Claude Code, or
 Cursor.

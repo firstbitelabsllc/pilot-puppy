@@ -191,7 +191,7 @@ def run_host(
     return subprocess.run(command, capture_output=True, text=True, check=False)
 
 
-class PilotPuppyHostTests(unittest.TestCase):
+class ShadowHostTests(unittest.TestCase):
     def test_cursor_json_envelope_parses_receipt_after_prose(self) -> None:
         envelope = json.dumps(
             {

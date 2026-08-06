@@ -92,8 +92,8 @@ def clean_head(repo: Path) -> str:
     dirty = [
         line
         for line in git(repo, "status", "--porcelain=v1", "--untracked-files=normal").splitlines()
-        if not (line.startswith("?? ") and line[3:].rstrip("/") == ".shadow")
-        and not (line.startswith("?? ") and line[3:].startswith(".shadow/"))
+        if not (line.startswith("?? ") and line[3:].rstrip("/") in {".shadow", ".pilot-puppy"})
+        and not (line.startswith("?? ") and line[3:].startswith((".shadow/", ".pilot-puppy/")))
     ]
     if dirty:
         raise DriveError("save or commit the current project changes before preparing ready work")

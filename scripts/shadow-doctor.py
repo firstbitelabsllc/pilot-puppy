@@ -34,7 +34,7 @@ def identity_check() -> dict[str, Any]:
     except (OSError, json.JSONDecodeError, IndexError) as exc:
         return check("product identity", "fail", f"metadata is unreadable: {exc}")
     valid = (
-        package.get("name") == "shadow"
+        package.get("name") == "@firstbitelabs/shadow"
         and package.get("version") == version
         and plugin.get("name") == "shadow"
         and plugin.get("version") == version

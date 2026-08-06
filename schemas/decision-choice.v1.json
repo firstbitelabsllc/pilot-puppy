@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://shadow.dev/schemas/decision-choice.v1.json",
+  "$id": "shadow.decision-choice.v1",
   "title": "Shadow Decision Choice v1",
   "description": "Ephemeral typed answer from a native on-the-go client to the host that owns one shadow.outcome.v1 document. It does not execute work, route providers, or persist mission state.",
   "type": "object",

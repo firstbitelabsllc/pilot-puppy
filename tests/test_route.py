@@ -49,7 +49,7 @@ def make_repo(root: Path) -> Path:
     repo.mkdir()
     git(repo, "init", "-q")
     git(repo, "config", "user.email", "shadow-test@example.invalid")
-    git(repo, "config", "user.name", "PilotPuppyTest")
+    git(repo, "config", "user.name", "ShadowTest")
     (repo / "README.md").write_text("base\n", encoding="utf-8")
     git(repo, "add", "README.md")
     git(repo, "commit", "-qm", "base")

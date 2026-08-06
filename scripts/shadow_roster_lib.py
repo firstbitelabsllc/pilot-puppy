@@ -82,7 +82,12 @@ def default_roster_path() -> Path:
     override = os.environ.get("SHADOW_ROSTER_FILE")
     if override:
         return lexical_absolute(Path(override))
-    return lexical_absolute(Path.home() / ".config" / "shadow" / "roster.json")
+    current = lexical_absolute(Path.home() / ".config" / "shadow" / "roster.json")
+    if not current.exists():
+        legacy = lexical_absolute(Path.home() / ".config" / "pilot-puppy" / "roster.json")
+        if legacy.exists():
+            return legacy
+    return current
 
 
 def configuration_path(value: str | Path | None = None) -> Path:
@@ -144,7 +149,7 @@ def validate_roster(value: object) -> dict[str, Any]:
 
     _check_json_depth(value)
     roster = _expect_exact_fields(value, {"schema", "revision", "slots"}, "root object")
-    if roster["schema"] != ROSTER_SCHEMA:
+    if roster["schema"] not in (ROSTER_SCHEMA, "pilot-puppy.roster.v1"):
         raise RosterError("local roster schema is unsupported")
     revision = roster["revision"]
     if type(revision) is not int or not (1 <= revision <= MAX_REVISION):

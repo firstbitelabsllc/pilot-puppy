@@ -498,7 +498,7 @@ def write_decision_receipt(plan: Path, document: dict[str, Any], option_id: Any,
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "PilotPuppy/1"
+    server_version = "Shadow/1"
 
     @property
     def scan_root(self) -> Path:

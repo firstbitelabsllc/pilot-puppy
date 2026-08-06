@@ -36,7 +36,9 @@ SECRET_SHAPE_RE: Final = re.compile(
     re.IGNORECASE,
 )
 DRIVE_BLOCK_RE: Final = re.compile(
-    r"<!--\s*shadow-drive\.v1\s*\n(?P<payload>.*?)\n\s*-->", re.DOTALL
+    # The pilot-puppy marker stays readable so packets written before the
+    # rename never silently disappear; new packets are written as shadow.
+    r"<!--\s*(?:shadow|pilot-puppy)-drive\.v1\s*\n(?P<payload>.*?)\n\s*-->", re.DOTALL
 )
 TASK_KINDS: Final = frozenset({"dev", "debug", "hard-dev"})
 STATES: Final = frozenset({"ready", "paused", "blocked", "done"})
@@ -140,7 +142,7 @@ def extract_document(plan_text: str) -> dict[str, Any] | None:
     except json.JSONDecodeError as exc:
         raise DrivePacketError("Drive Packet block is not valid JSON") from exc
     root = _exact_object(raw, {"schema", "revision", "lanes"}, "document")
-    if root["schema"] != DRIVE_SCHEMA:
+    if root["schema"] not in (DRIVE_SCHEMA, "pilot-puppy.drive.v1"):
         raise DrivePacketError("Drive Packet schema is invalid")
     if type(root["revision"]) is not int or not 1 <= root["revision"] <= 2_147_483_647:
         raise DrivePacketError("Drive Packet revision is invalid")

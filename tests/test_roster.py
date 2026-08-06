@@ -439,5 +439,20 @@ class RosterTests(unittest.TestCase):
         self.assertNotEqual(roster.route_roster_sha256(first), roster.route_roster_sha256(changed_route))
 
 
+class LegacyConfigFallbackTests(unittest.TestCase):
+    def test_default_path_falls_back_to_pilot_puppy_config(self) -> None:
+        import tempfile
+        from unittest import mock
+        from pathlib import Path as P
+
+        with tempfile.TemporaryDirectory() as home:
+            legacy = P(home) / ".config" / "pilot-puppy" / "roster.json"
+            legacy.parent.mkdir(parents=True)
+            legacy.write_text("{}", encoding="utf-8")
+            with mock.patch.object(P, "home", return_value=P(home)):
+                resolved = roster.default_roster_path()
+        self.assertTrue(str(resolved).endswith(".config/pilot-puppy/roster.json"))
+
+
 if __name__ == "__main__":
     unittest.main()

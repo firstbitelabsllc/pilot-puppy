@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://shadow.dev/schemas/route.v1.json",
+  "$id": "shadow.route.v1",
   "title": "Shadow Route v1",
   "description": "A local, non-executing role route bound to one frozen task and roster revision.",
   "type": "object",

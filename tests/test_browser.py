@@ -360,6 +360,9 @@ class BrowserTests(unittest.TestCase):
             self.assertIn(str(server.DRIVE_STEP_TIMEOUT_SECONDS), command)
             self.assertEqual(run.call_args.args[2], server.DRIVE_LAUNCH_TIMEOUT_SECONDS)
 
+    def test_http_server_header_carries_the_product_name(self) -> None:
+        self.assertTrue(server.Handler.server_version.startswith("Shadow/"))
+
     def test_titles_block_every_canonical_private_path_and_secret_shape(self) -> None:
         # Secret-shaped fixtures are assembled at runtime so the tracked
         # source itself stays clean for the public-ready grep gate.
