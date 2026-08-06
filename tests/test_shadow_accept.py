@@ -155,6 +155,26 @@ class ShadowAcceptTests(unittest.TestCase):
             result = run_accept(repo, "~zz99")
         self.assertEqual(result.returncode, 1)
 
+    def test_a_row_mentioning_another_id_cannot_stand_in_for_it(self) -> None:
+        # An earlier row that references ~ef56 in its needs field must not be
+        # selected — its own proof would run and its own state would flip.
+        plan = PLAN.replace(
+            "- [pending] shipped ~cd34 (DoD) | proof: gate leo resume: release cut",
+            "- [in_progress] decoy ~ab13 | proof: cmd true | needs: ~ef56\n"
+            "- [pending] shipped ~ef56 (DoD) | proof: gate leo resume: release cut",
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "decoy row")
+            result = run_accept(repo, "~ef56")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("gate", result.stdout.lower() + result.stderr.lower())
+        self.assertEqual(after_plan, plan)
+        self.assertEqual(commits, "2")
+
 
 if __name__ == "__main__":
     unittest.main()

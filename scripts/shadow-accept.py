@@ -22,6 +22,13 @@ from pathlib import Path
 
 ROW_ID_RE = re.compile(r"^~[0-9a-z]{4}$")
 PROOF_FIELD_RE = re.compile(r"\| proof: (?P<proof>[^|]+?)(?= \||$)")
+# The grammar's row shape, mirrored from scripts/shadow-lint.py: the id is a
+# parsed field, never a substring, so a `needs:` reference or trailing prose
+# mentioning another row's id cannot stand in for the row itself.
+ROW_LINE_RE = re.compile(
+    r"^- \[(?P<state>pending|in_progress|blocked|completed)\] "
+    r"(?P<text>.+?) (?P<id>~[0-9a-z]{4})(?P<dod> \(DoD\))?(?P<tail>(?: \| [a-z]+:.*)?)$"
+)
 
 
 class AcceptError(ValueError):
@@ -90,13 +97,20 @@ def remove_review_worktree(repo: Path, destination: Path) -> None:
 
 
 def find_row(plan_text: str, row_id: str) -> tuple[str, str]:
-    for line in plan_text.splitlines():
-        if f" {row_id}" in line and line.startswith("- ["):
-            match = PROOF_FIELD_RE.search(line)
-            if not match:
-                raise AcceptError("the row has no proof field")
-            return line, match.group("proof").strip()
-    raise AcceptError(f"no checkpoint row carries {row_id}")
+    matches = [
+        line
+        for line in plan_text.splitlines()
+        if (row := ROW_LINE_RE.match(line)) is not None and row.group("id") == row_id
+    ]
+    if not matches:
+        raise AcceptError(f"no checkpoint row carries {row_id}")
+    if len(matches) > 1:
+        raise AcceptError(f"{row_id} is carried by {len(matches)} rows; fix the duplicate first")
+    line = matches[0]
+    match = PROOF_FIELD_RE.search(line)
+    if not match:
+        raise AcceptError("the row has no proof field")
+    return line, match.group("proof").strip()
 
 
 def main(argv: list[str] | None = None) -> int:
