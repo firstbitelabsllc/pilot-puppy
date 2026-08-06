@@ -12,6 +12,7 @@
 | `shadow drive prepare …` | Freeze up to three path-disjoint, PLAN-owned local handoffs without starting a host. |
 | `shadow drive launch …` | Explicitly run one frozen local Drive session through native hosts, checks, and kept review commits. |
 | `shadow drive accept …` | Recheck a fully green Drive session in a separate lead checkout, then explicitly create one local merge commit. |
+| `shadow accept --row ~hash --repo PATH` | Rerun one row's `cmd` proof in a clean detached checkout; on success flip the row with its paired PROOF line in one commit — the only code path that flips a row. |
 | `shadow host probe --host HOST` | Check a native host without using it. |
 | `shadow host run …` | Run one sealed task in one clean worktree. |
 | `shadow doctor` | Check installation, skill mounts, and native hosts. |
