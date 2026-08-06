@@ -150,7 +150,9 @@ def main(argv: list[str] | None = None) -> int:
         if "## Progress" not in updated:
             raise AcceptError("the plan has no Progress section")
         updated = updated.rstrip() + "\n" + proof_line
-        staged_before = git_completed(repo, "diff", "--cached", "--quiet", "--", "PLAN.md").returncode != 0
+        # The exact index entry, not a "was it staged" flag: a staged snapshot
+        # that differs from the working tree must come back byte-for-byte.
+        index_entry = git_completed(repo, "ls-files", "--stage", "--", "PLAN.md").stdout.strip()
         plan_path.write_text(updated, encoding="utf-8")
         added = git_completed(repo, "add", "--", "PLAN.md")
         # --only with a pathspec keeps unrelated already-staged files out of the
@@ -172,10 +174,11 @@ def main(argv: list[str] | None = None) -> int:
             # A flipped row with no acceptance commit would read as completed
             # and refuse the rerun, so the plan goes back exactly as it was.
             plan_path.write_text(plan_text, encoding="utf-8")
-            if staged_before:
-                git_completed(repo, "add", "--", "PLAN.md")
+            if index_entry:
+                mode, blob = index_entry.split()[0], index_entry.split()[1]
+                git_completed(repo, "update-index", "--cacheinfo", f"{mode},{blob},PLAN.md")
             else:
-                git_completed(repo, "reset", "--quiet", "HEAD", "--", "PLAN.md")
+                git_completed(repo, "rm", "--cached", "--quiet", "--", "PLAN.md")
             raise AcceptError("the acceptance commit could not be created; the plan was restored")
     except AcceptError as exc:
         print(f"shadow accept: {exc}", file=sys.stderr)

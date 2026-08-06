@@ -129,6 +129,26 @@ class ShadowAcceptTests(unittest.TestCase):
         self.assertEqual(commits, "1")
         self.assertEqual(staged, [])
 
+    def test_a_failed_commit_restores_a_staged_plan_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            # Index and working tree disagree before accept runs: the staged
+            # snapshot carries a note the working tree does not.
+            (repo / "PLAN.md").write_text(PLAN + "\n- staged only\n", encoding="utf-8")
+            git(repo, "add", "--", "PLAN.md")
+            staged_blob = git(repo, "rev-parse", ":PLAN.md")
+            (repo / "PLAN.md").write_text(PLAN, encoding="utf-8")
+            git(repo, "config", "commit.gpgsign", "true")
+            git(repo, "config", "gpg.program", str(repo / "no-such-gpg"))
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            after_blob = git(repo, "rev-parse", ":PLAN.md")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(after_plan, PLAN)
+        self.assertEqual(after_blob, staged_blob)
+        self.assertEqual(commits, "1")
+
     def test_unknown_row_is_refused(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo = make_repo(Path(dirname).resolve())
