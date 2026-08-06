@@ -122,3 +122,7 @@ main:focus { outline: none; }
 }
 .board[hidden] { display: none; }
 .shell[hidden] { display: none; }
+
+.lint-chip { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: #2c7a4b; }
+.lint-chip.bad { color: #a03d2e; font-weight: 600; }
+.board-card.red { border-color: #a03d2e; background: color-mix(in srgb, #a03d2e 8%, var(--card, #fffdf7)); }

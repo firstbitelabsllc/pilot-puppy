@@ -35,6 +35,10 @@ except ModuleNotFoundError:
     from browser.outcome_source import OutcomeSourceError, project_plan_outcome
 from shadow_drive_lib import PRIVATE_PATH_RE as DRIVE_PRIVATE_PATH_RE
 from shadow_drive_lib import SECRET_SHAPE_RE as DRIVE_SECRET_SHAPE_RE
+import importlib.util as _ilu
+_LINT_SPEC = _ilu.spec_from_file_location("shadow_lint", SCRIPTS / "shadow-lint.py")
+shadow_lint = _ilu.module_from_spec(_LINT_SPEC)
+_LINT_SPEC.loader.exec_module(shadow_lint)
 
 
 PRODUCT = "Shadow"
@@ -183,6 +187,18 @@ def checkpoint_counts(text: str) -> dict[str, int] | None:
     return counts
 
 
+def lint_summary(text: str) -> dict[str, Any]:
+    try:
+        findings = shadow_lint.lint_plan(text)
+    except Exception:
+        return {"parse_ok": False, "blocking": 0, "warning": 0}
+    return {
+        "parse_ok": True,
+        "blocking": sum(1 for f in findings if f["severity"] == "blocking"),
+        "warning": sum(1 for f in findings if f["severity"] == "warning"),
+    }
+
+
 def plan_record(path: Path, root: Path) -> dict[str, Any]:
     text = read_plan(path)
     relative = path.relative_to(root).as_posix()
@@ -207,6 +223,7 @@ def plan_record(path: Path, root: Path) -> dict[str, Any]:
         "mode": mode_of(brief),
         "milestone": milestone_of(brief),
         "checkpoints": checkpoint_counts(text),
+        "lint": lint_summary(text),
         "outcome": outcome,
         "decision": decision,
         "briefing": chief,

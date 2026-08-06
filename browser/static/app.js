@@ -187,6 +187,16 @@ function renderBoard() {
       const status = plan.briefing?.state ? plan.briefing.state.replaceAll('_', ' ') : 'needs a brief';
       card.append(el('span', { className: 'board-state', text: status }));
       if (plan.milestone) card.append(el('p', { className: 'board-milestone', text: plan.milestone }));
+      if (plan.lint) {
+        if (!plan.lint.parse_ok) card.classList.add('red');
+        const verdict = !plan.lint.parse_ok
+          ? 'unreadable'
+          : plan.lint.blocking
+            ? `lint ${plan.lint.blocking}!`
+            : 'lint ✓';
+        card.append(el('span', { className: plan.lint.blocking || !plan.lint.parse_ok ? 'lint-chip bad' : 'lint-chip', text: verdict }));
+      }
+
       if (plan.checkpoints) {
         const meter = checkpointMeter(plan.checkpoints);
         if (meter) card.append(meter);

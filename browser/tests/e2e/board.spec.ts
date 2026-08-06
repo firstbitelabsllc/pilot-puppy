@@ -10,6 +10,7 @@ test('board groups plans into entity lanes with counts only and stays read-only'
   await expect(gift.locator('.mode-chip')).toHaveText('close');
   await expect(gift.locator('.board-milestone')).toHaveText('Gift flow live on storefront');
   await expect(gift.locator('.meter-count')).toHaveText('Checkpoints 1/3');
+  await expect(gift.locator('.lint-chip')).toBeVisible();
   const interactive = await board.locator('button:not(.board-card), a, input, select, textarea').count();
   expect(interactive).toBe(0);
   await expect(page.locator('.shell')).toBeHidden();

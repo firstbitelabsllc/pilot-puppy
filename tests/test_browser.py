@@ -315,6 +315,21 @@ class BoardProjectionTests(unittest.TestCase):
             {"pending": 1, "in_progress": 1, "blocked": 0, "completed": 1},
         )
 
+    def test_plan_record_carries_a_lint_summary(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), BOARD_PLAN)
+            record = server.plan_record(plan, repo)
+        self.assertTrue(record["lint"]["parse_ok"])
+        self.assertIsInstance(record["lint"]["blocking"], int)
+        self.assertIsInstance(record["lint"]["warning"], int)
+
+    def test_lint_flags_a_bad_plan(self) -> None:
+        bad = BOARD_PLAN.replace("- Mode: Close", "- Mode: turbo")
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), bad)
+            record = server.plan_record(plan, repo)
+        self.assertGreaterEqual(record["lint"]["blocking"], 1)
+
     def test_board_fields_fall_back_safely(self) -> None:
         bare = "# Plain plan\n\n## Operator Brief\n\n- Outcome: something\n"
         with tempfile.TemporaryDirectory() as dirname:
