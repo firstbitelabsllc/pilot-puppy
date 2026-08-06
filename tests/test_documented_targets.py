@@ -19,10 +19,13 @@ TARGET = re.compile(
     r"((?:assets|bin|browser|docs|examples|guides|hooks|references|schemas|scripts|tests)"
     r"/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*/?)"
 )
-# Design specs are proposal records: they name the targets a future
-# implementation would create, so their paths are not shipped instructions and
-# need not exist in this checkout.
-PROPOSAL_PREFIXES = ("docs/superpowers/specs/",)
+# Design specs and implementation plans are proposal records: they name the
+# targets a future implementation would create, so their paths are not shipped
+# instructions and need not exist in this checkout.
+PROPOSAL_PREFIXES = (
+    "docs/superpowers/specs/",
+    "docs/superpowers/plans/",
+)
 
 
 class DocumentedTargetTests(unittest.TestCase):
