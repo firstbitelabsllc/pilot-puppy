@@ -1,6 +1,6 @@
-# Pilot Puppy — Plan
+# Shadow — Plan
 
-This file is the sole plan, proof, and resume authority for Pilot Puppy.
+This file is the sole plan, proof, and resume authority for Shadow (formerly Pilot Puppy; renamed 2026-08-05 — "you are my shadow").
 
 ## Outcome
 
@@ -11,7 +11,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Operator Brief
 
-- Entity: pilot-puppy
+- Entity: shadow
 - Mode: Close
 - Milestone: The Method v1 live
 - Outcome ID: portfolio-product-closeout-20260803

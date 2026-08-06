@@ -1,4 +1,4 @@
-"""Focused tests for PLAN-owned Pilot Puppy Drive Packets."""
+"""Focused tests for PLAN-owned Shadow Drive Packets."""
 
 from __future__ import annotations
 
@@ -14,12 +14,12 @@ SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-import pilot_puppy_drive_lib as drive
+import shadow_drive_lib as drive
 
 
 def document() -> dict:
     return {
-        "schema": "pilot-puppy.drive.v1",
+        "schema": "shadow.drive.v1",
         "revision": 3,
         "lanes": [
             {
@@ -47,7 +47,7 @@ def document() -> dict:
 
 
 def plan(payload: dict) -> str:
-    return "# Example\n\n## Pilot Puppy Drive\n\n<!-- pilot-puppy-drive.v1\n" + json.dumps(payload, indent=2) + "\n-->\n"
+    return "# Example\n\n## Shadow Drive\n\n<!-- shadow-drive.v1\n" + json.dumps(payload, indent=2) + "\n-->\n"
 
 
 class DrivePacketTests(unittest.TestCase):

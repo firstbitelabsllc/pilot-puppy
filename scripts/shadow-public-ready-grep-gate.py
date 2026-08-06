@@ -78,17 +78,17 @@ def metadata_errors(root: Path) -> list[str]:
     except (OSError, json.JSONDecodeError, IndexError) as exc:
         return [f"metadata unreadable: {exc}"]
     errors = []
-    if package.get("name") != "pilot-puppy":
-        errors.append("package name must be pilot-puppy")
+    if package.get("name") != "shadow":
+        errors.append("package name must be shadow")
     if package.get("private") is not False:
         errors.append("package must be public")
     if package.get("version") != version or plugin.get("version") != version:
         errors.append("package, plugin, and VERSION must match")
-    expected = "https://github.com/firstbitelabsllc/pilot-puppy"
+    expected = "https://github.com/firstbitelabsllc/shadow"
     if expected not in str(package.get("homepage", "")):
         errors.append("homepage must use the canonical public repository")
-    if plugin.get("name") != "pilot-puppy":
-        errors.append("plugin name must be pilot-puppy")
+    if plugin.get("name") != "shadow":
+        errors.append("plugin name must be shadow")
     return errors
 
 
@@ -114,7 +114,7 @@ def scan(root: Path, paths: list[Path], *, metadata: bool) -> dict:
                 findings.append({"file": relative, "line": number, "reason": "secret-shaped value"})
     errors = metadata_errors(root) if metadata else []
     return {
-        "schema": "pilot-puppy.public-ready.v1",
+        "schema": "shadow.public-ready.v1",
         "ok": not findings and not errors,
         "scanned_files": len(paths),
         "findings": findings,
@@ -136,7 +136,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         report = scan(root, git_paths(root) if args.tracked_only else working_paths(root), metadata=args.metadata)
     except (OSError, RuntimeError) as exc:
-        report = {"schema": "pilot-puppy.public-ready.v1", "ok": False, "scanned_files": 0, "findings": [], "errors": [str(exc)]}
+        report = {"schema": "shadow.public-ready.v1", "ok": False, "scanned_files": 0, "findings": [], "errors": [str(exc)]}
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if report["ok"] else 1
 
