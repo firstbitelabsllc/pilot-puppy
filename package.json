@@ -60,7 +60,7 @@
     "test:js": "vitest run",
     "test:js:watch": "vitest",
     "lint:plan": "scripts/shadow-python.sh scripts/shadow-lint.py PLAN.md",
-    "test:py": "scripts/shadow-python.sh -m unittest discover -s tests -p 'test_*.py'",
+    "test:py": "scripts/shadow-python.sh -m unittest discover -s tests -p 'test_*.py' && npm run lint:plan",
     "public-ready:grep": "scripts/shadow-python.sh scripts/shadow-public-ready-grep-gate.py --tracked-only --metadata",
     "verify": "npm test && npm run public-ready:grep",
     "prepublishOnly": "npm run verify && npm run release:verify",

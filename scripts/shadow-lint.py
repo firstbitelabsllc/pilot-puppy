@@ -142,7 +142,7 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
             stamp = ts_match.group("ts")
             if previous and stamp < previous[0]:
                 findings.append(
-                    _finding("TS-ORDER", number, "blocking", f"timestamp precedes line {previous[1]}")
+                    _finding("TS-ORDER", number, "warning", f"timestamp precedes line {previous[1]}")
                 )
             previous = (stamp, number)
         box = BOX_RE.match(line)

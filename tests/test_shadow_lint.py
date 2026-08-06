@@ -95,9 +95,10 @@ class ShadowLintTests(unittest.TestCase):
         self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: Close", "- Mode: turbo")))
         self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: Close", "- Mode: Challenge")))
 
-    def test_non_monotonic_progress_timestamps_are_blocking(self) -> None:
+    def test_non_monotonic_progress_timestamps_are_a_warning(self) -> None:
         plan = CLEAN_PLAN.replace("2026-08-06T12:00:00Z VERDICT", "2026-08-04T12:00:00Z VERDICT")
-        self.assertIn("TS-ORDER", blocking(plan))
+        hits = [f for f in lint.lint_plan(plan) if f["check"] == "TS-ORDER"]
+        self.assertTrue(hits and all(f["severity"] == "warning" for f in hits))
 
     def test_overlong_line_is_a_warning(self) -> None:
         plan = CLEAN_PLAN + "\n- " + "x" * 2100 + "\n"

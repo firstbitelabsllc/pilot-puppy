@@ -830,18 +830,18 @@ Code, or Cursor without taking custody of credentials or conversations.
 ## Checkpoints
 
 ### M1 — Method encoded
-- [completed] C1~m3k7 AGENT.md lands encoding identity, modes+transition law, gate, steering, and the steal deltas | proof: npm run docs:build && npm run public-ready:grep | size: M
-- [completed] C2~q8f2 Method file contract lands in docs/reference/method.md + SKILL.md addendum with contract tests | proof: python3 -m unittest tests.test_method_contract | size: M | needs: ~m3k7
-- [in_progress] C3~w5d9 (DoD) Method rides the installed skill mounts on the operator machine | proof: shadow doctor (requires AGENT.md at the installed root as of v3.0.1) | size: S | needs: ~q8f2
+- [completed] AGENT.md encodes the core, gate, and steering ~m3k7 | proof: cmd npm run docs:build
+- [completed] method.md contract lands with contract tests ~q8f2 | proof: cmd npm run test:py | needs: ~m3k7
+- [completed] the Method rides the installed mounts ~w5d9 (DoD) | proof: read shadow doctor -> 11/11 with AGENT.md at root | needs: ~q8f2
 
 ### M2 — Board live
-- [completed] C4~t2b8 Scanner serves gated entity, mode, milestone, checkpoint counts | proof: python3 -m unittest tests.test_browser | size: M
-- [completed] C5~j6n4 Read-only board view, desktop and phone, zero write surfaces | proof: npm run test:e2e | size: M | needs: ~t2b8
-- [completed] C6~r9c3 (DoD) Full gate matrix green, PRs merged, v2.3.0–v2.3.2 released | proof: npm run verify | size: M | needs: ~j6n4, ~w5d9
+- [completed] scanner serves gated entity/mode/milestone/checkpoint counts ~t2b8 | proof: cmd npm run test:py
+- [completed] read-only board view on desktop and phone ~j6n4 | proof: cmd npm run test:e2e | needs: ~t2b8
+- [completed] full gate matrix green and v3.0.x released ~r9c3 (DoD) | proof: cmd npm run verify | needs: ~j6n4
 
-### M3 — Dogfood
-- [completed] C7~h4v1 Three real plans tagged (moussey; snowcubes first PLAN.md; resplit origin-fresh) render as entity lanes | proof: /api/plans readback + board screenshot | size: M | needs: ~r9c3
-- [completed] C8~z7e5 (DoD) One Method-style cycle in a tagged repo: mode declared, checkpoint flipped with paired proof line | proof: that repo's PLAN.md diff | size: M | needs: ~h4v1
+### M3 — v4 core
+- [completed] the Method reduced to eight concepts, lint the enforcer ~h4v1 | proof: cmd npm run test:py | needs: ~r9c3
+- [pending] v4.0.0 released, installed, doctor green ~z7e5 (DoD) | proof: read shadow doctor -> 11/11 on installed v4.0.0 | needs: ~h4v1
 
 ## Worklane boundary
 
