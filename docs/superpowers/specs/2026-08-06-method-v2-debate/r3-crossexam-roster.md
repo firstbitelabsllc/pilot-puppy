@@ -1,5 +1,3 @@
-Evidence is complete. Writing the cross-examination verdict.
-
 **VERDICT: AMEND (deletion affirmed; the ruling's two "surviving fragment" demotions must be reworded — as written they dereference grammar the same verdict table deleted).**
 
 Exact amendment to ruling #35 (fragment text lives in r2-ruling-03.md §3):
