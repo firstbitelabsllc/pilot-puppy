@@ -159,6 +159,11 @@ class BrowserTests(unittest.TestCase):
                 thread.join(timeout=2)
 
 
+    def test_stylesheet_uses_only_its_own_design_tokens(self) -> None:
+        css = (Path(server.__file__).parent / "static" / "style.css").read_text(encoding="utf-8")
+        for token in ("--card", "--paper"):
+            self.assertNotIn(f"var({token}", css)
+
     def test_proxy_host_is_refused_without_the_allowlist(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, _ = self.make_repo(Path(dirname))

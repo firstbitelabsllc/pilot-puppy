@@ -162,6 +162,14 @@ def project_plan_outcome(brief: Mapping[str, Any]) -> dict[str, Any]:
                 "delivery": _text(brief.get("proof_delivery"), "proof_delivery", max_length=32),
             }
         )
+        if proof[0]["delivery"] not in {"delivered", "not_delivered"}:
+            raise OutcomeSourceError("proof_delivery must be delivered or not_delivered")
+    # The canonical validator couples finished_with_proof to a delivered proof;
+    # the projection must refuse the same shapes or the board renders a lie.
+    if state == "finished_with_proof" and not any(
+        item["delivery"] == "delivered" for item in proof
+    ):
+        raise OutcomeSourceError("finished_with_proof requires a delivered proof")
 
     return {
         "schema": OUTCOME_SCHEMA,
