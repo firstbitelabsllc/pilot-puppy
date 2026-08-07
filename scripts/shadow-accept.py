@@ -113,8 +113,17 @@ def find_row(plan_text: str, row_id: str) -> tuple[int, str, str, str]:
     if len(matches) > 1:
         raise AcceptError(f"{row_id} is carried by {len(matches)} rows; fix the duplicate first")
     index, line, row = matches[0]
-    fields = dict(FIELD_RE.findall(row.group("tail") or ""))
-    proof = fields.get("proof", "").strip()
+    tail = row.group("tail") or ""
+    pairs = FIELD_RE.findall(tail)
+    # The same two tail checks shadow lint makes, because accept must not be a
+    # softer gate than the linter: an embedded " | " inside a value silently
+    # truncates the cmd this rerun executes, and a repeated key lets a second
+    # `proof:` shadow the first. Fail closed instead of running the remnant.
+    if "".join(f" | {key}: {value}" for key, value in pairs) != tail:
+        raise AcceptError("the row's tail has residue outside `| key: value` fields; run shadow lint")
+    if len(pairs) != len({key for key, _ in pairs}):
+        raise AcceptError("the row repeats a tail field key; run shadow lint")
+    proof = dict(pairs).get("proof", "").strip()
     if not proof:
         raise AcceptError("the row has no proof field")
     return index, line, row.group("state"), proof
@@ -178,8 +187,14 @@ def main(argv: list[str] | None = None) -> int:
         except (OSError, UnicodeError) as exc:
             raise AcceptError(f"plan cannot be re-read after the proof: {exc}") from exc
         index, _, fresh_state, fresh_proof = find_row(plan_text, row_id)
-        if fresh_state == "completed":
-            raise AcceptError("the row was completed while the proof ran; nothing was changed")
+        # Any state move during the run is somebody else's judgment about this
+        # row — completed, or blocked because the work is not done. Overwriting
+        # it with completed would erase that record, so only an unchanged row
+        # may be flipped.
+        if fresh_state != state:
+            raise AcceptError(
+                f"the row moved from {state} to {fresh_state} while the proof ran; nothing was changed"
+            )
         if fresh_proof != proof:
             raise AcceptError("the row's proof changed while it ran; rerun accept against the new proof")
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

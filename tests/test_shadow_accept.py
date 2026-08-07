@@ -248,6 +248,66 @@ class ShadowAcceptTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertIn("conflict", result.stdout.lower() + result.stderr.lower())
 
+    def test_a_pipe_truncated_proof_is_refused_instead_of_rerun_shortened(self) -> None:
+        # The tail residue would leave `cmd true` as the parsed proof — green,
+        # and the rest of the operator's command silently dropped.
+        plan = PLAN.replace(
+            'cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path(\'x.txt\').read_text()==\'hello\' else 1)"',
+            "cmd true | echo also-ran",
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "pipe-truncated proof")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("residue", result.stderr)
+        self.assertEqual(after_plan, plan)
+        self.assertEqual(commits, "2")
+
+    def test_a_repeated_tail_key_cannot_shadow_the_first_proof(self) -> None:
+        plan = PLAN.replace(
+            'cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path(\'x.txt\').read_text()==\'hello\' else 1)"',
+            "cmd false | proof: cmd true",
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "repeated proof key")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("repeats a tail field key", result.stderr)
+        self.assertEqual(after_plan, plan)
+        self.assertEqual(commits, "2")
+
+    def test_a_row_blocked_during_the_proof_run_is_not_flipped(self) -> None:
+        # The proof passes, but somebody marks the row blocked while it runs;
+        # that judgment outranks a green rerun.
+        proof = (
+            "cmd python3 -c \"import pathlib; p=pathlib.Path('../../repo/PLAN.md'); "
+            "p.write_text(p.read_text().replace('- [in_progress] x.txt', '- [blocked] x.txt'))\""
+        )
+        plan = PLAN.replace(
+            'cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path(\'x.txt\').read_text()==\'hello\' else 1)"',
+            proof,
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "row blocked mid-run")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("in_progress to blocked", result.stderr)
+        self.assertIn("- [blocked] x.txt says hello ~ab12", after_plan)
+        self.assertNotIn("~ab12 PROOF", after_plan)
+        self.assertEqual(commits, "2")
+
     def test_a_row_mentioning_another_id_cannot_stand_in_for_it(self) -> None:
         # An earlier row that references ~ef56 in its needs field must not be
         # selected — its own proof would run and its own state would flip.
