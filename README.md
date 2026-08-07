@@ -18,7 +18,7 @@ their own `PLAN.md`.
 
 *The board: one card per project, with its mode, status, lint result, and task
 counts. Running locally against a demo portfolio — Sunrise Bakery, Orbit, and
-Fieldnotes are fictional projects; unedited screenshot of v4.0.1.*
+Fieldnotes are fictional projects; unedited screenshot of v4.0.x.*
 
 Open a project and Shadow states the Outcome, what changed, the proof, and the
 one A/B/C decision waiting for you.
@@ -26,11 +26,11 @@ one A/B/C decision waiting for you.
 ![A brief and the decision waiting on you](docs/assets/brief-decision.png)
 
 *A brief and its waiting decision; nothing changes until you choose. Same demo
-portfolio, unedited screenshot of v4.0.1.*
+portfolio, unedited screenshot of v4.0.x.*
 
 ![The same board at phone width](docs/assets/board-phone.png)
 
-*The same board at phone width. Unedited screenshot of v4.0.1.*
+*The same board at phone width. Unedited screenshot of v4.0.x.*
 
 ## Five-minute install
 
