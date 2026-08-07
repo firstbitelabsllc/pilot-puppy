@@ -59,10 +59,10 @@ UNSAFE_TITLE_RE = re.compile(
 )
 # Board fields are closed vocabularies or title-gated text, so a plan line can
 # never carry a path or secret onto the board projection.
-ENTITY_VALUE_RE = re.compile(r"^[a-z][a-z0-9-]{1,31}$")
+PROJECT_VALUE_RE = re.compile(r"^[a-z][a-z0-9-]{1,31}$")
 # Grammar v2 has two postures. Legacy v1 modes are lint-blocking, so they
 # never earn a chip; the board shows the finding instead.
-MODE_VALUE_RE = re.compile(r"^(?:broad|close)$")
+MODE_VALUE_RE = re.compile(r"^(?:explore|ship)$")
 CHECKPOINT_STATES = ("pending", "in_progress", "blocked", "completed")
 CHECKPOINT_ALIASES = {"x": "completed", "done": "completed", "working": "in_progress"}
 ALLOWED_STATIC = {
@@ -105,7 +105,7 @@ def section(text: str, name: str) -> list[str]:
 
 def operator_brief(text: str) -> dict[str, str]:
     result: dict[str, str] = {}
-    for line in section(text, "Operator Brief"):
+    for line in section(text, "Brief"):
         match = FIELD_RE.match(line)
         if not match:
             continue
@@ -152,13 +152,13 @@ def read_plan(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def entity_of(brief: dict[str, str], relative: str) -> str:
-    raw = (brief.get("entity") or "").strip().lower()
-    if ENTITY_VALUE_RE.fullmatch(raw):
+def project_of(brief: dict[str, str], relative: str) -> str:
+    raw = (brief.get("project") or "").strip().lower()
+    if PROJECT_VALUE_RE.fullmatch(raw):
         return raw
     head = relative.split("/", 1)[0].lower()
     slug = re.sub(r"[^a-z0-9-]+", "-", head).strip("-")[:32]
-    return slug if ENTITY_VALUE_RE.fullmatch(slug) else "unassigned"
+    return slug if PROJECT_VALUE_RE.fullmatch(slug) else "unassigned"
 
 
 def mode_of(brief: dict[str, str]) -> str | None:
@@ -174,7 +174,7 @@ def milestone_of(brief: dict[str, str]) -> str | None:
 
 
 def checkpoint_counts(text: str) -> dict[str, int] | None:
-    lines = section(text, "Checkpoints")
+    lines = section(text, "Tasks")
     if not lines:
         return None
     counts = {state: 0 for state in CHECKPOINT_STATES}
@@ -221,10 +221,10 @@ def plan_record(path: Path, root: Path) -> dict[str, Any]:
         "path": relative,
         "title": title(text, path.parent.name),
         "tasks": task_counts(text),
-        "entity": entity_of(brief, relative),
+        "project": project_of(brief, relative),
         "mode": mode_of(brief),
         "milestone": milestone_of(brief),
-        "checkpoints": checkpoint_counts(text),
+        "tasks": checkpoint_counts(text),
         "lint": lint_summary(text),
         "outcome": outcome,
         "decision": decision,

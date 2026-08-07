@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Rerun one checkpoint row's proof in a clean checkout, then flip the row.
+"""Rerun one task's proof in a clean checkout, then flip it.
 
-This is the Method's only code path that flips a row to completed. It parses
+This is the only code path that flips a task to completed. It parses
 the repo's PLAN.md, finds the row by its ~hash id, reruns a ``cmd``-classed
 proof inside a detached clean worktree of HEAD, and — only on success —
 rewrites the row's state and appends the paired PROOF Progress line in one
@@ -109,7 +109,7 @@ def find_row(plan_text: str, row_id: str) -> tuple[int, str, str, str]:
         if (row := ROW_LINE_RE.match(line)) is not None and row.group("id") == row_id
     ]
     if not matches:
-        raise AcceptError(f"no checkpoint row carries {row_id}")
+        raise AcceptError(f"no task carries {row_id}")
     if len(matches) > 1:
         raise AcceptError(f"{row_id} is carried by {len(matches)} rows; fix the duplicate first")
     index, line, row = matches[0]

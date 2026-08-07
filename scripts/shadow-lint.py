@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Method's mechanical enforcer.
+"""Shadow's plan-grammar enforcer.
 
 Reads one or more PLAN.md files and reports findings against the grammar v2
 contract. Deterministic: same text, same findings, same order. Exit is
@@ -20,8 +20,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from shadow_scrub_lib import SECRET_SHAPE_RE  # noqa: E402
 
 
-LEGAL_MODES: Final = {"Broad", "Close"}
-LEGACY_MODES: Final = {"Spike", "Defer", "Challenge"}
+LEGAL_MODES: Final = {"explore", "ship"}
+LEGACY_MODES: Final = {"Spike", "Defer", "Challenge", "Broad", "Close"}
 STATES: Final = ("pending", "in_progress", "blocked", "completed")
 ROW_RE: Final = re.compile(
     r"^- \[(?P<state>pending|in_progress|blocked|completed)\] "
@@ -34,8 +34,8 @@ PROOF_CLASS_RE: Final = re.compile(r"^(?:cmd|read|gate) \S")
 MODE_RE: Final = re.compile(r"^- Mode: (?P<value>.+)$")
 HASH_RE: Final = re.compile(r"~[0-9a-z]{4}\b")
 TS_RE: Final = re.compile(r"^- (?P<ts>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z) ")
-BOX_RE: Final = re.compile(r"^- \S+ BOX (?P<id>~[0-9a-z]{4}) (?P<text>.+)$")
-VERDICT_RE: Final = re.compile(r"^- \S+ VERDICT (?P<id>~[0-9a-z]{4}) (?:keep|kill|promote)\b")
+SPIKE_RE: Final = re.compile(r"^- \S+ SPIKE (?P<id>~[0-9a-z]{4}) (?P<text>.+)$")
+DECISION_RE: Final = re.compile(r"^- \S+ DECISION (?P<id>~[0-9a-z]{4}) (?:keep|kill|promote)\b")
 ENDS_RE: Final = re.compile(r"\| ends: (?P<date>\S+)\s*$")
 MAX_LINE_CHARS: Final = 2_000
 
@@ -64,7 +64,7 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
 
     # Section dispatch is exact-string: a typo'd or missing canonical heading
     # would otherwise exempt everything under it from every check, silently.
-    for canonical in ("Operator Brief", "Checkpoints", "Progress"):
+    for canonical in ("Brief", "Tasks", "Progress"):
         if canonical not in sections:
             findings.append(_finding("SECTION-MISSING", 0, "warning", f"no `## {canonical}` heading"))
 
@@ -72,21 +72,21 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
         if len(line) > MAX_LINE_CHARS:
             findings.append(_finding("READ-FIT", number, "warning", f"line is {len(line)} chars"))
 
-    for number, line in ((n, l) for n, l in sections.get("Operator Brief", []) if MODE_RE.match(l)):
+    for number, line in ((n, l) for n, l in sections.get("Brief", []) if MODE_RE.match(l)):
         value = MODE_RE.match(line).group("value").strip()
         if value not in LEGAL_MODES:
             kind = "legacy mode" if value in LEGACY_MODES else "illegal mode"
             findings.append(_finding("MODE-ILLEGAL", number, "blocking", f"{kind}: {value}"))
-    mode_close = any(
-        MODE_RE.match(l) and MODE_RE.match(l).group("value").strip() == "Close"
-        for _, l in sections.get("Operator Brief", [])
+    mode_ship = any(
+        MODE_RE.match(l) and MODE_RE.match(l).group("value").strip() == "ship"
+        for _, l in sections.get("Brief", [])
     )
 
     ids: dict[str, tuple[int, str]] = {}
     needs_refs: list[tuple[int, str]] = []
     milestone_rows: list[list[tuple[int, dict]]] = []
     current_rows: list[tuple[int, dict]] | None = None
-    for number, line in sections.get("Checkpoints", []):
+    for number, line in sections.get("Tasks", []):
         if line.startswith("### "):
             current_rows = []
             milestone_rows.append(current_rows)
@@ -153,8 +153,8 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
             findings.append(_finding("DEFER-NO-WAKE", number, "blocking", "deferral without a wake predicate"))
 
     previous: tuple[str, int] | None = None
-    boxes: dict[str, tuple[int, date | None]] = {}
-    verdicts: dict[str, int] = {}
+    spikes: dict[str, tuple[int, date | None]] = {}
+    decisions: dict[str, int] = {}
     for number, line in sections.get("Progress", []):
         ts_match = TS_RE.match(line)
         if ts_match:
@@ -164,8 +164,8 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
                     _finding("TS-ORDER", number, "warning", f"timestamp precedes line {previous[1]}")
                 )
             previous = (stamp, number)
-        box = BOX_RE.match(line)
-        if box:
+        spike = SPIKE_RE.match(line)
+        if spike:
             ends = ENDS_RE.search(line)
             end_date: date | None = None
             if ends:
@@ -174,29 +174,29 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
                 except ValueError:
                     end_date = None
             if end_date is None:
-                findings.append(_finding("BOX-NO-END", number, "blocking", "a box that never ends is not a box"))
-            if box.group("id") in boxes:
+                findings.append(_finding("SPIKE-NO-END", number, "blocking", "a spike that never ends is not a spike"))
+            if spike.group("id") in spikes:
                 findings.append(
-                    _finding("BOX-DUP", number, "blocking", "re-boxing an id would reset its expiry; verdict first")
+                    _finding("SPIKE-DUP", number, "blocking", "re-spiking an id would reset its expiry; decision first")
                 )
             else:
-                boxes[box.group("id")] = (number, end_date)
-        verdict = VERDICT_RE.match(line)
-        if verdict:
-            verdicts[verdict.group("id")] = number
+                spikes[spike.group("id")] = (number, end_date)
+        decision = DECISION_RE.match(line)
+        if decision:
+            decisions[decision.group("id")] = number
     open_expired = False
-    for box_id, (number, end_date) in boxes.items():
-        if end_date is not None and end_date < today and box_id not in verdicts:
+    for spike_id, (number, end_date) in spikes.items():
+        if end_date is not None and end_date < today and spike_id not in decisions:
             findings.append(
-                _finding("BOX-EXPIRED-NO-VERDICT", number, "blocking", f"box {box_id} expired with no verdict")
+                _finding("SPIKE-EXPIRED-NO-DECISION", number, "blocking", f"spike {spike_id} expired with no decision")
             )
             open_expired = True
-    for verdict_id, number in verdicts.items():
-        if verdict_id not in boxes:
-            findings.append(_finding("ORPHAN-VERDICT", number, "warning", f"verdict {verdict_id} has no box"))
-    if open_expired and mode_close:
+    for decision_id, number in decisions.items():
+        if decision_id not in spikes:
+            findings.append(_finding("ORPHAN-DECISION", number, "warning", f"decision {decision_id} has no spike"))
+    if open_expired and mode_ship:
         findings.append(
-            _finding("CLOSE-OVER-OPEN-BOX", 0, "blocking", "Close posture with an expired unverdicted box")
+            _finding("SHIP-OVER-OPEN-SPIKE", 0, "blocking", "ship mode with an expired undecided spike")
         )
 
     return sorted(findings, key=lambda f: (f["line"], f["check"]))

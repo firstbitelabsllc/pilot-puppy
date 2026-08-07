@@ -9,10 +9,10 @@ is trying to achieve, what is happening now, what proof exists, and which A/B/C
 decision matters next—then drive bounded work through native Codex, Claude
 Code, or Cursor without taking custody of credentials or conversations.
 
-## Operator Brief
+## Brief
 
-- Entity: shadow
-- Mode: Close
+- Project: shadow
+- Mode: ship
 - Milestone: The Method v1 live
 - Outcome ID: portfolio-product-closeout-20260803
 - Outcome Revision: 218
@@ -827,7 +827,7 @@ Code, or Cursor without taking custody of credentials or conversations.
   outside this public repository and contains no private prompts, credentials,
   transcripts, or provider payloads.
 
-## Checkpoints
+## Tasks
 
 ### M1 — Method encoded
 - [completed] AGENT.md encodes the core, gate, and steering ~m3k7 | proof: cmd npm run docs:build

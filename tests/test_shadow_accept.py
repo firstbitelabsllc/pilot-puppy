@@ -16,12 +16,12 @@ SCRIPT = ROOT / "scripts" / "shadow-accept.py"
 
 PLAN = """# Demo
 
-## Operator Brief
+## Brief
 
-- Entity: demo
-- Mode: Close
+- Project: demo
+- Mode: ship
 
-## Checkpoints
+## Tasks
 
 ### M — file speaks
 - [in_progress] x.txt says hello ~ab12 | proof: cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path('x.txt').read_text()=='hello' else 1)"

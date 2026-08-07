@@ -1,4 +1,4 @@
-"""The Method's mechanical enforcer: every check refuses, deterministically."""
+"""Shadow's mechanical enforcer: every check refuses, deterministically."""
 
 from __future__ import annotations
 
@@ -20,12 +20,12 @@ SPEC.loader.exec_module(lint)
 
 CLEAN_PLAN = """# Demo
 
-## Operator Brief
+## Brief
 
-- Entity: demo
-- Mode: Close
+- Project: demo
+- Mode: ship
 
-## Checkpoints
+## Tasks
 
 ### M — the thing ships
 - [completed] wrapper renders ~ab12 | proof: cmd npm run test:pdp
@@ -43,8 +43,8 @@ CLEAN_PLAN = """# Demo
 ## Progress
 
 - 2026-08-05T10:00:00Z ~ab12 PROOF npm run test:pdp -> pass
-- 2026-08-06T11:00:00Z BOX ~cd34 is checkout smoke worth owning | ends: 2026-08-07
-- 2026-08-06T12:00:00Z VERDICT ~cd34 keep -> smoke stays
+- 2026-08-06T11:00:00Z SPIKE ~cd34 is checkout smoke worth owning | ends: 2026-08-07
+- 2026-08-06T12:00:00Z DECISION ~cd34 keep -> smoke stays
 """
 
 
@@ -92,11 +92,11 @@ class ShadowLintTests(unittest.TestCase):
         self.assertIn("DEFER-NO-WAKE", blocking(plan))
 
     def test_illegal_and_legacy_mode_values_are_blocking(self) -> None:
-        self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: Close", "- Mode: turbo")))
-        self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: Close", "- Mode: Challenge")))
+        self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: ship", "- Mode: turbo")))
+        self.assertIn("MODE-ILLEGAL", blocking(CLEAN_PLAN.replace("- Mode: ship", "- Mode: Challenge")))
 
     def test_non_monotonic_progress_timestamps_are_a_warning(self) -> None:
-        plan = CLEAN_PLAN.replace("2026-08-06T12:00:00Z VERDICT", "2026-08-04T12:00:00Z VERDICT")
+        plan = CLEAN_PLAN.replace("2026-08-06T12:00:00Z DECISION", "2026-08-04T12:00:00Z DECISION")
         hits = [f for f in lint.lint_plan(plan) if f["check"] == "TS-ORDER"]
         self.assertTrue(hits and all(f["severity"] == "warning" for f in hits))
 
@@ -108,17 +108,17 @@ class ShadowLintTests(unittest.TestCase):
 
     def test_box_lifecycle_checks(self) -> None:
         no_end = CLEAN_PLAN.replace(" | ends: 2026-08-07", "")
-        self.assertIn("BOX-NO-END", blocking(no_end))
+        self.assertIn("SPIKE-NO-END", blocking(no_end))
         expired = CLEAN_PLAN.replace("ends: 2026-08-07", "ends: 2026-08-05").replace(
-            "- 2026-08-06T12:00:00Z VERDICT ~cd34 keep -> smoke stays\n", ""
+            "- 2026-08-06T12:00:00Z DECISION ~cd34 keep -> smoke stays\n", ""
         )
-        self.assertIn("BOX-EXPIRED-NO-VERDICT", blocking(expired))
-        self.assertIn("CLOSE-OVER-OPEN-BOX", blocking(expired))
+        self.assertIn("SPIKE-EXPIRED-NO-DECISION", blocking(expired))
+        self.assertIn("SHIP-OVER-OPEN-SPIKE", blocking(expired))
         orphan = CLEAN_PLAN.replace(
-            "- 2026-08-06T11:00:00Z BOX ~cd34 is checkout smoke worth owning | ends: 2026-08-07\n", ""
+            "- 2026-08-06T11:00:00Z SPIKE ~cd34 is checkout smoke worth owning | ends: 2026-08-07\n", ""
         )
         findings = lint.lint_plan(orphan)
-        self.assertIn("ORPHAN-VERDICT", {f["check"] for f in findings if f["severity"] == "warning"})
+        self.assertIn("ORPHAN-DECISION", {f["check"] for f in findings if f["severity"] == "warning"})
 
     def test_secret_shaped_proof_is_blocking(self) -> None:
         token = "xoxb-" + "1234567890-ABCDEFGHIJKLMNOP"
@@ -156,13 +156,13 @@ class ShadowLintTests(unittest.TestCase):
 
     def test_duplicate_box_id_is_blocking(self) -> None:
         plan = CLEAN_PLAN.replace(
-            "- 2026-08-06T12:00:00Z VERDICT ~cd34 keep -> smoke stays",
-            "- 2026-08-06T12:00:00Z BOX ~cd34 re-boxed | ends: 2027-01-01",
+            "- 2026-08-06T12:00:00Z DECISION ~cd34 keep -> smoke stays",
+            "- 2026-08-06T12:00:00Z SPIKE ~cd34 re-boxed | ends: 2027-01-01",
         )
-        self.assertIn("BOX-DUP", blocking(plan))
+        self.assertIn("SPIKE-DUP", blocking(plan))
 
     def test_missing_canonical_section_is_a_warning(self) -> None:
-        plan = CLEAN_PLAN.replace("## Checkpoints", "## Checkpoints:")
+        plan = CLEAN_PLAN.replace("## Tasks", "## Tasks:")
         hits = [f for f in lint.lint_plan(plan) if f["check"] == "SECTION-MISSING"]
         self.assertTrue(hits and all(f["severity"] == "warning" for f in hits))
 
@@ -175,7 +175,7 @@ class ShadowLintTests(unittest.TestCase):
             clean = Path(dirname) / "clean.md"
             clean.write_text(CLEAN_PLAN, encoding="utf-8")
             dirty = Path(dirname) / "dirty.md"
-            dirty.write_text(CLEAN_PLAN.replace("- Mode: Close", "- Mode: turbo"), encoding="utf-8")
+            dirty.write_text(CLEAN_PLAN.replace("- Mode: ship", "- Mode: turbo"), encoding="utf-8")
             ok = subprocess.run([sys.executable, str(SCRIPT), str(clean)], capture_output=True, text=True)
             bad = subprocess.run([sys.executable, str(SCRIPT), str(dirty)], capture_output=True, text=True)
         self.assertEqual(ok.returncode, 0, ok.stdout + ok.stderr)
@@ -187,7 +187,7 @@ class ShadowLintTests(unittest.TestCase):
             clean = Path(dirname) / "clean.md"
             clean.write_text(CLEAN_PLAN, encoding="utf-8")
             dirty = Path(dirname) / "dirty.md"
-            dirty.write_text(CLEAN_PLAN.replace("- Mode: Close", "- Mode: turbo"), encoding="utf-8")
+            dirty.write_text(CLEAN_PLAN.replace("- Mode: ship", "- Mode: turbo"), encoding="utf-8")
             missing = Path(dirname) / "missing.md"
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(clean), str(missing), str(dirty)],

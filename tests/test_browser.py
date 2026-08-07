@@ -15,7 +15,7 @@ from browser import server
 
 PLAN = """# Release notes
 
-## Operator Brief
+## Brief
 
 - Outcome ID: ship-release-notes
 - Outcome Revision: 7
@@ -271,13 +271,13 @@ class WorktreePoolPruneTests(unittest.TestCase):
 
 BOARD_PLAN = """# Gift flow live
 
-## Operator Brief
+## Brief
 
-- Entity: snowcubes
-- Mode: Close
+- Project: snowcubes
+- Mode: ship
 - Milestone: Gift flow live on storefront
 
-## Checkpoints
+## Tasks
 
 ### M1 — Gift flow live
 - [completed] C1 Gift wrap option renders on PDP | proof: npm run test:pdp | size: S
@@ -307,11 +307,11 @@ class BoardProjectionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), BOARD_PLAN)
             record = server.plan_record(plan, repo)
-        self.assertEqual(record["entity"], "snowcubes")
-        self.assertEqual(record["mode"], "close")
+        self.assertEqual(record["project"], "snowcubes")
+        self.assertEqual(record["mode"], "ship")
         self.assertEqual(record["milestone"], "Gift flow live on storefront")
         self.assertEqual(
-            record["checkpoints"],
+            record["tasks"],
             {"pending": 1, "in_progress": 1, "blocked": 0, "completed": 1},
         )
 
@@ -324,14 +324,14 @@ class BoardProjectionTests(unittest.TestCase):
         self.assertIsInstance(record["lint"]["warning"], int)
 
     def test_broad_posture_earns_a_chip(self) -> None:
-        broad = BOARD_PLAN.replace("- Mode: Close", "- Mode: Broad")
+        broad = BOARD_PLAN.replace("- Mode: ship", "- Mode: explore")
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), broad)
             record = server.plan_record(plan, repo)
-        self.assertEqual(record["mode"], "broad")
+        self.assertEqual(record["mode"], "explore")
 
     def test_legacy_modes_earn_no_chip(self) -> None:
-        legacy = BOARD_PLAN.replace("- Mode: Close", "- Mode: Spike")
+        legacy = BOARD_PLAN.replace("- Mode: ship", "- Mode: Spike")
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), legacy)
             record = server.plan_record(plan, repo)
@@ -355,33 +355,33 @@ class BoardProjectionTests(unittest.TestCase):
         self.assertEqual(summary, {"parse_ok": False, "blocking": 0, "warning": 0})
 
     def test_lint_flags_a_bad_plan(self) -> None:
-        bad = BOARD_PLAN.replace("- Mode: Close", "- Mode: turbo")
+        bad = BOARD_PLAN.replace("- Mode: ship", "- Mode: turbo")
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), bad)
             record = server.plan_record(plan, repo)
         self.assertGreaterEqual(record["lint"]["blocking"], 1)
 
     def test_board_fields_fall_back_safely(self) -> None:
-        bare = "# Plain plan\n\n## Operator Brief\n\n- Outcome: something\n"
+        bare = "# Plain plan\n\n## Brief\n\n- Outcome: something\n"
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), bare)
             record = server.plan_record(plan, repo)
-        self.assertEqual(record["entity"], "gift-flow")
+        self.assertEqual(record["project"], "gift-flow")
         self.assertIsNone(record["mode"])
         self.assertIsNone(record["milestone"])
-        self.assertIsNone(record["checkpoints"])
+        self.assertIsNone(record["tasks"])
 
     def test_board_fields_reject_unsafe_or_invalid_values(self) -> None:
         unsafe = (
-            "# Unsafe\n\n## Operator Brief\n\n"
-            "- Entity: Not A Slug!!\n"
+            "# Unsafe\n\n## Brief\n\n"
+            "- Project: Not A Slug!!\n"
             "- Mode: turbo\n"
             "- Milestone: Fix ~/Development/secret-client build\n"
         )
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), unsafe)
             record = server.plan_record(plan, repo)
-        self.assertEqual(record["entity"], "gift-flow")
+        self.assertEqual(record["project"], "gift-flow")
         self.assertIsNone(record["mode"])
         self.assertIsNone(record["milestone"])
 

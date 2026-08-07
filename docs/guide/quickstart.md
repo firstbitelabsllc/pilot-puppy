@@ -7,11 +7,11 @@ shadow status --root .
 shadow browse --root .
 ```
 
-Fill the generated Operator Brief. The browser renders the same Outcome,
+Fill the generated Brief. The browser renders the same Outcome,
 briefing, proof, and A/B/C options after every restart because `PLAN.md` is the
 source.
 
-Write work as checkpoint rows — a verifiable state plus a typed proof:
+Write work as tasks — a verifiable state plus a typed proof:
 
 ```text
 - [in_progress] fix renders on the settings screen ~ab12 | proof: cmd npm test

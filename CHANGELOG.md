@@ -2,6 +2,14 @@
 
 ## 4.0.0 — 2026-08-06 — the eight-concept core
 
+- **Standard vocabulary only.** Shadow is the one invented name; everything
+  else is a standard word: project, milestone, task, lane, spike, brief.
+  `## Operator Brief` → `## Brief`, `## Checkpoints` → `## Tasks`,
+  `- Entity:` → `- Project:`, `Mode: Broad | Close` → `Mode: explore | ship`,
+  `BOX`/`VERDICT` spike heads → `SPIKE`/`DECISION`, "the Method" and "gate
+  pair" jargon retired (the law is just AGENT.md + `docs/reference/grammar.md`,
+  and the two questions: why now? what does this contradict?).
+
 The Method is reduced to its tribunal-ruled core, enforced by code instead of
 prose. Produced by a three-round adversarial debate (design spec + records in
 docs/superpowers/).

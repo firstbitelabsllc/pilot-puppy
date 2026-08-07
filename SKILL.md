@@ -10,15 +10,16 @@ cold reader should know the Outcome, current move, proof, and next decision.
 
 Skip it for a factual answer or an obvious one-step edit with no handoff.
 
-## The Method
+## How Shadow works
 
 Standing behavior for every session rides in `AGENT.md` at this skill's root;
-the file contract is `docs/reference/method.md`, enforced by
-`scripts/shadow-lint.py`. Follow both: declare a posture (Broad or Close) as
-the first move of a cycle, run `shadow lint` before honoring a posture flip,
-write plans as you execute, and close only through proof lines per DoD
-clause. The eight core concepts and the gate pair are the process law; the
-sections below are the delegation and proof mechanics underneath them.
+the file grammar is `docs/reference/grammar.md`, enforced by
+`scripts/shadow-lint.py`. Follow both: declare a mode (explore or ship) as
+the first move of a cycle, run `shadow lint` before honoring a mode flip,
+write plans as you execute, and ship only through proof lines per DoD
+clause. The eight core concepts and the two questions (why now? what does
+this contradict?) are the process law; the sections below are the delegation
+and proof mechanics underneath them.
 
 ## Worklane boundary
 
@@ -59,11 +60,11 @@ Review the diff and reproduce important tests before accepting the result.
 Do not put credentials, prompts, transcripts, private paths, or provider output
 in a task receipt.
 
-## Flip a row
+## Flip a task
 
 `shadow accept --row ~hash --repo <project>` is the only code path that flips
-a checkpoint row to completed: it reruns the row's `cmd` proof in a detached
-clean checkout of HEAD and, only on a pass, rewrites the row and appends its
+a task to completed: it reruns the task's `cmd` proof in a detached clean
+checkout of HEAD and, only on a pass, rewrites the task and appends its
 paired PROOF line in one commit carrying `PLAN.md` alone. `read` and `gate`
 proofs are person judgments — re-observe them yourself and append the PROOF
 line with the flip.

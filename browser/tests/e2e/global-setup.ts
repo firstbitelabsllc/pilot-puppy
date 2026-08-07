@@ -15,7 +15,7 @@ export default async function globalSetup() {
   mkdirSync(join(boundedRoot, 'demo'), { recursive: true });
   writeFileSync(join(boundedRoot, 'demo', 'PLAN.md'), `# Release notes
 
-## Operator Brief
+## Brief
 
 - Outcome ID: ship-release-notes
 - Outcome Revision: 7
@@ -51,10 +51,10 @@ export default async function globalSetup() {
   mkdirSync(join(boundedRoot, 'gift'), { recursive: true });
   writeFileSync(join(boundedRoot, 'gift', 'PLAN.md'), `# Gift flow live
 
-## Operator Brief
+## Brief
 
-- Entity: snowcubes
-- Mode: Close
+- Project: snowcubes
+- Mode: ship
 - Milestone: Gift flow live on storefront
 - Outcome ID: gift-flow-live
 - Outcome Revision: 3
@@ -67,7 +67,7 @@ export default async function globalSetup() {
 - Proof Summary: Focused gift tests pass.
 - Proof Delivery: delivered
 
-## Checkpoints
+## Tasks
 
 ### M1 — Gift flow live
 - [completed] C1 Gift wrap option renders | proof: npm run test:pdp | size: S

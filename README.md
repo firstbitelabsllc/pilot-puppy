@@ -48,13 +48,13 @@ mode, current milestone, checkpoint counts, and the one decision waiting for
 you. It never writes; the moment a surface could mutate a row it would be a
 banned second store.
 
-A checkpoint row is a state the world reaches plus a `proof:` that can refuse
+A task is a state the world reaches plus a `proof:` that can refuse
 bad work (`cmd`, `read`, or `gate <owner>`). A row flips to completed only in
 the same commit as its proof line, and `shadow accept --row ~hash` is the only
 code path that does it — it reruns the row's `cmd` proof in a clean detached
 checkout first. `shadow lint PLAN.md` is the mechanical enforcer and runs in
 the test gate. The whole method is `AGENT.md` (one page) and
-`docs/reference/method.md` (the grammar).
+`docs/reference/grammar.md` (the grammar).
 
 Delegation to a native host is one sealed command — no roster, no routing
 layer; provider and account choice live in your own config:

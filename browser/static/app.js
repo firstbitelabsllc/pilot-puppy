@@ -74,7 +74,7 @@ function renderPlan(plan) {
   if (!plan.outcome || !plan.briefing) {
     const card = el('section', { className: 'card empty' });
     card.append(el('p', { className: 'eyebrow', text: plan.title }));
-    card.append(el('h2', { text: 'This plan needs an Operator Brief' }));
+    card.append(el('h2', { text: 'This plan needs a Brief' }));
     card.append(el('p', { text: plan.contract_error || 'Add the typed Outcome fields to PLAN.md.' }));
     main.append(card);
     return;
@@ -149,14 +149,14 @@ function renderPlan(plan) {
 }
 
 function laneName(plan) {
-  return plan.entity || 'unassigned';
+  return plan.project || 'unassigned';
 }
 
 function checkpointMeter(counts) {
   const total = counts.pending + counts.in_progress + counts.blocked + counts.completed;
   if (!total) return null;
   const meter = el('p', { className: 'meter' });
-  meter.append(el('span', { className: 'meter-count', text: `Checkpoints ${counts.completed}/${total}` }));
+  meter.append(el('span', { className: 'meter-count', text: `Tasks ${counts.completed}/${total}` }));
   if (counts.blocked) meter.append(el('span', { className: 'meter-blocked', text: `${counts.blocked} blocked` }));
   return meter;
 }
@@ -201,8 +201,8 @@ function renderBoard() {
         card.append(el('span', { className: plan.lint.blocking || !plan.lint.parse_ok ? 'lint-chip bad' : 'lint-chip', text: verdict }));
       }
 
-      if (plan.checkpoints) {
-        const meter = checkpointMeter(plan.checkpoints);
+      if (plan.tasks) {
+        const meter = checkpointMeter(plan.tasks);
         if (meter) card.append(meter);
       }
       if (plan.briefing?.choices?.length) {

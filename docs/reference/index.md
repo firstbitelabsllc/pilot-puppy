@@ -1,7 +1,7 @@
 # Reference
 
 - [Commands](commands.md)
-- [The Method](method.md)
+- [The Method](grammar.md)
 - [PLAN.md fields](plan-fields.md)
 - [Chief-of-staff briefing](chief-of-staff.md)
 - [A/B/C decisions](decision-mode.md)
