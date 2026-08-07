@@ -533,31 +533,12 @@ def extract_host_receipt(texts: list[str]) -> dict[str, Any]:
     return next(iter(unique.values()))
 
 
-def _private_selector_present(text: str, private_values: tuple[str, ...]) -> bool:
-    """Detect an owner-local selector before any receipt field can retain it."""
-
-    folded = text.casefold()
-    for value in private_values:
-        if not value:
-            continue
-        # Long selector strings are safe to reject as a plain substring; short
-        # aliases use token boundaries so ordinary words do not false-positive.
-        if len(value) >= 4 and value.casefold() in folded:
-            return True
-        boundary = r"(?<![A-Za-z0-9._:+,=\[\]-])" + re.escape(value) + r"(?![A-Za-z0-9._:+,=\[\]-])"
-        if re.search(boundary, text, flags=re.IGNORECASE):
-            return True
-    return False
-
-
-def _receipt_text(value: object, label: str, maximum: int, private_values: tuple[str, ...]) -> str:
+def _receipt_text(value: object, label: str, maximum: int) -> str:
     if not isinstance(value, str):
         raise HostError("host_receipt_invalid", f"host receipt {label} is invalid")
     clean = value.strip()
     if not clean or len(clean) > maximum or any(ord(character) < 32 or ord(character) == 127 for character in clean):
         raise HostError("host_receipt_invalid", f"host receipt {label} is invalid")
-    if _private_selector_present(clean, private_values):
-        raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
     if PRIVATE_PATH_RE.search(clean) or ABSOLUTE_PATH_RE.search(clean):
         raise HostError("host_receipt_invalid", f"host receipt {label} contains a private path")
     if SECRET_SHAPE_RE.search(clean):
@@ -565,9 +546,7 @@ def _receipt_text(value: object, label: str, maximum: int, private_values: tuple
     return clean
 
 
-def validate_host_receipt(
-    raw: dict[str, Any], task_id: str, allowed: list[str], private_values: tuple[str, ...] = ()
-) -> dict[str, Any]:
+def validate_host_receipt(raw: dict[str, Any], task_id: str, allowed: list[str]) -> dict[str, Any]:
     expected_fields = {"schema", "task_id", "status", "summary", "proof_ref", "changed_paths", "tests"}
     if set(raw) != expected_fields:
         raise HostError("host_receipt_invalid", "host receipt fields are invalid")
@@ -578,7 +557,7 @@ def validate_host_receipt(
     status = raw.get("status")
     if status not in {"ok", "blocked", "failed"}:
         raise HostError("host_receipt_invalid", "host receipt status is invalid")
-    summary = _receipt_text(raw.get("summary"), "summary", MAX_SUMMARY_CHARS, private_values)
+    summary = _receipt_text(raw.get("summary"), "summary", MAX_SUMMARY_CHARS)
     reported_paths = raw.get("changed_paths")
     if not isinstance(reported_paths, list) or any(not isinstance(item, str) for item in reported_paths):
         raise HostError("host_receipt_invalid", "host receipt changed_paths must be a string list")
@@ -586,8 +565,6 @@ def validate_host_receipt(
     for path in reported_paths:
         if not path or any(ord(character) < 32 or ord(character) == 127 for character in path):
             raise HostError("host_receipt_invalid", "host receipt changed path is invalid")
-        if _private_selector_present(path, private_values):
-            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
         if SECRET_SHAPE_RE.search(path):
             raise HostError("host_receipt_invalid", "host receipt changed path contains a secret-shaped value")
         candidate = Path(path)
@@ -610,21 +587,17 @@ def validate_host_receipt(
             raise HostError("host_receipt_invalid", "host receipt test is invalid")
         safe_tests.append(
             {
-                "name": _receipt_text(item.get("name"), "test name", MAX_TEST_NAME_CHARS, private_values),
+                "name": _receipt_text(item.get("name"), "test name", MAX_TEST_NAME_CHARS),
                 "status": item["status"],
             }
         )
     proof_ref = raw.get("proof_ref")
     if status == "ok":
         identifier(proof_ref, "host proof_ref")
-        if _private_selector_present(proof_ref, private_values):
-            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
         if not safe_tests or any(item["status"] != "pass" for item in safe_tests):
             raise HostError("proof_missing", "successful host receipt requires passing tests")
     elif proof_ref is not None:
         identifier(proof_ref, "host proof_ref")
-        if _private_selector_present(proof_ref, private_values):
-            raise HostError("host_receipt_private", "host receipt attempted to retain private selector data")
     return {
         "status": status,
         "summary": summary,
@@ -768,10 +741,7 @@ def run_attempt(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
                 raise HostError("host_launch_failed", str(result["launch_error"]))
             if result.get("returncode") != 0:
                 raise HostError("host_failed", "host exited non-zero")
-            private_values: tuple[str, ...] = ()
-            host_receipt = validate_host_receipt(
-                extract_host_receipt(output_texts), task_id, allowed, private_values
-            )
+            host_receipt = validate_host_receipt(extract_host_receipt(output_texts), task_id, allowed)
             outside = [path for path in changed if not path_allowed(path, allowed)]
             if outside:
                 raise HostError("scope_violation", "host changed a path outside the packet")

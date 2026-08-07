@@ -288,6 +288,25 @@ class ShadowHostTests(unittest.TestCase):
                 )
                 self.assertEqual(payload["changed_paths"], ["result.txt"])
                 self.assertEqual(payload["proof_ref"], "tests-green")
+                # Pin the exact per-host argv: a silently dropped sandbox or
+                # output flag would still pass every other assertion here.
+                argv = json.loads(binary.with_suffix(".argv.json").read_text(encoding="utf-8"))
+                resolved = str(repo.resolve())
+                if host == "codex":
+                    self.assertEqual(argv[1:8], [
+                        "exec", "--json", "--ephemeral", "--sandbox", "workspace-write", "-C", resolved,
+                    ])
+                    self.assertEqual(argv[8], "--output-last-message")
+                elif host == "claude-code":
+                    self.assertEqual(argv[1:], [
+                        "--print", "--output-format", "json", "--no-session-persistence",
+                        "--permission-mode", "acceptEdits", "--add-dir", resolved,
+                    ])
+                else:
+                    self.assertEqual(argv[1:], [
+                        "--print", "--output-format", "json", "--workspace", resolved,
+                        "--trust", "--force", "agent",
+                    ])
                 self.assertFalse(payload["accepted_by_lead"])
                 self.assertTrue(payload["unreviewed_claim"])
 
