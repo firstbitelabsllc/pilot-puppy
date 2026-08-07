@@ -1,0 +1,41 @@
+# seats.example.yaml — a fleet seat map that lives OUTSIDE Shadow.
+#
+# Shadow v4 passes no model or account selector: `shadow host run --host X`
+# is the whole path, and which provider/model a host uses is that host CLI's
+# own business (docs/reference/native-hosts.md). This file is the optional
+# human-readable mirror of those host configs for operators who run several
+# hosts side by side.
+#
+# Contract:
+# - AI-AUTHORED: an agent regenerates this file from the live host configs
+#   (the `source:` lines below); hand edits are drift.
+# - It is a mirror, never an authority — Shadow and the host CLIs never
+#   read it.
+# - Keep it out of repositories and out of plans, briefs, and receipts.
+#   Never record account, quota, or billing details in it.
+#
+# Suggested location: your operator config directory, e.g.
+# ~/.config/<you>/seats.yaml
+
+schema: seats.example.v1
+
+seats:
+  codex:
+    binary: codex
+    model: example-model-a        # whatever your Codex CLI config pins
+    escalation: example-model-b   # optional: the model you escalate to, by hand
+    source: ~/.codex/config.toml
+
+  claude-code:
+    binary: claude
+    model: example-model-c
+    source: Claude Code settings (/config)
+
+  cursor:
+    binary: cursor-agent
+    model: default                # host picks internally; nothing pinned
+    source: Cursor app settings
+
+  manual:
+    binary: none
+    model: you                    # the lead reproduces proof; the harness defines done
