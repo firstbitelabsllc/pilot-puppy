@@ -21,7 +21,7 @@ from pathlib import Path
 
 
 ROW_ID_RE = re.compile(r"^~[0-9a-z]{4}$")
-PROOF_FIELD_RE = re.compile(r"\| proof: (?P<proof>[^|]+?)(?= \||$)")
+FIELD_RE = re.compile(r"\| (?P<key>[a-z]+): (?P<value>[^|]+?)(?= \||$)")
 # The grammar's row shape, mirrored from scripts/shadow-lint.py: the id is a
 # parsed field, never a substring, so a `needs:` reference or trailing prose
 # mentioning another row's id cannot stand in for the row itself.
@@ -29,6 +29,7 @@ ROW_LINE_RE = re.compile(
     r"^- \[(?P<state>pending|in_progress|blocked|completed)\] "
     r"(?P<text>.+?) (?P<id>~[0-9a-z]{4})(?P<dod> \(DoD\))?(?P<tail>(?: \| [a-z]+:.*)?)$"
 )
+PROGRESS_HEADING_RE = re.compile(r"^## Progress\s*$", re.MULTILINE)
 
 
 class AcceptError(ValueError):
@@ -96,21 +97,27 @@ def remove_review_worktree(repo: Path, destination: Path) -> None:
     git_completed(repo, "worktree", "prune", timeout=15)
 
 
-def find_row(plan_text: str, row_id: str) -> tuple[str, str]:
+def find_row(plan_text: str, row_id: str) -> tuple[int, str, str, str]:
+    """Return (line index, line, state, proof) for the one row carrying row_id.
+
+    The proof comes from the parsed tail group only — prose in the row text may
+    legally contain "| proof:" and must never stand in for the real field.
+    """
     matches = [
-        line
-        for line in plan_text.splitlines()
+        (index, line, row)
+        for index, line in enumerate(plan_text.splitlines())
         if (row := ROW_LINE_RE.match(line)) is not None and row.group("id") == row_id
     ]
     if not matches:
         raise AcceptError(f"no checkpoint row carries {row_id}")
     if len(matches) > 1:
         raise AcceptError(f"{row_id} is carried by {len(matches)} rows; fix the duplicate first")
-    line = matches[0]
-    match = PROOF_FIELD_RE.search(line)
-    if not match:
+    index, line, row = matches[0]
+    fields = dict(FIELD_RE.findall(row.group("tail") or ""))
+    proof = fields.get("proof", "").strip()
+    if not proof:
         raise AcceptError("the row has no proof field")
-    return line, match.group("proof").strip()
+    return index, line, row.group("state"), proof
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -129,8 +136,8 @@ def main(argv: list[str] | None = None) -> int:
             plan_text = plan_path.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as exc:
             raise AcceptError(f"plan cannot be read: {exc}") from exc
-        row_line, proof = find_row(plan_text, row_id)
-        if "[completed]" in row_line:
+        _, row_line, state, proof = find_row(plan_text, row_id)
+        if state == "completed":
             raise AcceptError("the row is already completed")
         if not proof.startswith("cmd "):
             kind = proof.split(" ", 1)[0]
@@ -144,8 +151,15 @@ def main(argv: list[str] | None = None) -> int:
         head = git_completed(repo, "rev-parse", "--verify", "HEAD").stdout.strip()
         if not head:
             raise AcceptError("the project has no HEAD commit")
+        # A conflicted PLAN.md has three index stages; the single-entry restore
+        # below would collapse them to the ancestor and destroy the merge state.
+        if git_completed(repo, "ls-files", "-u", "--", "PLAN.md").stdout.strip():
+            raise AcceptError("PLAN.md has unresolved merge conflicts; resolve them first")
         pool = repo.parent / f"{repo.name}-shadow-accept"
         pool.mkdir(exist_ok=True)
+        # A crashed prior run can leave a registered-but-deleted worktree that
+        # would wedge every future accept of this row; prune is always safe.
+        git_completed(repo, "worktree", "prune", timeout=15)
         review = create_lead_review_worktree(repo, pool, row_id.lstrip("~"), head)
         try:
             passed = lead_review_passes(review, argv_proof, args.timeout_seconds)
@@ -157,13 +171,32 @@ def main(argv: list[str] | None = None) -> int:
                 pass
         if not passed:
             raise AcceptError("the proof did not pass in a clean checkout; nothing was changed")
+        # The proof may have run for minutes; a write derived from the pre-run
+        # snapshot would silently revert anything appended to the plan since.
+        try:
+            plan_text = plan_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            raise AcceptError(f"plan cannot be re-read after the proof: {exc}") from exc
+        index, _, fresh_state, fresh_proof = find_row(plan_text, row_id)
+        if fresh_state == "completed":
+            raise AcceptError("the row was completed while the proof ran; nothing was changed")
+        if fresh_proof != proof:
+            raise AcceptError("the row's proof changed while it ran; rerun accept against the new proof")
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        flipped = re.sub(r"^- \[[a-z_]+\]", "- [completed]", row_line)
-        updated = plan_text.replace(row_line, flipped, 1)
-        proof_line = f"- {stamp} {row_id} PROOF {' '.join(argv_proof)} -> pass (accept)\n"
-        if "## Progress" not in updated:
+        plan_lines = plan_text.splitlines(keepends=True)
+        plan_lines[index] = re.sub(r"^- \[[a-z_]+\]", "- [completed]", plan_lines[index], count=1)
+        updated = "".join(plan_lines)
+        heading = PROGRESS_HEADING_RE.search(updated)
+        if heading is None:
             raise AcceptError("the plan has no Progress section")
-        updated = updated.rstrip() + "\n" + proof_line
+        proof_line = f"- {stamp} {row_id} PROOF {shlex.join(argv_proof)} -> pass (accept)\n"
+        # Insert at the end of the Progress section, not end-of-file: a section
+        # after Progress would otherwise swallow the audit line.
+        next_heading = updated.find("\n## ", heading.end())
+        if next_heading == -1:
+            updated = updated.rstrip() + "\n" + proof_line
+        else:
+            updated = updated[: next_heading + 1] + proof_line + updated[next_heading + 1 :]
         # The exact index entry, not a "was it staged" flag: a staged snapshot
         # that differs from the working tree must come back byte-for-byte.
         index_entry = git_completed(repo, "ls-files", "--stage", "--", "PLAN.md").stdout.strip()

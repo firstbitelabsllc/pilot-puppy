@@ -27,8 +27,9 @@ ROW_RE: Final = re.compile(
     r"^- \[(?P<state>pending|in_progress|blocked|completed)\] "
     r"(?P<text>.+?) (?P<id>~[0-9a-z]{4})(?P<dod> \(DoD\))?(?P<tail>(?: \| [a-z]+:.*)?)$"
 )
-ROW_LOOSE_RE: Final = re.compile(r"^- \[[a-z_]+\] ")
+ROW_LOOSE_RE: Final = re.compile(r"^- \[[^\]]*\] ")
 FIELD_RE: Final = re.compile(r"\| (?P<key>[a-z]+): (?P<value>[^|]+?)(?= \||$)")
+NEEDS_VALUE_RE: Final = re.compile(r"~[0-9a-z]{4}(?:[,\s]+~[0-9a-z]{4})*")
 PROOF_CLASS_RE: Final = re.compile(r"^(?:cmd|read|gate) \S")
 MODE_RE: Final = re.compile(r"^- Mode: (?P<value>.+)$")
 HASH_RE: Final = re.compile(r"~[0-9a-z]{4}\b")
@@ -60,6 +61,12 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
     lines = text.splitlines()
     sections = _sections(lines)
     today = today or date.today()
+
+    # Section dispatch is exact-string: a typo'd or missing canonical heading
+    # would otherwise exempt everything under it from every check, silently.
+    for canonical in ("Operator Brief", "Checkpoints", "Progress"):
+        if canonical not in sections:
+            findings.append(_finding("SECTION-MISSING", 0, "warning", f"no `## {canonical}` heading"))
 
     for number, line in enumerate(lines, 1):
         if len(line) > MAX_LINE_CHARS:
@@ -98,15 +105,27 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
             findings.append(_finding("ID-DUP", number, "blocking", f"{row_id} first used on line {ids[row_id][0]}"))
         else:
             ids[row_id] = (number, row["state"])
-        fields = dict(FIELD_RE.findall(row["tail"] or ""))
+        tail = row["tail"] or ""
+        pairs = FIELD_RE.findall(tail)
+        # Every byte of the tail must be accounted for by a parsed field: an
+        # embedded " | " inside a value would otherwise silently truncate what
+        # the proof (and the secret scan, and accept's rerun) actually sees.
+        if "".join(f" | {key}: {value}" for key, value in pairs) != tail:
+            findings.append(_finding("ROW-SHAPE", number, "blocking", "tail has residue outside `| key: value` fields"))
+        if len(pairs) != len({key for key, _ in pairs}):
+            findings.append(_finding("ROW-SHAPE", number, "blocking", "a tail field key repeats"))
+        fields = dict(pairs)
         proof = fields.get("proof", "").strip()
         if not proof:
             findings.append(_finding("PROOF-MISSING", number, "blocking", "row has no proof field"))
         elif not PROOF_CLASS_RE.match(proof):
             findings.append(_finding("PROOF-CLASS", number, "blocking", "proof must be classed cmd | read | gate"))
-        elif SECRET_SHAPE_RE.search(proof):
-            findings.append(_finding("PROOF-SECRET", number, "blocking", "proof line carries a secret-shaped value"))
-        for target in HASH_RE.findall(fields.get("needs", "")):
+        if SECRET_SHAPE_RE.search(line):
+            findings.append(_finding("PROOF-SECRET", number, "blocking", "row carries a secret-shaped value"))
+        needs_value = fields.get("needs", "").strip()
+        if needs_value and NEEDS_VALUE_RE.fullmatch(needs_value) is None:
+            findings.append(_finding("NEEDS-SHAPE", number, "blocking", "needs must be ~hash ids only"))
+        for target in HASH_RE.findall(needs_value):
             needs_refs.append((number, target))
         if current_rows is not None:
             current_rows.append((number, row))
@@ -130,7 +149,7 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
             findings.append(_finding("DOD-EARLY", dod_number, "blocking", "DoD flipped before its siblings"))
 
     for number, line in sections.get("Deferred", []):
-        if line.startswith("- ") and "wake:" not in line:
+        if line.startswith("- ") and not re.search(r"(?:^|\| )wake: \S", line):
             findings.append(_finding("DEFER-NO-WAKE", number, "blocking", "deferral without a wake predicate"))
 
     previous: tuple[str, int] | None = None
@@ -156,7 +175,12 @@ def lint_plan(text: str, *, today: date | None = None) -> list[dict]:
                     end_date = None
             if end_date is None:
                 findings.append(_finding("BOX-NO-END", number, "blocking", "a box that never ends is not a box"))
-            boxes[box.group("id")] = (number, end_date)
+            if box.group("id") in boxes:
+                findings.append(
+                    _finding("BOX-DUP", number, "blocking", "re-boxing an id would reset its expiry; verdict first")
+                )
+            else:
+                boxes[box.group("id")] = (number, end_date)
         verdict = VERDICT_RE.match(line)
         if verdict:
             verdicts[verdict.group("id")] = number

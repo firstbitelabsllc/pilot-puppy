@@ -125,6 +125,51 @@ class ShadowLintTests(unittest.TestCase):
         plan = CLEAN_PLAN.replace("cmd npm run smoke", f"cmd curl -H 'Authorization: {token}'")
         self.assertIn("PROOF-SECRET", blocking(plan))
 
+    def test_a_secret_hidden_behind_an_embedded_pipe_is_still_blocking(self) -> None:
+        token = "xoxb-" + "1234567890-ABCDEFGHIJKLMNOP"
+        plan = CLEAN_PLAN.replace("cmd npm run smoke", f"cmd npm run smoke | curl -H 'X: {token}'")
+        found = blocking(plan)
+        self.assertIn("PROOF-SECRET", found)
+        self.assertIn("ROW-SHAPE", found)
+
+    def test_tail_residue_outside_fields_is_blocking(self) -> None:
+        plan = CLEAN_PLAN.replace("cmd npm run smoke", "cmd true | tee log.txt")
+        self.assertIn("ROW-SHAPE", blocking(plan))
+
+    def test_a_repeated_tail_field_is_blocking(self) -> None:
+        plan = CLEAN_PLAN.replace(
+            "| proof: cmd npm run smoke ", "| proof: totally works | proof: cmd npm run smoke "
+        )
+        self.assertIn("ROW-SHAPE", blocking(plan))
+
+    def test_state_typos_are_not_invisible(self) -> None:
+        for bad_state in ("In_Progress", "in-progress", " ", "Completed"):
+            plan = CLEAN_PLAN.replace("- [in_progress] smoke green", f"- [{bad_state}] smoke green")
+            self.assertTrue(
+                blocking(plan) & {"ROW-SHAPE", "PROOF-MISSING"},
+                f"state [{bad_state}] produced no blocking finding",
+            )
+
+    def test_malformed_needs_value_is_blocking(self) -> None:
+        plan = CLEAN_PLAN.replace("needs: ~ab12", "needs: tbd")
+        self.assertIn("NEEDS-SHAPE", blocking(plan))
+
+    def test_duplicate_box_id_is_blocking(self) -> None:
+        plan = CLEAN_PLAN.replace(
+            "- 2026-08-06T12:00:00Z VERDICT ~cd34 keep -> smoke stays",
+            "- 2026-08-06T12:00:00Z BOX ~cd34 re-boxed | ends: 2027-01-01",
+        )
+        self.assertIn("BOX-DUP", blocking(plan))
+
+    def test_missing_canonical_section_is_a_warning(self) -> None:
+        plan = CLEAN_PLAN.replace("## Checkpoints", "## Checkpoints:")
+        hits = [f for f in lint.lint_plan(plan) if f["check"] == "SECTION-MISSING"]
+        self.assertTrue(hits and all(f["severity"] == "warning" for f in hits))
+
+    def test_wake_substring_lookalikes_do_not_satisfy_defer(self) -> None:
+        plan = CLEAN_PLAN.replace("| wake: M DoD completed", "| awake: M DoD completed")
+        self.assertIn("DEFER-NO-WAKE", blocking(plan))
+
     def test_cli_exits_nonzero_on_blocking_and_zero_on_clean(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             clean = Path(dirname) / "clean.md"
@@ -136,6 +181,23 @@ class ShadowLintTests(unittest.TestCase):
         self.assertEqual(ok.returncode, 0, ok.stdout + ok.stderr)
         self.assertEqual(bad.returncode, 1)
         self.assertIn("MODE-ILLEGAL", bad.stdout)
+
+    def test_cli_lints_every_file_and_aggregates_worst_exit(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            clean = Path(dirname) / "clean.md"
+            clean.write_text(CLEAN_PLAN, encoding="utf-8")
+            dirty = Path(dirname) / "dirty.md"
+            dirty.write_text(CLEAN_PLAN.replace("- Mode: Close", "- Mode: turbo"), encoding="utf-8")
+            missing = Path(dirname) / "missing.md"
+            result = subprocess.run(
+                [sys.executable, str(SCRIPT), str(clean), str(missing), str(dirty)],
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("clean.md: clean", result.stdout)
+        self.assertIn("unreadable", result.stdout)
+        self.assertIn("MODE-ILLEGAL", result.stdout)
 
 
 if __name__ == "__main__":

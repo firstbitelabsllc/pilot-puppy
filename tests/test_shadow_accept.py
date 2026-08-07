@@ -155,6 +155,99 @@ class ShadowAcceptTests(unittest.TestCase):
             result = run_accept(repo, "~zz99")
         self.assertEqual(result.returncode, 1)
 
+    def test_decoy_proof_in_row_prose_cannot_override_the_gate_class(self) -> None:
+        # Prose before the ~id may legally contain "| proof: cmd ..."; the real
+        # proof lives in the parsed tail and here it is gate-classed — refuse.
+        plan = PLAN.replace(
+            '- [in_progress] x.txt says hello ~ab12 | proof: cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path(\'x.txt\').read_text()==\'hello\' else 1)"',
+            "- [in_progress] ship it (was | proof: cmd true earlier) ~ab12 | proof: gate leo decides",
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "decoy prose proof")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("gate", result.stdout.lower() + result.stderr.lower())
+        self.assertEqual(after_plan, plan)
+
+    def test_a_plan_edit_during_the_proof_run_is_not_reverted(self) -> None:
+        # The proof appends a Progress note to PLAN.md while it runs (simulating
+        # a concurrent writer); the accepted plan must keep that note.
+        proof = (
+            "cmd python3 -c \"import pathlib; p=pathlib.Path('../../repo/PLAN.md'); "
+            "p.write_text(p.read_text() + '- concurrent note\\n')\""
+        )
+        plan = PLAN.replace(
+            'cmd python3 -c "import pathlib,sys; sys.exit(0 if pathlib.Path(\'x.txt\').read_text()==\'hello\' else 1)"',
+            proof,
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "concurrent-writer proof")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("- concurrent note", after_plan)
+        self.assertIn("- [completed]", after_plan)
+
+    def test_proof_line_lands_inside_progress_not_after_a_later_section(self) -> None:
+        plan = PLAN + "\n## Lessons\n\n- keep sections after Progress\n"
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            (repo / "PLAN.md").write_text(plan, encoding="utf-8")
+            git(repo, "commit", "-qam", "section after progress")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertLess(after_plan.find("~ab12 PROOF"), after_plan.find("## Lessons"))
+
+    def test_leftover_pool_directory_refuses_without_corruption(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            leftover = repo.parent / "repo-shadow-accept" / "ab12"
+            leftover.mkdir(parents=True)
+            before_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            result = run_accept(repo, "~ab12")
+            after_plan = (repo / "PLAN.md").read_text(encoding="utf-8")
+            commits = git(repo, "rev-list", "--count", "HEAD")
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(before_plan, after_plan)
+        self.assertEqual(commits, "1")
+
+    def test_a_crashed_runs_registered_worktree_is_pruned_not_wedged(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            pool = repo.parent / "repo-shadow-accept"
+            stale = pool / "ab12"
+            git(repo, "worktree", "add", "--detach", str(stale), "HEAD")
+            import shutil
+
+            shutil.rmtree(stale)
+            result = run_accept(repo, "~ab12")
+            text = (repo / "PLAN.md").read_text(encoding="utf-8")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("- [completed] x.txt says hello ~ab12", text)
+
+    def test_conflicted_plan_is_refused_before_any_work(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo = make_repo(Path(dirname).resolve())
+            git(repo, "checkout", "-qb", "side")
+            (repo / "PLAN.md").write_text(PLAN + "- side note\n", encoding="utf-8")
+            git(repo, "commit", "-qam", "side")
+            git(repo, "checkout", "-q", "-")
+            (repo / "PLAN.md").write_text(PLAN + "- main note\n", encoding="utf-8")
+            git(repo, "commit", "-qam", "main")
+            merge = subprocess.run(
+                ["git", "-C", str(repo), "merge", "side"], capture_output=True, text=True, check=False
+            )
+            result = run_accept(repo, "~ab12")
+        self.assertNotEqual(merge.returncode, 0)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("conflict", result.stdout.lower() + result.stderr.lower())
+
     def test_a_row_mentioning_another_id_cannot_stand_in_for_it(self) -> None:
         # An earlier row that references ~ef56 in its needs field must not be
         # selected — its own proof would run and its own state would flip.
