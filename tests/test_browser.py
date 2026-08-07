@@ -325,6 +325,18 @@ class BrowserTests(unittest.TestCase):
             "shipped the release notes",
         )
 
+    def test_browser_secret_shapes_carry_the_canonical_left_guard(self) -> None:
+        # shadow-lint accepts hyphenated English because the canonical
+        # SECRET_SHAPE_RE guards `sk-` on the left.  The browser transcriptions
+        # must agree, or a plan passes lint and then fails board projection.
+        from browser import chief_of_staff, outcome_source
+
+        prose = "task-mismatched risk-mitigation smoke green"
+        self.assertIsNone(outcome_source.SECRET_SHAPE_RE.search(prose), prose)
+        self.assertIsNone(chief_of_staff.PRIVATE_TEXT_RE.search(prose), prose)
+        self.assertEqual(chief_of_staff._public_text(prose, "changed"), prose)
+        self.assertEqual(outcome_source._text(prose, "changed"), prose)
+
 
 
 class WorktreePoolPruneTests(unittest.TestCase):
