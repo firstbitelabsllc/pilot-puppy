@@ -842,7 +842,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 ### M3 — v4 core
 - [completed] the Method reduced to eight concepts, lint the enforcer ~h4v1 | proof: cmd npm run test:py | needs: ~r9c3
 - [completed] four tagged plans on grammar v2: shadow, moussey #145, snowcubes #2113, resplit #2236 ~g4mv | proof: read shadow lint -> 0 blocking on all four | needs: ~h4v1
-- [pending] v4.0.0 released, installed, doctor green ~z7e5 (DoD) | proof: read shadow doctor -> 11/11 on installed v4.0.0 | needs: ~h4v1
+- [completed] v4.0.0 released, installed, doctor green ~z7e5 (DoD) | proof: read shadow doctor -> 11/11 on installed v4.0.0 | needs: ~h4v1
 
 ## Worklane boundary
 
@@ -1066,6 +1066,8 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-07T04:35:00Z ~z7e5 PROOF shadow doctor on installed v4.0.0 -> 11/11, 0 warnings; tarball sha256 9b617fe0..3d53f matches the release; version 4.0.0 (read, re-observed post-install)
+- 2026-08-07T04:35:00Z ~z7e5 DoD flips: M3 complete — the mega goal's Shadow-side work is done; the chain hands to product goals per the completion condition
 - 2026-08-07T04:05:00Z ~g4mv PROOF shadow-lint over the four migrated plans -> 0 blocking (moussey fdb2f223 on #145; snowcubes draft #2113 + graphite; resplit 897801527 on #2236; worktrees torn down) (read)
 - 2026-08-07T03:40:00Z NOTE seat=chief concept-drift audit vs the founding manifesto: core followed (method-over-harness, planning-is-writing, gate pair, checkpoints, A/B/C, auth-out); deliberate drifts confirmed (4 modes -> 2 postures with Spike/Defer/Challenge as moves; ledger deleted for git+board; adversarialism is process not machinery); named gap: the one-identity chat is behavior, not substrate -> Deferred row ~ob1c
 - 2026-08-06T17:05:00Z BOX ~v4ch is the v4 core survivable under a 7-lens adversarial challenge (correctness/simplify/deletion/coverage/interop) | ends: 2026-08-06
