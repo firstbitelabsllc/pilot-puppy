@@ -14,7 +14,7 @@ their own `PLAN.md`.
 
 ## See it
 
-![Shadow's board](docs/assets/board-desktop.png)
+![Shadow's board](https://raw.githubusercontent.com/firstbitelabsllc/shadow/main/docs/assets/board-desktop.png)
 
 *The board: one card per project, with its mode, status, lint result, and task
 counts. Running locally against a demo portfolio — Sunrise Bakery, Orbit, and
@@ -23,12 +23,12 @@ Fieldnotes are fictional projects; unedited screenshot of v4.0.x.*
 Open a project and Shadow states the Outcome, what changed, the proof, and the
 one A/B/C decision waiting for you.
 
-![A brief and the decision waiting on you](docs/assets/brief-decision.png)
+![A brief and the decision waiting on you](https://raw.githubusercontent.com/firstbitelabsllc/shadow/main/docs/assets/brief-decision.png)
 
 *A brief and its waiting decision; nothing changes until you choose. Same demo
 portfolio, unedited screenshot of v4.0.x.*
 
-![The same board at phone width](docs/assets/board-phone.png)
+![The same board at phone width](https://raw.githubusercontent.com/firstbitelabsllc/shadow/main/docs/assets/board-phone.png)
 
 *The same board at phone width. Unedited screenshot of v4.0.x.*
 
