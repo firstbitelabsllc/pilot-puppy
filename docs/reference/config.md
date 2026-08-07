@@ -23,6 +23,6 @@ blocks preparation or acceptance; adding `.shadow/` to the project's
 `.gitignore` is still recommended to keep ordinary Git output quiet.
 
 
-The roster file is local setup data, not project evidence. Keep any personal
-seat mapping outside repositories and never place provider/model/account/quota
-details in a plan, browser briefing, status output, or receipt.
+Never place provider/model/account/quota details in a plan, browser
+briefing, status output, or receipt; which provider a native host uses is the
+host CLI's own business.

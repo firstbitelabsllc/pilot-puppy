@@ -33,7 +33,6 @@ ln -sfn "$(pwd)" "$HOME/.cursor/skills/shadow"
 ```
 
 ## One real workflow
-## One real workflow
 
 Start in the repository whose work you want to understand:
 
