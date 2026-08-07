@@ -22,8 +22,14 @@ docs/superpowers/).
   route / seat (bare `shadow host run --host X` was always the complete sealed
   path); CLAIM/DONE bookkeeping; the Langfuse telemetry seam (git history is
   the trace store). Pre-rename compatibility from v3 is retained.
-- The board renders a lint chip per card and an unparseable plan as a red
-  card. AGENT.md is one page; the grammar is `docs/reference/method.md`.
+- The board renders a lint chip per card and blocking findings as a red card. AGENT.md is one page; the grammar is `docs/reference/method.md`.
+- A 19-agent adversarial challenge of this release confirmed 12 defects by
+  execution (0 refuted); all fixed before tagging. The worst three were in
+  the enforcers: lint's field parser truncated at embedded pipes (hiding
+  secrets and shortening the command accept reran — a false-green through
+  the only flip path), typo'd state tokens were invisible to every check,
+  and accept read its proof from row prose instead of the parsed tail.
+  `shadow checkpoint` (a second, unverified flip path) is deleted.
 
 ## 3.0.1 — 2026-08-06
 
