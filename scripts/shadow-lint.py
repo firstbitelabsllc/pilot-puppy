@@ -17,7 +17,7 @@ from typing import Final
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from shadow_drive_lib import SECRET_SHAPE_RE  # noqa: E402
+from shadow_scrub_lib import SECRET_SHAPE_RE  # noqa: E402
 
 
 LEGAL_MODES: Final = {"Broad", "Close"}

@@ -33,8 +33,8 @@ except ModuleNotFoundError:
     from browser.chief_of_staff import project_chief_of_staff
     from browser.decision_mode import DecisionInputError, build_choice, project_decision, receive_choice
     from browser.outcome_source import OutcomeSourceError, project_plan_outcome
-from shadow_drive_lib import PRIVATE_PATH_RE as DRIVE_PRIVATE_PATH_RE
-from shadow_drive_lib import SECRET_SHAPE_RE as DRIVE_SECRET_SHAPE_RE
+from shadow_scrub_lib import PRIVATE_PATH_RE as DRIVE_PRIVATE_PATH_RE
+from shadow_scrub_lib import SECRET_SHAPE_RE as DRIVE_SECRET_SHAPE_RE
 import importlib.util as _ilu
 _LINT_SPEC = _ilu.spec_from_file_location("shadow_lint", SCRIPTS / "shadow-lint.py")
 shadow_lint = _ilu.module_from_spec(_LINT_SPEC)

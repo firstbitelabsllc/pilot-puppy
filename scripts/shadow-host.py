@@ -25,6 +25,7 @@ import threading
 import time
 from typing import Any
 
+from shadow_scrub_lib import PRIVATE_PATH_RE, SECRET_SHAPE_RE
 from shadow_task_lib import TaskError, frozen_task_sha256
 
 
@@ -42,18 +43,7 @@ MAX_TEST_NAME_CHARS = 160
 CONTROL_RE = re.compile(r"[\x00-\x1f\x7f]")
 # Known-private markers match anywhere: a mid-string `/Users/...` behind a
 # backtick or parenthesis is still a private path.
-PRIVATE_PATH_RE = re.compile(
-    r"(?:~/|/Users/|/home/|/private/var/|file:///|[A-Za-z]:[\\/]|\\\\)",
-    re.IGNORECASE,
-)
 ABSOLUTE_PATH_RE = re.compile(r"(?:^|[\s\"'=])/(?!/)[A-Za-z0-9._-]+(?:/[^\s\"']*)?")
-SECRET_SHAPE_RE = re.compile(
-    r"(?:sk-(?:ant-)?[A-Za-z0-9_-]{8,}|gh[pousr]_[A-Za-z0-9]{20,}|"
-    r"github_pat_[A-Za-z0-9_]{20,}|xox[baprs]-[A-Za-z0-9-]{10,}|"
-    r"AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._\-/+=]{20,}|"
-    r"-----BEGIN[ A-Z]*PRIVATE KEY-----)",
-    re.IGNORECASE,
-)
 
 
 class HostError(ValueError):

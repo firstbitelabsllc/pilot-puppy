@@ -54,7 +54,7 @@ REQUIRED_FILES = {
     "scripts/shadow-release-package.py",
     "scripts/shadow-status.py",
     "scripts/shadow_task_lib.py",
-    "scripts/shadow_drive_lib.py",
+    "scripts/shadow_scrub_lib.py",
 }
 FORBIDDEN_ROOTS = {
     ".git",
