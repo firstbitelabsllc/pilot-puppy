@@ -114,19 +114,6 @@ def operator_brief(text: str) -> dict[str, str]:
     return result
 
 
-def task_counts(text: str) -> dict[str, int]:
-    counts = {"pending": 0, "in_progress": 0, "blocked": 0, "completed": 0}
-    aliases = {"x": "completed", "done": "completed", "working": "in_progress"}
-    for line in text.splitlines():
-        match = TASK_RE.match(line)
-        if not match:
-            continue
-        state = aliases.get(match.group(1).strip().lower(), match.group(1).strip().lower())
-        if state in counts:
-            counts[state] += 1
-    return counts
-
-
 def title(text: str, fallback: str) -> str:
     for line in text.splitlines():
         if line.startswith("# "):
@@ -220,7 +207,6 @@ def plan_record(path: Path, root: Path) -> dict[str, Any]:
         "id": hashlib.sha256(relative.encode("utf-8")).hexdigest()[:16],
         "path": relative,
         "title": title(text, path.parent.name),
-        "tasks": task_counts(text),
         "project": project_of(brief, relative),
         "mode": mode_of(brief),
         "milestone": milestone_of(brief),

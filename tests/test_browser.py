@@ -315,6 +315,19 @@ class BoardProjectionTests(unittest.TestCase):
             {"pending": 1, "in_progress": 1, "blocked": 0, "completed": 1},
         )
 
+    def test_task_counts_ignore_checkboxes_outside_the_tasks_section(self) -> None:
+        noisy = BOARD_PLAN.replace(
+            "## Progress",
+            "## Notes\n\n- [completed] a stray checkbox that is not a task\n\n## Progress",
+        )
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), noisy)
+            record = server.plan_record(plan, repo)
+        self.assertEqual(
+            record["tasks"],
+            {"pending": 1, "in_progress": 1, "blocked": 0, "completed": 1},
+        )
+
     def test_plan_record_carries_a_lint_summary(self) -> None:
         with tempfile.TemporaryDirectory() as dirname:
             repo, plan = self.make_board_repo(Path(dirname), BOARD_PLAN)
