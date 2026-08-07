@@ -43,7 +43,6 @@ REQUIRED_FILES = {
     "schemas/decision-choice.v1.json",
     "schemas/decision-receipt.v1.json",
     "schemas/outcome-choice.v1.json",
-    "scripts/shadow-checkpoint.py",
     "scripts/shadow-doctor.py",
     "scripts/shadow-accept.py",
     "scripts/shadow-lint.py",

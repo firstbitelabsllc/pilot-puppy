@@ -1065,6 +1065,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Progress
 
+- 2026-08-06T17:05:00Z BOX ~v4ch is the v4 core survivable under a 7-lens adversarial challenge (correctness/simplify/deletion/coverage/interop) | ends: 2026-08-06
 - 2026-08-06T16:35:00Z PARK seat=chief — v4 (PR #254) is green locally
   (Python 131, JS 4, Playwright 10, docs, privacy, 4.0.0 package) and pushed,
   but merge is blocked by a GitHub Actions outage: every job fails at "Set up
