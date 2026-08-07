@@ -471,24 +471,19 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             payload = json.loads(self.rfile.read(length))
-            if not isinstance(payload, dict):
-                raise BrowserError("request has unknown or missing fields")
-            if endpoint == "/api/decision":
-                if set(payload) != {"plan", "option_id", "revision"}:
-                    raise BrowserError("decision request has unknown or missing fields")
-                plan = resolve_plan(self.scan_root, payload["plan"])
-                record = plan_record(plan, self.scan_root)
-                if record["outcome"] is None:
-                    raise BrowserError(record["contract_error"] or "plan has no typed Outcome")
-                receipt = write_decision_receipt(
-                    plan,
-                    record["outcome"],
-                    payload["option_id"],
-                    payload["revision"],
-                )
-                self._json(200, {"ok": True, "receipt": receipt})
-                return
-            raise BrowserError("request has unknown or missing fields")
+            if not isinstance(payload, dict) or set(payload) != {"plan", "option_id", "revision"}:
+                raise BrowserError("decision request has unknown or missing fields")
+            plan = resolve_plan(self.scan_root, payload["plan"])
+            record = plan_record(plan, self.scan_root)
+            if record["outcome"] is None:
+                raise BrowserError(record["contract_error"] or "plan has no typed Outcome")
+            receipt = write_decision_receipt(
+                plan,
+                record["outcome"],
+                payload["option_id"],
+                payload["revision"],
+            )
+            self._json(200, {"ok": True, "receipt": receipt})
         except (BrowserError, DecisionInputError) as exc:
             self._json(400, {"error": str(exc)})
         except (OSError, UnicodeError, json.JSONDecodeError):

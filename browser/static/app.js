@@ -52,6 +52,11 @@ async function choose(plan, option) {
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'Choice could not be saved.');
+  if (data.receipt && data.receipt.state && data.receipt.state !== 'received') {
+    status.textContent = 'The plan changed since you loaded it — refreshing; choose again.';
+    load();
+    return;
+  }
   status.textContent = 'Choice saved. Nothing starts until you ask.';
   document.querySelectorAll('.choice').forEach((button) => { button.disabled = true; });
 }
@@ -66,7 +71,7 @@ function renderPlan(plan) {
     main.append(card);
     return;
   }
-  if (!plan.outcome) {
+  if (!plan.outcome || !plan.briefing) {
     const card = el('section', { className: 'card empty' });
     card.append(el('p', { className: 'eyebrow', text: plan.title }));
     card.append(el('h2', { text: 'This plan needs an Operator Brief' }));
@@ -177,9 +182,8 @@ function renderBoard() {
     head.append(el('span', { className: 'lane-count', text: `${plans.length} plan${plans.length === 1 ? '' : 's'}` }));
     lane.append(head);
     const rowEl = el('div', { className: 'lane-cards' });
-    const ordered = [...plans].sort((a, b) => Number(a.mode === 'defer') - Number(b.mode === 'defer'));
-    for (const plan of ordered) {
-      const card = el('button', { className: plan.mode === 'defer' ? 'board-card deferred' : 'board-card', type: 'button' });
+    for (const plan of plans) {
+      const card = el('button', { className: 'board-card', type: 'button' });
       const top = el('div', { className: 'board-card-head' });
       top.append(el('strong', { text: plan.title }));
       if (plan.mode) top.append(el('span', { className: `mode-chip mode-${plan.mode}`, text: plan.mode }));
@@ -188,7 +192,7 @@ function renderBoard() {
       card.append(el('span', { className: 'board-state', text: status }));
       if (plan.milestone) card.append(el('p', { className: 'board-milestone', text: plan.milestone }));
       if (plan.lint) {
-        if (!plan.lint.parse_ok) card.classList.add('red');
+        if (!plan.lint.parse_ok || plan.lint.blocking) card.classList.add('red');
         const verdict = !plan.lint.parse_ok
           ? 'unreadable'
           : plan.lint.blocking

@@ -338,6 +338,22 @@ class BoardProjectionTests(unittest.TestCase):
         self.assertIsNone(record["mode"])
         self.assertGreaterEqual(record["lint"]["blocking"], 1)
 
+    def test_an_unreadable_plan_is_skipped_without_crashing_the_scan(self) -> None:
+        with tempfile.TemporaryDirectory() as dirname:
+            repo, plan = self.make_board_repo(Path(dirname), BOARD_PLAN)
+            bad = repo / "broken" / "PLAN.md"
+            bad.parent.mkdir()
+            bad.write_bytes(b"# \xff\xfe not utf-8")
+            records = server.discover_plans(repo)
+        paths = [record["path"] for record in records]
+        self.assertIn("gift-flow/PLAN.md", paths)
+        self.assertNotIn("broken/PLAN.md", paths)
+
+    def test_lint_summary_reports_parse_ok_false_when_the_linter_raises(self) -> None:
+        with mock.patch.object(server.shadow_lint, "lint_plan", side_effect=RuntimeError("boom")):
+            summary = server.lint_summary("# anything")
+        self.assertEqual(summary, {"parse_ok": False, "blocking": 0, "warning": 0})
+
     def test_lint_flags_a_bad_plan(self) -> None:
         bad = BOARD_PLAN.replace("- Mode: Close", "- Mode: turbo")
         with tempfile.TemporaryDirectory() as dirname:
