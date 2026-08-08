@@ -816,16 +816,21 @@ Code, or Cursor without taking custody of credentials or conversations.
   foreground role router is allowed only when it is explicit, explainable, and
   cannot dispatch work by itself.
 - When the target is available, a usable Codex account there can complete the
-  deferred receipt. The local quota reset is the alternate resume predicate,
-  not a reason to expand the product.
-- The deferred Codex receipt uses one frozen, public-safe packet: task ID
-  `host-prompt-heading-guard`, target revision
-  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, SHA-256
-  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`, exact
-  allowed path `tests/test_pilot_puppy_host.py`, and proof command
-  `python3 -m unittest tests.test_pilot_puppy_host -v`. The packet file stays
-  outside this public repository and contains no private prompts, credentials,
-  transcripts, or provider payloads.
+  deferred receipt. The local quota reset is no longer a resume predicate: that
+  wake fired 2026-08-07 23:52 and is spent.
+- The old frozen packet is RETIRED, not runnable: task ID
+  `host-prompt-heading-guard` at target revision
+  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b` (SHA-256
+  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`) names
+  allowed path `tests/test_pilot_puppy_host.py`, which no longer exists in this
+  tree (it is `tests/test_shadow_host.py` after the v3/v4 renames), so running
+  it would produce an obsolete experiment rather than portability proof. Do not
+  execute it on either route.
+- Resuming this receipt requires re-freezing one new public-safe packet against
+  current main: a fresh target revision, an exact allowed path that exists
+  today, its own SHA-256, and a proof command that runs on current main. The
+  packet file stays outside this public repository and contains no private
+  prompts, credentials, transcripts, or provider payloads.
 
 ## Tasks
 
@@ -1070,7 +1075,7 @@ Code, or Cursor without taking custody of credentials or conversations.
 
 ## Deferred
 
-- 29 audit follow-ups from the 17-agent trust audit (regex dedup between lint/accept, host prompt example-receipt collision, doctor VERSION-grammar quadruplication, packaging glob shipping debate records, atomic-write and a11y nits) | full list in session 2d135e8d wf_653d647a | wake: first v4.1 release train
+- 29 audit follow-ups from the 17-agent trust audit (regex dedup between lint/accept, host prompt example-receipt collision, doctor VERSION-grammar quadruplication, packaging glob shipping debate records, atomic-write and a11y nits) | the full list lives only in session 2d135e8d wf_653d647a, which a fresh checkout cannot read — the named five above are the only ones recoverable from this repository | wake: first v4.1 release train; if that session is unreachable when the wake fires, re-derive the list by re-running the audit sweep rather than treating this row as complete
 - session-start portfolio brief ~ob1c (SessionStart hook or `shadow brief`: a fresh session opens knowing every project's state, mode, next move) | car mode is the chat itself per operator ruling | wake: a product cycle names cold-start friction in its plan
 - harden sealed-lane argv: claude --setting-sources user + --allowedTools, cursor --sandbox enabled | flags verified present in installed CLIs, lane behavior unverified | wake: first real delegated host run
 - native structured receipts: codex --output-schema, claude --json-schema | text-scrape works today | wake: a receipt-shape scrape failure occurs
@@ -2338,17 +2343,21 @@ Code, or Cursor without taking custody of credentials or conversations.
   failures are intentionally not counted as second-computer proof because the
   target host was offline. Do not call that receipt complete until its doctor
   is 11/11 from the target checkout.
-- The frozen packet is ready and must not be replaced: use task ID
-  `host-prompt-heading-guard` at target revision
-  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, exact allowed path
-  `tests/test_pilot_puppy_host.py`, and proof command
-  `python3 -m unittest tests.test_pilot_puppy_host -v`; verify its SHA-256
-  as `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`.
-- Native Codex execution is also time-bound. If the target has a usable
-  account, run the same sealed task there; otherwise resume after 2026-08-07
-  23:52 America/New_York. In either route, it must return `status: ok`, change
-  only its allowed path, and pass the lead-reproduced check. A binary/version
-  probe does not satisfy this deferred receipt.
+- The frozen packet (task ID `host-prompt-heading-guard` at target revision
+  `b1f5d0a6fefed6d4b3bb278ae1584ff133feec1b`, SHA-256
+  `fc04e1b8730808dbf2bceb30090d049305af1a04db34bd1d3f50f3781be294cd`) is
+  RETIRED and must be replaced before any run: its allowed path
+  `tests/test_pilot_puppy_host.py` and proof command
+  `python3 -m unittest tests.test_pilot_puppy_host -v` no longer resolve in
+  this tree, which predates the v3/v4 renames by hundreds of commits.
+- Native Codex execution is no longer time-bound by the local quota reset: the
+  2026-08-07 23:52 America/New_York wake fired and is spent. Resume only after
+  one new sealed task is re-frozen against current main (fresh revision, an
+  allowed path that exists today, its own SHA-256, a proof command that runs)
+  and a clean cross-host worktree exists. Whichever route runs it, it must
+  return `status: ok`, change only its allowed path, and pass the
+  lead-reproduced check. A binary/version probe does not satisfy this deferred
+  receipt.
 - 2026-08-04T06:08:51Z: Fresh target-host recheck found
   `Leos-Macbook-M4-Pro.local` online at the network layer: one bounded ICMP
   probe replied in 15.351 ms. Read-only TCP/22 checks were refused or timed
