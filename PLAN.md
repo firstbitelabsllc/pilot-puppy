@@ -1041,8 +1041,12 @@ Code, or Cursor without taking custody of credentials or conversations.
   run one real delegated row through a fresh worktree + `shadow host run` +
   `shadow accept --row` on a customer repository.
 - [deferred] Close cross-host portability proof through the other-computer
-  route or the local quota-reset fallback; require the same sealed task, exact
-  allowed-path change, and lead-reproduced check.
+  route; require the same sealed task, exact allowed-path change, and
+  lead-reproduced check. The local quota-reset fallback is spent: its 23:52
+  wake fired 2026-08-07 and the frozen task predates the v3/v4 renames, so it
+  must not be run as-is. See the `## Deferred` row — this proof only resumes
+  once the task is re-frozen against current main and a clean cross-host
+  worktree exists.
 
 ## Mechanical proof required
 
