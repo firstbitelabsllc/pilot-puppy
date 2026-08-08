@@ -1064,8 +1064,19 @@ Code, or Cursor without taking custody of credentials or conversations.
   tests, production build, credential-URL checks, and real public readback;
   primary dirty/owned checkouts are never restarted or overwritten by proof.
 
+## Deferred
+
+- 29 audit follow-ups from the 17-agent trust audit (regex dedup between lint/accept, host prompt example-receipt collision, doctor VERSION-grammar quadruplication, packaging glob shipping debate records, atomic-write and a11y nits) | full list in session 2d135e8d wf_653d647a | wake: first v4.1 release train
+- session-start portfolio brief ~ob1c (SessionStart hook or `shadow brief`: a fresh session opens knowing every project's state, mode, next move) | car mode is the chat itself per operator ruling | wake: a product cycle names cold-start friction in its plan
+- harden sealed-lane argv: claude --setting-sources user + --allowedTools, cursor --sandbox enabled | flags verified present in installed CLIs, lane behavior unverified | wake: first real delegated host run
+- native structured receipts: codex --output-schema, claude --json-schema | text-scrape works today | wake: a receipt-shape scrape failure occurs
+- v4.1 packaging pass: fold shadow-outcome-validate into tests/, fold shadow_task_lib into shadow-host, delete unread schemas/*.json | shipped surface with no runtime callers | wake: first v4.1 release train
+- ai-leo maintenance: land-or-retire the pilot-leo/delegate edits in the two stale lane checkouts and put `delegate` back on PATH from a main-fresh checkout | an active Cursor lane was mid-edit there 2026-08-07 20:30 | wake: no writer active in those checkouts for 24h
+- cross-host portability proof | its 23:52 quota-reset wake FIRED 2026-08-07 but the frozen task predates the v3/v4 renames by hundreds of commits and must not run as-is | wake: the task is re-frozen against current main and a clean cross-host worktree exists
+
 ## Progress
 
+- 2026-08-08T01:10:00Z CONTRADICTION found + repaired: three Progress receipts parked rows into `## Deferred`, but no such heading existed (only `## Deferred proof (not a global blocker)`) — every canonical-anchor insert silently no-oped (replace without assert), invisible to lint since neither heading parses as Deferred. The canonical section now exists with all promised rows. LESSON: a plan edit that anchors on a heading must assert the anchor matched — silence is how receipts lie.
 - 2026-08-07T13:30:00Z ~fa17 PROOF 17-agent full-coverage audit (thermo+ponytail, 100% of product files) -> 9 confirmed blocks (0 refuted), all fixed + regression-tested in v4.0.2; 29 follow-ups parked (read)
 - 2026-08-07T12:30:00Z STRUCT operator ruling (Leo, in chat): Shadow is a method per orchestrator, not a durable singular service — it spins up with the caller's session (codex or claude), and the ongoing chat is the on-the-go surface; no standing board. Same-day revert of my over-build: shadow-browse LaunchAgent removed, tailscale :8443 serve off, tailnet config back to pre-existing paths only. `browse --allow-host` STAYS in the repo as a generic opt-in proxy knob (not tailscale-specific; one-line veto: say revert and 4.0.2 removes it). Personal deploy choices live outside the OSS repo (operator CLAUDE.md/memory), so no /shadow-leo skill is minted for a recipe nobody runs. | trigger: 'there is no need for me to see the board on the go'
 - 2026-08-07T12:05:00Z ~gate PROOF Leo confirmed in chat ('delete all the old ones, we don't need to port over anything') -> deleted ~/Development/vidux (68M) + vidux-friendly-artifact-20260804 + vidux-snowcubes-current-20260804 + the .disabled vidux-browser plist; pre-deletion inventory: 0 dirty files, 0 unpushed commits in all three; the vidux remote redirects to firstbitelabsllc/shadow so all history survives there; board healthy post-delete (read)
